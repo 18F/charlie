@@ -23,7 +23,8 @@
   "dependencies": {
     "hubot": ">= 2.6.0 < 3.0.0",
     "hubot-scripts": ">= 2.5.0 < 3.0.0",
-    "hubot-slack": "~2.0.3"
+    "hubot-slack": "~2.0.3",
+    "hubot-standup": "git://github.com/miyagawa/hubot-standup.git"
   },
   "engines": {
     "node": ">= 0.8.x",
