@@ -1,1 +1,22 @@
-["redis-brain.coffee", "shipit.coffee"]
+[
+	"redis-brain.coffee",
+	"shipit.coffee",
+	"xkcd.coffee",
+	"advice.coffee",
+	"alot.coffee",
+	"animal.coffee",
+	"announce.coffee",
+	"applause.coffee",
+	"ascii.coffee",
+	"availability.coffee",
+	"aws.coffee",
+	"aww.coffee",
+	"poem.coffee",
+	"excuse.coffee",
+	"zen.coffee",
+	"room-info.coffee",
+	"python_library.coffee",
+	"twitter_stream.coffee",
+	"encourage.coffee",
+	"bitcoin.coffee"
+]
