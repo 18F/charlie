@@ -18,5 +18,5 @@
 	"twitter_stream.coffee",
 	"encourage.coffee",
 	"bitcoin.coffee",
-	"meme.coffee"
+	"meme_generator.coffee"
 ]
