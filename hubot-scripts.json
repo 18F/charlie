@@ -17,5 +17,6 @@
 	"python_library.coffee",
 	"twitter_stream.coffee",
 	"encourage.coffee",
-	"bitcoin.coffee"
+	"bitcoin.coffee",
+	"meme.coffee"
 ]
