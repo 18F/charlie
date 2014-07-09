@@ -18,6 +18,5 @@ module.exports = (robot) ->
     lovee = msg.match[1]
     action = msg.match[2]
     room = "#love"
-    msg.reply "Yay, more love for #love!"
     robot.messageRoom room, lover + " loves " + lovee + "because " + action
     
