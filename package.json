@@ -21,16 +21,16 @@
     "url": "https://github.com/github/hubot.git"
   },
   "dependencies": {
+    "aws2js": "0.6.12",
+    "cheerio": "",
     "hubot": ">= 2.6.0 < 3.0.0",
     "hubot-scripts": ">= 2.5.0 < 3.0.0",
-    "hubot-slack": "~2.0.3",
+    "hubot-slack": "^2.0.4",
     "hubot-standup": "git://github.com/miyagawa/hubot-standup.git",
-    "aws2js": "0.6.12",
-    "underscore": "1.4.4",
-    "moment": "1.6.2",
     "jsdom": "0.8.4",
+    "moment": "1.6.2",
     "twit": "1.1.6",
-    "cheerio": ""
+    "underscore": "1.4.4"
   },
   "engines": {
     "node": ">= 0.8.x",
