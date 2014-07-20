@@ -13,10 +13,10 @@
 
 module.exports = (robot) ->
 
-  robot.hear /^\s*love\s+((@[\w\-]+\s*)+)(.*)$/i, (msg) ->
+  robot.hear /^\s*(love|<3|:heart:)\s+((@[\w\-]+\s*)+)(.*)$/i, (msg) ->
     lover = msg.message.user.name
-    lovees = msg.match[1].trim()
-    action = msg.match[3]
+    lovees = msg.match[2].trim()
+    action = msg.match[4]
     room = "#love"
     robot.messageRoom room, lover + " loves " + lovees + ": " + action
     msg.send "Yay, more love for #love! Thanks, #{lover}!"
