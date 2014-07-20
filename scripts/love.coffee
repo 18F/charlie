@@ -13,7 +13,7 @@
 
 module.exports = (robot) ->
 
-  robot.hear /^\s*(love|<3|:heart:)\s+((@[\w\-]+\s*)+)(.*)$/i, (msg) ->
+  robot.hear /^\s*(love|<3|:heart\w*:)\s+((@[\w\-]+\s*)+)(.*)$/i, (msg) ->
     lover = msg.message.user.name
     lovees = msg.match[2].trim()
     action = msg.match[4]
