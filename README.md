@@ -1,3 +1,5 @@
+Hi. This was originally taken from [amos](https://github.com/18F/18f-slack.git) and is being reworked a bit so that it can be automatically deployed to EC2 via Sendak. -ja
+
 # Hubot
 
 This is a version of GitHub's Campfire bot, hubot. He's pretty cool.
