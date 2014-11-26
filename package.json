@@ -6,6 +6,7 @@
     "aws2js": "^0.6.12",
     "cheerio": "^0.18.0",
     "hubot": "^2.9.3",
+    "hubot-auth": "^1.1.2",
     "hubot-diagnostics": "0.0.1",
     "hubot-google-images": "^0.1.1",
     "hubot-google-translate": "^0.1.0",
