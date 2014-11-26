@@ -1,6 +1,4 @@
 [
-	"redis-brain.coffee",
-	"shipit.coffee",
 	"xkcd.coffee",
 	"advice.coffee",
 	"alot.coffee",
