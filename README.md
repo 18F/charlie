@@ -1,6 +1,6 @@
 # Hubot
 
-This is a version of GitHub's Campfire bot, hubot. He's pretty cool. We deploy him to EC2 via [Sendak](https://github.com/18F/Sendak).
+This is a version of GitHub's chat bot, [Hubot](https://hubot.github.com/). Hubot's pretty cool. We deploy it to EC2 via [Sendak](https://github.com/18F/Sendak).
 
 ### Testing Hubot Locally
 
