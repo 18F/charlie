@@ -1,5 +1,1 @@
-node_modules
-.DS_Store*
-dump.rdb
-slack.yml
-.hubot_history
+.gitignore
