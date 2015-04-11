@@ -1,1 +1,1 @@
-web: bin/hubot --adapter slack
+web: sh start.sh

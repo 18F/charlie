@@ -17,6 +17,6 @@ module.exports = (robot) ->
     lover = msg.message.user.name
     lovees = msg.match[2].trim()
     action = msg.match[4]
-    room = "#love"
+    room = "love"
     robot.messageRoom room, lover + " loves " + lovees + ": " + action
     msg.send "Yay, more love for #love! Thanks, #{lover}!"
