@@ -1,5 +1,6 @@
 [
   "hubot-auth",
+  "hubot-cf",
   "hubot-diagnostics",
   "hubot-help",
   "hubot-google-images",
