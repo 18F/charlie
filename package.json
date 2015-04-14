@@ -20,7 +20,7 @@
     "hubot-shipit": "^0.1.1",
     "hubot-slack": "^3.2.1",
     "hubot-standup": "git://github.com/miyagawa/hubot-standup.git#bf7dc4aeebb",
-    "hubot-trollbot": "^0.1.0",
+    "hubot-trollbot": "^0.1.1",
     "hubot-youtube": "^0.1.2",
     "jsdom": "^1.5.0",
     "moment": "^2.8.4",
