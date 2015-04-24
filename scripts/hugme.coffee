@@ -10,6 +10,10 @@
 # Commands:
 #   hubot hug me - Receive a hug
 #   hubot hug bomb N - get N hugs
+#
+# Notes:
+# Images are stored in a bucket in S3. They should be continuously numbered and .jpg.
+# HUG_COUNT and HUG_BASE_URL are required
 
 module.exports = (robot) ->
 
