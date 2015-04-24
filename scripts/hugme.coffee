@@ -23,7 +23,8 @@ all_indexes = [0...hug_count]
 base_url = process.env.HUG_BASE_URL
 
 hugUrl = (n) ->
-  base_url + n + ".jpg"
+  rand = Math.floor(Math.random() * 10000)
+  base_url + n + ".jpg?rnd=" + rand
 
 hugBomb = (count, msg) ->
   if count > hug_count
@@ -33,7 +34,6 @@ hugBomb = (count, msg) ->
   for i in selected
     url = hugUrl(i)
     msg.send(url)
-
 
 module.exports = (robot) ->
   robot.respond /hug me/i, (msg) ->
