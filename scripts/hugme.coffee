@@ -28,7 +28,7 @@ module.exports = (robot) ->
     msg.send randomHug()
 
   robot.respond /hug bomb( (\d+))?/i, (msg) ->
-    count = msg.match[2] || 
+    count = msg.match[2] || 3
     if count > hug_count
       count = hug_count
     (msg.send randomHug() for i in [1..count])
