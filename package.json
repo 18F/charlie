@@ -7,7 +7,7 @@
     "cheerio": "^0.18.0",
     "hubot": "^2.11.0",
     "hubot-auth": "^1.1.2",
-    "hubot-cf": "18F/hubot-cf#66a180982095",
+    "hubot-cf-notifications": "^0.1.0",
     "hubot-diagnostics": "0.0.1",
     "hubot-google-images": "^0.1.2",
     "hubot-google-translate": "^0.1.0",
