@@ -1,0 +1,10 @@
+{
+  "orgs": {
+    "cap": {
+      "room": "cap"
+    },
+    "sandbox": {
+      "room": "transient"
+    }
+  }
+}
