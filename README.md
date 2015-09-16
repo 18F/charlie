@@ -1,8 +1,8 @@
 # Hubot
 
-This is a version of GitHub's chat bot, [Hubot](https://hubot.github.com/). Hubot's pretty cool. We deploy it to EC2 via [Sendak](https://github.com/18F/Sendak).
+This is a version of GitHub's chat bot, [Hubot](https://hubot.github.com/). Hubot's pretty cool.
 
-### Testing Hubot Locally
+## Testing Hubot Locally
 
 You can test your hubot by running the following.
 
@@ -25,8 +25,18 @@ Then you can interact with hubot by typing `hubot help`.
     help - Displays all of the help commands that Hubot knows about.
     ...
 
-### Documentation
+## Deploying
 
-Additional information about Hubot can be found here:
+18F's Hubot is named Charlie, and is deployed in [Cloud Foundry](https://www.cloudfoundry.org/). To deploy (as an 18F employee), follow [the steps to get started](https://docs.18f.gov/getting-started/setup/), then run:
+
+```bash
+cd 18f-bot
+cf target -o devops -s hubot
+cf push charlie
+```
+
+## Documentation
+
+General information about Hubot can be found here:
 
 https://hubot.github.com/
