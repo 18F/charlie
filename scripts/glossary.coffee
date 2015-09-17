@@ -24,6 +24,6 @@ module.exports = (robot) ->
         term = msg.match[2]
 
         if term in Object.keys(g)
-          console.log "The term " + g[term].longform + " (" +  term + ") means " + g[term].description
+          msg.reply "The term #{ g[term].longform } (#{ term }) means #{g[term].description}" 
         else
-          console.log "I don't know that term."
+          msg.reply "I don't know that term."
