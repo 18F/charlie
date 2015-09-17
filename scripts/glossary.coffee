@@ -12,18 +12,26 @@
 
 yaml = require('js-yaml');
 
+findCaseInsensitively = (list, searchTerm) ->
+  searchTerm = searchTerm.toLowerCase()
+  for term in list
+    if term.toLowerCase() is searchTerm
+      return term
+  null # else return null
+
 module.exports = (robot) ->
-
   robot.respond /(glossary|define) (\w+)/i, (msg) ->
-    robot.http("https://api.github.com/repos/18f/procurement-glossary/contents/abbreviations.yml")
+    robot.http('https://api.github.com/repos/18f/procurement-glossary/contents/abbreviations.yml')
       .header('User-Agent', '18F-bot')
-      .get() (err, res, body) -> 
+      .get() (err, res, body) ->
         b = new Buffer(JSON.parse(body).content, 'base64');
-        g = yaml.safeLoad(b.toString()).abbreviations 
+        g = yaml.safeLoad(b.toString()).abbreviations
 
-        term = msg.match[2]
+        searchTerm = msg.match[2]
+        terms = Object.keys(g)
+        term = findCaseInsensitively(terms, searchTerm)
 
-        if term in Object.keys(g)
-          msg.reply "The term #{ g[term].longform } (#{ term }) means #{g[term].description}" 
+        if term
+          msg.reply "The term #{ g[term].longform } (#{ term }) means #{g[term].description}"
         else
           msg.reply "I don't know that term."
