@@ -28,13 +28,13 @@ hugUrl = (s3Object) ->
 hugBomb = (count, msg) ->
   s3.listObjects {Bucket: BUCKET}, (err, data) ->
     if err
-      msg.send("Error retrieving images: #{err}")
+      msg.reply("Error retrieving images: #{err}")
     else
       # send unique URLs
       s3Objects = _u.sample(data.Contents, count)
       for s3Object in s3Objects
         url = hugUrl(s3Object)
-        msg.send(url)
+        msg.reply(url)
 
 module.exports = (robot) ->
   robot.respond /hug me/i, (msg) ->
