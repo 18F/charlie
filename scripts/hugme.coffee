@@ -35,6 +35,7 @@ hugBomb = (count, msg) ->
       for s3Object in s3Objects
         url = hugUrl(s3Object)
         msg.reply(url)
+      msg.reply("_If you would like to be added, send a picture in #bots._")
 
 module.exports = (robot) ->
   robot.respond /hug me/i, (msg) ->
