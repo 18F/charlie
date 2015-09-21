@@ -12,28 +12,29 @@
 #   hubot hug bomb N - get N hugs
 #
 # Notes:
-# Images are stored in a bucket in S3. They should be continuously numbered and .jpg.
-# HUG_COUNT and HUG_BASE_URL are required
+# Images are stored in a bucket in S3.
 
+AWS = require('aws-sdk')
 _u = require('underscore')
 
+BUCKET = '18f-hugs'
+s3 = new AWS.S3()
 
-hug_count = parseInt(process.env.HUG_COUNT)
-all_indexes = [0...hug_count]
-base_url = process.env.HUG_BASE_URL
-
-hugUrl = (n) ->
-  rand = Math.floor(Math.random() * 10000)
-  base_url + n + ".jpg?rnd=" + rand
+hugUrl = (s3Object) ->
+  filename = s3Object.Key
+  rand = _u.random(10000)
+  url = "https://#{BUCKET}.s3.amazonaws.com/#{filename}?rnd=#{rand}"
 
 hugBomb = (count, msg) ->
-  if count > hug_count
-    count = hug_count
-  # send unique URLs
-  selected = _u.sample(all_indexes, count)
-  for i in selected
-    url = hugUrl(i)
-    msg.send(url)
+  s3.listObjects {Bucket: BUCKET}, (err, data) ->
+    if err
+      msg.send("Error retrieving images: #{err}")
+    else
+      # send unique URLs
+      s3Objects = _u.sample(data.Contents, count)
+      for s3Object in s3Objects
+        url = hugUrl(s3Object)
+        msg.send(url)
 
 module.exports = (robot) ->
   robot.respond /hug me/i, (msg) ->

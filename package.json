@@ -3,8 +3,10 @@
   "version": "2.7.1",
   "private": true,
   "dependencies": {
+    "aws-sdk": "^2.2.3",
     "aws2js": "^0.8.3",
     "cheerio": "^0.18.0",
+    "coffee-script": "1.6.3",
     "hubot": "^2.11.0",
     "hubot-auth": "^1.1.2",
     "hubot-cf-notifications": "^0.2.0",
@@ -22,12 +24,11 @@
     "hubot-standup": "git://github.com/miyagawa/hubot-standup.git#bf7dc4aeebb",
     "hubot-trollbot": "^0.1.1",
     "hubot-youtube": "^0.1.2",
-    "jsdom": "^1.5.0",
     "js-yaml": "3.4.1",
+    "jsdom": "^1.5.0",
     "moment": "^2.8.4",
     "twit": "^1.1.18",
-    "underscore": "^1.7.0",
-    "coffee-script": "1.6.3"
+    "underscore": "^1.7.0"
   },
   "engines": {
     "node": "0.10.x"
