@@ -1,21 +1,18 @@
 # Description:
-#   When someone writes a message with "XPOST #<somechannel>", post the message to that channel.
+#   When someone writes a message with "XPOST #<somechannel>", post the message to that channel. One use case is posting links to press articles that should be seen by a project team but also X-posted in #press.
 #
-# Dependencies:
-#   "<module name>": "<module version>"
+# Dependencies: none
 #
-# Configuration:
-#   LIST_OF_ENV_VARS_TO_SET
+# Configuration: none
 #
 # Commands:
-#   hubot <trigger> - <what the respond trigger does>
-#   <trigger> - <what the hear trigger does>
+#   mention "XPOST @somechannel" in any message
 #
 # Notes:
-#   <optional notes required for the script>
+#   No notes needed
 #
 # Author:
-#   <github username of the original script author>
+#   @afeld with ideas from @wslack
 
 module.exports = (robot) ->
   console.log("XPOST script loaded.")
