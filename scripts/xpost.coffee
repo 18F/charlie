@@ -20,7 +20,5 @@ module.exports = (robot) ->
     target = msg.match[1]
     poster = msg.message.user.name
     text = msg.message.text
-#    console.log("cross-posting to #{target}")
-#    console.log(msg)
     robot.messageRoom(target, "XPOST from " + poster + " in " + msg.message.room + " -- " + text)
     msg.send "cross-posted to #{target}; Thanks, #{poster}!"
