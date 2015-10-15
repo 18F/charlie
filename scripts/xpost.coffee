@@ -12,13 +12,15 @@
 #   No notes needed
 #
 # Author:
-#   @afeld with ideas from @wslack
+#   @afeld and @wslack
 
 module.exports = (robot) ->
   console.log("XPOST script loaded.")
   robot.hear /\bxpost #([\w\-]+)/i, (msg) ->
-    channel = msg.match[1]
-    console.log("cross-posting to ##{channel}")
-
+    target = msg.match[1]
+    poster = msg.message.user.name
     text = msg.message.text
-    robot.messageRoom(channel, text)
+#    console.log("cross-posting to #{target}")
+#    console.log(msg)
+    robot.messageRoom(target, "XPOST from " + poster + " in " + msg.message.room + " -- " + text)
+    msg.send "cross-posted to #{target}; Thanks, #{poster}!"
