@@ -27,7 +27,7 @@ Then you can interact with hubot by typing `hubot help`.
 
 ## Deploying
 
-18F's Hubot is named Charlie, and is deployed in [Cloud Foundry](https://www.cloudfoundry.org/). To deploy (as an 18F employee), follow [the steps to get started](https://docs.18f.gov/getting-started/setup/), then run:
+18F's Hubot is named Charlie, and is deployed in [Cloud Foundry](https://www.cloudfoundry.org/). To deploy (as an 18F employee), follow [the steps to get started](https://docs.18f.gov/getting-started/setup/), get yourself added to the CF devops org by asking a CF admin, then run:
 
 ```bash
 cd 18f-bot
