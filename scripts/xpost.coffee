@@ -9,7 +9,7 @@
 #   mention "XPOST @somechannel" in any message
 #
 # Notes:
-#   No notes needed
+#   Charlie will not tell you right now if the post has failed to the other channel (if Charlie's not there, if Charlie can't post, etc)
 #
 # Author:
 #   @afeld and @wslack
