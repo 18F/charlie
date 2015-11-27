@@ -1,0 +1,12 @@
+install: true
+script: true
+sudo: true
+deploy:
+  edge: true
+  provider: cloudfoundry
+  username: devops_deployer
+  password:
+    secure: "fVAHh5k56hi1B6ZOFwAcZaYnPD9JRG3HUlF559LZCA+XjpKR9YAuZB/1oc592pEcW7V2NYkyxta2rO7BY+wnUFcGvlQXycMuNREDsAVSOIungR49p5pYZU4LX9JuarZqKIpCVASDGONRmyewNPMis5e71FascY9h6j/DEImXCyA="
+  api: https://api.cloud.gov
+  organization: $DEPLOY_ORG
+  space: $DEPLOY_SPACE
