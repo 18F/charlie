@@ -27,13 +27,10 @@ Then you can interact with hubot by typing `hubot help`.
 
 ## Deploying
 
-18F's Hubot is named Charlie, and is deployed in [Cloud Foundry](https://www.cloudfoundry.org/). To deploy (as an 18F employee), follow [the steps to get started](https://docs.18f.gov/getting-started/setup/), get yourself added to the CF devops org by asking a CF admin, then run:
+18F's Hubot is named Charlie, and is deployed in [Cloud Foundry](https://www.cloudfoundry.org/).
 
-```bash
-cd 18f-bot
-cf target -o devops -s hubot
-cf push charlie
-```
+Charlie is set up with continuous deployment, just merge your code to master and
+it will get deployed with Travis.
 
 ## Documentation
 
