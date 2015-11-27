@@ -1,0 +1,7 @@
+---
+applications:
+- name: charlie
+  memory: 512M
+  instances: 1
+  host: charlie
+  domain: 18f.gov
