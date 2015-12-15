@@ -5,6 +5,9 @@
     },
     "sandbox": {
       "room": "transient"
+    },
+    "fec": {
+      "room": "fec"
     }
   }
 }
