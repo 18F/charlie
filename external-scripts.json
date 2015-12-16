@@ -10,6 +10,7 @@
   "hubot-redis-brain",
   "hubot-rules",
   "hubot-shipit",
+  "hubot-slack-github-issues",
   "hubot-standup",
   "hubot-trollbot",
   "hubot-youtube"

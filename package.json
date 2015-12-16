@@ -20,7 +20,8 @@
     "hubot-rules": "^0.1.0",
     "hubot-scripts": "^2.5.16",
     "hubot-shipit": "^0.1.1",
-    "hubot-slack": "^3.2.1",
+    "hubot-slack": "18f/hubot-slack#3.4.2-handle-reaction-added",
+    "hubot-slack-github-issues": "18f/hubot-slack-github-issues#0.0.0",
     "hubot-standup": "git://github.com/miyagawa/hubot-standup.git#bf7dc4aeebb",
     "hubot-trollbot": "^0.1.1",
     "hubot-youtube": "^0.1.2",
@@ -31,6 +32,6 @@
     "underscore": "^1.7.0"
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "4.2.x"
   }
 }
