@@ -1,0 +1,10 @@
+{
+  "githubUser": "18F",
+  "githubTimeout": 5000,
+  "rules": [
+    {
+      "reactionName": "evergreen_tree",
+      "githubRepository": "handbook"
+    }
+  ]
+}
