@@ -5,29 +5,27 @@
   "successReaction": "heavy_check_mark",
   "rules": [
     {
-      "reactionName": "evergreen_tree",
-      "githubRepository": "handbook",
-      "channel": "hub"
-    },
-    {
-      "reactionName": "evergreen_tree",
-      "githubRepository": "handbook",
-      "channel": "general-talk"
-    },
-    {
-      "reactionName": "evergreen_tree",
-      "githubRepository": "handbook",
-      "channel": "questions"
+      "reactionName": "bookmark",
+      "githubRepository": "federalist",
+      "channelNames": [
+        "federalist"
+      ]
     },
     {
       "reactionName": "bookmark",
       "githubRepository": "wg-documentation",
-      "channel": "wg-documentation"
+      "channelNames": [
+        "wg-documentation"
+      ]
     },
     {
-      "reactionName": "bookmark",
-      "githubRepository": "federalist",
-      "channel": "federalist"
+      "reactionName": "evergreen_tree",
+      "githubRepository": "handbook",
+      "channelNames": [
+        "general-talk",
+        "hub",
+        "questions"
+      ]
     }
   ]
 }
