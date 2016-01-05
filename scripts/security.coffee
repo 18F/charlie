@@ -1,5 +1,5 @@
 # Description:
-#   When someone writes a message with "https://fugacious.18f.gov/m/", post a warning.
+#   When someone writes a message with "https://fugacious.18f.gov/m/" or "fugacio.us/m/", post a warning.
 #
 # Dependencies: none
 #
@@ -8,8 +8,7 @@
 # Commands:
 #   mention "https://fugacious.18f.gov/m/" in any message
 #
-# Notes:
-#   Needs another warning for "fugacio.us/m/"
+# Notes: none
 #
 # Author:
 #   @wslack
