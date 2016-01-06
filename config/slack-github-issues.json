@@ -20,13 +20,6 @@
     },
     {
       "reactionName": "evergreen_tree",
-      "githubRepository": "handbook",
-      "channelNames": [
-        "general-talk",
-        "hub",
-        "newcomers",
-        "questions"
-      ]
-    }
+      "githubRepository": "handbook"
   ]
 }
