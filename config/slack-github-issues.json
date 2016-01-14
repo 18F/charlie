@@ -21,6 +21,10 @@
     {
       "reactionName": "evergreen_tree",
       "githubRepository": "handbook"
+    },
+    {
+      "reactionName": "koala",
+      "githubRepository": "product-guide"
     }
   ]
 }
