@@ -15,7 +15,7 @@
 icons = 
   'Open': ':greenlight:'
   'Alert': ':yellowlight:'
-  'Closed': ':yellowlight:'
+  'Closed': ':redlight:'
 
 module.exports = (robot) ->
   robot.respond /opm status/i, (msg) ->
@@ -24,5 +24,5 @@ module.exports = (robot) ->
         msg.send "Well, what does Capital Weather Gang say?"
       else
         status = JSON.parse(body)
-        msg.send status['Icon'] + ' ' + icons[status['Icon']] + ' - ' + status['StatusSummary'] + ' - ' + '<' + status['Url']+ '|More>'
+        msg.send status['Icon'] + ' ' + icons[status['Icon']] + ' - ' + status['StatusSummary'] + ' Read More: ' + status['Url']
       return
