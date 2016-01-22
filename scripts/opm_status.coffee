@@ -1,0 +1,28 @@
+# Description:
+#   get opm status from api
+#
+# Dependencies:
+#   None
+#
+# Commands:
+#   hubot opm status
+#
+# Author:
+#   lauraggit
+
+
+# :greenlight: :redlight: :yellowlight:
+icons = 
+  'Open': ':greenlight:'
+  'Alert': ':yellowlight:'
+  'Closed': ':yellowlight:'
+
+module.exports = (robot) ->
+  robot.respond /opm status/i, (msg) ->
+    msg.http("https://www.opm.gov/json/operatingstatus.json").get() (err, res, body) ->
+      if err || res.statusCode != 200
+        msg.send "Well, what does Capital Weather Gang say?"
+      else
+        status = JSON.parse(body)
+        msg.send status['Icon'] + ' ' + icons[status['Icon']] + ' - ' + status['StatusSummary'] + ' - ' + '<' + status['Url']+ '|More>'
+      return
