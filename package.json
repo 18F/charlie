@@ -24,7 +24,7 @@
     "hubot-scripts": "^2.5.16",
     "hubot-shipit": "^0.1.1",
     "hubot-slack": "18f/hubot-slack#3.4.2-handle-reaction-added",
-    "hubot-slack-github-issues": "^1.0.1",
+    "hubot-slack-github-issues": "^1.0.2",
     "hubot-standup": "git://github.com/miyagawa/hubot-standup.git#bf7dc4aeebb",
     "hubot-trollbot": "^0.1.1",
     "hubot-youtube": "^0.1.2",
