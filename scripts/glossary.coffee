@@ -27,7 +27,7 @@ module.exports = (robot) ->
         b = new Buffer(JSON.parse(body).content, 'base64');
         g = yaml.safeLoad(b.toString()).abbreviations
 
-        searchTerm = msg.match[2]
+        searchTerm = msg.match[2].trim()
         terms = Object.keys(g)
         term = findCaseInsensitively(terms, searchTerm)
 
