@@ -20,7 +20,7 @@ findCaseInsensitively = (list, searchTerm) ->
   null # else return null
 
 module.exports = (robot) ->
-  robot.respond /(glossary|define) (\w+)/i, (msg) ->
+  robot.respond /(glossary|define) (.+)/i, (msg) ->
     robot.http('https://api.github.com/repos/18f/procurement-glossary/contents/abbreviations.yml')
       .header('User-Agent', '18F-bot')
       .get() (err, res, body) ->
