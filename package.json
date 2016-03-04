@@ -12,7 +12,6 @@
     "coffee-script": "1.6.3",
     "hubot": "^2.11.0",
     "hubot-auth": "^1.1.2",
-    "hubot-cf-notifications": "^0.2.0",
     "hubot-diagnostics": "0.0.1",
     "hubot-google-images": "^0.1.2",
     "hubot-google-translate": "^0.1.0",
