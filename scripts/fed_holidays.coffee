@@ -3,10 +3,12 @@
 #
 # Dependencies:
 #   "@18f/us-federal-holidays": "^1.1.0"
-#   "moment": ""
+#   "moment": "^2.8.4"
 #
 # Commands:
 #   hubot next holiday - tells you when the next holiday is
+#   hubot when is next holiday
+#   hubot when is the next holiday
 
 fedHolidays = require('@18f/us-federal-holidays');
 moment = require('moment');
