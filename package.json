@@ -6,6 +6,7 @@
     "validate-config": "hubot-slack-github-issues validate config/slack-github-issues.json"
   },
   "dependencies": {
+    "@18f/us-federal-holidays": "^1.1.0",
     "aws-sdk": "^2.2.3",
     "cheerio": "^0.20.0",
     "coffee-script": "1.10.0",
