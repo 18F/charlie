@@ -25,7 +25,7 @@ module.exports = (robot) ->
       .header('User-Agent', '18F-bot')
       .get() (err, res, body) ->
         b = new Buffer(JSON.parse(body).content, 'base64');
-        g = yaml.safeLoad(b.toString()).abbreviations
+        g = yaml.safeLoad(b.toString(), { json: true }).abbreviations
 
         searchTerm = msg.match[2].trim()
         terms = Object.keys(g)
