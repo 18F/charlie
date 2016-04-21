@@ -16,7 +16,7 @@
 
 module.exports = (robot) ->
   console.log("XPOST script loaded.")
-  robot.hear /\bxpost #([\w\-]+)/i, (msg) ->
+  robot.hear /\bx\-?post #([\w\-]+)/i, (msg) ->
     target = msg.match[1]
     poster = msg.message.user.name
     text = msg.message.text
