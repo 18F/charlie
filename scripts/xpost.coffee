@@ -16,8 +16,8 @@
 
 module.exports = (robot) ->
   console.log("XPOST script loaded.")
-  robot.hear /\bx(\-)?post #([\w\-]+)/i, (msg) ->
-    target = msg.match[2]
+  robot.hear /\bx\-?post #([\w\-]+)/i, (msg) ->
+    target = msg.match[1]
     poster = msg.message.user.name
     text = msg.message.text
     robot.messageRoom(target, "XPOST from " + poster + " in " + msg.message.room + " -- " + text)
