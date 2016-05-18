@@ -21,4 +21,4 @@ module.exports = (robot) ->
     poster = msg.message.user.name
     text = msg.message.text
     robot.messageRoom(target, "XPOST from " + poster + " in " + msg.message.room + " -- " + text)
-    msg.send "cross-posted to #{target}; Thanks, #{poster}!"
+    msg.send "cross-posted to #{target} (assuming I am in that channel); Thanks, #{poster}!"
