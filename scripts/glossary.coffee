@@ -34,4 +34,4 @@ module.exports = (robot) ->
         if term
           msg.reply "The term #{ g[term].longform } (#{ term }) means #{g[term].description}"
         else
-          msg.reply "I don't know that term."
+          msg.reply "I don't know that term. If you'd like to add it, the project is at https://github.com/18F/procurement-glossary."
