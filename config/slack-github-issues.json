@@ -19,6 +19,13 @@
       ]
     },
     {
+      "reactionName": "bookmark",
+      "githubRepository": "cg-docs",
+      "channelNames": [
+        "cloud-gov-support"
+      ]
+    },
+    {
       "reactionName": "evergreen_tree",
       "githubRepository": "handbook"
     },
