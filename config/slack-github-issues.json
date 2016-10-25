@@ -28,10 +28,7 @@
     },
     {
       "reactionName": "dart",
-      "githubRepository": "Design-Wiki",
-      "channelNames": [
-        "design-wiki"
-      ]
+      "githubRepository": "Design-Wiki"
     }
     
   ]
