@@ -25,14 +25,14 @@
     {
       "reactionName": "koala",
       "githubRepository": "product-guide"
-    }
+    },
     {
       "reactionName": "dart",
       "githubRepository": "Design-Wiki",
       "channelNames": [
         "design-wiki"
       ]
-    },
+    }
     
   ]
 }
