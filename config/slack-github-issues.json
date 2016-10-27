@@ -6,6 +6,13 @@
   "rules": [
     {
       "reactionName": "bookmark",
+      "githubRepository": "cg-docs",
+      "channelNames": [
+        "cloud-gov-support"
+      ]
+    },
+    {
+      "reactionName": "bookmark",
       "githubRepository": "federalist",
       "channelNames": [
         "federalist"
@@ -19,11 +26,8 @@
       ]
     },
     {
-      "reactionName": "bookmark",
-      "githubRepository": "cg-docs",
-      "channelNames": [
-        "cloud-gov-support"
-      ]
+      "reactionName": "dart",
+      "githubRepository": "Design-Wiki"
     },
     {
       "reactionName": "evergreen_tree",
@@ -32,11 +36,6 @@
     {
       "reactionName": "koala",
       "githubRepository": "product-guide"
-    },
-    {
-      "reactionName": "dart",
-      "githubRepository": "Design-Wiki"
     }
-    
   ]
 }
