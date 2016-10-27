@@ -6,7 +6,7 @@ deploy:
   provider: cloudfoundry
   username: devops_deployer
   password:
-    secure: "fVAHh5k56hi1B6ZOFwAcZaYnPD9JRG3HUlF559LZCA+XjpKR9YAuZB/1oc592pEcW7V2NYkyxta2rO7BY+wnUFcGvlQXycMuNREDsAVSOIungR49p5pYZU4LX9JuarZqKIpCVASDGONRmyewNPMis5e71FascY9h6j/DEImXCyA="
+    secure: VfxVa7qo8s3Kvb32kSb2hJa4rHzmLpFoSGjLK+iVmu5rAHyEjTBs3c49foDY5JWjrYqmumLiod4mWy1geWc0hskYpCThC6tDzLpodFVDXKCU8AV6HN2JUsCuHDQrA9yh/YE2bh/tEFPmEbbuLISII8/XG6eNmdlE7/6N/ZR99x4=
   api: https://api.cloud.gov
-  organization: $DEPLOY_ORG
-  space: $DEPLOY_SPACE
+  organization: "$DEPLOY_ORG"
+  space: "$DEPLOY_SPACE"
