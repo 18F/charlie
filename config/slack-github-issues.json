@@ -6,7 +6,7 @@
   "rules": [
     {
       "reactionName": "bookmark",
-      "githubRepository": "cg-docs",
+      "githubRepository": "cg-site",
       "channelNames": [
         "cloud-gov-support"
       ]
