@@ -2,19 +2,21 @@
   "githubUser": "18F",
   "githubTimeout": 5000,
   "slackTimeout": 5000,
+  "githubApiToken": "<token>",
+  "slackApiToken": "<token>",
   "successReaction": "heavy_check_mark",
   "rules": [
     {
       "reactionName": "bookmark",
       "githubRepository": "cg-site",
       "channelNames": [
-        "cloud-gov-agent-q"
+        "cloud-gov-agent-q",
         "cloud-gov-atlas",
         "cloud-gov-business",
         "cloud-gov-highbar",
         "cloud-gov-navigator",
         "cloud-gov-skyporter",
-        "cloud-gov-support",
+        "cloud-gov-support"
       ]
     },
     {
