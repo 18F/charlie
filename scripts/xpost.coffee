@@ -17,6 +17,10 @@
 module.exports = (robot) ->
   console.log("XPOST script loaded.")
   robot.hear /\bx\-?post #?([\w\-]+)/i, (msg) ->
+    if !msg.message.rawMessage.channel.startsWith('C')
+      msg.send 'Sorry, I can only XPOST from public channels!'
+      return
+
     target = msg.match[1]
     poster = msg.message.user.id
     text = msg.message.text.replace(msg.match[0], '').trim()
