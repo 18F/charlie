@@ -8,13 +8,13 @@
       "reactionName": "bookmark",
       "githubRepository": "cg-site",
       "channelNames": [
-        "cloud-gov-support",
+        "cloud-gov-agent-q"
         "cloud-gov-atlas",
-        "cloud-gov-skyporter",
+        "cloud-gov-business",
         "cloud-gov-highbar",
         "cloud-gov-navigator",
-        "cloud-gov-business",
-        "cloud-gov-agent-q"
+        "cloud-gov-skyporter",
+        "cloud-gov-support",
       ]
     },
     {
