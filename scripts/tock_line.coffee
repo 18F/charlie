@@ -15,9 +15,9 @@ module.exports = (robot) ->
   robot.respond /tock( line)?$/i, (msg) ->
     tock_lines = get_tock_lines(robot)
     if tock_lines[msg.envelope.room]
-      msg.send 'The tock line for #' + msg.envelope.room + ' is `' + tock_lines[msg.envelope.room] + '`'
+      msg.send "The tock line for <##{msg.envelope.room}> is `#{tock_lines[msg.envelope.room]}`"
     else
-      msg.send 'I don\'t know a tock line for this room. To set one, say `@' + robot.name + ' set tock line <line>`'
+      msg.send "I don't know a tock line for this room. To set one, say `<@#{robot.name}> set tock line <line>`"
 
   robot.respond /set tock( line)? (.*)$/i, (msg) ->
     tock_lines = get_tock_lines(robot)

@@ -1,4 +1,5 @@
 [
+  "hubot-ascii-art",
   "hubot-auth",
   "hubot-diagnostics",
   "hubot-help",
@@ -8,10 +9,10 @@
   "hubot-maps",
   "hubot-redis-brain",
   "hubot-rules",
+  "hubot-scripts-us-federal-holidays",
   "hubot-shipit",
   "hubot-slack-github-issues",
-  "hubot-standup",
   "hubot-trollbot",
-  "hubot-youtube",
-  "hubot-scripts-us-federal-holidays"
+  "hubot-xkcd",
+  "hubot-youtube"
 ]
