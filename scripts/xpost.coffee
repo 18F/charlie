@@ -18,15 +18,15 @@ module.exports = (robot) ->
   console.log("XPOST script loaded.")
   robot.hear /\bx\-?post #?([\w\-]+)/i, (msg) ->
     target = msg.match[1]
-    poster = msg.message.rawMessage.user
+    poster = msg.message.user.id
     text = msg.message.text.replace(msg.match[0], '').trim()
     msg.send "cross-posted to #{target} (assuming I am in that channel); Thanks, <@#{poster}>!"
 
-    robot.adapter.customMessage
+    robot.messageRoom target,
       attachments: [ {
         fallback: text
         color: '#36a64f'
-        title: 'XPOST from <#' + msg.message.rawMessage.channel + '>:'
+        title: 'XPOST from <#' + msg.message.room + '>:'
         footer: "from: <@#{poster}>"
         text: text
       } ]
