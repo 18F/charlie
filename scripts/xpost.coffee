@@ -17,7 +17,7 @@
 module.exports = (robot) ->
   console.log("XPOST script loaded.")
   robot.hear /\bx\-?post #?([\w\-]+)/i, (msg) ->
-    if !msg.message.rawMessage.channel.startsWith('C')
+    if !msg.message.room.startsWith('C')
       msg.send 'Sorry, I can only XPOST from public channels!'
       return
 
