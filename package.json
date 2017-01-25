@@ -13,8 +13,6 @@
     "hubot-ascii-art": "^1.1.1",
     "hubot-auth": "^2.0.0",
     "hubot-diagnostics": "0.0.1",
-    "hubot-google-images": "^0.2.6",
-    "hubot-google-translate": "^0.2.0",
     "hubot-help": "^0.2.0",
     "hubot-maps": "0.0.2",
     "hubot-pugme": "^0.1.0",

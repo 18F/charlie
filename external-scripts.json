@@ -3,8 +3,6 @@
   "hubot-auth",
   "hubot-diagnostics",
   "hubot-help",
-  "hubot-google-images",
-  "hubot-google-translate",
   "hubot-pugme",
   "hubot-maps",
   "hubot-redis-brain",
