@@ -3,7 +3,7 @@
   "version": "2.7.1",
   "private": true,
   "scripts": {
-    "validate-config": "hubot-slack-github-issues validate config/slack-github-issues.json"
+    "validate-config": "slack-github-issues validate config/slack-github-issues.json"
   },
   "dependencies": {
     "aws-sdk": "^2.7.21",

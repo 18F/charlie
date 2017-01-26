@@ -44,6 +44,13 @@
     {
       "reactionName": "koala",
       "githubRepository": "product-guide"
+    },
+    {
+      "reactionName": "standup-bot",
+      "githubRepository": "standup-slack-bot",
+      "channelNames": [
+        "standup-bot-dev"
+      ]
     }
   ]
 }
