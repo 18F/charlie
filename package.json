@@ -30,7 +30,6 @@
     "hubot-youtube": "^1.0.2",
     "js-yaml": "^3.7.0",
     "json": "^9.0.4",
-    "slack-github-issues": "github:18f/slack-github-issues",
     "twit": "^2.2.5",
     "underscore": "^1.8.3"
   },
