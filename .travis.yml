@@ -4,9 +4,9 @@ sudo: true
 deploy:
   edge: true
   provider: cloudfoundry
-  username: devops_deployer
+  username: 05cea16f-606b-457f-9f79-255dd85312da
   password:
-    secure: MiFE6wqG6oxHSugB6u5NffsJt9BsD5YHhot0MWgHqSVBilnMIlotw9aOQ8exXDKdO+pMSDV7kWafFax87fwz56aqKZ6+YHidkNS/+8Hc8pCZzujeA1qHSdCWg0Tny5G8TYl79LagqrBltEUDdpxPOBf9a+99jRgqshDebB9N31g=
+    secure: "KVeJotHCfo3wLYOdHhpFcgX717nEsdWCCH7RPMxFSTrjhTh3cPidTYpcS7EJ5rsSZuDl7+W/4z/ZZTkDkNVPaECPxT/j/oJ1DbDbIyqS1+9IgHK/1xsK/OL9k6MCqighrFxBlLviYGpwjUOOXHpQS63yj365QeYlMpTLV+k0hjo="
   api: https://api.fr.cloud.gov
   organization: "gsa-18f-hubot"
   space: "prod"
