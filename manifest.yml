@@ -1,7 +1,10 @@
 ---
 applications:
 - name: charlie
+  buildpack: nodejs_buildpack
   memory: 512M
   instances: 1
   host: charlie
-  domain: 18f.gov
+  services:
+    - charlie-redis
+    - charlie-bucket

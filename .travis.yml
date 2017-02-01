@@ -7,6 +7,6 @@ deploy:
   username: devops_deployer
   password:
     secure: MiFE6wqG6oxHSugB6u5NffsJt9BsD5YHhot0MWgHqSVBilnMIlotw9aOQ8exXDKdO+pMSDV7kWafFax87fwz56aqKZ6+YHidkNS/+8Hc8pCZzujeA1qHSdCWg0Tny5G8TYl79LagqrBltEUDdpxPOBf9a+99jRgqshDebB9N31g=
-  api: https://api.cloud.gov
-  organization: "$DEPLOY_ORG"
-  space: "$DEPLOY_SPACE"
+  api: https://api.fr.cloud.gov
+  organization: "gsa-18f-hubot"
+  space: "prod"
