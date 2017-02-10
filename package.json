@@ -26,6 +26,7 @@
     "hubot-shipit": "^0.2.0",
     "hubot-slack": "^4.3.1",
     "hubot-slack-github-issues": "^1.1.0",
+    "hubot-slack-reading-list": "^1.0.0",
     "hubot-trollbot": "^0.1.1",
     "hubot-xkcd": "0.0.3",
     "hubot-youtube": "^1.0.2",
