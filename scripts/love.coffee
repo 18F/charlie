@@ -1,6 +1,7 @@
 # Description:
-#   Love is the script which captures lines like "I love donuts"
-#   and places the content in the channel of your choosing, eg. #love
+#   For the giving of praise and thanks to colleagues.
+#   Looks for messages like "love @username for [reason]", acknowledges them,
+#   and copies them to #love.
 #
 # Dependencies:
 #   None
