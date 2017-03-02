@@ -16,9 +16,22 @@
 
 module.exports = (robot) ->
   console.log("XPOST script loaded.")
-  robot.hear /\bxpost #([\w\-]+)/i, (msg) ->
+  robot.hear /\bx\-?post #([\w\-]+)/i, (msg) ->
+    if !msg.message.room.startsWith('C')
+      msg.send 'Sorry, I can only XPOST from public channels!'
+      return
+
     target = msg.match[1]
-    poster = msg.message.user.name
-    text = msg.message.text
-    robot.messageRoom(target, "XPOST from " + poster + " in " + msg.message.room + " -- " + text)
-    msg.send "cross-posted to #{target}; Thanks, #{poster}!"
+    poster = msg.message.user.id
+    text = msg.message.text.replace(msg.match[0], '').trim()
+    msg.send "cross-posted to #{target} (assuming I am in that channel); Thanks, <@#{poster}>!"
+
+    robot.messageRoom target,
+      attachments: [ {
+        fallback: text
+        color: '#36a64f'
+        title: 'XPOST from <#' + msg.message.room + '>:'
+        footer: "from: <@#{poster}>"
+        text: text
+      } ]
+      channel: target

@@ -14,16 +14,26 @@
 # Notes:
 # Images are stored in a bucket in S3.
 
+CFENV = require('cfenv')
 AWS = require('aws-sdk')
 _u = require('underscore')
 
-BUCKET = '18f-hugs'
-s3 = new AWS.S3()
+appEnv = CFENV.getAppEnv()
+s3Creds = appEnv.getServiceCreds('charlie-bucket')
+if s3Creds == null
+  console.log("Unable to find service creds for 'charlie-bucket'.")
+  return
+console.log("Found service creds for 'charlie-bucket'.")
+
+creds = new AWS.Credentials(s3Creds['access_key_id'], s3Creds['secret_access_key']);
+BUCKET = s3Creds['bucket']
+REGION = s3Creds['region']
+s3 = new AWS.S3({region: REGION, credentials: creds})
 
 hugUrl = (s3Object) ->
   filename = s3Object.Key
   rand = _u.random(10000)
-  url = "https://#{BUCKET}.s3.amazonaws.com/#{filename}?rnd=#{rand}"
+  url = "https://s3-#{REGION}.amazonaws.com/#{BUCKET}/#{filename}?rnd=#{rand}"
 
 hugBomb = (count, msg) ->
   s3.listObjects {Bucket: BUCKET}, (err, data) ->

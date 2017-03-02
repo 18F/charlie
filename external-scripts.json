@@ -1,17 +1,16 @@
 [
+  "hubot-ascii-art",
   "hubot-auth",
   "hubot-diagnostics",
   "hubot-help",
-  "hubot-google-images",
-  "hubot-google-translate",
   "hubot-pugme",
   "hubot-maps",
   "hubot-redis-brain",
   "hubot-rules",
-  "hubot-shipit",
+  "hubot-scripts-us-federal-holidays",
   "hubot-slack-github-issues",
-  "hubot-standup",
+  "hubot-slack-reading-list",
   "hubot-trollbot",
-  "hubot-youtube",
-  "hubot-scripts-us-federal-holidays"
+  "hubot-xkcd",
+  "hubot-youtube"
 ]
