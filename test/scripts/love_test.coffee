@@ -4,7 +4,7 @@ helper = new Helper('../../scripts/love.coffee')
 co     = require('co')
 expect = require('chai').expect
 
-describe 'hello-world', ->
+describe 'love machine', ->
 
   beforeEach ->
     @room = helper.createRoom()
