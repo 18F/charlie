@@ -1,5 +1,5 @@
 Helper = require('hubot-test-helper')
-scriptHelper = new Helper('../../scripts/love.coffee')
+helper = new Helper('../../scripts/love.coffee')
 
 co     = require('co')
 expect = require('chai').expect
@@ -7,7 +7,10 @@ expect = require('chai').expect
 describe 'hello-world', ->
 
   beforeEach ->
-    @room = scriptHelper.createRoom(httpd: false)
+    @room = helper.createRoom()
+
+  afterEach ->
+    @room.destroy()
 
   context 'user triggers love message', ->
     beforeEach ->
@@ -17,5 +20,6 @@ describe 'hello-world', ->
     it 'should reply to user', ->
       expect(@room.messages).to.eql [
         ['alice', 'love @bob for the cheesecake']
-        ['hubot', '@alice hi']
+        ['hubot', 'alice loves @bob: for the cheesecake']
+        ['hubot', 'Yay, more love for #love! Thanks, alice!']
       ]
