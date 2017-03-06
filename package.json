@@ -3,6 +3,7 @@
   "version": "2.7.1",
   "private": true,
   "scripts": {
+    "test": "mocha --compilers coffee:coffee-script/register test/*",
     "validate-config": "slack-github-issues validate config/slack-github-issues.json"
   },
   "dependencies": {
@@ -35,5 +36,11 @@
   },
   "engines": {
     "node": "^6.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "co": "^4.6.0",
+    "hubot-test-helper": "^1.5.1",
+    "mocha": "^2.5.3"
   }
 }
