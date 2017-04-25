@@ -34,6 +34,10 @@
       ]
     },
     {
+      "reactionName": "dart",
+      "githubRepository": "Design-Wiki"
+    },
+    {
       "reactionName": "evergreen_tree",
       "githubRepository": "handbook"
     },
