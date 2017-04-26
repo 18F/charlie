@@ -10,6 +10,5 @@
   "hubot-scripts-us-federal-holidays",
   "hubot-slack-github-issues",
   "hubot-slack-reading-list",
-  "hubot-xkcd",
-  "hubot-youtube"
+  "hubot-xkcd"
 ]

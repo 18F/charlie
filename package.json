@@ -27,7 +27,6 @@
     "hubot-slack-github-issues": "^1.1.0",
     "hubot-slack-reading-list": "^1.0.1",
     "hubot-xkcd": "0.0.3",
-    "hubot-youtube": "^1.0.2",
     "js-yaml": "^3.7.0",
     "json": "^9.0.4",
     "twit": "^2.2.5",
