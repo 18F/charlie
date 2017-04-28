@@ -1,4 +1,4 @@
-slackbot:
+18f-bot:
   build: .
   entrypoint: ./start.sh
   environment:
