@@ -8,7 +8,8 @@ This is a version of GitHub's chat bot, [Hubot](https://hubot.github.com/). Hubo
 Get a fun fact!
 
 `@charlie define <term>` or `@charlie glossary <term>`  
-Charlie will attempt to look the term up in the [18F Procurement Glossary](18f/procurement-glossary)
+Charlie will attempt to look the term up in the
+[18F Procurement Glossary](https://github.com/18f/procurement-glossary)
 and report what it finds
 
 `@charlie hug me` or `@charlie hug bomb <number>`  
@@ -63,7 +64,7 @@ it will get deployed with Travis.
 
 ### slack-github-issues
 
-We use [hubot-slack-github-issues](mbland/hubot-slack-github-issues) to automatically create Github issues
+We use [hubot-slack-github-issues](https://github.com/mbland/hubot-slack-github-issues) to automatically create Github issues
 when certain emoji reactions are added to messages in certain channels.  This is configured in
 [config/slack-github-issues.json](config/slack-github-issues.json).
 
