@@ -3,3 +3,4 @@ node_modules
 dump.rdb
 slack.yml
 .hubot_history
+.env
