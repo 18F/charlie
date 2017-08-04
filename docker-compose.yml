@@ -1,0 +1,23 @@
+18f-bot:
+  build: .
+  entrypoint: ./start.sh
+  environment:
+    - HUBOT_SLACK_TOKEN=${HUBOT_SLACK_TOKEN}
+    - HUBOT_GITHUB_TOKEN=${HUBOT_GITHUB_TOKEN}
+    - HUBOT_TWITTER_ACCESS_TOKEN_SECRET=${HUBOT_TWITTER_ACCESS_TOKEN_SECRET}
+    - HUBOT_TWITTER_STREAM_ACCESS_TOKEN=${HUBOT_TWITTER_STREAM_ACCESS_TOKEN}
+    - HUBOT_TWITTER_STREAM_CONSUMER_KEY=${HUBOT_TWITTER_STREAM_CONSUMER_KEY}
+    - HUBOT_TWITTER_STREAM_CONSUMER_KEY${HUBOT_TWITTER_STREAM_CONSUMER_KEY}
+    - HUG_BASE_URL=${HUG_BASE_URL}
+    - ADAPTER=slack
+    - HUBOT_SLACK_GITHUB_ISSUES_CONFIG_PATH=config/slack-github-issues.json
+    - HUBOT_LOG_LEVEL=debug
+    - REDIS_URL=redis://database:6379
+  working_dir: /app
+  volumes:
+    - ./:/app
+    - /app/node_modules
+  links:
+    - database:database
+database:
+  image: redis:latest

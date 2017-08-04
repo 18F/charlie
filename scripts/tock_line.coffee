@@ -2,8 +2,8 @@
 #   Inspect the data in redis easily
 #
 # Commands:
-#   hubot show users - Display all users that hubot knows about
-#   hubot show storage - Display the contents that are persisted in the brain
+#   hubot set tock line <line> - Associates a tock line with the current channel
+#   hubot tock line - Display the tock line associated with the current channel, if any
 
 get_tock_lines = (robot) ->
     tock_lines = robot.brain.get('tock_lines')
