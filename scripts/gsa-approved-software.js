@@ -81,7 +81,7 @@ const getMessage = (target) => {
 };
 
 const handler = (msg) => {
-  const lookingFor = msg.match[1].toLowerCase();
+  const lookingFor = msg.match[1];
   getMessage(lookingFor).then(message => {
     msg.send(message);
 
