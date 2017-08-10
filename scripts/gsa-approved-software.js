@@ -72,6 +72,6 @@ const handler = (msg) => {
 
 module.exports = (robot) => {
   _robot = robot
-  robot.respond(/is (.+) approved/i, handler);
-  robot.hear(/(\S+) is approved\?/i, handler)
+  robot.respond(/is (.+) app?roved/i, handler);
+  robot.hear(/(\S+) is app?roved\?/i, handler)
 };
