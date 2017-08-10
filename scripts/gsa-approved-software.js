@@ -20,13 +20,11 @@ const colors = {
   'Denied': '#e31c3d'
 };
 
-const getCSV = () => {
-  return new Promise((resolve, reject) => {
-    _robot.http('https://raw.githubusercontent.com/GSA/data/gh-pages/enterprise-architecture/it-standards.csv')
-      .header('User-Agent', '18F-bot')
-      .get()((err, res, body) => resolve(body));
-  });
-};
+const getCSV = () => new Promise((resolve, reject) => {
+  _robot.http('https://raw.githubusercontent.com/GSA/data/gh-pages/enterprise-architecture/it-standards.csv')
+    .header('User-Agent', '18F-bot')
+    .get()((err, res, body) => resolve(body));
+});
 
 const getColor = (status) => {
   const shortStatus = status.match(/^\S+/)[0];
@@ -49,7 +47,7 @@ const getAttachment = item => ({
 
 const handler = (msg) => {
   const lookingFor = msg.match[1].toLowerCase();
-  getCSV.then(body => {
+  getCSV().then(body => {
     const matches = [];
     csv().fromString(body)
       .on('csv', (item) => {
