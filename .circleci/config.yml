@@ -17,4 +17,7 @@ jobs:
           filters:
             branches:
               only: master
-          command: ./.circleci/deploy.sh
+          command: |
+            if [ "${CIRCLECI_BRANCH}" == "master" ];
+              then ./.circleci/deploy.sh;
+            fi
