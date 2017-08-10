@@ -54,25 +54,28 @@ const getMessage = (target) => {
   const lookingFor = target.toLowerCase();
   return getCSV().then(body => {
     const matches = [];
-    csv().fromString(body)
-      .on('csv', (item) => {
-        // Can't be certain the CSV is right, but we can at least
-        // make sure it has the right number of fields
-        if(item.length > 4 && item[0].toLowerCase().includes(lookingFor)) {
-          matches.push({ name: item[0], status: item[3], platform: item[4] })
-        }
-      }).on('done', () => {
-        let message = ''
-        if (matches.length == 0) {
-          message = `I didn't find anything in the GSA IT Standards for ${target}`;
-        } else if (matches.length <= 5) {
-          message = { attachments: matches.map(getAttachment) };
-          message.attachments[0].pretext = `Here's what I found in the GSA IT Standards`;
-        } else {
-          const finds = matches.map((item) => `*${item.name}* (${item.status})`)
-          message = `I found several potential matches for ${target}: ${finds.join(' | ')}`;
-        }
-        return message;
+
+    return new Promise((resolve, reject) => {
+      csv().fromString(body)
+        .on('csv', (item) => {
+          // Can't be certain the CSV is right, but we can at least
+          // make sure it has the right number of fields
+          if(item.length > 4 && item[0].toLowerCase().includes(lookingFor)) {
+            matches.push({ name: item[0], status: item[3], platform: item[4] })
+          }
+        }).on('done', () => {
+          let message = ''
+          if (matches.length == 0) {
+            message = `I didn't find anything in the GSA IT Standards for ${target}`;
+          } else if (matches.length <= 5) {
+            message = { attachments: matches.map(getAttachment) };
+            message.attachments[0].pretext = `Here's what I found in the GSA IT Standards`;
+          } else {
+            const finds = matches.map((item) => `*${item.name}* (${item.status})`)
+            message = `I found several potential matches for ${target}: ${finds.join(' | ')}`;
+          }
+          resolve(message);
+        }).on('error', err => reject(err));
       });
     });
 };

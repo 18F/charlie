@@ -21,6 +21,9 @@ Charlie will exclaim about even more love, and will post in the #love channel
 `@charlie opm status`  
 Charlie will check with OPM about whether or not DC offices are open today
 
+`@charlie is <app> approved?`
+Charlie will check if the app is approved according to the [GSA IT Standards](https://ea.gsa.gov/#!/itstandards) (also [available on Github](https://github.com/GSA/data/blob/gh-pages/enterprise-architecture/it-standards.csv))
+
 `@charlie set tock <tock line>` or `@charlie set tock line <tock line>`  
 Charlie will associate the current channel to the given tock line
 
