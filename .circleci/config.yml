@@ -12,6 +12,7 @@ jobs:
       - checkout
       - run: npm install
       - run: npm test
+      - setup-docker-engine
       - deploy:
           filters:
             branches:
