@@ -84,6 +84,13 @@ const handler = (msg) => {
   const lookingFor = msg.match[1].toLowerCase();
   getMessage(lookingFor).then(message => {
     msg.send(message);
+
+    // For responses triggered by the indirect listener, log
+    // it to #transient so we can make sure it's not
+    // triggering too much
+    if (msg.match[2]) {
+      _robot.messageRoom('transient', `Approved software indirect response trigged by *${lookingFor}*`);
+    }
   }).catch(err => {
     console.log('Error in gsa-approved-software script:');
     console.log(err);
@@ -93,5 +100,9 @@ const handler = (msg) => {
 module.exports = (robot) => {
   _robot = robot
   robot.respond(/is (.+) app?roved/i, handler);
-  robot.hear(/(\S+) is app?roved\?/i, handler)
+  robot.hear(/(\S{4,}) (is app?roved\?)/i, (msg) => {
+    if (msg.match[1].toLowerCase() !== 'this' && msg.match[1].toLowerCase() !== 'that') {
+      handler(msg);
+    }
+  })
 };
