@@ -25,4 +25,4 @@ jobs:
           filters:
             branches:
               only: master
-          command: echo "hi"
+          command: ./.circleci/deploy.sh
