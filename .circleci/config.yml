@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  - build:
     docker:
       - image: circleci/node:6
     working_directory: ~/repo
@@ -21,3 +21,8 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn test
+
+  - deploy:
+    filters:
+      branches:
+        only: master
