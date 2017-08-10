@@ -23,7 +23,12 @@ const colors = {
 const getCSV = () => new Promise((resolve, reject) => {
   _robot.http('https://raw.githubusercontent.com/GSA/data/gh-pages/enterprise-architecture/it-standards.csv')
     .header('User-Agent', '18F-bot')
-    .get()((err, res, body) => resolve(body));
+    .get()((err, res, body) => {
+      if (err || !body || res.statusCode < 200 || res.statusCode > 299) {
+        return reject(err || `Couldn't get CSV file, HTTP status ${res.statusCode}`);
+      }
+      return resolve(body);
+    });
 });
 
 const getColor = (status) => {
@@ -45,29 +50,41 @@ const getAttachment = item => ({
   color: getColor(item.status),
 });
 
-const handler = (msg) => {
-  const lookingFor = msg.match[1].toLowerCase();
-  getCSV().then(body => {
+const getMessage = (target) => {
+  const lookingFor = target.toLowerCase();
+  return getCSV().then(body => {
     const matches = [];
     csv().fromString(body)
       .on('csv', (item) => {
-        if(item[0].toLowerCase().includes(lookingFor)) {
+        // Can't be certain the CSV is right, but we can at least
+        // make sure it has the right number of fields
+        if(item.length > 4 && item[0].toLowerCase().includes(lookingFor)) {
           matches.push({ name: item[0], status: item[3], platform: item[4] })
         }
       }).on('done', () => {
         let message = ''
         if (matches.length == 0) {
-          message = `I didn't find anything in the GSA IT Standards for ${msg.match[1]}`;
+          message = `I didn't find anything in the GSA IT Standards for ${target}`;
         } else if (matches.length <= 5) {
           message = { attachments: matches.map(getAttachment) };
           message.attachments[0].pretext = `Here's what I found in the GSA IT Standards`;
         } else {
           const finds = matches.map((item) => `*${item.name}* (${item.status})`)
-          message = `I found several potential matches for ${msg.match[1]}: ${finds.join(' | ')}`;
+          message = `I found several potential matches for ${target}: ${finds.join(' | ')}`;
         }
-        msg.send(message);
+        return message;
       });
     });
+};
+
+const handler = (msg) => {
+  const lookingFor = msg.match[1].toLowerCase();
+  getMessage(lookingFor).then(message => {
+    msg.send(message);
+  }).catch(err => {
+    console.log('Error in gsa-approved-software script:');
+    console.log(err);
+  });
 };
 
 module.exports = (robot) => {
