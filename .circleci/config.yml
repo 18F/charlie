@@ -18,6 +18,6 @@ jobs:
             branches:
               only: master
           command: |
-            if [ "${CIRCLECI_BRANCH}" == "master" ];
+            if [ "${CIRCLE_BRANCH}" == "master" ];
               then ./.circleci/deploy.sh;
             fi
