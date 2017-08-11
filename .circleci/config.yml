@@ -12,11 +12,7 @@ jobs:
       - checkout
       - run: npm install
       - run: npm test
-      - setup-docker-engine
       - deploy:
-          filters:
-            branches:
-              only: master
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ];
               then ./.circleci/deploy.sh;

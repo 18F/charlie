@@ -9,24 +9,11 @@ API="https://api.fr.cloud.gov"
 ORG="gsa-18f-hubot"
 SPACE="prod"
 
-# This directory is used to persist the CF credentials
-mkdir -p $HOME/.cf
-
-# This wonderful image pulls the `cf` tool along with the
-# `autopilot` plugin
-docker pull adelevie/cf-cli:latest
-
-# For some reason, aliases aren't working here
-# so we're using this function instead
-cf_run() {
- docker run \
-   --rm \
-   -v $HOME/.cf:/root/.cf \
-   -v $PWD:/app \
-   adelevie/cf-cli \
-   cf "$@"
-}
+# Install CF CLI
+curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
+sudo dpkg -i cf-cli_amd64.deb
+rm cf-cli_amd64.deb
 
 # Log into CF and push
-cf_run login -a $API -u $CF_USERNAME -p $CF_PASSWORD -o $ORG -s $SPACE
-cf_run push -f manifest.yml
+cf login -a $API -u $CF_USERNAME -p $CF_PASSWORD -o $ORG -s $SPACE
+cf push -f /app/manifest.yml
