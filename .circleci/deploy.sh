@@ -6,7 +6,7 @@ set -e
 
 # CF environment
 API="https://api.fr.cloud.gov"
-ORG="gsa-hubot"
+ORG="gsa-18f-hubot"
 SPACE="prod"
 
 # This directory is used to persist the CF credentials
