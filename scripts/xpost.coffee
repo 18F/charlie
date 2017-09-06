@@ -37,6 +37,17 @@ isInChannel = (robot, channel) ->
     return
 )
 
+addReaction = (robot, reaction, channelID, messageID) ->
+  new Promise((resolve, reject) ->
+    robot.adapter.client.web.reactions.add reaction, { channel: channelID, timestamp: messageID }, (err, res) ->
+      if err
+        return reject(err)
+      else if !res.ok
+        return reject(new Error('Unknown error with Slack API'))
+      resolve()
+      return
+)
+
 module.exports = (robot) ->
   robot.hear /\bx\-?post/i, (msg) ->
     messagePieces = msg.message.text.match /\bx\-?post (to |in )?#([\w\-]+)/i
@@ -63,7 +74,7 @@ module.exports = (robot) ->
               text: text
             } ]
             channel: target
-          msg.send "cross-posted to <##{result.channelID}>; Thanks <@#{poster}>!"
+          return addReaction(robot, 'hubot', msg.message.room, msg.message.id)
         else
           msg.send "I can't cross-post to <##{result.channelID}> because I'm not in there!"
         return
