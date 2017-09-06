@@ -38,33 +38,39 @@ isInChannel = (robot, channel) ->
 )
 
 module.exports = (robot) ->
-  console.log("XPOST script loaded.")
-  robot.hear /\bx\-?post #([\w\-]+)/i, (msg) ->
-    if !msg.message.room.startsWith('C')
-      msg.send 'Sorry, I can only XPOST from public channels!'
-      return
+  robot.hear /\bx\-?post/i, (msg) ->
+    messagePieces = msg.message.text.match /\bx\-?post (to |in )?#([\w\-]+)/i
 
-    target = msg.match[1]
-    poster = msg.message.user.id
-    text = msg.message.text.replace(msg.match[0], '').trim()
+    # If the above regex matches, then the xpost request is validly formed
+    if messagePieces
+      target = messagePieces[2]
 
-    isInChannel(robot, target).then((result) ->
-      if result.inChannel
-        robot.messageRoom target,
-          attachments: [ {
-            fallback: text
-            color: '#36a64f'
-            title: 'XPOST from <#' + msg.message.room + '>:'
-            footer: "from: <@#{poster}>"
-            text: text
-          } ]
-          channel: target
-        msg.send "cross-posted to <##{result.channelID}>; Thanks <@#{poster}>!"
-      else
-        msg.send "I can't cross-post to <##{result.channelID}> because I'm not in there!"
-      return
-    ).catch (err) ->
-      msg.send "Something went wrong!"
-      return
+      if !msg.message.room.startsWith('C')
+        msg.send 'Sorry, I can only XPOST from public channels!'
+        return
 
-    #msg.send "cross-posted to #{target} (assuming I am in that channel); Thanks, <@#{poster}>!"
+      poster = msg.message.user.id
+      text = msg.message.text.replace(msg.match[0], '').trim()
+
+      isInChannel(robot, target).then((result) ->
+        if result.inChannel
+          robot.messageRoom target,
+            attachments: [ {
+              fallback: text
+              color: '#36a64f'
+              title: 'XPOST from <#' + msg.message.room + '>:'
+              footer: "from: <@#{poster}>"
+              text: text
+            } ]
+            channel: target
+          msg.send "cross-posted to <##{result.channelID}>; Thanks <@#{poster}>!"
+        else
+          msg.send "I can't cross-post to <##{result.channelID}> because I'm not in there!"
+        return
+      ).catch (err) ->
+        msg.send "Something went wrong!"
+        return
+    # If the regex didn't match, tell the user how to use xpost
+    # if they are in a public channel
+    else if msg.message.room.startsWith('C')
+      msg.send "XPOST usage: `<your message> XPOST #channel`"
