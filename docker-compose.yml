@@ -20,4 +20,4 @@
   links:
     - database:database
 database:
-  image: redis:latest
+  image: redis:3.2
