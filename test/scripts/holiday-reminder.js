@@ -1,37 +1,44 @@
-const moment = require('moment');
-
-const reminder = require('../../scripts/holiday-reminder');
+const sinon = require('sinon');
 const expect = require('chai').expect;
 
+const moment = require('moment');
+const reminder = require('../../scripts/holiday-reminder');
+
 describe('holiday reminder', () => {
+  const sandbox = sinon.createSandbox();
+
   const robot = {
-    messageRoom() {
-      robot.messageRoom.callCount++;
+    messageRoom: sandbox.spy(),
+    brain: {
+      get: sandbox.stub(),
+      set: sandbox.spy()
     }
   };
-  robot.messageRoom.callCount = 0;
 
-  const functionMocks = { };
+  const functionMocks = {
+    isWeekend: sandbox.stub(),
+    isReportingTime: sandbox.stub(),
+    hasRunAlready: sandbox.stub(),
+    getNextWeekday: sandbox.stub(),
+    holidayForDate: sandbox.stub()
+  };
 
   beforeEach(() => {
-    robot.messageRoom.callCount = 0;
-    functionMocks.isWeekend = () => false;
-    functionMocks.isReportingTime = () => false;
-    functionMocks.hasRunAlready = () => false;
-    functionMocks.getNextWeekday = () => moment().utc();
-    functionMocks.holidayForDate = () => false;
+    sandbox.reset();
   });
 
   describe('checks if already run today', () => {
     it('returns false initially', () => {
-      expect(reminder.hasRunAlready(moment())).to.equal(false);
+      robot.brain.get.withArgs('LAST_HOLIDAY_REPORT_DATE').returns(0);
+      expect(reminder.hasRunAlready(moment(), robot)).to.equal(false);
     });
 
     it('returns true if stashed date is same as passed-in date', () => {
+      robot.brain.get.withArgs('LAST_HOLIDAY_REPORT_DATE').returns('08:00')
       const date = {
-        format: () => ''
+        format: () => '08:00'
       };
-      expect(reminder.hasRunAlready(date)).to.equal(true);
+      expect(reminder.hasRunAlready(date, robot)).to.equal(true);
     });
   });
 
@@ -62,11 +69,20 @@ describe('holiday reminder', () => {
   });
 
   describe('checks if it is time to report', () => {
-    it('returns false for times other than 15:00', () => {
+    let targetHours, targetMinutes;
+    before(() => {
+      const configuredTime = moment(process.env.REPORTING_TIME || '15:00', 'HH:mm');
+      targetHours = configuredTime.hours();
+      targetMinutes = configuredTime.minutes();
+    });
+
+    it('returns false for all times other than the configured one', () => {
       const timesToTest = [ ];
       for (let hour = 0; hour < 24; hour++) {
-        const startMinute = (hour === 15 ? 1 : 0);
-        for (let minute = startMinute; minute < 60; minute++) {
+        for (let minute = 0; minute < 60; minute++) {
+          if (hour === targetHours && minute === targetMinutes) {
+            continue;
+          }
           const dateString = `2017-10-18T${hour < 10 ? '0' : ''}${hour}:${minute < 10 ? '0' : ''}${minute}:00Z`;
           timesToTest.push(`${hour < 10 ? '0' : ''}${hour}:${minute < 10 ? '0' : ''}${minute}:00Z`);
         }
@@ -77,9 +93,9 @@ describe('holiday reminder', () => {
       });
     });
 
-    it('returns true for 15:00', () => {
-      const dateString = '2017-10-18T15:00:00Z';
-      expect(reminder.isReportingTime(moment(dateString).utc())).to.equal(true);
+    it('returns true for the configured time', () => {
+      const dateString = `2017-10-18T${targetHours < 10 ? '0' : ''}${targetHours}:${targetMinutes < 10 ? '0' : ''}${targetMinutes}:00`;
+      expect(reminder.isReportingTime(moment(dateString))).to.equal(true);
     });
   });
 
@@ -150,44 +166,46 @@ describe('holiday reminder', () => {
   describe('the ticker works as expected', () => {
     describe('it does not post a reminder when...', () => {
       it('...it is a weekend', () => {
-        functionMocks.isWeekend = () => true;
+        functionMocks.isWeekend.returns(true);
         reminder.timerTick(robot, null, functionMocks);
         expect(robot.messageRoom.callCount).to.equal(0);
       });
 
       it('...it is not 15:00', () => {
-        functionMocks.isReportingTime = () => false;
+        functionMocks.isReportingTime.returns(false);
         reminder.timerTick(robot, null, functionMocks);
         expect(robot.messageRoom.callCount).to.equal(0);
       });
 
       it('...it has already run today', () => {
-        functionMocks.hasRunAlready = () => true;
+        functionMocks.hasRunAlready.returns(true);
         reminder.timerTick(robot, null, functionMocks);
         expect(robot.messageRoom.callCount).to.equal(0);
       });
 
       it('...the next weekday is not a holiday', () => {
-        functionMocks.holidayForDate = () => false;
+        functionMocks.holidayForDate.returns(false);
         reminder.timerTick(robot, null, functionMocks);
         expect(robot.messageRoom.callCount).to.equal(0);
       });
     });
 
     it('posts a reminder when it is a weekday, it is 15:00, it has not already run, and the next weekday is a holiday', () => {
-      functionMocks.isWeekend = () => false;
-      functionMocks.isReportingTime = () => true;
-      functionMocks.hasRunAlready = () => false;
-      functionMocks.holidayForDate = () => ({ name: 'Holiday!' });
+      functionMocks.isWeekend.returns(false);
+      functionMocks.isReportingTime.returns(true);
+      functionMocks.hasRunAlready.returns(false);
+      functionMocks.holidayForDate.returns({ name: 'Holiday!' });
+      functionMocks.getNextWeekday.returns(moment());
       reminder.timerTick(robot, moment(), functionMocks);
       expect(robot.messageRoom.callCount).to.equal(1);
+      expect(robot.brain.set.calledWith('LAST_HOLIDAY_REPORT_DATE'));
     });
   });
 
   describe('integration tests', () => {
     beforeEach(() => {
-      functionMocks.isReportingTime = () => true;
-      functionMocks.hasRunAlready = () => false;
+      functionMocks.isReportingTime.returns(true);
+      functionMocks.hasRunAlready.returns(false);
       functionMocks.isWeekend = reminder.isWeekend;
       functionMocks.getNextWeekday = reminder.getNextWeekday;
       functionMocks.holidayForDate = reminder.holidayForDate;
@@ -235,11 +253,13 @@ describe('holiday reminder', () => {
       it('...and it is not Friday', () => {
         reminder.timerTick(robot, moment('2017-11-22').utc(), functionMocks);
         expect(robot.messageRoom.callCount).to.equal(1);
+        expect(robot.brain.set.calledWith('LAST_HOLIDAY_REPORT_DATE'));
       });
 
       it('...and it is Friday', () => {
         reminder.timerTick(robot, moment('2017-10-06').utc(), functionMocks);
         expect(robot.messageRoom.callCount).to.equal(1);
+        expect(robot.brain.set.calledWith('LAST_HOLIDAY_REPORT_DATE'));
       });
     });
 
@@ -247,11 +267,13 @@ describe('holiday reminder', () => {
       it('2018 New Year\'s (falls on Monday 2018, should remind on Friday 2017)', () => {
         reminder.timerTick(robot, moment('2017-12-29').utc(), functionMocks);
         expect(robot.messageRoom.callCount).to.equal(1);
+        expect(robot.brain.set.calledWith('LAST_HOLIDAY_REPORT_DATE'));
       });
 
       it('Thanksgiving any year (should remind on a preceding Wednesday)', () => {
         reminder.timerTick(robot, moment('2017-11-22').utc(), functionMocks);
         expect(robot.messageRoom.callCount).to.equal(1);
+        expect(robot.brain.set.calledWith('LAST_HOLIDAY_REPORT_DATE'));
       });
     });
   });
