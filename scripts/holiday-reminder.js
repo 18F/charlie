@@ -1,4 +1,5 @@
 const moment = require('moment-timezone');
+const scheduler = require('node-schedule');
 const holidays = require('@18f/us-federal-holidays');
 
 const TIMEZONE = process.env.TIMEZONE || 'America/New_York';
@@ -52,9 +53,9 @@ function timerTick(robot, now, internalFunctions) {
 }
 
 module.exports = (robot) => {
-  setInterval(() => {
-    timerTick(robot, moment().tz(TIMEZONE), { isWeekend, isReportingTime, hasRunAlready, getNextWeekday, holidayForDate });
-  }, 30000);
+  scheduler.scheduleJob('0 0 * * * 1-5', () => {
+    timerTick(robot, moment().tz(TIMEZONE), { isReportingTime, hasRunAlready, getNextWeekday, holidayForDate });
+  });
 };
 
 // Expose for testing
