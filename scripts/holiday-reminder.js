@@ -2,6 +2,7 @@ const moment = require('moment-timezone');
 const scheduler = require('node-schedule');
 const holidays = require('@18f/us-federal-holidays');
 
+const REPORTING_TIME = process.env.REPORTING_TIME || '15:00';
 const TIMEZONE = process.env.TIMEZONE || 'America/New_York';
 const CHANNEL = process.env.HUBOT_HOLIDAY_REMINDER_CHANNEL || 'general';
 
@@ -15,7 +16,8 @@ function isWeekend(date) {
 }
 
 function isReportingTime(date) {
-  return (date.hours() === 15 && date.minutes() === 00);
+  const reportingTime = moment(REPORTING_TIME, 'HH:mm');
+  return (date.hours() === reportingTime.hours() && date.minutes() === reportingTime.minutes());
 }
 
 function getNextWeekday(date) {
