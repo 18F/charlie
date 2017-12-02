@@ -5,10 +5,8 @@ const holidays = require('@18f/us-federal-holidays');
 const TIMEZONE = process.env.TIMEZONE || 'America/New_York';
 const CHANNEL = process.env.HUBOT_HOLIDAY_REMINDER_CHANNEL || 'general';
 
-let lastRun = '';
-
-function hasRunAlready(date) {
-  return (date.format('YYYY-M-D') === lastRun);
+function hasRunAlready(date, robot) {
+  return (date.format('YYYY-M-D') === robot.brain.get('LAST_HOLIDAY_REPORT_DATE'));
 }
 
 function isWeekend(date) {
@@ -42,7 +40,7 @@ function timerTick(robot, now, internalFunctions) {
   if (internalFunctions.isWeekend(now) || !internalFunctions.isReportingTime(now) || internalFunctions.hasRunAlready(now)) {
     return;
   }
-  lastRun = now.format('YYYY-M-D');
+  robot.brain.set('LAST_HOLIDAY_REPORT_DATE', now.format('YYYY-M-D'));
 
   const nextWeekday = internalFunctions.getNextWeekday(now);
   const upcomingHoliday = internalFunctions.holidayForDate(nextWeekday);
