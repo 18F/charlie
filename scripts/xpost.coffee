@@ -100,3 +100,7 @@ module.exports = (robot) ->
     # if they are in a public channel
     else if msg.message.room.startsWith('C')
       msg.send "XPOST usage: `<your message> XPOST #channel`"
+
+# Expose for testing
+module.exports.isInChannel = isInChannel;
+module.exports.addReaction = addReaction;
