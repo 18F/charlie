@@ -188,7 +188,7 @@ describe('xpost', () => {
     });
 
     it('does all the expected things if the message text does match and the message is from a public channel', (done) => {
-      msg.message.text = 'hello world xpost #target1 #target2 #target3';
+      msg.message.text = 'hello world #not-a-target xpost #target1 #target2 #target3';
       msg.message.room = 'Cpublic';
 
       robot.adapter.client.web.channels.list.yields(false, { ok: true, channels: [
