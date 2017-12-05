@@ -48,7 +48,7 @@ addReaction = (robot, reaction, channelID, messageID) ->
       return
 )
 
-xpostTestRegex = /\bx\-?post( to| in)?( #([\w\-]+))+/i
+xpostTestRegex = /(.*\bx\-?post( to| in)?)( #([\w\-]+))+/i
 xpostChannelsRegex = / #[\w\-]+\b/g
 
 module.exports = (robot) ->
@@ -59,9 +59,14 @@ module.exports = (robot) ->
         msg.send 'Sorry, I can only XPOST from public channels!'
         return
 
+      # Don't match against the ENTIRE message, only the part after
+      # the XPOST.  Channel names before that are not targets.
+      xpostChannelFrontmatter = msg.message.text.match(xpostTestRegex)[1];
+      channelText = msg.message.text.substr(xpostChannelFrontmatter.length);
+
       # The regex catches a space and hash sign at the
       # beginning of the channel name. Strip those off
-      channels = msg.message.text.match(xpostChannelsRegex).map (channel) ->
+      channels = channelText.match(xpostChannelsRegex).map (channel) ->
         return channel.trim().substr(1)
 
       poster = msg.message.user.id
