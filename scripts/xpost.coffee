@@ -48,7 +48,7 @@ addReaction = (robot, reaction, channelID, messageID) ->
       return
 )
 
-xpostTestRegex = /(.*\bx\-?post( to| in)?)( #([\w\-]+))+/i
+xpostTestRegex = /(.*\bx\-?post( to| in)?) #[\w\-]+/i
 xpostChannelsRegex = / #[\w\-]+\b/g
 
 module.exports = (robot) ->
