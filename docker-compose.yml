@@ -13,7 +13,6 @@
     - HUBOT_SLACK_GITHUB_ISSUES_CONFIG_PATH=config/slack-github-issues.json
     - HUBOT_LOG_LEVEL=debug
     - REDIS_URL=redis://database:6379
-    - HUBOT_STATUS_CHANNEL=${HUBOT_STATUS_CHANNEL}
   working_dir: /app
   volumes:
     - ./:/app
