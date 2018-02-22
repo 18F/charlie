@@ -177,16 +177,6 @@ describe('xpost', () => {
       expect(msg.send.firstCall.args[0]).to.equal('XPOST usage: `<your message> XPOST #channel`');
     });
 
-    it('posts that it only works in public channels if the message text does match and the message is from a private channel', () => {
-      msg.message.text = 'hello world xpost #target';
-      msg.message.room = 'Private';
-
-      responder(msg);
-
-      expect(msg.send.callCount).to.equal(1);
-      expect(msg.send.firstCall.args[0]).to.equal('Sorry, I can only XPOST from public channels!');
-    });
-
     it('does all the expected things if the message text does match and the message is from a public channel', (done) => {
       msg.message.text = 'hello world #not-a-target xpost #target1 #target2 #target3';
       msg.message.room = 'Cpublic';
