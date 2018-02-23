@@ -55,9 +55,6 @@ module.exports = (robot) ->
   robot.hear /\bx\-?post/i, (msg) ->
     # If the above regex matches, then the xpost request is validly formed
     if xpostTestRegex.test(msg.message.text)
-      if !msg.message.room.startsWith('C')
-        msg.send 'Sorry, I can only XPOST from public channels!'
-        return
 
       # Don't match against the ENTIRE message, only the part after
       # the XPOST.  Channel names before that are not targets.
