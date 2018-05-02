@@ -38,6 +38,10 @@
       "githubRepository": "product-guide"
     },
     {
+      "reactionName": "lighthouse",
+      "githubRepository": "digitalgov.gov"
+    },
+    {
       "reactionName": "standup-bot",
       "githubRepository": "standup-slack-bot",
       "channelNames": [
