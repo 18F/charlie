@@ -77,5 +77,5 @@ facts = [
 ]
 
 module.exports = (robot) ->
-  robot.respond /dag fact(s)?/i, (res) ->
+  robot.hear /dag fact(s)?/i, (res) ->
     res.send res.random facts
