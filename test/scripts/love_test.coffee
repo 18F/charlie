@@ -20,5 +20,6 @@ describe 'love machine', ->
     it 'should reply to user', ->
       expect(@room.messages).to.eql [
         ['alice', 'love @bob for the cheesecake']
+        ['hubot', 'alice loves @bob: for the cheesecake']
         ['hubot', 'Yay, more love for #love! Thanks, alice!']
       ]
