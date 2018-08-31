@@ -40,7 +40,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "co": "^4.6.0",
-    "hubot-test-helper": "^1.5.1",
+    "hubot-test-helper": "~1.5.1",
     "mocha": "^2.5.3"
   }
 }
