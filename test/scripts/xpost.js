@@ -23,18 +23,20 @@ const robot = {
 
 describe('xpost', () => {
   beforeEach(() => {
-    mockSandbox.reset();
+    mockSandbox.resetBehavior();
+    mockSandbox.resetHistory();
   });
 
   describe('can verify if the bot is in a channel', () => {
     it('rejects with the error if the Slack API returns an error', () => {
-      robot.adapter.client.web.channels.list.yields('the api error message')
+      robot.adapter.client.web.channels.list.yields('the api error message');
 
-      return xpost.isInChannel(robot, null)
+      return xpost
+        .isInChannel(robot, null)
         .then(() => {
           expect.fail(false, false, 'should reject');
         })
-        .catch((err) => {
+        .catch(err => {
           expect(err).to.equal('the api error message');
         });
     });
@@ -42,23 +44,28 @@ describe('xpost', () => {
     it('rejects with an error object if the Slack response is not okay and does not contain an error', () => {
       robot.adapter.client.web.channels.list.yields(null, { ok: false });
 
-      return xpost.isInChannel(robot, null)
+      return xpost
+        .isInChannel(robot, null)
         .then(() => {
           expect.fail(false, false, 'should reject');
         })
-        .catch((err) => {
+        .catch(err => {
           expect(err).to.be.an('error');
         });
     });
 
     it('returns false and a null channel ID if the requested channel does not exist', () => {
-      robot.adapter.client.web.channels.list.yields(null, { ok: true, channels: [{ name: 'good-channel' }]});
+      robot.adapter.client.web.channels.list.yields(null, {
+        ok: true,
+        channels: [{ name: 'good-channel' }]
+      });
 
-      return xpost.isInChannel(robot, 'z')
+      return xpost
+        .isInChannel(robot, 'z')
         .catch(() => {
           expect.fail(false, false, 'should resolve');
         })
-        .then((channelInfo) => {
+        .then(channelInfo => {
           expect(channelInfo).to.be.an('object');
           expect(channelInfo.inChannel).to.be.false;
           expect(channelInfo.channelID).to.be.null;
@@ -66,13 +73,19 @@ describe('xpost', () => {
     });
 
     it('returns false and the channel ID if the requested channel does exist but the robot is not in it', () => {
-      robot.adapter.client.web.channels.list.yields(null, { ok: true, channels: [{ name: 'good-channel', id: 'good-channel-id', is_member: false }]});
+      robot.adapter.client.web.channels.list.yields(null, {
+        ok: true,
+        channels: [
+          { name: 'good-channel', id: 'good-channel-id', is_member: false }
+        ]
+      });
 
-      return xpost.isInChannel(robot, 'good-channel')
+      return xpost
+        .isInChannel(robot, 'good-channel')
         .catch(() => {
           expect.fail(false, false, 'should resolve');
         })
-        .then((channelInfo) => {
+        .then(channelInfo => {
           expect(channelInfo).to.be.an('object');
           expect(channelInfo.inChannel).to.be.false;
           expect(channelInfo.channelID).to.equal('good-channel-id');
@@ -80,13 +93,19 @@ describe('xpost', () => {
     });
 
     it('returns true and the channel ID if the requested channel does exist and the robot is in it', () => {
-      robot.adapter.client.web.channels.list.yields(null, { ok: true, channels: [{ name: 'good-channel', id: 'good-channel-id', is_member: true }]});
+      robot.adapter.client.web.channels.list.yields(null, {
+        ok: true,
+        channels: [
+          { name: 'good-channel', id: 'good-channel-id', is_member: true }
+        ]
+      });
 
-      return xpost.isInChannel(robot, 'good-channel')
+      return xpost
+        .isInChannel(robot, 'good-channel')
         .catch(() => {
           expect.fail(false, false, 'should resolve');
         })
-        .then((channelInfo) => {
+        .then(channelInfo => {
           expect(channelInfo).to.be.an('object');
           expect(channelInfo.inChannel).to.be.true;
           expect(channelInfo.channelID).to.equal('good-channel-id');
@@ -96,14 +115,15 @@ describe('xpost', () => {
 
   describe('can add a reaction to an existing message', () => {
     it('rejects with the error if the Slack API returns an error', () => {
-      robot.adapter.client.web.reactions.add.yields('the api error message')
+      robot.adapter.client.web.reactions.add.yields('the api error message');
 
-      return xpost.addReaction(robot, null, null, null)
+      return xpost
+        .addReaction(robot, null, null, null)
         .then(() => {
           expect.fail(false, false, 'should reject');
         })
-        .catch((err) => {
-          expect(robot.adapter)
+        .catch(err => {
+          expect(robot.adapter);
           expect(err).to.equal('the api error message');
         });
     });
@@ -111,11 +131,12 @@ describe('xpost', () => {
     it('rejects with an error object if the Slack response is not okay and does not contain an error', () => {
       robot.adapter.client.web.reactions.add.yields(null, { ok: false });
 
-      return xpost.addReaction(robot, null, null, null)
+      return xpost
+        .addReaction(robot, null, null, null)
         .then(() => {
           expect.fail(false, false, 'should reject');
         })
-        .catch((err) => {
+        .catch(err => {
           expect(err).to.be.an('error');
         });
     });
@@ -123,7 +144,8 @@ describe('xpost', () => {
     it('resolves with no value if there is no error and the Slack response is okay', () => {
       robot.adapter.client.web.reactions.add.yields(null, { ok: true });
 
-      return xpost.addReaction(robot, null, null, null)
+      return xpost
+        .addReaction(robot, null, null, null)
         .then(() => {
           expect(true).to.be.true;
         })
@@ -174,18 +196,24 @@ describe('xpost', () => {
       responder(msg);
 
       expect(msg.send.callCount).to.equal(1);
-      expect(msg.send.firstCall.args[0]).to.equal('XPOST usage: `<your message> XPOST #channel`');
+      expect(msg.send.firstCall.args[0]).to.equal(
+        'XPOST usage: `<your message> XPOST #channel`'
+      );
     });
 
-    it('does all the expected things if the message text does match and the message is from a public channel', (done) => {
-      msg.message.text = 'hello world #not-a-target xpost #target1 #target2 #target3';
+    it('does all the expected things if the message text does match and the message is from a public channel', done => {
+      msg.message.text =
+        'hello world #not-a-target xpost #target1 #target2 #target3';
       msg.message.room = 'Cpublic';
 
-      robot.adapter.client.web.channels.list.yields(false, { ok: true, channels: [
-        { name: 'target1', id: 'target1', is_member: true },
-        { name: 'target2', id: 'target2', is_member: true },
-        { name: 'target3', id: 'target3', is_member: false }
-      ]});
+      robot.adapter.client.web.channels.list.yields(false, {
+        ok: true,
+        channels: [
+          { name: 'target1', id: 'target1', is_member: true },
+          { name: 'target2', id: 'target2', is_member: true },
+          { name: 'target3', id: 'target3', is_member: false }
+        ]
+      });
       robot.adapter.client.web.reactions.add.yields(null, { ok: true });
 
       responder(msg);
@@ -199,10 +227,16 @@ describe('xpost', () => {
         expect(robot.adapter.client.web.reactions.add.callCount).to.equal(1);
 
         expect(robot.messageRoom.callCount).to.equal(2);
-        expect(robot.messageRoom.firstCall.args[0]).to.be.oneOf(['target1', 'target2']);
-        expect(robot.messageRoom.secondCall.args[0]).to.be.oneOf(['target1', 'target2']);
+        expect(robot.messageRoom.firstCall.args[0]).to.be.oneOf([
+          'target1',
+          'target2'
+        ]);
+        expect(robot.messageRoom.secondCall.args[0]).to.be.oneOf([
+          'target1',
+          'target2'
+        ]);
         done();
       }, 10);
     });
-  })
+  });
 });

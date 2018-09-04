@@ -1,6 +1,7 @@
-node_modules
 .DS_Store*
 dump.rdb
 slack.yml
 .hubot_history
 .env
+node_modules
+.vscode
