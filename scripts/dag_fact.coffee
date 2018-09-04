@@ -79,3 +79,5 @@ facts = [
 module.exports = (robot) ->
   robot.hear /dag fact(s)?/i, (res) ->
     res.send res.random facts
+
+module.exports.factList = facts;
