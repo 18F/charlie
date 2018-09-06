@@ -68,6 +68,8 @@ facts = [
     she climbs into the human bed under the covers for some snugs",
   ":ripley-dag: One time Ripley ate some weird peach thing from
     the tree on the corner and barfed on the couch.",
+  ":ripley-dag: Ripley is scared of even the smallest human toot,
+    but happily delivers her own brutal farts with extreme nonchalance.",
   ":scully: Scully doesn't chew human things she's not supposed to.
       But she does pick up socks that are left on the floor and move them to other locations.",
   ":winry-headache: Winry was afraid of going up or down stairs,
