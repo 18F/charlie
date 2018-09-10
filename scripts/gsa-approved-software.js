@@ -21,7 +21,7 @@ const colors = {
 };
 
 const getCSV = () => new Promise((resolve, reject) => {
-  _robot.http('https://raw.githubusercontent.com/GSA/data/gh-pages/enterprise-architecture/it-standards.csv')
+  _robot.http('https://raw.githubusercontent.com/GSA/data/master/enterprise-architecture/it-standards.csv')
     .header('User-Agent', '18F-bot')
     .get()((err, res, body) => {
       if (err || !body || res.statusCode < 200 || res.statusCode > 299) {
