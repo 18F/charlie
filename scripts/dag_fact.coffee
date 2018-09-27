@@ -21,6 +21,11 @@ facts = [
   ":cooper: Cooper's full name is Wilford J Cooperbottom.",
   ":cooper: Cooper only likes two toys: his laser and destroying whatever toy
       Cupcake had a minute ago.",
+  ":cooper: One day Cooper was paying too much attention to another dog
+    and he walked right into a parked car.",
+  ":cooper: When we go to the dog park, Cooper likes to show off on the agility dog ramps.
+    We never trained him to do the ramps,
+    he just saw other dogs on them and he likes to one-up other dogs.",
   ":cupcake-dag: Cupcake does not like hats. At all.",
   ":cupcake-dag: Cupcake's full name is Princess Petunia Cupcake.",
   ":cupcake-dag: Cupcake likes to nap on the back of the couch.",
