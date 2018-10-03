@@ -6,11 +6,14 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:6
+      - image: circleci/node:8
     working_directory: ~/repo
     steps:
       - checkout
-      - run: npm install
+      - run:
+          name: update npm
+          command: sudo npm i -g npm@^6.2
+      - run: npm ci
       - run: npm test
       - deploy:
           command: ./.circleci/deploy.sh
