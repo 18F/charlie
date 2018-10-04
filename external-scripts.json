@@ -1,6 +1,5 @@
 [
   "hubot-ascii-art",
-  "hubot-auth",
   "hubot-diagnostics",
   "hubot-help",
   "hubot-pugme",
@@ -9,6 +8,5 @@
   "hubot-rules",
   "hubot-scripts-us-federal-holidays",
   "hubot-slack-github-issues",
-  "hubot-slack-reading-list",
   "hubot-xkcd"
 ]
