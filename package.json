@@ -33,7 +33,7 @@
     "underscore": "^1.9.1"
   },
   "engines": {
-    "node": "^8.12"
+    "node": "^8.11"
   },
   "devDependencies": {
     "chai": "^4.2.0",
