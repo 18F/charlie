@@ -1,1 +1,9 @@
-.gitignore
+.DS_Store*
+dump.rdb
+slack.yml
+.circleci
+.hubot_history
+.env
+.vscode
+bin
+test
