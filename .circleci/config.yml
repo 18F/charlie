@@ -15,5 +15,10 @@ jobs:
           command: sudo npm i -g npm@^6.2
       - run: npm ci
       - run: npm test
+      - run:
+          name: dependency vulnerability scan
+          command: |
+            npx snyk auth $SNYK_TOKEN
+            npx snyk test
       - deploy:
           command: ./.circleci/deploy.sh
