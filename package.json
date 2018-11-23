@@ -22,7 +22,7 @@
     "hubot-rules": "^1.0.0",
     "hubot-scripts": "^2.17.2",
     "hubot-scripts-us-federal-holidays": "^1.1.0",
-    "hubot-scripts-us-federal-holidays-reminder": "^2.0.1",
+    "hubot-scripts-us-federal-holidays-reminder": "^2.1.0",
     "hubot-shipit": "^0.2.0",
     "hubot-slack": "^4.5.5",
     "hubot-slack-github-issues": "^1.1.0",
