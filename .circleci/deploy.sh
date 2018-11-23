@@ -14,6 +14,8 @@ then
   # Log into CF and push
   cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
   cf push -f manifest.yml
+
+  npx snyk monitor --org=18f-bot-charlie
 else
   echo "Not on the master branch.  Not deploying."
 fi
