@@ -5,5 +5,4 @@ slack.yml
 .hubot_history
 .env
 .vscode
-bin
-test
+./test
