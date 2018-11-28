@@ -102,6 +102,10 @@ facts = [
 
 module.exports = (robot) ->
   robot.hear /dag fact(s)?/i, (res) ->
-    res.send res.random facts
+    res.send
+      text: res.random facts
+      as_user: false
+      username: 'Dag Bot (Charlie)'
+      icon_emoji: ':dog:'
 
 module.exports.factList = facts;
