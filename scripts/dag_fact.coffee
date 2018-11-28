@@ -83,14 +83,14 @@ facts = [
     celebrated by dropping a :poop: in the middle of the floor on graduation day.",
   ":scully: Scully doesn't chew human things she's not supposed to.
       But she does pick up socks that are left on the floor and move them to other locations.",
-  ":winry-headache: Winry was afraid of going up or down stairs,
+  ":winry-smile: Winry was afraid of going up or down stairs,
       so when Greg moved into a house that had them,
       she just slept in the living room by herself until she got over it.",
-  ":winry-headache: Winry ate a banana peel once when Greg wasn't looking.
+  ":winry-smile: Winry ate a banana peel once when Greg wasn't looking.
       She was totally fine.",
-  ":winry-headache: Winry has heterochromia - one eye is solid blue
+  ":winry-smile: Winry has heterochromia - one eye is solid blue
       but the other is half blue,half brown.",
-  ":winry-headache: Sometimes if you put one of Winry's back feet near her ear,
+  ":winry-smile: Sometimes if you put one of Winry's back feet near her ear,
     it'll start scratching automatically.
     That gets on her nerves and she'll start biting her foot to make it stop.",
   ":zoey: Zoey thinks she is the cat police at our house:
@@ -102,10 +102,18 @@ facts = [
 
 module.exports = (robot) ->
   robot.hear /dag fact(s)?/i, (res) ->
+    fact = res.random(facts)
+
+    emoji = ':dog:'
+    match = fact.match /^(:[^:]+:)(.*)$/
+    if match
+      emoji = match[1]
+      fact = match[2].trim()
+
     res.send
-      text: res.random facts
+      text: fact
       as_user: false
       username: 'Dag Bot (Charlie)'
-      icon_emoji: ':dog:'
+      icon_emoji: emoji
 
 module.exports.factList = facts;
