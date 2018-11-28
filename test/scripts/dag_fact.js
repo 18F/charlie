@@ -32,9 +32,25 @@ describe('daggity facts', () => {
     it('should reply with a wonderful fact about a dag', () => {
       expect(this.room.messages).to.eql([
         ['alice', 'I request one dag fact please'],
-        ['hubot', 'this is an injected fact'],
+        [
+          'hubot',
+          {
+            text: 'this is an injected fact',
+            as_user: false,
+            username: 'Dag Bot (Charlie)',
+            icon_emoji: ':dog:'
+          }
+        ],
         ['bob', 'I too would like some dag facts'],
-        ['hubot', 'this is an injected fact']
+        [
+          'hubot',
+          {
+            text: 'this is an injected fact',
+            as_user: false,
+            username: 'Dag Bot (Charlie)',
+            icon_emoji: ':dog:'
+          }
+        ]
       ]);
     });
   });
@@ -52,7 +68,14 @@ describe('daggity facts', () => {
       handler(res);
 
       expect(res.random.calledWith(sinon.match.array)).to.eql(true);
-      expect(res.send.calledWith('random!')).to.eql(true);
+      expect(
+        res.send.calledWith({
+          text: 'random!',
+          as_user: false,
+          username: 'Dag Bot (Charlie)',
+          icon_emoji: ':dog:'
+        })
+      ).to.eql(true);
     });
   });
 });
