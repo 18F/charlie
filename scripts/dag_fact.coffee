@@ -65,7 +65,7 @@ facts = [
       which is the best and weirdest and most surprising thing.",
   ":pancho-dag: Pancho can read.",
   ":pancho-dag: Pancho is not color blind, he knows UPS brown.",
-  ":pixie: Pixie is a rescue that was found injured the side of the highway.
+  ":pixie: Pixie is a rescue that was found injured on the side of the highway.
      Don't worry she's all healed up and healthy.",
   ":pixie: Pixie likes to give \"puppy hugs\" where she leans on you
       placing her paws around you.",
