@@ -9,7 +9,8 @@
 
 facts = [
   ":belle-dag: Belle loves sunbeams more than anything except belly rubs and bacon.",
-  ":belle-dag: Belle will not eat cheese. There may be pills hiding in there.",
+  ":belle-dag: Belle likes to have her nails painted. She holds out her paw to have it
+    done, then wants to show everyone how they look when they're done.",
   ":belle-dag: Belle can't see or hear all that well anymore.
     She relies on her well-honed sniffer.",
   ":bubba: Bubba used to be scared of walking down the stairs,
@@ -23,9 +24,14 @@ facts = [
       Cupcake had a minute ago.",
   ":cooper: One day Cooper was paying too much attention to another dog
     and he walked right into a parked car.",
+  ":cooper: Every winter we have to rub dryer sheets on Cooper or else he gets shocked every
+    time someone touches him. He gets very careful about touching anyone.",
   ":cooper: When we go to the dog park, Cooper likes to show off on the agility dog ramps.
     We never trained him to do the ramps,
     he just saw other dogs on them and he likes to one-up other dogs.",
+  ":cooper: If you give :cooper: Cooper and :cupcake-dag: Cupcake a toy they will remember.
+    When you come to visit months later they will go to the toybox and get it out to show you
+    that they still have it."
   ":cupcake-dag: Cupcake does not like hats. At all.",
   ":cupcake-dag: Cupcake's full name is Princess Petunia Cupcake.",
   ":cupcake-dag: Cupcake likes to nap on the back of the couch.",
@@ -59,14 +65,16 @@ facts = [
       which is the best and weirdest and most surprising thing.",
   ":pancho-dag: Pancho can read.",
   ":pancho-dag: Pancho is not color blind, he knows UPS brown.",
-  ":pixie: Pixie is a rescue that was found on injured the side of the highway. 
+  ":pixie: Pixie is a rescue that was found injured the side of the highway.
      Don't worry she's all healed up and healthy.",
   ":pixie: Pixie likes to give \"puppy hugs\" where she leans on you
       placing her paws around you.",
   ":pixie: Pixie loves to chase and bark at wheels.",
   ":pixie: Pixie's middle name is sioux.",
-  ":pixie: Pixie's favorite chew toy is \"her Tito\", a plush Titos vodka bottle
-      we were gifted from our neighbor who works in the food/bev industry :joy:.",
+  ":pixie: Pixie's favorite chew toy was \"her Tito\", a plush Titos vodka bottle
+    we were gifted from our neighbor who works in the food/bev industry :joy:.
+    Tito was finally retired in 2018, and Pixie's new favorite is \"Ricky\", an
+    unstuffed floppy raccoon.",
   ":pixie: Pixie really enjoys to go on hikes in the wilderness.",
   ":pixie: Pixie still sees her foster mom regularly
       and stays with her when we go out of town.",
@@ -81,6 +89,10 @@ facts = [
     the dogs next door barking all day, our house getting its roof replaced.",
   ":ripley-dag: Ripley was the star pupil of her obedience class, at least until she
     celebrated by dropping a :poop: in the middle of the floor on graduation day.",
+  ":ripley-dag: Ripley sleeps on her dog bed in our bedroom, but every morning,
+    about a half hour before it's time for us to get up, she climbs into the human bed
+    under the covers for some snugs."
+  ":ripley-dag: Ripley is completely unperturbed by fireworks and thunderstorms. :sweat_smile:"
   ":scully: Scully doesn't chew human things she's not supposed to.
       But she does pick up socks that are left on the floor and move them to other locations.",
   ":winry-smile: Winry was afraid of going up or down stairs,
@@ -93,6 +105,8 @@ facts = [
   ":winry-smile: Sometimes if you put one of Winry's back feet near her ear,
     it'll start scratching automatically.
     That gets on her nerves and she'll start biting her foot to make it stop.",
+  ":winry-smile: Winry likes to be pushed around the carpet.
+    You push her away and she jumps up and comes running back to your hands."
   ":zoey: Zoey thinks she is the cat police at our house:
       if they are fighting (usually playfully) with each other, she runs up to them,
       sits in front of them and whines until they stop.",
