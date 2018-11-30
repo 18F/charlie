@@ -86,13 +86,14 @@ facts = [
   ":ripley-dag: Ripley is scared of even the smallest human toot,
     but happily delivers her own brutal farts with extreme nonchalance.",
   ":ripley-dag: Things Ripley has calmly slept through: thunderstorms, fireworks,
-    the dogs next door barking all day, our house getting its roof replaced.",
+    the dogs next door barking all day, our house getting its roof replaced. :sweat_smile:",
   ":ripley-dag: Ripley was the star pupil of her obedience class, at least until she
     celebrated by dropping a :poop: in the middle of the floor on graduation day.",
   ":ripley-dag: Ripley sleeps on her dog bed in our bedroom, but every morning,
     about a half hour before it's time for us to get up, she climbs into the human bed
     under the covers for some snugs."
-  ":ripley-dag: Ripley is completely unperturbed by fireworks and thunderstorms. :sweat_smile:"
+  ":ripley-dag: Thanks to the magic of static cling, Ripley often gets up from a nap and wanders
+      around the house with her blanket stuck to her like a shawl or some kind of strange dog skirt."
   ":scully: Scully doesn't chew human things she's not supposed to.
       But she does pick up socks that are left on the floor and move them to other locations.",
   ":winry-smile: Winry was afraid of going up or down stairs,
