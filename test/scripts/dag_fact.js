@@ -10,7 +10,11 @@ const expect = require('chai').expect;
 describe('daggity facts', () => {
   // Replace the list of facts with one known fact, so we don't
   // have to worry about randomness.
-  facts.factList.splice(0, facts.factList.length, 'this is an injected fact');
+  facts.factList.splice(
+    0,
+    facts.factList.length,
+    ':emoji: this is an injected fact'
+  );
 
   beforeEach(() => {
     this.room = helper.createRoom();
@@ -32,9 +36,25 @@ describe('daggity facts', () => {
     it('should reply with a wonderful fact about a dag', () => {
       expect(this.room.messages).to.eql([
         ['alice', 'I request one dag fact please'],
-        ['hubot', 'this is an injected fact'],
+        [
+          'hubot',
+          {
+            text: 'this is an injected fact',
+            as_user: false,
+            username: 'Dag Bot (Charlie)',
+            icon_emoji: ':emoji:'
+          }
+        ],
         ['bob', 'I too would like some dag facts'],
-        ['hubot', 'this is an injected fact']
+        [
+          'hubot',
+          {
+            text: 'this is an injected fact',
+            as_user: false,
+            username: 'Dag Bot (Charlie)',
+            icon_emoji: ':emoji:'
+          }
+        ]
       ]);
     });
   });
@@ -46,13 +66,20 @@ describe('daggity facts', () => {
 
     it('sends a random response from an array', () => {
       const res = {
-        random: sinon.stub().returns('random!'),
+        random: sinon.stub().returns(':rrrrandom: random!'),
         send: sinon.stub()
       };
       handler(res);
 
       expect(res.random.calledWith(sinon.match.array)).to.eql(true);
-      expect(res.send.calledWith('random!')).to.eql(true);
+      expect(
+        res.send.calledWith({
+          text: 'random!',
+          as_user: false,
+          username: 'Dag Bot (Charlie)',
+          icon_emoji: ':rrrrandom:'
+        })
+      ).to.eql(true);
     });
   });
 });
