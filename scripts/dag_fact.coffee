@@ -65,19 +65,20 @@ facts = [
       which is the best and weirdest and most surprising thing.",
   ":pancho-dag: Pancho can read.",
   ":pancho-dag: Pancho is not color blind, he knows UPS brown.",
-  ":pixie: Pixie is a rescue that was found injured on the side of the highway.
-     Don't worry she's all healed up and healthy.",
-  ":pixie: Pixie likes to give \"puppy hugs\" where she leans on you
-      placing her paws around you.",
-  ":pixie: Pixie loves to chase and bark at wheels.",
-  ":pixie: Pixie's middle name is sioux.",
-  ":pixie: Pixie's favorite chew toy was \"her Tito\", a plush Titos vodka bottle
-    we were gifted from our neighbor who works in the food/bev industry :joy:.
-    Tito was finally retired in 2018, and Pixie's new favorite is \"Ricky\", an
-    unstuffed floppy raccoon.",
-  ":pixie: Pixie really enjoys to go on hikes in the wilderness.",
-  ":pixie: Pixie still sees her foster mom regularly
-      and stays with her when we go out of town.",
+  ":pixie: I am a rescue that was found injured on the side of the highway.
+     Don't worry I'm all healed up and healthy now. - Pixie",
+  ":pixie: I like to give \"puppy hugs\", where I lean on you
+      placing my paws around you. - Pixie :two_hearts:",
+  ":pixie: I love to chase and bark at wheels! - Pixie",
+  ":pixie: My middle name is sioux. - Pixie",
+  ":pixie: My favorite chew toy was \"my Tito\", a plush Titos vodka bottle
+    gifted from my neighbor who works in the food/bev industry :joy:.
+    Tito was retired in 2018, and my new favorite is \"Ricky\", an
+    unstuffed floppy raccoon. - Pixie",
+  ":pixie: I love  to go on hikes in the wilderness and will hike all day. - Pixie",
+  ":pixie: I still see my foster mom regularly
+      and stay with her when my owners go on extendted trips. - Pixie",
+  ":pixie: My owner is @scottweber - Pixie",
   ":ripley-dag: Ripley sleeps on her dog bed in our bedroom, but every morning,
     about a half hour before it's time for us to get up,
     she climbs into the human bed under the covers for some snugs",
