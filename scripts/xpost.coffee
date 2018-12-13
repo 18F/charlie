@@ -14,6 +14,8 @@
 # Author:
 #   @afeld and @wslack
 
+defaultWebClient = require("@slack/client").WebClient
+
 isInChannel = (robot, channel) ->
   new Promise((resolve, reject) ->
     robot.adapter.client.web.channels.list (err, res) ->
@@ -51,8 +53,12 @@ addReaction = (robot, reaction, channelID, messageID) ->
 xpostTestRegex = /(.*\bx\-?post( to| in)?) #[\w\-]+/i
 xpostChannelsRegex = / #[\w\-]+\b/g
 
-module.exports = (robot) ->
+module.exports = (robot, WebClient = defaultWebClient) ->
+  webAPI = new WebClient robot.adapter.options.token
+
   robot.hear /\bx\-?post/i, (msg) ->
+    poster = msg.message.user.id
+
     # If the above regex matches, then the xpost request is validly formed
     if xpostTestRegex.test(msg.message.text)
 
@@ -66,7 +72,6 @@ module.exports = (robot) ->
       channels = channelText.match(xpostChannelsRegex).map (channel) ->
         return channel.trim().substr(1)
 
-      poster = msg.message.user.id
       text = msg.message.text.replace(msg.match[0], '').trim()
       sentReaction = false
 
@@ -101,7 +106,10 @@ module.exports = (robot) ->
     # If the regex didn't match, tell the user how to use xpost
     # if they are in a public channel
     else if msg.message.room.startsWith('C')
-      msg.send "XPOST usage: `<your message> XPOST #channel`"
+      webAPI.chat.postEphemeral
+        channel: msg.message.room
+        user: poster
+        text: "XPOST usage: `<your message> XPOST #channel`"
 
 # Expose for testing
 module.exports.isInChannel = isInChannel;

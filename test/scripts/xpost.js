@@ -17,6 +17,9 @@ const robot = {
           add: mockSandbox.stub()
         }
       }
+    },
+    options: {
+      token: 'Slack Web API Token'
     }
   }
 };
@@ -162,6 +165,9 @@ describe('xpost', () => {
   });
 
   describe('the main responder function', () => {
+    const postEphemeral = mockSandbox.spy();
+    const WebAPI = sinon.stub().returns({ chat: { postEphemeral } });
+
     const msg = {
       send: mockSandbox.stub(),
       message: {
@@ -176,8 +182,10 @@ describe('xpost', () => {
     let responder = null;
 
     beforeEach(() => {
-      xpost(robot);
+      WebAPI.resetHistory();
+      xpost(robot, WebAPI);
       responder = robot.hear.firstCall.args[1];
+      expect(WebAPI.calledWith('Slack Web API Token')).to.equal(true);
     });
 
     it('does not xpost anything if the message text does not match and the message is from a private channel', () => {
@@ -195,10 +203,12 @@ describe('xpost', () => {
 
       responder(msg);
 
-      expect(msg.send.callCount).to.equal(1);
-      expect(msg.send.firstCall.args[0]).to.equal(
-        'XPOST usage: `<your message> XPOST #channel`'
-      );
+      expect(postEphemeral.callCount).to.equal(1);
+      expect(postEphemeral.firstCall.args[0]).to.eql({
+        channel: 'Cpublic',
+        user: 'user-id',
+        text: 'XPOST usage: `<your message> XPOST #channel`'
+      });
     });
 
     it('does all the expected things if the message text does match and the message is from a public channel', done => {
