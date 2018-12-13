@@ -110,6 +110,7 @@ module.exports = (robot, WebClient = defaultWebClient) ->
         channel: msg.message.room
         user: poster
         text: "XPOST usage: `<your message> XPOST #channel`"
+        as_user: true
 
 # Expose for testing
 module.exports.isInChannel = isInChannel;

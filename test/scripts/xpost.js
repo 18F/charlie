@@ -207,7 +207,8 @@ describe('xpost', () => {
       expect(postEphemeral.firstCall.args[0]).to.eql({
         channel: 'Cpublic',
         user: 'user-id',
-        text: 'XPOST usage: `<your message> XPOST #channel`'
+        text: 'XPOST usage: `<your message> XPOST #channel`',
+        as_user: true
       });
     });
 
