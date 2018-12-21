@@ -92,9 +92,12 @@ facts = [
     celebrated by dropping a :poop: in the middle of the floor on graduation day.",
   ":ripley-dag: Ripley sleeps on her dog bed in our bedroom, but every morning,
     about a half hour before it's time for us to get up, she climbs into the human bed
-    under the covers for some snugs."
+    under the covers for some snugs.",
   ":ripley-dag: Thanks to the magic of static cling, Ripley often gets up from a nap and wanders
-      around the house with her blanket stuck to her like a shawl or some kind of strange dog skirt."
+      around the house with her blanket stuck to her like a shawl or some kind of strange dog skirt.",
+  ":ruby-dag: If there is snow on the ground and I'm outside, there is snow on my snoot. - Ruby”,
+  ":ruby-dag: I like to growl at carved pumpkins. :jack_o_lantern: - Ruby”,
+  ":ruby-dag: Finding street food on the ground is one of my best talents. I found a _full chicken thigh_ once. - Ruby”,
   ":scully: Scully doesn't chew human things she's not supposed to.
       But she does pick up socks that are left on the floor and move them to other locations.",
   ":winry-smile: Winry was afraid of going up or down stairs,
