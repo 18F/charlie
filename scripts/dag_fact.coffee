@@ -63,6 +63,10 @@ facts = [
       and went running around the house to show it off.",
   ":neko: Neko is part rottweiler, part pit bull, and part chow chow,
       which is the best and weirdest and most surprising thing.",
+  ":paloma: Paloma looks a little like Toto from The Wizard of Oz. She dislikes the car but loves riding in a bike basket, which inspires lots of \"TOTO!\" calls as she rides through town.",
+  ":paloma: Paloma knows how to ring a bell on command. But, she never quite caught onto the fact that ringing the bell would alert her parents to take her outside, so now it's just a fun party trick.",
+  ":paloma: According to Wisdom Panel, Paloma is a lhasapoouhuahua (lhasa apso / poodle / chihuahua mix). Because Paloma's mom is embarrassed to admit she DNA tested her dog, she tells people she's simply a \"terrier mix.\"",
+  ":paloma: When Paloma meets someone new, she begs for a belly rub. If she knows you already, she also begs for a belly rub. It's her standard greeting (unless you're a delivery driver...).",
   ":pancho-dag: Pancho can read.",
   ":pancho-dag: Pancho is not color blind, he knows UPS brown.",
   ":pixie: I am a rescue that was found injured on the side of the highway.
