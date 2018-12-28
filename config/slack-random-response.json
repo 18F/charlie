@@ -7,7 +7,7 @@
   },
   {
     "botName": "Cat Bot",
-    "defaultEmoji": "smile_cat",
+    "defaultEmoji": ":smile_cat:",
     "trigger": "cat fact",
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/cats.json"
   }
