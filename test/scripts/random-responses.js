@@ -175,21 +175,23 @@ describe('random responder', () => {
     };
 
     it('handles a single text trigger', () => {
-      script.attachTrigger(robot, 'one trigger');
+      script.attachTrigger(robot, { trigger: 'one trigger' });
       expect(robot.hear.calledWith(/one trigger/i, sinon.match.func)).to.eql(
         true
       );
     });
 
     it('handles a single regex trigger', () => {
-      script.attachTrigger(robot, /one regex/g);
+      script.attachTrigger(robot, { trigger: /one regex/g });
       expect(robot.hear.calledWith(/one regex/i, sinon.match.func)).to.eql(
         true
       );
     });
 
     it('handles an array of text triggers', () => {
-      script.attachTrigger(robot, ['trigger 1', 'trigger 2', 'trigger 3']);
+      script.attachTrigger(robot, {
+        trigger: ['trigger 1', 'trigger 2', 'trigger 3']
+      });
       expect(robot.hear.calledWith(/trigger 1/i, sinon.match.func)).to.eql(
         true
       );
@@ -202,7 +204,9 @@ describe('random responder', () => {
     });
 
     it('handles an array of regex triggers', () => {
-      script.attachTrigger(robot, [/trigger 1/g, /trigger 2/g, /trigger 3/g]);
+      script.attachTrigger(robot, {
+        trigger: [/trigger 1/g, /trigger 2/g, /trigger 3/g]
+      });
       expect(robot.hear.calledWith(/trigger 1/i, sinon.match.func)).to.eql(
         true
       );
