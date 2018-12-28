@@ -6,3 +6,12 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/dags.json"
   }
 ]
+
+[
+  {
+    "botName": "Cat Bot",
+    "defaultEmoji": "smile_cat",
+    "trigger": "cat fact",
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/cats.json"
+  }
+]
