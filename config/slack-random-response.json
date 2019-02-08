@@ -16,5 +16,11 @@
     "defaultEmoji": ":giraffe:",
     "trigger": "giraffe fact",
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/giraffes.json"
+  },
+  {
+    "botName": "Alan Bot",
+    "defaultEmoji": ":adelevie:",
+    "trigger": "alan fact",
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/alan.json"
   }
 ]
