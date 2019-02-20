@@ -1,27 +1,11 @@
-MongoClient = require('mongodb').MongoClient;
 
 function Bot(rtm, request, token) {
 	var startTime = new Date();
 	var queue;
 
-	var url;
-	if(process.env.VCAP_SERVICES) {
-		vcapServices = JSON.parse(process.env.VCAP_SERVICES);
-		url = vcapServices["mongodb32"][0].credentials.uri
-	} else if(process.env.MONGODB_URL) {
-		url = process.env.MONGODB_URL
-	} else {
-		url = 'mongodb://localhost:27017/coffeemate';
-	}
-
 	function emptyQueue(callback) {
-		MongoClient.connect(url, function(err, db) {
-			queue = db.collection("queue");
-			queue.remove({}, function(err, result) {
-				db.close();
-				callback();
-			});
-		});
+		robot.brain.set("queue", '');
+		robot.brain.save()
 	}
 
 	function openGroupChat(coffeemateId, coffeeQueue) {
@@ -96,25 +80,19 @@ function Bot(rtm, request, token) {
 		   }}});}
 
 	function run() {
-		MongoClient.connect(url, function(err, db) {
-			if(err) {
-				throw err;
-			}
-			module.exports.db = db;
-			queue = db.collection("queue");
-			queue.ensureIndex('available');
+		queue = robot.brain.get("queue");
+		queue.ensureIndex('available'); // Probably not redis-y
 
-			var options = {url: "https://slack.com/api/users.list",
+		var options = {url: "https://slack.com/api/users.list",
 						qs: {token: token}};
-			request.get(options, function(err, response, body) {
-			    bodyObj = JSON.parse(body);
-			    if(bodyObj.ok) {
-			    	var coffeemateId = bodyObj.members.filter(function(member) {
-			    		return member.name === 'coffeemate'})[0].id
-			    	listenForPrompts(coffeemateId);
-			    }
-			})
-		});
+		request.get(options, function(err, response, body) {
+				bodyObj = JSON.parse(body);
+				if(bodyObj.ok) {
+					var coffeemateId = bodyObj.members.filter(function(member) {
+						return member.name === 'coffeemate'})[0].id
+					listenForPrompts(coffeemateId);
+				}
+		})
 	}
 
 	return {run: run, emptyQueue: emptyQueue};
