@@ -32,10 +32,12 @@ module.exports = (robot) ->
 			mpim = robot.adapter.client.web.mpim.open { options }, (err, mpim) ->
 				if err or !mpim.ok
 					console.log("Error with Slack API", err)
-
-				mpim.send "You two have been paired up for coffee." +
+				
+				msg = "You two have been paired up for coffee." +
 						"The next step is to figure out a time that works for both of you." +
 						"Enjoy! :coffee:"
+
+				mpim.send msg
 				
 				# then empty the queue again
 				robot.brain.set "coffeemate_queue", []
