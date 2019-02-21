@@ -5,14 +5,14 @@ module.exports = (robot) ->
 	robot.hear /coffee me/i, (res) ->
 		# First, is the current user in already in the queue?
 		# If so, just let them know
-		console.log("the current user is", res.message.user.name)
+		console.log("the current user is", res.message.user.id)
 		console.log("the current queue is", queue)
-		if res.message.user.name in queue
+		if res.message.user.id in queue
 			res.reply "You're already in the queue. " +
 				"As soon as we find someone else to meet with, we'll introduce you."
 			#return
 		# If we didn't bail out already, add the current user to the queue
-		queue.push(res.message.user.name)
+		queue.push(res.message.user.id)
 		robot.brain.set "coffeemate_queue", queue
 		robot.brain.save()
 		# Now do we have a pair or not?
