@@ -5,10 +5,12 @@ module.exports = (robot) ->
 	robot.hear /coffee me/i, (res) ->
 		# First, is the current user in already in the queue?
 		# If so, just let them know
-		if res.message.user in queue
+		console.log("the current user is", res.message.user.name)
+		console.log("the current queue is", queue)
+		if res.message.user.name in queue
 			res.reply "You're already in the queue. " +
-				"We'll introduce you to the next person who wants to meet up."
-			return
+				"As soon as we find someone else to meet with, we'll introduce you."
+			#return
 		# If we didn't bail out already, add the current user to the queue
 		queue.push(res.message.user.name)
 		robot.brain.set "coffeemate_queue", queue
@@ -21,30 +23,20 @@ module.exports = (robot) ->
 			# pair them up
 			res.reply "You’ve been matched up for coffee with <@" + queue[0] + ">! " +
 				"I’ll start a direct message for you two. :coffee: :tada:"
-			# set up the DM
-			openGroupChat(res, queue)
-			# and then empty the queue again
-			robot.brain.set "coffeemate_queue", []
-			robot.brain.save()
-
-
-openGroupChat = (res, queue) ->
-	"""
-	Starts a 1:1 DM chat between the people in queue.
-	"""
-	options = {
-			url: "https://slack.com/api/mpim.open",
-			qs: {
+			# Now start a 1:1 DM chat between the people in queue.
+			options = {
 				token: process.env.HUBOT_SLACK_TOKEN,
-				users: queue
+				users: queue.toString()
 			}
-	}
 
-	res.http(options).get() (err, response, body) ->
-		bodyObj = JSON.parse(body)
-		if bodyObj.ok
-			rtm.sendMessage(
-				"You two have been paired up for coffee.
-				The next step is to figure out a time that works for both of you.
-				Enjoy! :coffee:", bodyObj.group.id
-			)
+			mpim = robot.adapter.client.web.mpim.open { options }, (err, mpim) ->
+				if err or !mpim.ok
+					console.log("Error with Slack API", err)
+
+				mpim.send "You two have been paired up for coffee." +
+						"The next step is to figure out a time that works for both of you." +
+						"Enjoy! :coffee:"
+				
+				# then empty the queue again
+				robot.brain.set "coffeemate_queue", []
+				robot.brain.save()
