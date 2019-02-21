@@ -10,7 +10,7 @@ module.exports = (robot) ->
 				"We'll introduce you to the next person who wants to meet up."
 			return
 		# If we didn't bail out already, add the current user to the queue
-		queue.push(res.message.user)
+		queue.push(res.message.user.name)
 		robot.brain.set "coffeemate_queue", queue
 		robot.brain.save()
 		# Now do we have a pair or not?
