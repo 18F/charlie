@@ -7,6 +7,7 @@
     "validate-config": "slack-github-issues validate config/slack-github-issues.json"
   },
   "dependencies": {
+    "@slack/client": "^4.9.0",
     "aws-sdk": "^2.327.0",
     "cfenv": "^1.1.0",
     "cheerio": "^0.22.0",
@@ -29,6 +30,7 @@
     "hubot-xkcd": "0.0.5",
     "js-yaml": "^3.12.0",
     "json": "^9.0.4",
+    "request": "^2.88.0",
     "sinon": "^6.3.5",
     "twit": "^2.2.11",
     "underscore": "^1.9.1"
