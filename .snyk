@@ -1,9 +1,13 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.1
+version: v1.13.3
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-JUSTEXTEND-72674:
     - sinon > nise > just-extend:
         reason: not relevant
         expires: '2019-01-13T14:07:53.024Z'
+  SNYK-JS-LODASHMERGE-173732:
+    - cheerio > lodash.merge:
+        reason: minor vulnerability with no available fix
+        expires: '2019-04-21T16:43:38.684Z'
 patch: {}
