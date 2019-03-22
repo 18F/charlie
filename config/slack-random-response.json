@@ -48,7 +48,7 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/scream.json"
   },
   {
-    "trigger": "(?<!boba )guy(s|z)(?=[^\"]*(\"[^\"]*\"[^\"]*)*$)",
+    "trigger": "!!! (?<!boba )guy(s|z)(?=[^\"]*(\"[^\"]*\"[^\"]*)*$)",
     "botName": "Charlie",
     "defaultEmoji": ":18f:",
     "responseList": [
