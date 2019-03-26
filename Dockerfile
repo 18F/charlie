@@ -4,6 +4,8 @@ RUN mkdir /app
 WORKDIR /app
 
 ADD ./package.json .
-RUN npm install
+ADD ./package-lock.json .
+
+RUN npm ci
 
 CMD ./start.sh
