@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "test": "mocha --require coffeescript/register test/*",
-    "validate-config": "slack-github-issues validate config/slack-github-issues.json"
+    "validate-config": "slack-github-issues validate config/slack-github-issues.json",
+    "postinstall": "sed -i'.backup' -e 's/\\(image: 18f\\/charlie:\\).*/\\1'`md5 -q package-lock.json`'/g' docker-compose.yml && rm docker-compose.yml.backup"
   },
   "dependencies": {
-    "aws-sdk": "^2.327.0",
-    "cfenv": "^1.1.0",
+    "aws-sdk": "^2.428.0",
+    "cfenv": "^1.2.2",
     "cheerio": "^0.22.0",
     "coffeescript": "^1.12.7",
     "csvtojson": "^2.0.8",
-    "hubot": "^3.1.1",
+    "hubot": "^3.3.1",
     "hubot-ascii-art": "^1.1.3",
     "hubot-diagnostics": "^1.0.0",
     "hubot-help": "^1.0.1",
@@ -24,10 +25,10 @@
     "hubot-scripts-us-federal-holidays": "^1.1.0",
     "hubot-scripts-us-federal-holidays-reminder": "^2.1.0",
     "hubot-shipit": "^0.2.0",
-    "hubot-slack": "^4.5.5",
+    "hubot-slack": "^4.6.0",
     "hubot-slack-github-issues": "^1.1.0",
     "hubot-xkcd": "0.0.5",
-    "js-yaml": "^3.12.0",
+    "js-yaml": "^3.13.0",
     "json": "^9.0.4",
     "sinon": "^6.3.5",
     "twit": "^2.2.11",
