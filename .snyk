@@ -10,4 +10,8 @@ ignore:
     - cheerio > lodash.merge:
         reason: minor vulnerability with no available fix
         expires: '2019-04-21T16:43:38.684Z'
+  SNYK-JS-LODASHMERGE-173733:
+    - cheerio > lodash.merge:
+        reason: 'no patch, non-issue anyway'
+        expires: '2019-04-25T20:36:57.427Z'
 patch: {}
