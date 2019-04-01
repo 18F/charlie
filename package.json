@@ -10,7 +10,6 @@
   "dependencies": {
     "aws-sdk": "^2.428.0",
     "cfenv": "^1.2.2",
-    "cheerio": "^0.22.0",
     "coffeescript": "^1.12.7",
     "csvtojson": "^2.0.8",
     "hubot": "^3.3.1",
@@ -23,7 +22,6 @@
     "hubot-scripts-us-federal-holidays-reminder": "^2.1.0",
     "hubot-shipit": "^0.2.0",
     "hubot-slack": "^4.6.0",
-    "hubot-slack-github-issues": "^1.1.0",
     "hubot-xkcd": "0.0.5",
     "js-yaml": "^3.13.0",
     "json": "^9.0.4",
