@@ -1,11 +1,8 @@
 [
   "hubot-ascii-art",
-  "hubot-diagnostics",
   "hubot-help",
   "hubot-pugme",
-  "hubot-maps",
   "hubot-redis-brain",
-  "hubot-rules",
   "hubot-scripts-us-federal-holidays",
   "hubot-scripts-us-federal-holidays-reminder",
   "hubot-slack-github-issues",
