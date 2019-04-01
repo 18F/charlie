@@ -5,6 +5,5 @@
   "hubot-redis-brain",
   "hubot-scripts-us-federal-holidays",
   "hubot-scripts-us-federal-holidays-reminder",
-  "hubot-slack-github-issues",
   "hubot-xkcd"
 ]
