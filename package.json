@@ -8,6 +8,7 @@
     "postinstall": "sed -i'.backup' -e 's/\\(image: 18f\\/charlie:\\).*/\\1'`md5 -q package-lock.json`'/g' docker-compose.yml && rm docker-compose.yml.backup"
   },
   "dependencies": {
+    "@slack/client": "^4.9.0",
     "aws-sdk": "^2.428.0",
     "cfenv": "^1.2.2",
     "coffeescript": "^1.12.7",
@@ -25,6 +26,7 @@
     "hubot-xkcd": "0.0.5",
     "js-yaml": "^3.13.0",
     "json": "^9.0.4",
+    "request": "^2.88.0",
     "sinon": "^6.3.5",
     "twit": "^2.2.11",
     "underscore": "^1.9.1"
