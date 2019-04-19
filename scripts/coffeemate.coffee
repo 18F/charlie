@@ -1,8 +1,10 @@
 defaultWebClient = require("@slack/client").WebClient
 
+brainKey = "coffeemate_queue"
+
 module.exports = (robot, { WebClient = defaultWebClient } = {}) ->
 	webAPI = new WebClient robot.adapter.options.token
-	queue = robot.brain.get("coffeemate_queue") || []
+	queue = robot.brain.get(brainKey) || []
 
 	robot.hear /coffee me/i, (res) ->
 		# First, is the current user in already in the queue?
@@ -17,9 +19,9 @@ module.exports = (robot, { WebClient = defaultWebClient } = {}) ->
 
 		# If we didn't bail out already, add the current user to the queue
 		queue.push(res.message.user.id)
-		robot.brain.set "coffeemate_queue", queue
+		robot.brain.set brainKey, queue
 		robot.brain.save()
-		
+
 		# Now do we have a pair or not?
 		if queue.length < 2
 			webAPI.chat.postEphemeral
@@ -52,7 +54,7 @@ module.exports = (robot, { WebClient = defaultWebClient } = {}) ->
 					icon_emoji: ":coffee:"
 					as_user: false
 
-				
 				# then empty the queue again
-				robot.brain.set "coffeemate_queue", []
+				queue.length = 0
+				robot.brain.set brainKey, queue
 				robot.brain.save()
