@@ -5,7 +5,7 @@ services:
 
   18f-bot:
     build: .
-    image: 18f/charlie:dcf1c170c14af39474c93271fa43e185
+    image: 18f/charlie:80520b406c7e4e2d5efed9a44831e1ea
     entrypoint: ./start.sh
     environment:
       - HUBOT_SLACK_TOKEN=${HUBOT_SLACK_TOKEN}
