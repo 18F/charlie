@@ -12,6 +12,9 @@ describe('coffeemate', () => {
         web: {
           mpim: {
             open: sandbox.stub()
+          },
+          reactions: {
+            add: sandbox.stub()
           }
         }
       },
@@ -61,12 +64,20 @@ describe('coffeemate', () => {
     it('sends an ephemeral message the first time a user asks for coffee and adds them to the queue', () => {
       handler({
         message: {
+          id: 'message id',
           user: {
             id: 'user 1'
           },
           room: 'room id'
         }
       });
+
+      expect(
+        robot.adapter.client.web.reactions.add.calledWith('coffee', {
+          channel: 'room id',
+          timestamp: 'message id'
+        })
+      ).to.equal(true);
 
       expect(
         webAPI.chat.postEphemeral.calledWith({
@@ -87,12 +98,20 @@ describe('coffeemate', () => {
     it('sends an ephemeral message subsequent time a user asks for coffee and does nothing to the queue', () => {
       handler({
         message: {
+          id: 'message id',
           user: {
             id: 'user 1'
           },
           room: 'room id'
         }
       });
+
+      expect(
+        robot.adapter.client.web.reactions.add.calledWith('coffee', {
+          channel: 'room id',
+          timestamp: 'message id'
+        })
+      ).to.equal(true);
 
       expect(
         webAPI.chat.postEphemeral.calledWith({
@@ -119,12 +138,20 @@ describe('coffeemate', () => {
 
       handler({
         message: {
+          id: 'message id',
           user: {
             id: 'user 2'
           },
           room: 'room id'
         }
       });
+
+      expect(
+        robot.adapter.client.web.reactions.add.calledWith('coffee', {
+          channel: 'room id',
+          timestamp: 'message id'
+        })
+      ).to.equal(true);
 
       expect(
         webAPI.chat.postEphemeral.calledWith({
@@ -167,12 +194,20 @@ describe('coffeemate', () => {
     it('sends an ephemeral message the first time a user asks for coffee and does nothing to the queue', () => {
       handler({
         message: {
+          id: 'message id',
           user: {
             id: 'user 1'
           },
           room: 'room id'
         }
       });
+
+      expect(
+        robot.adapter.client.web.reactions.add.calledWith('coffee', {
+          channel: 'room id',
+          timestamp: 'message id'
+        })
+      ).to.equal(true);
 
       expect(
         webAPI.chat.postEphemeral.calledWith({
@@ -191,12 +226,20 @@ describe('coffeemate', () => {
     it('sends an ephemeral message subsequent time a user asks for coffee and does nothing to the queue', () => {
       handler({
         message: {
+          id: 'message id',
           user: {
             id: 'user 1'
           },
           room: 'room id'
         }
       });
+
+      expect(
+        robot.adapter.client.web.reactions.add.calledWith('coffee', {
+          channel: 'room id',
+          timestamp: 'message id'
+        })
+      ).to.equal(true);
 
       expect(
         webAPI.chat.postEphemeral.calledWith({
@@ -223,12 +266,20 @@ describe('coffeemate', () => {
 
       handler({
         message: {
+          id: 'message id',
           user: {
             id: 'user 2'
           },
           room: 'room id'
         }
       });
+
+      expect(
+        robot.adapter.client.web.reactions.add.calledWith('coffee', {
+          channel: 'room id',
+          timestamp: 'message id'
+        })
+      ).to.equal(true);
 
       expect(
         webAPI.chat.postEphemeral.calledWith({
