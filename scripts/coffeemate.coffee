@@ -2,11 +2,24 @@ defaultWebClient = require("@slack/client").WebClient
 
 brainKey = "coffeemate_queue"
 
+addReaction = (robot, reaction, channelID, messageID) ->
+  new Promise((resolve, reject) ->
+    robot.adapter.client.web.reactions.add reaction, { channel: channelID, timestamp: messageID }, (err, res) ->
+      if err
+        return reject(err)
+      else if !res.ok
+        return reject(new Error('Unknown error with Slack API'))
+      resolve()
+      return
+)
+
 module.exports = (robot, { WebClient = defaultWebClient } = {}) ->
 	webAPI = new WebClient robot.adapter.options.token
 	queue = robot.brain.get(brainKey) || []
 
 	robot.hear /coffee me/i, (res) ->
+		addReaction(robot, 'coffee', res.message.room, res.message.id)
+
 		# First, is the current user in already in the queue?
 		# If so, just let them know
 		if res.message.user.id in queue
