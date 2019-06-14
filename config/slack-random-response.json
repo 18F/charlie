@@ -22,5 +22,11 @@
     "defaultEmoji": ":alda:",
     "trigger": "alan fact",
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/alan.json"
+  },
+  {
+    "botName": "Dolphin Bot",
+    "defaultEmoji": ":dolphin:",
+    "trigger": "dolphin fact",
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/dolphins.json"
   }
 ]
