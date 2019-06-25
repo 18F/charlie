@@ -13,9 +13,9 @@
 yaml = require('js-yaml');
 
 findCaseInsensitively = (list, searchTerm) ->
-  searchTerm = searchTerm.toLowerCase()
+  lowerSearch = searchTerm.toLowerCase()
   for term in list
-    if term.toLowerCase() is searchTerm
+    if term.toLowerCase() is lowerSearch
       return term
   null # else return null
 
@@ -24,7 +24,7 @@ module.exports = (robot) ->
     robot.http('https://api.github.com/repos/18f/procurement-glossary/contents/abbreviations.yml')
       .header('User-Agent', '18F-bot')
       .get() (err, res, body) ->
-        b = new Buffer(JSON.parse(body).content, 'base64');
+        b = Buffer.from(JSON.parse(body).content, 'base64');
         g = yaml.safeLoad(b.toString(), { json: true }).abbreviations
 
         searchTerm = msg.match[2].trim()

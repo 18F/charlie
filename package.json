@@ -3,6 +3,7 @@
   "version": "2.7.1",
   "private": true,
   "scripts": {
+    "lint": "eslint scripts/*.js scripts/*.coffee",
     "test": "mocha --require coffeescript/register test/*",
     "validate-config": "slack-github-issues validate config/slack-github-issues.json",
     "postinstall": "sed -i'.backup' -e 's/\\(image: 18f\\/charlie:\\).*/\\1'`md5 -q package-lock.json`'/g' docker-compose.yml && rm docker-compose.yml.backup"
@@ -37,7 +38,13 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "co": "^4.6.0",
+    "eslint": "^6.0.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^5.1.0",
+    "eslint-plugin-coffeescript": "^1.0.0",
+    "eslint-plugin-import": "^2.18.0",
     "hubot-test-helper": "^1.9.0",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "prettier": "^1.18.2"
   }
 }

@@ -1,0 +1,11 @@
+{
+  "extends": ["airbnb-base", "prettier"],
+  "rules": {
+    "prefer-destructuring": [0]
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "plugins": ["coffeescript"]
+}
