@@ -123,6 +123,12 @@ module.exports = robot => {
     configs.forEach(async config => {
       attachTrigger(robot, config);
     });
+
+    robot.hear(/^fact of facts$/i, async res => {
+      responseFrom(robot, configs[Math.floor(Math.random() * configs.length)])(
+        res
+      );
+    });
   }
 };
 
