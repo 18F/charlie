@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 const configs = JSON.parse(
   fs.readFileSync('config/slack-random-response.json')
 );
@@ -43,6 +44,8 @@ const getResponses = async (robot, config) => {
       });
     });
   }
+
+  return [];
 };
 
 /**
