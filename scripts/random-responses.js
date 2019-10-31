@@ -125,9 +125,11 @@ module.exports = robot => {
     });
 
     robot.hear(/^fact of facts$/i, async res => {
-      responseFrom(robot, configs[Math.floor(Math.random() * configs.length)])(
-        res
-      );
+      // Pick a random fact config
+      const factConfig = configs[Math.floor(Math.random() * configs.length)];
+
+      // Get a message handler for the chosen configuration and then run it!
+      responseFrom(robot, factConfig)(res);
     });
   }
 };
