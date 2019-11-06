@@ -28,7 +28,7 @@
     "js-yaml": "^3.13.1",
     "json": "^9.0.4",
     "request": "^2.88.0",
-    "sinon": "^6.3.5",
+    "sinon": "^7.5.0",
     "twit": "^2.2.11",
     "underscore": "^1.9.1"
   },
@@ -39,12 +39,12 @@
     "chai": "^4.2.0",
     "co": "^4.6.0",
     "eslint": "^6.6.0",
-    "eslint-config-airbnb-base": "^13.2.0",
-    "eslint-config-prettier": "^5.1.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.5.0",
     "eslint-plugin-coffeescript": "^1.0.0",
     "eslint-plugin-import": "^2.18.2",
     "hubot-test-helper": "^1.9.0",
-    "mocha": "^5.2.0",
+    "mocha": "^6.2.2",
     "prettier": "^1.18.2"
   }
 }
