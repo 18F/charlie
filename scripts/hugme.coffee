@@ -22,6 +22,7 @@ appEnv = CFENV.getAppEnv()
 s3Creds = appEnv.getServiceCreds('charlie-bucket')
 if s3Creds == null
   console.log("Unable to find service creds for 'charlie-bucket'.")
+  return
 
 console.log("Found service creds for 'charlie-bucket'.")
 
