@@ -22,38 +22,38 @@ appEnv = CFENV.getAppEnv()
 s3Creds = appEnv.getServiceCreds('charlie-bucket')
 if s3Creds == null
   console.log("Unable to find service creds for 'charlie-bucket'.")
+else
+  console.log("Found service creds for 'charlie-bucket'.")
 
-console.log("Found service creds for 'charlie-bucket'.")
+  creds = new AWS.Credentials(s3Creds.access_key_id, s3Creds.secret_access_key)
+  BUCKET = s3Creds.bucket
+  REGION = s3Creds.region
+  s3 = new AWS.S3({ region: REGION, credentials: creds })
 
-creds = new AWS.Credentials(s3Creds.access_key_id, s3Creds.secret_access_key)
-BUCKET = s3Creds.bucket
-REGION = s3Creds.region
-s3 = new AWS.S3({ region: REGION, credentials: creds })
+  hugUrl = (s3Object) ->
+    filename = s3Object.Key
+    rand = _u.random(10000)
+    return "https://s3-#{REGION}.amazonaws.com/#{BUCKET}/#{filename}?rnd=#{rand}"
 
-hugUrl = (s3Object) ->
-  filename = s3Object.Key
-  rand = _u.random(10000)
-  return "https://s3-#{REGION}.amazonaws.com/#{BUCKET}/#{filename}?rnd=#{rand}"
+  hugBomb = (count, msg) ->
+    s3.listObjects { Bucket: BUCKET }, (err, data) ->
+      if err
+        msg.reply("Error retrieving images: #{err}")
+      else
+        # send unique URLs
+        s3Objects = _u.sample(data.Contents, count)
+        for s3Object in s3Objects
+          url = hugUrl(s3Object)
+          msg.send(url)
+        msg.send("_If you would like to be added, send a picture in #bots._")
 
-hugBomb = (count, msg) ->
-  s3.listObjects { Bucket: BUCKET }, (err, data) ->
-    if err
-      msg.reply("Error retrieving images: #{err}")
-    else
-      # send unique URLs
-      s3Objects = _u.sample(data.Contents, count)
-      for s3Object in s3Objects
-        url = hugUrl(s3Object)
-        msg.send(url)
-      msg.send("_If you would like to be added, send a picture in #bots._")
+  module.exports = (robot) ->
+    if s3Creds == null
+      return
 
-module.exports = (robot) ->
-  if s3Creds == null
-    return
+    robot.respond /hug me/i, (msg) ->
+      hugBomb(1, msg)
 
-  robot.respond /hug me/i, (msg) ->
-    hugBomb(1, msg)
-
-  robot.respond /hug bomb( (\d+))?/i, (msg) ->
-    count = msg.match[2] || 3
-    hugBomb(count, msg)
+    robot.respond /hug bomb( (\d+))?/i, (msg) ->
+      count = msg.match[2] || 3
+      hugBomb(count, msg)

@@ -24,5 +24,8 @@ module.exports = (robot) ->
         msg.send "Well, what does Capital Weather Gang say?"
       else
         status = JSON.parse(body)
-        msg.send "#{icons[status.Icon]} #{status.Icon} for #{status.AppliesTo}. #{status.StatusSummary}. Read More: \n #{status.Url}"
+        msg.send
+          text: "#{icons[status.Icon]} #{status.Icon} for #{status.AppliesTo}. #{status.StatusSummary}. (<#{status.Url}|Read more>)"
+          unfurl_links: false
+          unfurl_media: false
       return
