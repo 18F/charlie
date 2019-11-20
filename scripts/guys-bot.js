@@ -20,8 +20,8 @@ module.exports = robot => {
         }
       ],
       as_user: false,
-      icon_emoji: ':18f:',
-      username: '18F DE&I',
+      icon_emoji: ':tts:',
+      username: 'TTS DE&I',
       unfurl_links: false,
       unfurl_media: false
       // text: `Did you mean *y'all*? (_<https://web.archive.org/web/20170714141744/https://18f.gsa.gov/2016/01/12/hacking-inclusion-by-customizing-a-slack-bot/|What's this?>_)`
