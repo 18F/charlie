@@ -25,7 +25,7 @@ module.exports = (robot) ->
       else
         status = JSON.parse(body)
         msg.send
-          text: "#{icons[status.Icon]} #{status.Icon} for #{status.AppliesTo}. #{status.StatusSummary}. (<#{status.Url}|Read more>)"
+          text: "#{icons[status.Icon]} #{status.StatusSummary} for #{status.AppliesTo}. (<#{status.Url}|Read more>)"
           unfurl_links: false
           unfurl_media: false
       return
