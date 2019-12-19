@@ -28,5 +28,11 @@
     "defaultEmoji": ":dolphin:",
     "trigger": "dolphin fact",
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/dolphins.json"
+  },
+  {
+    "botName": "Ed Simulator",
+    "defaultEmoji": ":edmullen:",
+    "trigger": "ed simulator",
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/ed.json"
   }
 ]
