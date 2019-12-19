@@ -34,5 +34,11 @@
     "defaultEmoji": ":edmullen:",
     "trigger": "ed simulator",
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/ed.json"
+  },
+  {
+    "botName": "Minnesota Facts",
+    "defaultEmoji": ":minn:",
+    "trigger": "minnesota facts",
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/Minnesota.json"
   }
 ]
