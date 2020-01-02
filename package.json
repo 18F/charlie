@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@slack/client": "^5.0.2",
-    "aws-sdk": "^2.564.0",
+    "aws-sdk": "^2.596.0",
     "cfenv": "^1.2.2",
     "coffeescript": "^1.12.7",
     "csvtojson": "^2.0.10",
@@ -21,7 +21,7 @@
     "hubot-redis-brain": "^1.0.0",
     "hubot-scripts": "^2.17.2",
     "hubot-scripts-us-federal-holidays": "^1.1.0",
-    "hubot-scripts-us-federal-holidays-reminder": "^2.1.0",
+    "hubot-scripts-us-federal-holidays-reminder": "^2.1.1",
     "hubot-shipit": "^0.2.0",
     "hubot-slack": "^4.7.1",
     "hubot-xkcd": "0.0.5",
@@ -38,13 +38,13 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "co": "^4.6.0",
-    "eslint": "^6.6.0",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-prettier": "^6.5.0",
+    "eslint-config-prettier": "^6.9.0",
     "eslint-plugin-coffeescript": "^1.0.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-import": "^2.19.1",
     "hubot-test-helper": "^1.9.0",
     "mocha": "^6.2.2",
-    "prettier": "^1.18.2"
+    "prettier": "^1.19.1"
   }
 }
