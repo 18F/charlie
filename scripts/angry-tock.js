@@ -98,6 +98,10 @@ const getTockTruants = async robot => {
   while (now.format('dddd') !== 'Sunday') {
     now.subtract(1, 'day');
   }
+  // We're now at the nearest Sunday, but we want to go back one further to see
+  // who is absent on the PREVIOUS reporting period.
+  now.subtract(7, 'days');
+
   const reportingPeriodStart = now.format('YYYY-MM-DD');
 
   return new Promise((resolve, reject) => {
