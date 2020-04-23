@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "lint": "eslint scripts/*.js scripts/*.coffee",
-    "test": "mocha --require coffeescript/register test/*",
+    "test": "mocha --require coffeescript/register test/**/*.js",
+    "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha --require coffeescript/register test/**/*.js",
     "validate-config": "slack-github-issues validate config/slack-github-issues.json"
   },
   "dependencies": {
@@ -30,8 +31,9 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "node-schedule": "^1.3.2",
+    "nyc": "^15.0.1",
     "request": "^2.88.2",
-    "sinon": "^7.5.0",
+    "sinon": "^9.0.2",
     "twit": "^2.2.11",
     "underscore": "^1.10.2"
   },

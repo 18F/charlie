@@ -6,18 +6,28 @@ const TOCK_API_URL = process.env.HUBOT_TOCK_API;
 const TOCK_TOKEN = process.env.HUBOT_TOCK_TOKEN;
 
 const ANGRY_TOCK_TIMEZONE =
-  process.env.HUBOT_ANGRY_TOCK_TZ || 'America/New_York';
+  process.env.ANGRY_TOCK_TIMEZONE || 'America/New_York';
 const ANGRY_TOCK_FIRST_ALERT = moment(
-  process.env.HUBOT_ANGRY_TOCK_FIRST_TIME || '10:00',
+  process.env.ANGRY_TOCK_FIRST_TIME || '10:00',
   'HH:mm'
 );
 const ANGRY_TOCK_SECOND_ALERT = moment(
-  process.env.HUBOT_ANGRY_TOCK_SECOND_TIME || '16:00',
+  process.env.ANGRY_TOCK_SECOND_TIME || '16:00',
   'HH:mm'
 );
 
-const merge = arrayOne => ({
+/**
+ * Join two arrays on a given property. Similar to a SQL JOIN.
+ * @param {Array} arrayOne first array to be merged
+ */
+const join = arrayOne => ({
+  /**
+   * @param {Array} arrayTwo second array to be merged
+   */
   with: arrayTwo => ({
+    /**
+     * @param {string} key property to join the arrays on
+     */
     on: key =>
       arrayOne
         .filter(a => arrayTwo.some(b => b[key] === a[key]))
@@ -28,6 +38,19 @@ const merge = arrayOne => ({
   })
 });
 
+/**
+ * Get the current time in the configured timezone.
+ * @returns {Moment} A moment object representing the current time in the
+ *   configured timezone.
+ */
+const m = () => moment.tz(ANGRY_TOCK_TIMEZONE);
+
+/**
+ * Fetch a list of Slack users in the workspace that this bot is in.
+ * @async
+ * @param {Object} robot Hubot robot object
+ * @returns {Promise<Array<Object>>} A list of Slack users.
+ */
 const getSlackUsers = async robot =>
   new Promise((resolve, reject) => {
     robot.adapter.client.web.users.list((err, response) => {
@@ -38,8 +61,16 @@ const getSlackUsers = async robot =>
     });
   });
 
+/**
+ * Fetch a list of Tock users that are current 18F employees.
+ * @async
+ * @param {Object} robot Hubot robot object
+ * @returns {Promise<Array<Object>>} A list of Tock users
+ */
 const getCurrent18FTockUsers = async robot =>
   new Promise((resolve, reject) => {
+    // First get user data. This is what tells us whether users are current and
+    // are 18F employees. We'll use that to filter to just relevant users.
     robot
       .http(`${TOCK_API_URL}/user_data.json`)
       .header('Authorization', `Token ${TOCK_TOKEN}`)
@@ -48,10 +79,16 @@ const getCurrent18FTockUsers = async robot =>
         return reject(new Error(userDataErr));
       }
 
+      // Filter only current 18F employees. Only keep the user property. This
+      // is their username, and we'll use that to filter the later user list.
       const userDataObjs = JSON.parse(userDataBody)
         .filter(u => u.current_employee && u.is_18f_employee)
-        .map(u => ({ user: u.user }));
+        .map(u => u.user);
 
+      // Now get the list of users. This includes email addresses, which we can
+      // use to associate a user to a Slack account. However, this doesn't tell
+      // us whether they are currently an employee or with 18F, so we have to
+      // combine these two lists together.
       return robot
         .http(`${TOCK_API_URL}/users.json`)
         .header('Authorization', `Token ${TOCK_TOKEN}`)
@@ -60,46 +97,34 @@ const getCurrent18FTockUsers = async robot =>
           return reject(new Error(usersErr));
         }
 
-        const users = JSON.parse(usersBody).map(u => ({
-          user: u.username,
-          email: u.email,
-          tock_id: u.id
-        }));
+        // Keep just the bits we care about.
+        const users = JSON.parse(usersBody)
+          .filter(u => userDataObjs.includes(u.username))
+          .map(u => ({
+            user: u.username,
+            email: u.email,
+            tock_id: u.id
+          }));
 
-        const tockUsers = merge(userDataObjs)
-          .with(users)
-          .on('user');
-
-        return resolve(tockUsers);
+        return resolve(users);
       });
     });
   });
 
-const getTockSlackUsers = async robot => {
-  const allSlackUsers = await getSlackUsers(robot);
-
-  const slackUsers = allSlackUsers
-    .filter(u => !u.is_restricted && !u.is_bot && !u.deleted)
-    .map(u => ({ slack_id: u.id, name: u.real_name, email: u.profile.email }));
-
-  const tockUsers = await getCurrent18FTockUsers(robot);
-
-  const tockSlackUsers = merge(tockUsers)
-    .with(slackUsers)
-    .on('email');
-
-  return tockSlackUsers;
-};
-
-const m = () => moment.tz(ANGRY_TOCK_TIMEZONE);
-
+/**
+ * Get the truant users for the most recent completed Tock reporting period.
+ * @async
+ * @param {Object} robot Hubot robot object
+ * @returns {<Promise<Array<Object>>} The list of truant users
+ */
 const getTockTruants = async robot => {
   const now = m();
   while (now.format('dddd') !== 'Sunday') {
     now.subtract(1, 'day');
   }
-  // We're now at the nearest Sunday, but we want to go back one further to see
-  // who is absent on the PREVIOUS reporting period.
+  // We're now at the nearest past Sunday, but that's the start of the current
+  // reporting period. We want to go back one week further to see who is truant
+  // on the PREVIOUS reporting period.
   now.subtract(7, 'days');
 
   const reportingPeriodStart = now.format('YYYY-MM-DD');
@@ -120,6 +145,38 @@ const getTockTruants = async robot => {
   });
 };
 
+/**
+ * Get all current 18F Tock users that are also Slack users.
+ * @async
+ * @param {Object} robot Hubot robot object
+ * @returns {Promise<Array<Object>>} A list of users that are both current 18F
+ *   employees in Tock and users in Slack, joined on their email addresses.
+ */
+const getTockSlackUsers = async robot => {
+  const allSlackUsers = await getSlackUsers(robot);
+
+  // This shouldn't filter anyone who would be in the current 18F Tock users,
+  // but there's no good reason we can't go ahead and do this filter to be safe.
+  const slackUsers = allSlackUsers
+    .filter(u => !u.is_restricted && !u.is_bot && !u.deleted)
+    .map(u => ({ slack_id: u.id, name: u.real_name, email: u.profile.email }));
+
+  const tockUsers = await getCurrent18FTockUsers(robot);
+
+  const tockSlackUsers = join(tockUsers)
+    .with(slackUsers)
+    .on('email');
+
+  return tockSlackUsers;
+};
+
+/**
+ * Shout at all the truant users.
+ * @async
+ * @param {Object} options
+ * @param {Boolean} options.calm Whether this is Happy Tock or Angry Tock. Angry
+ *   Tock is not calm. Defaults to Angry Tock.
+ */
 let shout = robot => {
   shout = async ({ calm = false } = {}) => {
     const message = {
@@ -143,12 +200,20 @@ let shout = robot => {
   };
 };
 
+/**
+ * Gets whether or not a given date/time is a Angry Tock shouting day.
+ * @param {Moment} now The date/time to check, as a Moment object
+ * @returns {Boolean} True if the passed date/time is a good day for shouting
+ */
 const isAngryTockDay = now => {
   const d = now || m();
   return d.format('dddd') === 'Monday' && !holidays.isAHoliday();
 };
 
-const scheduleNextShoutingMatch = ({ schedule = scheduler } = {}) => {
+/**
+ * Schedules the next time to shout at users.
+ */
+const scheduleNextShoutingMatch = () => {
   const day = moment.tz(ANGRY_TOCK_TIMEZONE);
 
   const firstHour = ANGRY_TOCK_FIRST_ALERT.hour();
@@ -170,14 +235,14 @@ const scheduleNextShoutingMatch = ({ schedule = scheduler } = {}) => {
     if (day.isBefore(firstTockShoutTime)) {
       // ...and Angry Tock should not have shouted at all yet, schedule a calm
       // shout.
-      return schedule.scheduleJob(firstTockShoutTime.toDate(), () => {
+      return scheduler.scheduleJob(firstTockShoutTime.toDate(), () => {
         shout({ calm: true });
         setTimeout(() => scheduleNextShoutingMatch(), 1000);
       });
     }
-    if (day.isAfter(firstTockShoutTime) && day.isBefore(secondTockShoutTime)) {
+    if (day.isBefore(secondTockShoutTime)) {
       // ...and Angry Tock should have shouted once, schedule an un-calm shout.
-      return schedule.scheduleJob(secondTockShoutTime.toDate(), () => {
+      return scheduler.scheduleJob(secondTockShoutTime.toDate(), () => {
         shout({ calm: false });
         setTimeout(() => scheduleNextShoutingMatch(), 1000);
       });
@@ -188,7 +253,8 @@ const scheduleNextShoutingMatch = ({ schedule = scheduler } = {}) => {
     day.add(1, 'day');
   }
 
-  // Advance to the next shouting day
+  // ...and Angry Tock should have already shouted twice today, advance to the
+  // next shouting day.
   while (!isAngryTockDay(day)) {
     day.add(1, 'day');
   }
@@ -198,7 +264,7 @@ const scheduleNextShoutingMatch = ({ schedule = scheduler } = {}) => {
   day.minute(firstMinute);
   day.second(0);
 
-  return schedule.scheduleJob(day.toDate(), () => {
+  return scheduler.scheduleJob(day.toDate(), () => {
     shout({ calm: true });
     setTimeout(() => scheduleNextShoutingMatch(), 1000);
   });
@@ -211,7 +277,6 @@ module.exports = async robot => {
     );
     return;
   }
-
   robot.logger.info('AngryTock starting up');
 
   // Setup the shouty method, to create a closure around the robot object.

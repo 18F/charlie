@@ -5,3 +5,5 @@ slack.yml
 .env
 node_modules
 .vscode
+.nyc_output
+coverage
