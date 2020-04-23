@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "lint": "eslint scripts/*.js scripts/*.coffee",
-    "test": "mocha --require coffeescript/register test/**/*.js",
-    "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha --require coffeescript/register test/**/*.js",
+    "test": "mocha --require coffeescript/register test/*",
+    "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha --require coffeescript/register test/*",
     "validate-config": "slack-github-issues validate config/slack-github-issues.json"
   },
   "dependencies": {
