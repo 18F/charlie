@@ -1,6 +1,7 @@
 const holidays = require('@18f/us-federal-holidays');
 const moment = require('moment-timezone');
 const scheduler = require('node-schedule');
+const { promisify } = require('util');
 
 const TOCK_API_URL = process.env.HUBOT_TOCK_API;
 const TOCK_TOKEN = process.env.HUBOT_TOCK_TOKEN;
@@ -51,13 +52,21 @@ const m = () => moment.tz(ANGRY_TOCK_TIMEZONE);
  * @param {Object} robot Hubot robot object
  * @returns {Promise<Array<Object>>} A list of Slack users.
  */
-const getSlackUsers = async robot =>
+const getSlackUsers = async robot => {
+  const response = await promisify(robot.adapter.client.web.users.list)();
+  return response.members;
+};
+
+const getFromTock = async (robot, url) =>
   new Promise((resolve, reject) => {
-    robot.adapter.client.web.users.list((err, response) => {
+    robot
+      .http(url)
+      .header('Authorization', `Token ${TOCK_TOKEN}`)
+      .get()((err, _, body) => {
       if (err) {
-        return reject(new Error(err));
+        return reject(err);
       }
-      return resolve(response.members);
+      return resolve(JSON.parse(body));
     });
   });
 
@@ -67,49 +76,37 @@ const getSlackUsers = async robot =>
  * @param {Object} robot Hubot robot object
  * @returns {Promise<Array<Object>>} A list of Tock users
  */
-const getCurrent18FTockUsers = async robot =>
-  new Promise((resolve, reject) => {
-    // First get user data. This is what tells us whether users are current and
-    // are 18F employees. We'll use that to filter to just relevant users.
-    robot
-      .http(`${TOCK_API_URL}/user_data.json`)
-      .header('Authorization', `Token ${TOCK_TOKEN}`)
-      .get()((userDataErr, _, userDataBody) => {
-      if (userDataErr) {
-        return reject(new Error(userDataErr));
-      }
+const getCurrent18FTockUsers = async robot => {
+  // First get user data. This is what tells us whether users are current and
+  // are 18F employees. We'll use that to filter to just relevant users.
+  const userDataBody = await getFromTock(
+    robot,
+    `${TOCK_API_URL}/user_data.json`
+  );
 
-      // Filter only current 18F employees. Only keep the user property. This
-      // is their username, and we'll use that to filter the later user list.
-      const userDataObjs = JSON.parse(userDataBody)
-        .filter(u => u.current_employee && u.is_18f_employee)
-        .map(u => u.user);
+  // Filter only current 18F employees. Only keep the user property. This
+  // is their username, and we'll use that to filter the later user list.
+  const userDataObjs = userDataBody
+    .filter(u => u.current_employee && u.is_18f_employee)
+    .map(u => u.user);
 
-      // Now get the list of users. This includes email addresses, which we can
-      // use to associate a user to a Slack account. However, this doesn't tell
-      // us whether they are currently an employee or with 18F, so we have to
-      // combine these two lists together.
-      return robot
-        .http(`${TOCK_API_URL}/users.json`)
-        .header('Authorization', `Token ${TOCK_TOKEN}`)
-        .get()((usersErr, response, usersBody) => {
-        if (usersErr) {
-          return reject(new Error(usersErr));
-        }
+  // Now get the list of users. This includes email addresses, which we can
+  // use to associate a user to a Slack account. However, this doesn't tell
+  // us whether they are currently an employee or with 18F, so we have to
+  // combine these two lists together.
+  const usersBody = await getFromTock(robot, `${TOCK_API_URL}/users.json`);
 
-        // Keep just the bits we care about.
-        const users = JSON.parse(usersBody)
-          .filter(u => userDataObjs.includes(u.username))
-          .map(u => ({
-            user: u.username,
-            email: u.email,
-            tock_id: u.id
-          }));
+  // Keep just the bits we care about.
+  const users = usersBody
+    .filter(u => userDataObjs.includes(u.username))
+    .map(u => ({
+      user: u.username,
+      email: u.email,
+      tock_id: u.id
+    }));
 
-        return resolve(users);
-      });
-    });
-  });
+  return users;
+};
 
 /**
  * Get the truant users for the most recent completed Tock reporting period.
@@ -129,20 +126,10 @@ const getTockTruants = async robot => {
 
   const reportingPeriodStart = now.format('YYYY-MM-DD');
 
-  return new Promise((resolve, reject) => {
-    robot
-      .http(
-        `${TOCK_API_URL}/reporting_period_audit/${reportingPeriodStart}.json`
-      )
-      .header('Authorization', `Token ${process.env.HUBOT_TOCK_TOKEN}`)
-      .get()((err, _, truantsBody) => {
-      if (err) {
-        return reject(new Error(err));
-      }
-
-      return resolve(JSON.parse(truantsBody));
-    });
-  });
+  return getFromTock(
+    robot,
+    `${TOCK_API_URL}/reporting_period_audit/${reportingPeriodStart}.json`
+  );
 };
 
 /**
