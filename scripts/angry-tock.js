@@ -188,6 +188,43 @@ let shout = robot => {
     slackableTruants.forEach(({ slack_id: slackID }) => {
       robot.messageRoom(slackID, message);
     });
+
+    if (!calm) {
+      if (truants.length > 0) {
+        const nonSlackableTruants = truants.filter(
+          t => !slackableTruants.some(s => s.email === t.email)
+        );
+
+        const report = [];
+        slackableTruants.forEach(u =>
+          report.push([`• <@${u.slack_id}> (notified on Slack)`])
+        );
+        nonSlackableTruants.forEach(u =>
+          report.push([`• ${u.username} (not notified)`])
+        );
+
+        robot.messageRoom('tock', {
+          attachments: [
+            {
+              fallback: report.join('\n'),
+              color: '#FF0000',
+              text: report.join('\n')
+            }
+          ],
+          username: 'Angry Tock',
+          icon_emoji: ':angrytock:',
+          text: '*The following users are currently truant on Tock:*',
+          as_user: false
+        });
+      } else {
+        robot.messageRoom('tock', {
+          username: 'Happy Tock',
+          icon_emoji: ':happy-tock:',
+          text: 'No Tock truants!',
+          as_user: false
+        });
+      }
+    }
   };
 };
 

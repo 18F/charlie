@@ -401,7 +401,7 @@ describe('Angry Tock', () => {
       moment.duration({ hours: 4, minutes: 45 }).asMilliseconds()
     );
 
-    expect(robot.messageRoom.callCount).to.equal(2);
+    expect(robot.messageRoom.callCount).to.equal(3);
 
     expect(
       robot.messageRoom.calledWith('slack1', {
@@ -417,6 +417,24 @@ describe('Angry Tock', () => {
         username: 'Angry Tock',
         icon_emoji: ':angrytock:',
         text: '<https://tock.18f.gov|Tock your time>! You gotta!',
+        as_user: false
+      })
+    ).to.equal(true);
+
+    expect(
+      robot.messageRoom.calledWith('tock', {
+        attachments: [
+          {
+            fallback:
+              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)\n• employee5 (not notified)',
+            color: '#FF0000',
+            text:
+              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)\n• employee5 (not notified)'
+          }
+        ],
+        username: 'Angry Tock',
+        icon_emoji: ':angrytock:',
+        text: '*The following users are currently truant on Tock:*',
         as_user: false
       })
     ).to.equal(true);
@@ -451,26 +469,33 @@ describe('Angry Tock', () => {
     // Last time. Advance to the secound shouting. This finishes all the shouty
     // routes through the bot and we can be done.
     robot.messageRoom.resetHistory();
+
+    // But first, clear out the truants, so we can test the case where Angry
+    // Tock's rage is sated and Happy Tock returns.
+    robot.http
+      .withArgs(sinon.match('tock url/reporting_period_audit/'))
+      .returns({
+        header: sinon
+          .stub()
+          .withArgs('Authorization', 'Token tock token')
+          .returns({
+            get: sinon
+              .stub()
+              .returns(sinon.stub().yields(false, null, JSON.stringify([])))
+          })
+      });
+
     await clock.tickAsync(
       moment.duration({ hours: 4, minutes: 45 }).asMilliseconds()
     );
 
-    expect(robot.messageRoom.callCount).to.equal(2);
+    expect(robot.messageRoom.callCount).to.equal(1);
 
     expect(
-      robot.messageRoom.calledWith('slack1', {
-        username: 'Angry Tock',
-        icon_emoji: ':angrytock:',
-        text: '<https://tock.18f.gov|Tock your time>! You gotta!',
-        as_user: false
-      })
-    ).to.equal(true);
-
-    expect(
-      robot.messageRoom.calledWith('slack2', {
-        username: 'Angry Tock',
-        icon_emoji: ':angrytock:',
-        text: '<https://tock.18f.gov|Tock your time>! You gotta!',
+      robot.messageRoom.calledWith('tock', {
+        username: 'Happy Tock',
+        icon_emoji: ':happy-tock:',
+        text: 'No Tock truants!',
         as_user: false
       })
     ).to.equal(true);
