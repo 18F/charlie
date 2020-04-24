@@ -203,7 +203,7 @@ let shout = robot => {
           report.push([`• ${u.username} (not notified)`])
         );
 
-        robot.messageRoom('tock', {
+        robot.messageRoom('18f-gmt', {
           attachments: [
             {
               fallback: report.join('\n'),
@@ -217,7 +217,7 @@ let shout = robot => {
           as_user: false
         });
       } else {
-        robot.messageRoom('tock', {
+        robot.messageRoom('18f-gmt', {
           username: 'Happy Tock',
           icon_emoji: ':happy-tock:',
           text: 'No Tock truants!',

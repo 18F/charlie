@@ -422,7 +422,7 @@ describe('Angry Tock', () => {
     ).to.equal(true);
 
     expect(
-      robot.messageRoom.calledWith('tock', {
+      robot.messageRoom.calledWith('18f-gmt', {
         attachments: [
           {
             fallback:
@@ -492,7 +492,7 @@ describe('Angry Tock', () => {
     expect(robot.messageRoom.callCount).to.equal(1);
 
     expect(
-      robot.messageRoom.calledWith('tock', {
+      robot.messageRoom.calledWith('18f-gmt', {
         username: 'Happy Tock',
         icon_emoji: ':happy-tock:',
         text: 'No Tock truants!',
