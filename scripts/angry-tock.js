@@ -1,7 +1,6 @@
 const holidays = require('@18f/us-federal-holidays');
 const moment = require('moment-timezone');
 const scheduler = require('node-schedule');
-const { promisify } = require('util');
 
 const TOCK_API_URL = process.env.HUBOT_TOCK_API;
 const TOCK_TOKEN = process.env.HUBOT_TOCK_TOKEN;
@@ -52,10 +51,15 @@ const m = () => moment.tz(ANGRY_TOCK_TIMEZONE);
  * @param {Object} robot Hubot robot object
  * @returns {Promise<Array<Object>>} A list of Slack users.
  */
-const getSlackUsers = async robot => {
-  const response = await promisify(robot.adapter.client.web.users.list)();
-  return response.members;
-};
+const getSlackUsers = async robot =>
+  new Promise((resolve, reject) => {
+    robot.adapter.client.web.users.list((err, response) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(response.members);
+    });
+  });
 
 const getFromTock = async (robot, url) =>
   new Promise((resolve, reject) => {
@@ -184,6 +188,43 @@ let shout = robot => {
     slackableTruants.forEach(({ slack_id: slackID }) => {
       robot.messageRoom(slackID, message);
     });
+
+    if (!calm) {
+      if (truants.length > 0) {
+        const nonSlackableTruants = truants.filter(
+          t => !slackableTruants.some(s => s.email === t.email)
+        );
+
+        const report = [];
+        slackableTruants.forEach(u =>
+          report.push([`• <@${u.slack_id}> (notified on Slack)`])
+        );
+        nonSlackableTruants.forEach(u =>
+          report.push([`• ${u.username} (not notified)`])
+        );
+
+        robot.messageRoom('18f-gmt', {
+          attachments: [
+            {
+              fallback: report.join('\n'),
+              color: '#FF0000',
+              text: report.join('\n')
+            }
+          ],
+          username: 'Angry Tock',
+          icon_emoji: ':angrytock:',
+          text: '*The following users are currently truant on Tock:*',
+          as_user: false
+        });
+      } else {
+        robot.messageRoom('18f-gmt', {
+          username: 'Happy Tock',
+          icon_emoji: ':happy-tock:',
+          text: 'No Tock truants!',
+          as_user: false
+        });
+      }
+    }
   };
 };
 
