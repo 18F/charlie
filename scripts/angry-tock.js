@@ -1,7 +1,6 @@
 const holidays = require('@18f/us-federal-holidays');
 const moment = require('moment-timezone');
 const scheduler = require('node-schedule');
-const { promisify } = require('util');
 
 const TOCK_API_URL = process.env.HUBOT_TOCK_API;
 const TOCK_TOKEN = process.env.HUBOT_TOCK_TOKEN;
@@ -52,10 +51,15 @@ const m = () => moment.tz(ANGRY_TOCK_TIMEZONE);
  * @param {Object} robot Hubot robot object
  * @returns {Promise<Array<Object>>} A list of Slack users.
  */
-const getSlackUsers = async robot => {
-  const response = await promisify(robot.adapter.client.web.users.list)();
-  return response.members;
-};
+const getSlackUsers = async robot =>
+  new Promise((resolve, reject) => {
+    robot.adapter.client.web.users.list((err, response) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(response.members);
+    });
+  });
 
 const getFromTock = async (robot, url) =>
   new Promise((resolve, reject) => {
