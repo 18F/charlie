@@ -171,8 +171,8 @@ const getTockSlackUsers = async robot => {
 let shout = robot => {
   shout = async ({ calm = false } = {}) => {
     const message = {
-      username: `${calm ? 'Happy' : 'Angry'} Tock`,
-      icon_emoji: calm ? ':happy-tock:' : ':angrytock:',
+      username: `${calm ? 'Disappointed' : 'Angry'} Tock`,
+      icon_emoji: calm ? ':disappointed-tock:' : ':angrytock:',
       text: calm
         ? 'Please <https://tock.18f.gov|Tock your time>!'
         : '<https://tock.18f.gov|Tock your time>! You gotta!',
@@ -218,8 +218,8 @@ let shout = robot => {
         });
       } else {
         robot.messageRoom('18f-gmt', {
-          username: 'Disappointed Tock',
-          icon_emoji: ':disappointed-tock:',
+          username: 'Happy Tock',
+          icon_emoji: ':happy-tock:',
           text: 'No Tock truants!',
           as_user: false
         });

@@ -450,8 +450,8 @@ describe('Angry Tock', () => {
 
     expect(
       robot.messageRoom.calledWith('slack1', {
-        username: 'Happy Tock',
-        icon_emoji: ':happy-tock:',
+        username: 'Disappointed Tock',
+        icon_emoji: ':disappointed-tock:',
         text: 'Please <https://tock.18f.gov|Tock your time>!',
         as_user: false
       })
@@ -459,8 +459,8 @@ describe('Angry Tock', () => {
 
     expect(
       robot.messageRoom.calledWith('slack2', {
-        username: 'Happy Tock',
-        icon_emoji: ':happy-tock:',
+        username: 'Disappointed Tock',
+        icon_emoji: ':disappointed-tock:',
         text: 'Please <https://tock.18f.gov|Tock your time>!',
         as_user: false
       })
@@ -493,8 +493,8 @@ describe('Angry Tock', () => {
 
     expect(
       robot.messageRoom.calledWith('18f-gmt', {
-        username: 'Disappointed Tock',
-        icon_emoji: ':disappointed-tock:',
+        username: 'Happy Tock',
+        icon_emoji: ':happy-tock:',
         text: 'No Tock truants!',
         as_user: false
       })
