@@ -421,8 +421,6 @@ describe('Angry Tock', () => {
       })
     ).to.equal(true);
 
-    console.log(robot.messageRoom.args[2]);
-
     expect(
       robot.messageRoom.calledWith('18f-gmt', {
         attachments: [
