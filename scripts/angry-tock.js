@@ -130,9 +130,15 @@ const getTockTruants = async robot => {
 
   const reportingPeriodStart = now.format('YYYY-MM-DD');
 
-  return getFromTock(
+  const tockUsers = await getCurrent18FTockUsers(robot);
+
+  const allTruants = await getFromTock(
     robot,
     `${TOCK_API_URL}/reporting_period_audit/${reportingPeriodStart}.json`
+  );
+
+  return allTruants.filter(truant =>
+    tockUsers.some(tockUser => tockUser.tock_id === truant.id)
   );
 };
 

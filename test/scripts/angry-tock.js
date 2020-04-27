@@ -426,10 +426,10 @@ describe('Angry Tock', () => {
         attachments: [
           {
             fallback:
-              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)\n• employee5 (not notified)',
+              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)',
             color: '#FF0000',
             text:
-              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)\n• employee5 (not notified)'
+              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)'
           }
         ],
         username: 'Angry Tock',
