@@ -171,8 +171,8 @@ const getTockSlackUsers = async robot => {
 let shout = robot => {
   shout = async ({ calm = false } = {}) => {
     const message = {
-      username: `${calm ? 'Happy' : 'Angry'} Tock`,
-      icon_emoji: calm ? ':happy-tock:' : ':angrytock:',
+      username: `${calm ? 'Disappointed' : 'Angry'} Tock`,
+      icon_emoji: calm ? ':disappointed-tock:' : ':angrytock:',
       text: calm
         ? 'Please <https://tock.18f.gov|Tock your time>!'
         : '<https://tock.18f.gov|Tock your time>! You gotta!',
