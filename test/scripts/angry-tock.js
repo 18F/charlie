@@ -421,15 +421,17 @@ describe('Angry Tock', () => {
       })
     ).to.equal(true);
 
+    console.log(robot.messageRoom.args[2]);
+
     expect(
       robot.messageRoom.calledWith('18f-gmt', {
         attachments: [
           {
             fallback:
-              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)\n• employee5 (not notified)',
+              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)',
             color: '#FF0000',
             text:
-              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)\n• employee5 (not notified)'
+              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)'
           }
         ],
         username: 'Angry Tock',
