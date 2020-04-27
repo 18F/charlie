@@ -493,8 +493,8 @@ describe('Angry Tock', () => {
 
     expect(
       robot.messageRoom.calledWith('18f-gmt', {
-        username: 'Happy Tock',
-        icon_emoji: ':happy-tock:',
+        username: 'Disappointed Tock',
+        icon_emoji: ':disappointed-tock:',
         text: 'No Tock truants!',
         as_user: false
       })
