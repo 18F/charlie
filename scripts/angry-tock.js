@@ -91,7 +91,7 @@ const getCurrent18FTockUsers = async robot => {
   // Filter only current 18F employees. Only keep the user property. This
   // is their username, and we'll use that to filter the later user list.
   const userDataObjs = userDataBody
-    .filter(u => u.current_employee && u.is_18f_employee)
+    .filter(u => u.is_active && u.current_employee && u.is_18f_employee)
     .map(u => u.user);
 
   // Now get the list of users. This includes email addresses, which we can

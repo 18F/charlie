@@ -101,6 +101,7 @@ describe('Angry Tock', () => {
               {
                 current_employee: true,
                 is_18f_employee: true,
+                is_active: true,
                 is_billable: true,
                 organization: null,
                 unit: null,
@@ -109,6 +110,7 @@ describe('Angry Tock', () => {
               {
                 current_employee: true,
                 is_18f_employee: true,
+                is_active: true,
                 is_billable: true,
                 organization: '18F',
                 unit: 'Engineering Chapter',
@@ -117,6 +119,7 @@ describe('Angry Tock', () => {
               {
                 current_employee: true,
                 is_18f_employee: true,
+                is_active: true,
                 is_billable: true,
                 organization: 'Who knows',
                 unit: '',
@@ -125,6 +128,7 @@ describe('Angry Tock', () => {
               {
                 current_employee: true,
                 is_18f_employee: false,
+                is_active: true,
                 is_billable: true,
                 organization: '',
                 unit: '',
@@ -133,6 +137,7 @@ describe('Angry Tock', () => {
               {
                 current_employee: false,
                 is_18f_employee: true,
+                is_active: true,
                 is_billable: false,
                 organization: '',
                 unit: '',
@@ -141,10 +146,20 @@ describe('Angry Tock', () => {
               {
                 current_employee: false,
                 is_18f_employee: false,
+                is_active: true,
                 is_billable: true,
                 organization: '',
                 unit: '',
                 user: 'not 18, nor a current employee'
+              },
+              {
+                current_employee: true,
+                is_18f_employee: true,
+                is_active: false,
+                is_billable: true,
+                organization: '',
+                unit: '',
+                user: 'not active'
               }
             ])
           )
@@ -196,6 +211,13 @@ describe('Angry Tock', () => {
                 id: 'tock5',
                 last_name: 'Five',
                 username: 'employee5'
+              },
+              {
+                email: 'user@six',
+                first_name: 'User',
+                id: 'tock6',
+                last_name: 'Six',
+                username: 'not active'
               }
             ])
           )
@@ -240,6 +262,13 @@ describe('Angry Tock', () => {
                 first_name: 'User',
                 last_name: 'Five',
                 username: 'employee5'
+              },
+              {
+                id: 'tock6',
+                email: 'user@six',
+                first_name: 'User',
+                last_name: 'Six',
+                username: 'not active'
               }
             ])
           )
