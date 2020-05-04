@@ -8,5 +8,5 @@ applications:
   health-check-type: process
   host: charlie
   services:
-    - charlie-redis
+    - charlie-redis32
     - charlie-bucket
