@@ -11,7 +11,7 @@
   "dependencies": {
     "@18f/us-federal-holidays": "^1.4.0",
     "@slack/client": "^5.0.2",
-    "aws-sdk": "^2.656.0",
+    "aws-sdk": "^2.674.0",
     "cfenv": "^1.2.2",
     "coffeescript": "^1.12.7",
     "csvtojson": "^2.0.10",
