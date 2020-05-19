@@ -1,4 +1,4 @@
-const guysRegex = /(?<!boba )(?<!halal )guy(s|z)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i;
+const guysRegex = /(?<!boba )(?<!five )(?<!halal )guy(s|z)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i;
 
 module.exports = robot => {
   robot.hear('guy[sz]', msg => {

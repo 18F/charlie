@@ -82,6 +82,12 @@ describe('Inclusion/guys bot', () => {
       expect(msg.send.called).to.equal(false);
     });
 
+    it('does not respond to five guys', () => {
+      msg.message.text = `this is about five guys, not the other kind`;
+      handler(msg);
+      expect(msg.send.called).to.equal(false);
+    });
+
     it('does respond to just guys', () => {
       msg.message.text = 'hello guys';
       handler(msg);
