@@ -24,7 +24,7 @@
     "hubot-scripts-us-federal-holidays": "^1.1.0",
     "hubot-scripts-us-federal-holidays-reminder": "^2.1.1",
     "hubot-shipit": "^0.2.0",
-    "hubot-slack": "^4.7.2",
+    "hubot-slack": "^4.8.0",
     "hubot-xkcd": "0.0.5",
     "js-yaml": "^3.13.1",
     "json": "^9.0.4",
