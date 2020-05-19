@@ -20,9 +20,9 @@ describe('Inclusion/guys bot', () => {
     sandbox.resetHistory();
   });
 
-  it('subscribes to utterances of "guys"', () => {
+  it('subscribes to case-insensitive utterances of "guys"', () => {
     guysBot(robot);
-    expect(robot.hear.calledWith('guy[sz]', sinon.match.func)).to.equal(true);
+    expect(robot.hear.calledWith(/guy[sz]/i, sinon.match.func)).to.equal(true);
   });
 
   describe('guys bot handler', () => {
@@ -83,6 +83,10 @@ describe('Inclusion/guys bot', () => {
     });
 
     it('does not respond to five guys', () => {
+      msg.message.text = `this is about 5 guys, not the other kind`;
+      handler(msg);
+      expect(msg.send.called).to.equal(false);
+
       msg.message.text = `this is about five guys, not the other kind`;
       handler(msg);
       expect(msg.send.called).to.equal(false);
@@ -94,8 +98,20 @@ describe('Inclusion/guys bot', () => {
       expect(msg.send.calledWith(expectedResponse));
     });
 
+    it('does respond to just guys with capitals', () => {
+      msg.message.text = 'hello GuYs';
+      handler(msg);
+      expect(msg.send.calledWith(expectedResponse));
+    });
+
     it('does respond to just guyz', () => {
       msg.message.text = 'hello guyz';
+      handler(msg);
+      expect(msg.send.calledWith(expectedResponse));
+    });
+
+    it('does respond to just guyz with capitals', () => {
+      msg.message.text = 'hello gUyZ';
       handler(msg);
       expect(msg.send.calledWith(expectedResponse));
     });
