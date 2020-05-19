@@ -1,0 +1,14 @@
+const moment = require('moment-timezone');
+
+const march1 = moment.tz('2020-03-01T00:00:00Z', 'America/New_York');
+
+module.exports = robot => {
+  robot.respond(/what day is it/i, msg => {
+    const now = moment.tz('America/New_York');
+
+    const dow = now.format('dddd');
+    const days = Math.ceil(moment.duration(now.diff(march1)).as('days'));
+
+    msg.send(`Today is ${dow}, March ${days}, 2020`);
+  });
+};
