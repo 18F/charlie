@@ -1,6 +1,4 @@
-let count = 0;
-
-const guysRegex = /(?<!boba )guy(s|z)(?=[^"“”]*(["“”][^"“”]*["“”][^"“”]*)*$)/i;
+const guysRegex = /(?<!boba )(?<!halal )guy(s|z)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i;
 
 module.exports = robot => {
   robot.hear('guy[sz]', msg => {
@@ -8,7 +6,6 @@ module.exports = robot => {
       return;
     }
 
-    count += 1;
     msg.send({
       attachments: [
         {
@@ -21,16 +18,9 @@ module.exports = robot => {
       ],
       as_user: false,
       icon_emoji: ':tts:',
-      username: 'TTS DE&I',
+      username: 'Inclusion Bot',
       unfurl_links: false,
       unfurl_media: false
-      // text: `Did you mean *y'all*? (_<https://web.archive.org/web/20170714141744/https://18f.gsa.gov/2016/01/12/hacking-inclusion-by-customizing-a-slack-bot/|What's this?>_)`
-      // text:
-      //   count === 1
-      //     ? "This is the first time you triggered the bot"
-      //     : count === 2
-      //     ? "This is the second time you triggered the bot"
-      //     : "This is the Nth time you triggered the bot"
     });
   });
 };
