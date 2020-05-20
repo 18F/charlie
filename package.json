@@ -28,7 +28,7 @@
     "hubot-xkcd": "0.0.5",
     "js-yaml": "^3.13.1",
     "json": "^9.0.4",
-    "moment": "^2.24.0",
+    "moment": "^2.26.0",
     "moment-timezone": "^0.5.28",
     "node-schedule": "^1.3.2",
     "nyc": "^15.0.1",
