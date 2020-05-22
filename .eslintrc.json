@@ -12,9 +12,6 @@
     "es6": true,
     "node": true
   },
-  "plugins": [
-    "coffeescript"
-  ],
   "overrides": [
     {
       "files": [
