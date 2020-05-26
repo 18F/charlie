@@ -6,7 +6,9 @@
     "lint": "eslint scripts/*.js scripts/*.coffee",
     "test": "mocha --require coffeescript/register test/*",
     "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha --require coffeescript/register test/*",
-    "validate-config": "slack-github-issues validate config/slack-github-issues.json"
+    "validate-config": "slack-github-issues validate config/slack-github-issues.json",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "dependencies": {
     "@18f/us-federal-holidays": "^1.4.0",
@@ -35,7 +37,8 @@
     "request": "^2.88.2",
     "sinon": "^9.0.2",
     "twit": "^2.2.11",
-    "underscore": "^1.10.2"
+    "underscore": "^1.10.2",
+    "snyk": "^1.329.0"
   },
   "engines": {
     "node": "^12.11.1"
@@ -55,5 +58,6 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "none"
-  }
+  },
+  "snyk": true
 }
