@@ -156,7 +156,11 @@ const getTockSlackUsers = async robot => {
   // but there's no good reason we can't go ahead and do this filter to be safe.
   const slackUsers = allSlackUsers
     .filter(u => !u.is_restricted && !u.is_bot && !u.deleted)
-    .map(u => ({ slack_id: u.id, name: u.real_name, email: u.profile.email }));
+    .map(u => ({
+      slack_id: u.id,
+      name: u.real_name,
+      email: u.profile.email
+    }));
 
   const tockUsers = await getCurrent18FTockUsers(robot);
 
@@ -180,8 +184,8 @@ let shout = robot => {
       username: `${calm ? 'Disappointed' : 'Angry'} Tock`,
       icon_emoji: calm ? ':disappointed-tock:' : ':angrytock:',
       text: calm
-        ? 'Please <https://tock.18f.gov|Tock your time>!'
-        : '<https://tock.18f.gov|Tock your time>! You gotta!',
+        ? ':disappointed-tock: Please <https://tock.18f.gov|Tock your time>!'
+        : ':angrytock: <https://tock.18f.gov|Tock your time>! You gotta!',
       as_user: false
     };
 
