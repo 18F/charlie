@@ -64,6 +64,10 @@ describe('Inclusion/guys bot', () => {
       handler = robot.hear.args[0][1];
     });
 
+    after(() => {
+      originalUtils.setup.restore();
+    });
+
     it('does not respond to "guys" in quotes', () => {
       ['guys', 'guyz'].forEach(guy => {
         msg.message.text = `this has "${guy}" in double quotes`;

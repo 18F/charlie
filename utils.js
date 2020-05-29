@@ -1,8 +1,8 @@
-const WebClient = require('@slack/client').WebClient;
+const slack = require('@slack/client');
 
 module.exports = {
   setup: robot => {
-    const webAPI = new WebClient(robot.adapter.options.token);
+    const webAPI = new slack.WebClient(robot.adapter.options.token);
 
     return {
       addEmojiReaction(reaction, channelID, messageID) {
