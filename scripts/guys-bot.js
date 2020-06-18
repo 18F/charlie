@@ -1,12 +1,25 @@
 const utils = require("../utils");
 
-const guysRegex = /(?<!boba )(?<!five )(?<!5 )(?<!halal )guy(s|z)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i;
+const guysRegex = /guy(s|z)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i;
+
+const phrasesToIgnore = [
+  /boba guy(s|z)/gi,
+  /(five|5) guy(s|z)/gi,
+  /halal guy(s|z)/gi,
+  /guy(s|z) bot/gi,
+  /guy(s|z)bot(s|z)?/gi,
+];
 
 module.exports = (robot) => {
   const { addEmojiReaction, postEphemeralMessage } = utils.setup(robot);
 
   robot.hear(/guy[sz]/i, (msg) => {
-    if (!guysRegex.test(msg.message.text)) {
+    const preprocessed = phrasesToIgnore.reduce(
+      (str, ignore) => str.replace(ignore, ""),
+      msg.message.text
+    );
+
+    if (!guysRegex.test(preprocessed)) {
       return;
     }
 

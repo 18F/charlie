@@ -119,6 +119,28 @@ describe("Inclusion/guys bot", () => {
       expect(addEmojiReaction.called).to.equal(false);
     });
 
+    it("does not respond to guysbot", () => {
+      msg.message.text = "this is about the guys bot itself";
+      handler(msg);
+      expect(postEphemeralMessage.called).to.equal(false);
+      expect(addEmojiReaction.called).to.equal(false);
+
+      msg.message.text = "this is about the guyz bot itself";
+      handler(msg);
+      expect(postEphemeralMessage.called).to.equal(false);
+      expect(addEmojiReaction.called).to.equal(false);
+
+      msg.message.text = "this is about the guysbot itself";
+      handler(msg);
+      expect(postEphemeralMessage.called).to.equal(false);
+      expect(addEmojiReaction.called).to.equal(false);
+
+      msg.message.text = "this is about the guyzbot itself";
+      handler(msg);
+      expect(postEphemeralMessage.called).to.equal(false);
+      expect(addEmojiReaction.called).to.equal(false);
+    });
+
     it("does respond to just guys", () => {
       msg.message.text = "hello guys";
       handler(msg);
