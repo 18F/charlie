@@ -21,8 +21,8 @@ describe('Angry Tock', () => {
                   id: 'slack1',
                   real_name: 'User 1',
                   profile: {
-                    email: 'user@one'
-                  }
+                    email: 'user@one',
+                  },
                 },
                 {
                   deleted: false,
@@ -31,8 +31,8 @@ describe('Angry Tock', () => {
                   id: 'slack2',
                   real_name: 'User 2',
                   profile: {
-                    email: 'user@two'
-                  }
+                    email: 'user@two',
+                  },
                 },
                 {
                   deleted: false,
@@ -41,8 +41,8 @@ describe('Angry Tock', () => {
                   id: 'slack3',
                   real_name: 'User 3',
                   profile: {
-                    email: 'user@three'
-                  }
+                    email: 'user@three',
+                  },
                 },
                 {
                   deleted: true,
@@ -51,8 +51,8 @@ describe('Angry Tock', () => {
                   id: 'deleted user',
                   real_name: 'deleted user',
                   profile: {
-                    email: 'user@deleted'
-                  }
+                    email: 'user@deleted',
+                  },
                 },
                 {
                   deleted: false,
@@ -61,8 +61,8 @@ describe('Angry Tock', () => {
                   id: 'restricted user',
                   real_name: 'restricted user',
                   profile: {
-                    email: 'user@restricted'
-                  }
+                    email: 'user@restricted',
+                  },
                 },
                 {
                   deleted: false,
@@ -71,21 +71,21 @@ describe('Angry Tock', () => {
                   id: 'bot user',
                   real_name: 'bot user',
                   profile: {
-                    email: 'user@bot'
-                  }
-                }
-              ]
-            })
-          }
-        }
-      }
+                    email: 'user@bot',
+                  },
+                },
+              ],
+            }),
+          },
+        },
+      },
     },
     http: sandbox.stub(),
     logger: {
       info: sandbox.spy(),
-      warning: sandbox.spy()
+      warning: sandbox.spy(),
     },
-    messageRoom: sandbox.spy()
+    messageRoom: sandbox.spy(),
   };
 
   robot.http.withArgs('tock url/user_data.json').returns({
@@ -105,7 +105,7 @@ describe('Angry Tock', () => {
                 is_billable: true,
                 organization: null,
                 unit: null,
-                user: 'employee1'
+                user: 'employee1',
               },
               {
                 current_employee: true,
@@ -114,7 +114,7 @@ describe('Angry Tock', () => {
                 is_billable: true,
                 organization: '18F',
                 unit: 'Engineering Chapter',
-                user: 'employee2'
+                user: 'employee2',
               },
               {
                 current_employee: true,
@@ -123,7 +123,7 @@ describe('Angry Tock', () => {
                 is_billable: true,
                 organization: 'Who knows',
                 unit: '',
-                user: 'employee3'
+                user: 'employee3',
               },
               {
                 current_employee: true,
@@ -132,7 +132,7 @@ describe('Angry Tock', () => {
                 is_billable: true,
                 organization: '',
                 unit: '',
-                user: 'not an 18F employee'
+                user: 'not an 18F employee',
               },
               {
                 current_employee: false,
@@ -141,7 +141,7 @@ describe('Angry Tock', () => {
                 is_billable: false,
                 organization: '',
                 unit: '',
-                user: 'not a current employee'
+                user: 'not a current employee',
               },
               {
                 current_employee: false,
@@ -150,7 +150,7 @@ describe('Angry Tock', () => {
                 is_billable: true,
                 organization: '',
                 unit: '',
-                user: 'not 18, nor a current employee'
+                user: 'not 18, nor a current employee',
               },
               {
                 current_employee: true,
@@ -159,12 +159,12 @@ describe('Angry Tock', () => {
                 is_billable: true,
                 organization: '',
                 unit: '',
-                user: 'not active'
-              }
+                user: 'not active',
+              },
             ])
           )
-        )
-      })
+        ),
+      }),
   });
 
   robot.http.withArgs('tock url/users.json').returns({
@@ -182,47 +182,47 @@ describe('Angry Tock', () => {
                 first_name: 'User',
                 id: 'tock1',
                 last_name: 'One',
-                username: 'employee1'
+                username: 'employee1',
               },
               {
                 email: 'user@two',
                 first_name: 'User',
                 id: 'tock2',
                 last_name: 'Two',
-                username: 'employee2'
+                username: 'employee2',
               },
               {
                 email: 'user@three',
                 first_name: 'User',
                 id: 'tock3',
                 last_name: 'Three',
-                username: 'employee3'
+                username: 'employee3',
               },
               {
                 email: 'user@four',
                 first_name: 'User',
                 id: 'tock4',
                 last_name: 'Four',
-                username: 'employee4'
+                username: 'employee4',
               },
               {
                 email: 'user@five',
                 first_name: 'User',
                 id: 'tock5',
                 last_name: 'Five',
-                username: 'employee5'
+                username: 'employee5',
               },
               {
                 email: 'user@six',
                 first_name: 'User',
                 id: 'tock6',
                 last_name: 'Six',
-                username: 'not active'
-              }
+                username: 'not active',
+              },
             ])
           )
-        )
-      })
+        ),
+      }),
   });
 
   robot.http.withArgs(sinon.match('tock url/reporting_period_audit/')).returns({
@@ -240,40 +240,40 @@ describe('Angry Tock', () => {
                 email: 'user@one',
                 first_name: 'User',
                 last_name: 'One',
-                username: 'employee1'
+                username: 'employee1',
               },
               {
                 id: 'tock2',
                 email: 'user@two',
                 first_name: 'User',
                 last_name: 'Two',
-                username: 'employee2'
+                username: 'employee2',
               },
               {
                 id: 'tock4',
                 email: 'user@four',
                 first_name: 'User',
                 last_name: 'Four',
-                username: 'employee4'
+                username: 'employee4',
               },
               {
                 id: 'tock5',
                 email: 'user@five',
                 first_name: 'User',
                 last_name: 'Five',
-                username: 'employee5'
+                username: 'employee5',
               },
               {
                 id: 'tock6',
                 email: 'user@six',
                 first_name: 'User',
                 last_name: 'Six',
-                username: 'not active'
-              }
+                username: 'not active',
+              },
             ])
           )
-        )
-      })
+        ),
+      }),
   });
 
   beforeEach(() => {
@@ -409,8 +409,9 @@ describe('Angry Tock', () => {
       robot.messageRoom.calledWith('slack1', {
         username: 'Disappointed Tock',
         icon_emoji: ':disappointed-tock:',
-        text: 'Please <https://tock.18f.gov|Tock your time>!',
-        as_user: false
+        text:
+          ':disappointed-tock: Please <https://tock.18f.gov|Tock your time>!',
+        as_user: false,
       })
     ).to.equal(true);
 
@@ -418,8 +419,9 @@ describe('Angry Tock', () => {
       robot.messageRoom.calledWith('slack2', {
         username: 'Disappointed Tock',
         icon_emoji: ':disappointed-tock:',
-        text: 'Please <https://tock.18f.gov|Tock your time>!',
-        as_user: false
+        text:
+          ':disappointed-tock: Please <https://tock.18f.gov|Tock your time>!',
+        as_user: false,
       })
     ).to.equal(true);
 
@@ -436,8 +438,8 @@ describe('Angry Tock', () => {
       robot.messageRoom.calledWith('slack1', {
         username: 'Angry Tock',
         icon_emoji: ':angrytock:',
-        text: '<https://tock.18f.gov|Tock your time>! You gotta!',
-        as_user: false
+        text: ':angrytock: <https://tock.18f.gov|Tock your time>! You gotta!',
+        as_user: false,
       })
     ).to.equal(true);
 
@@ -445,8 +447,8 @@ describe('Angry Tock', () => {
       robot.messageRoom.calledWith('slack2', {
         username: 'Angry Tock',
         icon_emoji: ':angrytock:',
-        text: '<https://tock.18f.gov|Tock your time>! You gotta!',
-        as_user: false
+        text: ':angrytock: <https://tock.18f.gov|Tock your time>! You gotta!',
+        as_user: false,
       })
     ).to.equal(true);
 
@@ -458,13 +460,13 @@ describe('Angry Tock', () => {
               '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)',
             color: '#FF0000',
             text:
-              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)'
-          }
+              '• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)',
+          },
         ],
         username: 'Angry Tock',
         icon_emoji: ':angrytock:',
         text: '*The following users are currently truant on Tock:*',
-        as_user: false
+        as_user: false,
       })
     ).to.equal(true);
 
@@ -481,8 +483,9 @@ describe('Angry Tock', () => {
       robot.messageRoom.calledWith('slack1', {
         username: 'Disappointed Tock',
         icon_emoji: ':disappointed-tock:',
-        text: 'Please <https://tock.18f.gov|Tock your time>!',
-        as_user: false
+        text:
+          ':disappointed-tock: Please <https://tock.18f.gov|Tock your time>!',
+        as_user: false,
       })
     ).to.equal(true);
 
@@ -490,8 +493,9 @@ describe('Angry Tock', () => {
       robot.messageRoom.calledWith('slack2', {
         username: 'Disappointed Tock',
         icon_emoji: ':disappointed-tock:',
-        text: 'Please <https://tock.18f.gov|Tock your time>!',
-        as_user: false
+        text:
+          ':disappointed-tock: Please <https://tock.18f.gov|Tock your time>!',
+        as_user: false,
       })
     ).to.equal(true);
 
@@ -510,8 +514,8 @@ describe('Angry Tock', () => {
           .returns({
             get: sinon
               .stub()
-              .returns(sinon.stub().yields(false, null, JSON.stringify([])))
-          })
+              .returns(sinon.stub().yields(false, null, JSON.stringify([]))),
+          }),
       });
 
     await clock.tickAsync(
@@ -525,7 +529,7 @@ describe('Angry Tock', () => {
         username: 'Happy Tock',
         icon_emoji: ':happy-tock:',
         text: 'No Tock truants!',
-        as_user: false
+        as_user: false,
       })
     ).to.equal(true);
   });
