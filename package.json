@@ -48,7 +48,5 @@
     "mocha": "^7.1.2"
   },
   "prettier": {
-    "singleQuote": true,
-    "trailingComma": "none"
   }
 }

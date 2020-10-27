@@ -1,42 +1,23 @@
-const holidays = require('@18f/us-federal-holidays');
-const moment = require('moment-timezone');
-const scheduler = require('node-schedule');
+const holidays = require("@18f/us-federal-holidays");
+const moment = require("moment-timezone");
+const scheduler = require("node-schedule");
+const utils = require("../utils");
 
 const TOCK_API_URL = process.env.HUBOT_TOCK_API;
 const TOCK_TOKEN = process.env.HUBOT_TOCK_TOKEN;
 
 const ANGRY_TOCK_TIMEZONE =
-  process.env.ANGRY_TOCK_TIMEZONE || 'America/New_York';
+  process.env.ANGRY_TOCK_TIMEZONE || "America/New_York";
 const ANGRY_TOCK_FIRST_ALERT = moment(
-  process.env.ANGRY_TOCK_FIRST_TIME || '10:00',
-  'HH:mm'
+  process.env.ANGRY_TOCK_FIRST_TIME || "10:00",
+  "HH:mm"
 );
 const ANGRY_TOCK_SECOND_ALERT = moment(
-  process.env.ANGRY_TOCK_SECOND_TIME || '16:00',
-  'HH:mm'
+  process.env.ANGRY_TOCK_SECOND_TIME || "16:00",
+  "HH:mm"
 );
 
-/**
- * Join two arrays on a given property. Similar to a SQL JOIN.
- * @param {Array} arrayOne first array to be merged
- */
-const join = arrayOne => ({
-  /**
-   * @param {Array} arrayTwo second array to be merged
-   */
-  with: arrayTwo => ({
-    /**
-     * @param {string} key property to join the arrays on
-     */
-    on: key =>
-      arrayOne
-        .filter(a => arrayTwo.some(b => b[key] === a[key]))
-        .map(a => ({
-          ...a,
-          ...(arrayTwo.find(b => b[key] === a[key]) || {})
-        }))
-  })
-});
+let util;
 
 /**
  * Get the current time in the configured timezone.
@@ -46,153 +27,27 @@ const join = arrayOne => ({
 const m = () => moment.tz(ANGRY_TOCK_TIMEZONE);
 
 /**
- * Fetch a list of Slack users in the workspace that this bot is in.
- * @async
- * @param {Object} robot Hubot robot object
- * @returns {Promise<Array<Object>>} A list of Slack users.
- */
-const getSlackUsers = async robot =>
-  new Promise((resolve, reject) => {
-    robot.adapter.client.web.users.list((err, response) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(response.members);
-    });
-  });
-
-const getFromTock = async (robot, url) =>
-  new Promise((resolve, reject) => {
-    robot
-      .http(url)
-      .header('Authorization', `Token ${TOCK_TOKEN}`)
-      .get()((err, _, body) => {
-      if (err) {
-        return reject(err);
-      }
-      return resolve(JSON.parse(body));
-    });
-  });
-
-/**
- * Fetch a list of Tock users that are current 18F employees.
- * @async
- * @param {Object} robot Hubot robot object
- * @returns {Promise<Array<Object>>} A list of Tock users
- */
-const getCurrent18FTockUsers = async robot => {
-  // First get user data. This is what tells us whether users are current and
-  // are 18F employees. We'll use that to filter to just relevant users.
-  const userDataBody = await getFromTock(
-    robot,
-    `${TOCK_API_URL}/user_data.json`
-  );
-
-  // Filter only current 18F employees. Only keep the user property. This
-  // is their username, and we'll use that to filter the later user list.
-  const userDataObjs = userDataBody
-    .filter(u => u.is_active && u.current_employee && u.is_18f_employee)
-    .map(u => u.user);
-
-  // Now get the list of users. This includes email addresses, which we can
-  // use to associate a user to a Slack account. However, this doesn't tell
-  // us whether they are currently an employee or with 18F, so we have to
-  // combine these two lists together.
-  const usersBody = await getFromTock(robot, `${TOCK_API_URL}/users.json`);
-
-  // Keep just the bits we care about.
-  const users = usersBody
-    .filter(u => userDataObjs.includes(u.username))
-    .map(u => ({
-      user: u.username,
-      email: u.email,
-      tock_id: u.id
-    }));
-
-  return users;
-};
-
-/**
- * Get the truant users for the most recent completed Tock reporting period.
- * @async
- * @param {Object} robot Hubot robot object
- * @returns {<Promise<Array<Object>>} The list of truant users
- */
-const getTockTruants = async robot => {
-  const now = m();
-  while (now.format('dddd') !== 'Sunday') {
-    now.subtract(1, 'day');
-  }
-  // We're now at the nearest past Sunday, but that's the start of the current
-  // reporting period. We want to go back one week further to see who is truant
-  // on the PREVIOUS reporting period.
-  now.subtract(7, 'days');
-
-  const reportingPeriodStart = now.format('YYYY-MM-DD');
-
-  const tockUsers = await getCurrent18FTockUsers(robot);
-
-  const allTruants = await getFromTock(
-    robot,
-    `${TOCK_API_URL}/reporting_period_audit/${reportingPeriodStart}.json`
-  );
-
-  return allTruants.filter(truant =>
-    tockUsers.some(tockUser => tockUser.tock_id === truant.id)
-  );
-};
-
-/**
- * Get all current 18F Tock users that are also Slack users.
- * @async
- * @param {Object} robot Hubot robot object
- * @returns {Promise<Array<Object>>} A list of users that are both current 18F
- *   employees in Tock and users in Slack, joined on their email addresses.
- */
-const getTockSlackUsers = async robot => {
-  const allSlackUsers = await getSlackUsers(robot);
-
-  // This shouldn't filter anyone who would be in the current 18F Tock users,
-  // but there's no good reason we can't go ahead and do this filter to be safe.
-  const slackUsers = allSlackUsers
-    .filter(u => !u.is_restricted && !u.is_bot && !u.deleted)
-    .map(u => ({
-      slack_id: u.id,
-      name: u.real_name,
-      email: u.profile.email
-    }));
-
-  const tockUsers = await getCurrent18FTockUsers(robot);
-
-  const tockSlackUsers = join(tockUsers)
-    .with(slackUsers)
-    .on('email');
-
-  return tockSlackUsers;
-};
-
-/**
  * Shout at all the truant users.
  * @async
  * @param {Object} options
  * @param {Boolean} options.calm Whether this is Happy Tock or Angry Tock. Angry
  *   Tock is not calm. Defaults to Angry Tock.
  */
-let shout = robot => {
+let shout = (robot) => {
   shout = async ({ calm = false } = {}) => {
     const message = {
-      username: `${calm ? 'Disappointed' : 'Angry'} Tock`,
-      icon_emoji: calm ? ':disappointed-tock:' : ':angrytock:',
+      username: `${calm ? "Disappointed" : "Angry"} Tock`,
+      icon_emoji: calm ? ":disappointed-tock:" : ":angrytock:",
       text: calm
-        ? ':disappointed-tock: Please <https://tock.18f.gov|Tock your time>!'
-        : ':angrytock: <https://tock.18f.gov|Tock your time>! You gotta!',
-      as_user: false
+        ? ":disappointed-tock: Please <https://tock.18f.gov|Tock your time>!"
+        : ":angrytock: <https://tock.18f.gov|Tock your time>! You gotta!",
+      as_user: false,
     };
 
-    const tockSlackUsers = await getTockSlackUsers(robot);
-    const truants = await getTockTruants(robot);
-    const slackableTruants = tockSlackUsers.filter(tu =>
-      truants.some(t => t.email === tu.email)
+    const tockSlackUsers = await util.tock.get18FTockSlackUsers();
+    const truants = await util.tock.get18FTockTruants(m());
+    const slackableTruants = tockSlackUsers.filter((tu) =>
+      truants.some((t) => t.email === tu.email)
     );
 
     slackableTruants.forEach(({ slack_id: slackID }) => {
@@ -202,36 +57,36 @@ let shout = robot => {
     if (!calm) {
       if (truants.length > 0) {
         const nonSlackableTruants = truants.filter(
-          t => !slackableTruants.some(s => s.email === t.email)
+          (t) => !slackableTruants.some((s) => s.email === t.email)
         );
 
         const report = [];
-        slackableTruants.forEach(u =>
+        slackableTruants.forEach((u) =>
           report.push([`• <@${u.slack_id}> (notified on Slack)`])
         );
-        nonSlackableTruants.forEach(u =>
+        nonSlackableTruants.forEach((u) =>
           report.push([`• ${u.username} (not notified)`])
         );
 
-        robot.messageRoom('18f-gmt', {
+        robot.messageRoom("18f-gmt", {
           attachments: [
             {
-              fallback: report.join('\n'),
-              color: '#FF0000',
-              text: report.join('\n')
-            }
+              fallback: report.join("\n"),
+              color: "#FF0000",
+              text: report.join("\n"),
+            },
           ],
-          username: 'Angry Tock',
-          icon_emoji: ':angrytock:',
-          text: '*The following users are currently truant on Tock:*',
-          as_user: false
+          username: "Angry Tock",
+          icon_emoji: ":angrytock:",
+          text: "*The following users are currently truant on Tock:*",
+          as_user: false,
         });
       } else {
-        robot.messageRoom('18f-gmt', {
-          username: 'Happy Tock',
-          icon_emoji: ':happy-tock:',
-          text: 'No Tock truants!',
-          as_user: false
+        robot.messageRoom("18f-gmt", {
+          username: "Happy Tock",
+          icon_emoji: ":happy-tock:",
+          text: "No Tock truants!",
+          as_user: false,
         });
       }
     }
@@ -243,9 +98,9 @@ let shout = robot => {
  * @param {Moment} now The date/time to check, as a Moment object
  * @returns {Boolean} True if the passed date/time is a good day for shouting
  */
-const isAngryTockDay = now => {
+const isAngryTockDay = (now) => {
   const d = now || m();
-  return d.format('dddd') === 'Monday' && !holidays.isAHoliday();
+  return d.format("dddd") === "Monday" && !holidays.isAHoliday();
 };
 
 /**
@@ -288,13 +143,13 @@ const scheduleNextShoutingMatch = () => {
 
     // ...and Angry Tock should have shouted twice already, advance a day and
     // schedule a shout for next week.
-    day.add(1, 'day');
+    day.add(1, "day");
   }
 
   // ...and Angry Tock should have already shouted twice today, advance to the
   // next shouting day.
   while (!isAngryTockDay(day)) {
-    day.add(1, 'day');
+    day.add(1, "day");
   }
 
   // Schedule a calm shout for the next shouting day.
@@ -308,14 +163,17 @@ const scheduleNextShoutingMatch = () => {
   });
 };
 
-module.exports = async robot => {
+module.exports = async (robot) => {
   if (!TOCK_API_URL || !TOCK_TOKEN) {
     robot.logger.warning(
-      'AngryTock disabled: Tock API URL or access token is not set'
+      "AngryTock disabled: Tock API URL or access token is not set"
     );
     return;
   }
-  robot.logger.info('AngryTock starting up');
+
+  util = utils.setup(robot);
+
+  robot.logger.info("AngryTock starting up");
 
   // Setup the shouty method, to create a closure around the robot object.
   shout(robot);
