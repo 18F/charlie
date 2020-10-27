@@ -1,0 +1,17 @@
+name: lint action
+
+on: [pull_request]
+
+jobs:
+  lint:
+    name: 18F ESLint
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - uses: actions/checkout@af513c7a
+      - name: install dependencies # needed for coffeescript
+        run: npm ci
+      - uses: 18f/18f-eslint-action@v1.1.0
+        with:
+          lint-glob: "*.js *.coffee"
+          working-directory: ./scripts
