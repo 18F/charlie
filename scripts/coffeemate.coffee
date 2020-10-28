@@ -53,7 +53,7 @@ module.exports = (robot, { WebClient = defaultWebClient } = {}) ->
       # Now start a 1:1 DM chat between the people in queue.
       robot.adapter.client.web.mpim.open queue.join(','), (err, mpim) ->
         if err or !mpim.ok
-          console.log("Error with Slack API", err)
+          robot.logger.warning("Error with Slack API", err)
           return
 
         msg = "You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:"

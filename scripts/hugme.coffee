@@ -21,9 +21,9 @@ _u = require('underscore')
 appEnv = CFENV.getAppEnv()
 s3Creds = appEnv.getServiceCreds('charlie-bucket')
 if s3Creds == null
-  console.log("Unable to find service creds for 'charlie-bucket'.")
+  console.log("Unable to find service creds for 'charlie-bucket'.") # eslint-disable-line no-console
 else
-  console.log("Found service creds for 'charlie-bucket'.")
+  console.log("Found service creds for 'charlie-bucket'.") # eslint-disable-line no-console
 
   creds = new AWS.Credentials(s3Creds.access_key_id, s3Creds.secret_access_key)
   BUCKET = s3Creds.bucket

@@ -69,7 +69,7 @@ module.exports = async (robot) => {
     robot.logger.warning(
       "OptimisticTock disabled: Tock API URL or access token is not set"
     );
-    return null;
+    return;
   }
   reminder(robot);
 
