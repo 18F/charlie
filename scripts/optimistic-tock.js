@@ -61,6 +61,20 @@ const scheduleReminders = async () => {
   });
 };
 
+const scheduleNext = () => {
+  const nextSunday = moment().day("Sunday");
+  // "Not after" rather than "before" to handle the edge where these
+  // two are identical. So... Sundays. Also the tests.
+  if (!nextSunday.isAfter(moment())) {
+    nextSunday.add(7, "days");
+  }
+
+  scheduler.scheduleJob(nextSunday.toDate(), async () => {
+    await scheduleReminders();
+    await scheduleNext();
+  });
+};
+
 module.exports = async (robot) => {
   if (!TOCK_API_URL || !TOCK_TOKEN) {
     robot.logger.warning(
@@ -73,4 +87,5 @@ module.exports = async (robot) => {
   util = utils.setup(robot);
 
   await scheduleReminders();
+  await scheduleNext();
 };

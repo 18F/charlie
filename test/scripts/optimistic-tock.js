@@ -135,7 +135,7 @@ describe("Optimistic Tock", () => {
   describe("it schedules future reminders", () => {
     it("for the next Friday if it is not a holiday", async () => {
       // The Bell System is broken up by antitrust action.
-      const time = moment.tz("1984-01-01T12:00:00", "America/New_York");
+      const time = moment.tz("1984-01-01T12:32:18", "America/New_York");
       clock.tick(time.toDate().getTime());
 
       const times = [
@@ -148,20 +148,30 @@ describe("Optimistic Tock", () => {
 
       // There are 5 users. One is deleted. Of the remaining 4 users, there are
       // only three distinct timezones, so there should only be three scheduled
-      // reminders.
-      expect(scheduler.scheduleJob.callCount).to.equal(3);
+      // reminders. Plus one for scheduling next week's reminders, for a total
+      // of 4.
+      expect(scheduler.scheduleJob.callCount).to.equal(4);
 
       times.forEach((scheduledTime) => {
         expect(
           scheduler.scheduleJob.calledWith(scheduledTime, sinon.match.func)
         ).to.equal(true);
       });
+
+      // The following week's reminders should be for the next Sunday, at the
+      // same time of day as when the bot started.
+      expect(
+        scheduler.scheduleJob.calledWith(
+          moment.tz("1984-01-08T12:32:18", "America/New_York").toDate(),
+          sinon.match.func
+        )
+      ).to.equal(true);
     });
 
     it("for the next Thursday if Friday is a holiday", async () => {
       // I don't know if this is a significant date, but July 4 was a Friday
       // in 1986, so it meets our test criteria.
-      const time = moment.tz("1986-07-01T12:00:00", "America/New_York");
+      const time = moment.tz("1986-07-01T12:43:44", "America/New_York");
       clock.tick(time.toDate().getTime());
 
       const times = [
@@ -174,14 +184,68 @@ describe("Optimistic Tock", () => {
 
       // There are 5 users. One is deleted. Of the remaining 4 users, there are
       // only three distinct timezones, so there should only be three scheduled
-      // reminders.
-      expect(scheduler.scheduleJob.callCount).to.equal(3);
+      // reminders. Plus one for scheduling next week's reminders, for a total
+      // of 4.
+      expect(scheduler.scheduleJob.callCount).to.equal(4);
 
       times.forEach((scheduledTime) => {
         expect(
           scheduler.scheduleJob.calledWith(scheduledTime, sinon.match.func)
         ).to.equal(true);
       });
+
+      // The following week's reminders should be for the next Sunday, at the
+      // same time of day as when the bot started.
+      expect(
+        scheduler.scheduleJob.calledWith(
+          moment.tz("1986-07-06T12:43:44", "America/New_York").toDate(),
+          sinon.match.func
+        )
+      ).to.equal(true);
+    });
+
+    it("schedules more reminders for following weeks", async () => {
+      // The wreck of the Titanic is found. A Monday. We all feel a little like
+      // wrecks on Mondays, don't we?
+      const time = moment.tz("1985-09-02T09:45:00", "America/New_York");
+      clock.tick(time.toDate().getTime());
+
+      await load()(robot);
+      // The last thing that should get scheduled is the the re-schedule.
+      const rescheduler = scheduler.scheduleJob.args.pop()[1];
+
+      // Before we call the re-scheduler, reset the mock to clear out the set of
+      // scheduled jobs from start-up.. Also fast-forward in time by a week.
+      scheduler.scheduleJob.resetHistory();
+      clock.tick(moment.duration(7, "days").asMilliseconds());
+
+      // Now let's see what happens!
+      await rescheduler();
+
+      // There are 5 users. One is deleted. Of the remaining 4 users, there are
+      // only three distinct timezones, so there should only be three scheduled
+      // reminders. Plus one for scheduling next week's reminders, for a total
+      // of 4.
+      expect(scheduler.scheduleJob.callCount).to.equal(4);
+
+      [
+        moment.tz("1985-09-13T15:30:00", "America/New_York").toDate(),
+        moment.tz("1985-09-13T15:30:00", "America/Chicago").toDate(),
+        moment.tz("1985-09-13T15:30:00", "America/Los_Angeles").toDate(),
+      ].forEach((scheduledTime) => {
+        expect(
+          scheduler.scheduleJob.calledWith(scheduledTime, sinon.match.func)
+        ).to.equal(true);
+      });
+
+      // The following week's reminders should be for the next Sunday, at the
+      // same time of day as when the bot started.
+      expect(
+        scheduler.scheduleJob.calledWith(
+          moment.tz("1985-09-15T09:45:00", "America/New_York").toDate(),
+          sinon.match.func
+        )
+      ).to.equal(true);
     });
   });
 
