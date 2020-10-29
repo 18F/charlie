@@ -139,9 +139,9 @@ describe("Optimistic Tock", () => {
       clock.tick(time.toDate().getTime());
 
       const times = [
-        moment.tz("1984-01-06T15:30:00", "America/New_York").toDate(),
-        moment.tz("1984-01-06T15:30:00", "America/Chicago").toDate(),
-        moment.tz("1984-01-06T15:30:00", "America/Los_Angeles").toDate(),
+        moment.tz("1984-01-06T16:00:00", "America/New_York").toDate(),
+        moment.tz("1984-01-06T16:00:00", "America/Chicago").toDate(),
+        moment.tz("1984-01-06T16:00:00", "America/Los_Angeles").toDate(),
       ];
 
       await load()(robot);
@@ -175,9 +175,9 @@ describe("Optimistic Tock", () => {
       clock.tick(time.toDate().getTime());
 
       const times = [
-        moment.tz("1986-07-03T15:30:00", "America/New_York").toDate(),
-        moment.tz("1986-07-03T15:30:00", "America/Chicago").toDate(),
-        moment.tz("1986-07-03T15:30:00", "America/Los_Angeles").toDate(),
+        moment.tz("1986-07-03T16:00:00", "America/New_York").toDate(),
+        moment.tz("1986-07-03T16:00:00", "America/Chicago").toDate(),
+        moment.tz("1986-07-03T16:00:00", "America/Los_Angeles").toDate(),
       ];
 
       await load()(robot);
@@ -229,9 +229,9 @@ describe("Optimistic Tock", () => {
       expect(scheduler.scheduleJob.callCount).to.equal(4);
 
       [
-        moment.tz("1985-09-13T15:30:00", "America/New_York").toDate(),
-        moment.tz("1985-09-13T15:30:00", "America/Chicago").toDate(),
-        moment.tz("1985-09-13T15:30:00", "America/Los_Angeles").toDate(),
+        moment.tz("1985-09-13T16:00:00", "America/New_York").toDate(),
+        moment.tz("1985-09-13T16:00:00", "America/Chicago").toDate(),
+        moment.tz("1985-09-13T16:00:00", "America/Los_Angeles").toDate(),
       ].forEach((scheduledTime) => {
         expect(
           scheduler.scheduleJob.calledWith(scheduledTime, sinon.match.func)

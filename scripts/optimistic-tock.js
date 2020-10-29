@@ -45,7 +45,7 @@ const scheduleReminders = async () => {
     day.subtract(1, "day");
   }
 
-  const reminderString = day.format("YYYY-MM-DDT15:30:00");
+  const reminderString = day.format("YYYY-MM-DDT16:00:00");
 
   const users = await util.tock.get18FTockSlackUsers();
   const now = moment();
