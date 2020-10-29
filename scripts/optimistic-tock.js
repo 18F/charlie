@@ -17,16 +17,13 @@ let reminder = (robot) => {
   };
 
   reminder = (tz) => async () => {
-    // Get the Slack users in this timezone.
-    const tzUsers = (await util.getSlackUsers()).filter((u) => u.tz === tz);
-
-    // Now get all the folks who have not submitted their current Tock.
+    // Get all the folks who have not submitted their current Tock.
     const truants = await util.tock.get18FTockTruants(moment.tz(tz), 0);
 
+    // Now get the list of Slacky-Tocky users in the current timezone who
+    // have not submitted their Tock. Tsk tsk.
     const tockSlackUsers = (await util.tock.get18FTockSlackUsers())
-      .filter((tockUser) =>
-        tzUsers.some((tzUser) => tzUser.id === tockUser.slack_id)
-      )
+      .filter((tockUser) => tockUser.tz === tz)
       .filter((tockUser) => truants.some((t) => t.email === tockUser.email));
 
     tockSlackUsers.forEach(({ slack_id: slackID }) => {
@@ -50,7 +47,7 @@ const scheduleReminders = async () => {
 
   const reminderString = day.format("YYYY-MM-DDT15:30:00");
 
-  const users = await util.getSlackUsers();
+  const users = await util.tock.get18FTockSlackUsers();
   const now = moment();
   Array.from(new Set(users.filter((u) => !u.deleted).map((u) => u.tz))).forEach(
     (tz) => {

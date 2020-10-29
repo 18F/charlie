@@ -253,6 +253,7 @@ describe("utility helpers", () => {
               is_restricted: false,
               profile: { email: "email 1" },
               real_name: "user 1",
+              tz: "timezone 1",
             },
             {
               deleted: false,
@@ -261,6 +262,7 @@ describe("utility helpers", () => {
               is_restricted: true,
               profile: { email: "email 2" },
               real_name: "user 2",
+              tz: "timezone 2",
             },
             {
               deleted: false,
@@ -269,6 +271,7 @@ describe("utility helpers", () => {
               is_restricted: false,
               profile: { email: "email 3" },
               real_name: "user 3",
+              tz: "timezone 3",
             },
             {
               deleted: true,
@@ -277,6 +280,7 @@ describe("utility helpers", () => {
               is_restricted: false,
               profile: { email: "email 4" },
               real_name: "user 4",
+              tz: "timezone 4",
             },
             {
               deleted: false,
@@ -285,6 +289,7 @@ describe("utility helpers", () => {
               is_restricted: false,
               profile: { email: "email 5" },
               real_name: "user 5",
+              tz: "timezone 5",
             },
           ],
         });
@@ -421,6 +426,7 @@ describe("utility helpers", () => {
             slack_id: "slack 1",
             tock_id: 1,
             user: "user 1",
+            tz: "timezone 1",
           },
           {
             email: "email 5",
@@ -428,6 +434,7 @@ describe("utility helpers", () => {
             slack_id: "slack 5",
             tock_id: 5,
             user: "user 5",
+            tz: "timezone 5",
           },
         ]);
       });

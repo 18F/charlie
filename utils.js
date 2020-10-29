@@ -143,6 +143,7 @@ module.exports = {
           slack_id: u.id,
           name: u.real_name,
           email: u.profile.email,
+          tz: u.tz,
         }));
 
       const tockUsers = await getCurrent18FTockUsers();

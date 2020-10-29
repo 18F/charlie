@@ -17,34 +17,6 @@ describe("Optimistic Tock", () => {
     messageRoom: sandbox.spy(),
   };
 
-  const slackUsers = [
-    {
-      deleted: false,
-      id: "slack 1",
-      tz: "America/New_York",
-    },
-    {
-      deleted: false,
-      id: "slack 2",
-      tz: "America/Chicago",
-    },
-    {
-      deleted: false,
-      id: "slack 3",
-      tz: "America/Los_Angeles",
-    },
-    {
-      deleted: true,
-      id: "slack 4",
-      tz: "America/Denver",
-    },
-    {
-      deleted: false,
-      id: "slack 5",
-      tz: "America/New_York",
-    },
-  ];
-
   const tock18FTruants = [
     {
       id: "tock1",
@@ -69,6 +41,7 @@ describe("Optimistic Tock", () => {
       name: "User 1",
       slack_id: "slack 1",
       user: "employee1",
+      tz: "America/New_York",
     },
     {
       email: "user@two",
@@ -76,6 +49,7 @@ describe("Optimistic Tock", () => {
       name: "User 2",
       slack_id: "slack 2",
       user: "employee2",
+      tz: "America/Chicago",
     },
     {
       email: "user@three",
@@ -83,6 +57,7 @@ describe("Optimistic Tock", () => {
       name: "User 3",
       slack_id: "slack 3",
       user: "employee3",
+      tz: "America/Los_Angeles",
     },
     {
       email: "user@five",
@@ -90,10 +65,10 @@ describe("Optimistic Tock", () => {
       name: "User 5",
       slack_id: "slack 5",
       user: "employee5",
+      tz: "America/New_York",
     },
   ];
 
-  const getSlackUsers = sandbox.stub();
   const get18FTockSlackUsers = sandbox.stub();
   const get18FTockTruants = sandbox.stub();
 
@@ -113,14 +88,12 @@ describe("Optimistic Tock", () => {
     process.env.ANGRY_TOCK_SECOND_TIME = "14:45";
 
     setup.returns({
-      getSlackUsers,
       tock: {
         get18FTockSlackUsers,
         get18FTockTruants,
       },
     });
 
-    getSlackUsers.resolves(slackUsers);
     get18FTockTruants.resolves(tock18FTruants);
     get18FTockSlackUsers.resolves(tock18FSlackUsers);
   });
