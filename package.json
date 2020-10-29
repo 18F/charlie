@@ -3,7 +3,7 @@
   "version": "2.7.1",
   "private": true,
   "scripts": {
-    "lint": "eslint scripts/*.js scripts/*.coffee",
+    "lint": "18f-eslint scripts/*.js scripts/*.coffee",
     "test": "mocha --require coffeescript/register test/*",
     "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha --require coffeescript/register test/*",
     "validate-config": "slack-github-issues validate config/slack-github-issues.json"
@@ -41,19 +41,12 @@
     "node": "^12.11.1"
   },
   "devDependencies": {
+    "@18f/18f-eslint": "^1.2.5",
     "chai": "^4.2.0",
     "co": "^4.6.0",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-coffeescript": "^1.0.0",
-    "eslint-plugin-import": "^2.20.2",
-    "hubot-test-helper": "^1.9.0",
-    "mocha": "^7.1.2",
-    "prettier": "^2.0.5"
+    "mocha": "^7.1.2"
   },
   "prettier": {
-    "singleQuote": true,
-    "trailingComma": "none"
   }
 }
