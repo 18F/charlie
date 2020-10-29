@@ -49,16 +49,16 @@ const scheduleReminders = async () => {
 
   const users = await util.tock.get18FTockSlackUsers();
   const now = moment();
-  Array.from(new Set(users.filter((u) => !u.deleted).map((u) => u.tz))).forEach(
-    (tz) => {
-      const tzReminderTime = moment.tz(reminderString, tz);
-      if (tzReminderTime.isAfter(now)) {
-        // If the reminder time is in the past, don't schedule it. That'd be
-        // a really silly thing to do.
-        scheduler.scheduleJob(tzReminderTime.toDate(), reminder(tz));
-      }
+
+  // Get a list of unique timezones by putting them into a Set.
+  new Set(users.map((u) => u.tz)).forEach((tz) => {
+    const tzReminderTime = moment.tz(reminderString, tz);
+    if (tzReminderTime.isAfter(now)) {
+      // If the reminder time is in the past, don't schedule it. That'd be
+      // a really silly thing to do.
+      scheduler.scheduleJob(tzReminderTime.toDate(), reminder(tz));
     }
-  );
+  });
 };
 
 module.exports = async (robot) => {
