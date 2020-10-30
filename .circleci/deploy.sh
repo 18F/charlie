@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "${CIRCLE_BRANCH}" == "master" ]
+if [ "${CIRCLE_BRANCH}" == "main" ]
 then
   # Fail if anything within this script returns
   # a non-zero exit code
@@ -15,5 +15,5 @@ then
   cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
   cf push -f manifest.yml
 else
-  echo "Not on the master branch.  Not deploying."
+  echo "Not on the main branch.  Not deploying."
 fi

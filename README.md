@@ -54,8 +54,8 @@ environment variables.
 
 18F's Hubot is named Charlie, and is deployed in [Cloud.gov](https://cloud.gov/).
 
-Charlie is set up with continuous deployment, just merge your code to master and
-it will get deployed with Travis.
+Charlie is set up with continuous deployment, just merge your code to main and
+it will get deployed with CircleCI.
 
 ## Configuration
 
