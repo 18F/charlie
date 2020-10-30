@@ -27,6 +27,9 @@ describe("utility helpers", () => {
     adapter: {
       client: {
         web: {
+          conversations: {
+            members: sandbox.stub(),
+          },
           reactions: {
             add: sandbox.stub(),
           },
@@ -182,6 +185,64 @@ describe("utility helpers", () => {
       try {
         const out = await getSlackUsers();
         expect(out).to.equal("here is the result");
+      } catch (_) {
+        // If the promise rejects, something wonky happened, so fail the test.
+        expect(true).to.equal(false);
+      }
+    });
+  });
+
+  describe("gets a list of Slack users in a conversation", () => {
+    it("rejects if there is an error getting users in a conversation", async () => {
+      const { getSlackUsersInConversation } = utils.setup(robot);
+
+      const testError = new Error();
+      robot.adapter.client.web.conversations.members.yields(testError, null);
+
+      try {
+        await getSlackUsersInConversation("channel id");
+        expect(true).to.equal(false);
+      } catch (e) {
+        expect(e).to.equal(testError);
+      }
+    });
+
+    it("rejects if there is an error getting all user details", async () => {
+      const { getSlackUsersInConversation } = utils.setup(robot);
+
+      const testError = new Error();
+      robot.adapter.client.web.conversations.members.yields(null, "okay");
+      robot.adapter.client.web.users.list.yields(testError, null);
+
+      try {
+        await getSlackUsersInConversation("channel id");
+        expect(true).to.equal(false);
+      } catch (e) {
+        expect(e).to.equal(testError);
+      }
+    });
+
+    it("resolves a list of users in the requested channel if there are no errors", async () => {
+      const { getSlackUsersInConversation } = utils.setup(robot);
+
+      robot.adapter.client.web.conversations.members.yields(null, {
+        members: ["id1", "id4"],
+      });
+      robot.adapter.client.web.users.list.yields(null, {
+        members: [
+          { id: "id1", profile: "profile1" },
+          { id: "id2", profile: "profile2" },
+          { id: "id3", profile: "profile3" },
+          { id: "id4", profile: "profile4" },
+        ],
+      });
+
+      try {
+        const out = await getSlackUsersInConversation("channel id");
+        expect(out).to.deep.equal([
+          { id: "id1", profile: "profile1" },
+          { id: "id4", profile: "profile4" },
+        ]);
       } catch (_) {
         // If the promise rejects, something wonky happened, so fail the test.
         expect(true).to.equal(false);

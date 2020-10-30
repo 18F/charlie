@@ -125,6 +125,30 @@ module.exports = {
       });
     };
 
+    const getSlackUsersInConversation = async (conversationID) => {
+      return new Promise((resolve, reject) => {
+        robot.adapter.client.web.conversations.members(
+          conversationID,
+          async (err, response) => {
+            if (err) {
+              return reject(err);
+            }
+
+            try {
+              const channelUsers = response.members;
+              const allUsers = await getSlackUsers();
+
+              return resolve(
+                allUsers.filter(({ id }) => channelUsers.includes(id))
+              );
+            } catch (e) {
+              return reject(e);
+            }
+          }
+        );
+      });
+    };
+
     /**
      * Get all current 18F Tock users that are also Slack users.
      * @async
@@ -159,7 +183,7 @@ module.exports = {
 
       return tockSlackUsers;
     };
-    const postEphemeralMessage = (message) => {
+    const postEphemeralMessage = async (message) => {
       webAPI.chat.postEphemeral(message);
     };
 
@@ -172,6 +196,7 @@ module.exports = {
         get18FTockTruants,
       },
       getSlackUsers,
+      getSlackUsersInConversation,
       postEphemeralMessage,
     };
   },
