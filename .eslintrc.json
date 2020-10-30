@@ -4,6 +4,7 @@
     "prettier"
   ],
   "rules": {
+    "no-console": 0,
     "prefer-destructuring": [
       0
     ]
@@ -12,9 +13,6 @@
     "es6": true,
     "node": true
   },
-  "plugins": [
-    "coffeescript"
-  ],
   "overrides": [
     {
       "files": [
