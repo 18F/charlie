@@ -14,16 +14,14 @@
 // Notes:
 // Images are stored in a bucket in S3.
 
-const CFENV = require('cfenv');
-const AWS = require('aws-sdk');
-const underscore = require('underscore');
+const CFENV = require("cfenv");
+const AWS = require("aws-sdk");
+const underscore = require("underscore");
 
 const appEnv = CFENV.getAppEnv();
-const s3Creds = appEnv.getServiceCreds('charlie-bucket');
+const s3Creds = appEnv.getServiceCreds("charlie-bucket");
 
 if (s3Creds !== null) {
-  console.log("Found service creds for 'charlie-bucket'.");
-
   const creds = new AWS.Credentials(
     s3Creds.access_key_id,
     s3Creds.secret_access_key
@@ -32,7 +30,7 @@ if (s3Creds !== null) {
   const REGION = s3Creds.region;
   const s3 = new AWS.S3({ region: REGION, credentials: creds });
 
-  const hugUrl = s3Object => {
+  const hugUrl = (s3Object) => {
     const filename = s3Object.Key;
     const rand = underscore.random(10000);
     return `https://s3-${REGION}.amazonaws.com/${BUCKET}/${filename}?rnd=${rand}`;
@@ -50,21 +48,21 @@ if (s3Creds !== null) {
           const url = hugUrl(s3Object);
           msg.send(url);
         }
-        msg.send('_If you would like to be added, send a picture in #bots._');
+        msg.send("_If you would like to be added, send a picture in #bots._");
       }
     });
   };
 
-  module.exports = robot => {
+  module.exports = (robot) => {
     if (s3Creds === null) {
       return;
     }
 
-    robot.respond(/hug me/i, msg => {
+    robot.respond(/hug me/i, (msg) => {
       hugBomb(1, msg);
     });
 
-    robot.respond(/hug bomb( (\d+))?/i, msg => {
+    robot.respond(/hug bomb( (\d+))?/i, (msg) => {
       const count = msg.match[2] || 3;
       hugBomb(count, msg);
     });

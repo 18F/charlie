@@ -1,30 +1,16 @@
-const defaultWebClient = require('@slack/client').WebClient;
+const defaultWebClient = require("@slack/client").WebClient;
+const utils = require("../utils");
 
-const brainKey = 'coffeemate_queue';
-
-const addReaction = (robot, reaction, channelID, messageID) =>
-  new Promise((resolve, reject) =>
-    robot.adapter.client.web.reactions.add(
-      reaction,
-      { channel: channelID, timestamp: messageID },
-      (err, res) => {
-        if (err) {
-          return reject(err);
-        }
-        if (!res.ok) {
-          return reject(new Error('Unknown error with Slack API'));
-        }
-        return resolve();
-      }
-    )
-  );
+const brainKey = "coffeemate_queue";
 
 module.exports = (robot, { WebClient = defaultWebClient } = {}) => {
   const webAPI = new WebClient(robot.adapter.options.token);
   const queue = robot.brain.get(brainKey) || [];
 
-  robot.hear(/coffee me/i, res => {
-    addReaction(robot, 'coffee', res.message.room, res.message.id);
+  const { addEmojiReaction } = utils.setup(robot);
+
+  robot.hear(/coffee me/i, (res) => {
+    addEmojiReaction("coffee", res.message.room, res.message.id);
 
     // First, is the current user in already in the queue?
     // If so, just let them know
@@ -33,8 +19,8 @@ module.exports = (robot, { WebClient = defaultWebClient } = {}) => {
         channel: res.message.room,
         user: res.message.user.id,
         text:
-          'You’re already in the queue. As soon as we find someone else to meet with, we’ll introduce you!',
-        as_user: true
+          "You’re already in the queue. As soon as we find someone else to meet with, we’ll introduce you!",
+        as_user: true,
       });
       return;
     }
@@ -50,8 +36,8 @@ module.exports = (robot, { WebClient = defaultWebClient } = {}) => {
         channel: res.message.room,
         user: res.message.user.id,
         text:
-          'You’re in line for coffee! You’ll be introduced to the next person who wants to meet up.',
-        as_user: true
+          "You’re in line for coffee! You’ll be introduced to the next person who wants to meet up.",
+        as_user: true,
       });
     } else {
       // pair them up
@@ -59,25 +45,25 @@ module.exports = (robot, { WebClient = defaultWebClient } = {}) => {
         channel: res.message.room,
         user: res.message.user.id,
         text: `You’ve been matched up for coffee with <@${queue[0]}>! `,
-        as_user: true
+        as_user: true,
       });
 
       // Now start a 1:1 DM chat between the people in queue.
-      robot.adapter.client.web.mpim.open(queue.join(','), (err, mpim) => {
+      robot.adapter.client.web.mpim.open(queue.join(","), (err, mpim) => {
         if (err || !mpim.ok) {
-          console.log('Error with Slack API', err);
+          robot.logger.warning("Error with Slack API", err);
           return;
         }
 
         const msg =
-          'You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:';
+          "You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:";
 
         // mpim.send msg
         robot.messageRoom(mpim.group.id, {
           text: msg,
-          username: 'coffeemate',
-          icon_emoji: ':coffee:',
-          as_user: false
+          username: "coffeemate",
+          icon_emoji: ":coffee:",
+          as_user: false,
         });
 
         // then empty the queue again
