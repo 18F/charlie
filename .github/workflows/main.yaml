@@ -30,7 +30,9 @@ jobs:
         run: npm test
 
   deploy:
+    name: deploy
     needs: [lint, test]
+    runs-on: ubuntu-latest
     container: governmentpaas/cf-cli
     steps:
     - uses: actions/checkout@af513c7a
