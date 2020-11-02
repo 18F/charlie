@@ -9,18 +9,22 @@ jobs:
     container: node:14
     steps:
       - uses: actions/checkout@af513c7a
-      - name: install dependencies # needed for coffeescript
-        run: npm ci
       - uses: 18f/18f-eslint-action@v1.1.0
         with:
-          lint-glob: "**/*.js"
+          lint-glob: "*.js scripts/*.js test/**/*.js"
   test:
     name: unit tests
     runs-on: ubuntu-latest
     container: node:14
     steps:
       - uses: actions/checkout@af513c7a
+      - uses: actions/cache@v2
+        id: dep-cache
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}-v2
       - name: install dependencies
+        if: steps.dep-cache.outputs.cache-hit != 'true'
         run: npm ci
       - name: run tests
         run: npm test

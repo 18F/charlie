@@ -1,55 +1,70 @@
-name: update on main
+# name: update on main
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - mgwalker/all-in-on-actions
 
-jobs:
-  lint:
-    name: 18F ESLint
-    runs-on: ubuntu-latest
-    container: node:14
-    steps:
-      - uses: actions/checkout@af513c7a
-      - name: install dependencies # needed for coffeescript
-        run: npm ci
-      - uses: 18f/18f-eslint-action@v1.1.0
-        with:
-          lint-glob: "**/*.js"
+# jobs:
+#   build:
+#     name: build everything
+#     runs-on: ubuntu-latest
+#     container: node:14
+#     steps:
+#       - uses: actions/checkout@af513c7a
+#       - uses: actions/cache@v2
+#         id: dep-cache
+#         with:
+#           path: ./node_modules
+#           key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}-v2
+#       - name: install dependencies
+#         if: steps.dep-cache.outputs.cache-hit != 'true'
+#         run: npm ci
 
-  test:
-    name: unit tests
-    runs-on: ubuntu-latest
-    container: node:14
-    steps:
-      - uses: actions/checkout@af513c7a
-      - name: install dependencies
-        run: npm ci
-      - name: run tests
-        run: npm test
+#   lint:
+#     name: 18F ESLint
+#     runs-on: ubuntu-latest
+#     container: node:14
+#     steps:
+#       - uses: actions/checkout@af513c7a
+#       - uses: 18f/18f-eslint-action@v1.1.0
+#         with:
+#           lint-glob: "*.js scripts/*.js test/**/*.js"
 
-  deploy:
-    name: deploy
-    needs: [lint, test]
-    runs-on: ubuntu-latest
-    container: governmentpaas/cf-cli
-    steps:
-    - uses: actions/checkout@af513c7a
-    - uses: actions/setup-node@56899e0
-      with:
-        node-version: '12'
-    - name: install dependencies # vendoring
-      run: npm ci
-    - name: log into cloud.gov
-      env:
-        CF_API: ${{ secrets.CF_API }}
-        CF_ORG: ${{ secrets.CF_ORG }}
-        CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
-        CF_SPACE: ${{ secrets.CF_SPACE }}
-        CF_USERNAME: ${{ secrets.CF_USERNAME }}
-      run: cf login -a "$CF_API" -u "$CF_USERNAME" -u "$CF_PASSWORD" -o "$CF_ORG" -s "$CF_SPACE"
-    - name: deploy
-      run: cf push -f manifest.yml
+#   test:
+#     name: unit tests
+#     needs: [build]
+#     runs-on: ubuntu-latest
+#     container: node:14
+#     steps:
+#       - uses: actions/checkout@af513c7a
+#       - uses: actions/cache@v2
+#         id: dep-cache
+#         with:
+#           path: ./node_modules
+#           key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}-v2
+#       - name: run tests
+#         run: npm test
 
-
+#   deploy:
+#     name: deploy
+#     needs: [build, lint, test]
+#     runs-on: ubuntu-latest
+#     container: governmentpaas/cf-cli
+#     steps:
+#     - uses: actions/checkout@af513c7a
+#     - uses: actions/cache@v2
+#       id: dep-cache
+#       with:
+#         path: ./node_modules
+#         key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}-v2
+#     - name: log into cloud.gov
+#       env:
+#         CF_API: ${{ secrets.CF_API }}
+#         CF_ORG: ${{ secrets.CF_ORG }}
+#         CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+#         CF_SPACE: ${{ secrets.CF_SPACE }}
+#         CF_USERNAME: ${{ secrets.CF_USERNAME }}
+#       run: cf login -a "$CF_API" -u "$CF_USERNAME" -u "$CF_PASSWORD" -o "$CF_ORG" -s "$CF_SPACE"
+#     - name: deploy
+#       run: cf push -f manifest.yml
