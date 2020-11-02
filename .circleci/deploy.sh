@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "${CIRCLE_BRANCH}" == "main but not really so don't deploy" ]
+if [ "${CIRCLE_BRANCH}" == "main" ]
 then
   # Fail if anything within this script returns
   # a non-zero exit code
