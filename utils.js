@@ -183,9 +183,18 @@ module.exports = {
 
       return tockSlackUsers;
     };
-    const postEphemeralMessage = async (message) => {
-      webAPI.chat.postEphemeral(message);
-    };
+    const postEphemeralMessage = async (message) =>
+      new Promise((resolve, reject) => {
+        webAPI.chat.postEphemeral(message, (err, response) => {
+          if (err) {
+            return reject(err);
+          }
+          if (!response.ok) {
+            return reject(new Error("Unknown error with Slack API"));
+          }
+          return resolve();
+        });
+      });
 
     return {
       addEmojiReaction,

@@ -166,8 +166,6 @@ describe("Handy Tau-bot timezone conversions", () => {
       message.match[2] = "PM";
       await handler(message);
 
-      console.log(postEphemeralMessage.args);
-
       expect(
         postEphemeralMessage.calledWith({
           ...baseResponse,

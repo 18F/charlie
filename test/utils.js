@@ -12,7 +12,7 @@ describe("utility helpers", () => {
 
   const webAPI = {
     chat: {
-      postEphemeral: sandbox.spy(),
+      postEphemeral: sandbox.stub(),
     },
   };
 
@@ -79,14 +79,54 @@ describe("utility helpers", () => {
     expect(typeof out.tock.get18FTockTruants === "function").to.equal(true);
   });
 
-  it("posts an ephemeral message", () => {
-    const { postEphemeralMessage } = utils.setup(robot);
+  describe("posts an ephemeral message", () => {
+    it("rejects if there is an HTTP error", async () => {
+      const { postEphemeralMessage } = utils.setup(robot);
+      const error = new Error("test error");
+      webAPI.chat.postEphemeral.yields(error, null);
 
-    postEphemeralMessage("this is my magical message");
+      try {
+        await postEphemeralMessage("this is my magical message");
+        expect(true).to.equal(false);
+      } catch (e) {
+        expect(e).to.equal(error);
+      }
 
-    expect(
-      webAPI.chat.postEphemeral.calledWith("this is my magical message")
-    ).to.equal(true);
+      expect(
+        webAPI.chat.postEphemeral.calledWith("this is my magical message")
+      ).to.equal(true);
+    });
+
+    it("rejects if there is a Slack error", async () => {
+      const { postEphemeralMessage } = utils.setup(robot);
+      webAPI.chat.postEphemeral.yields(null, { ok: false });
+
+      try {
+        await postEphemeralMessage("this is my magical message");
+        expect(true).to.equal(false);
+      } catch (e) {
+        expect(e.message).to.equal("Unknown error with Slack API");
+      }
+
+      expect(
+        webAPI.chat.postEphemeral.calledWith("this is my magical message")
+      ).to.equal(true);
+    });
+
+    it("resolves if everything goes okay", async () => {
+      const { postEphemeralMessage } = utils.setup(robot);
+      webAPI.chat.postEphemeral.yields(null, { ok: true });
+
+      try {
+        await postEphemeralMessage("this is my magical message");
+      } catch (e) {
+        expect(true).to.equal(false);
+      }
+
+      expect(
+        webAPI.chat.postEphemeral.calledWith("this is my magical message")
+      ).to.equal(true);
+    });
   });
 
   describe("adds an emoji reaction", () => {
