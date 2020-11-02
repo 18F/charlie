@@ -22,6 +22,7 @@ describe("Handy Tau-bot timezone conversions", () => {
     user: "user 1",
     username: "Handy Tau-bot",
     text: "That's 1:00 for you!",
+    thread_ts: "thread.id",
   };
 
   before(() => {
@@ -64,8 +65,11 @@ describe("Handy Tau-bot timezone conversions", () => {
 
   describe("handles messages that include timeish text", () => {
     const message = {
-      match: ["", "03:00", "", "AT"],
       message: {
+        rawMessage: {
+          text: "03:00 AT",
+          thread_ts: "thread.id",
+        },
         room: "room id",
         user: {
           id: "user id",
@@ -83,7 +87,7 @@ describe("Handy Tau-bot timezone conversions", () => {
     });
 
     it("if a timezone is specified, doesn't message people who are in the specified timezone", async () => {
-      message.match[3] = "est";
+      message.message.rawMessage.text = "03:00 est";
       await handler(message);
 
       expect(
@@ -123,7 +127,7 @@ describe("Handy Tau-bot timezone conversions", () => {
     });
 
     it("if a timezone is not specified, it messages everyone except the original author", async () => {
-      message.match[3] = "";
+      message.message.rawMessage.text = "03:00";
       await handler(message);
 
       expect(
@@ -163,7 +167,7 @@ describe("Handy Tau-bot timezone conversions", () => {
     });
 
     it("includes AM/PM in the message if it was included in the original", async () => {
-      message.match[2] = "PM";
+      message.message.rawMessage.text = "03:00 PM";
       await handler(message);
 
       expect(
@@ -175,6 +179,13 @@ describe("Handy Tau-bot timezone conversions", () => {
       ).to.equal(true);
 
       // Not testing filtering here, so trust the previous tests.
+    });
+
+    it("does not respond at all if the user text is empty (e.g., crossposted messages", async () => {
+      message.message.rawMessage.text = "";
+      await handler(message);
+
+      expect(postEphemeralMessage.called).to.equal(false);
     });
   });
 });
