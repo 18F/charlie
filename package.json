@@ -3,7 +3,7 @@
   "version": "2.7.1",
   "private": true,
   "scripts": {
-    "lint": "18f-eslint scripts/*.js",
+    "lint": "18f-eslint '**/*.js'",
     "test": "mocha test/*",
     "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha test/*",
     "validate-config": "slack-github-issues validate config/slack-github-issues.json"

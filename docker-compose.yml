@@ -27,6 +27,7 @@ services:
       - HUBOT_SLACK_GITHUB_ISSUES_CONFIG_PATH=config/slack-github-issues.json
       - HUBOT_LOG_LEVEL=debug
       - REDIS_URL=redis://database:6379
+      - NODEMON=true
     working_dir: /app
     volumes:
       - ./:/app

@@ -13,4 +13,8 @@ export PORT=$PORT
 export BIND_ADDRESS=0.0.0.0
 export PATH=./node_modules/.bin:$PATH
 
-./node_modules/.bin/hubot --adapter slack --name charlie
+if [ -z "$NODEMON" ]; then
+  ./node_modules/.bin/hubot --adapter slack --name charlie
+else
+  npx nodemon -x ./node_modules/.bin/hubot --adapter slack --name charlie
+fi
