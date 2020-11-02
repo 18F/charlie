@@ -1,4 +1,4 @@
-name: tests
+name: pull requests
 
 on: [pull_request]
 
@@ -13,7 +13,7 @@ jobs:
         run: npm ci
       - uses: 18f/18f-eslint-action@v1.1.0
         with:
-          lint-glob: "**/.js"
+          lint-glob: "**/*.js"
   test:
     name: unit tests
     runs-on: ubuntu-latest
