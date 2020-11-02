@@ -79,6 +79,7 @@ describe("Angry Tock", () => {
     { email: "user@one", id: "tock1", user: "employee1" },
     { email: "user@two", id: "tock2", user: "employee2" },
     { email: "user@three", id: "tock3", user: "employee3" },
+    { email: "user@four", id: "tock4", user: "employee4" },
   ];
 
   const tock18FTruants = [
@@ -95,6 +96,13 @@ describe("Angry Tock", () => {
       first_name: "User",
       last_name: "Two",
       username: "employee2",
+    },
+    {
+      id: "tock4",
+      email: "user@four",
+      first_name: "User",
+      last_name: "Four",
+      username: "employee4",
     },
   ];
 
@@ -132,6 +140,8 @@ describe("Angry Tock", () => {
   before(() => {
     clock = sinon.useFakeTimers();
     setup = sinon.stub(originalUtils, "setup");
+
+    process.env.ANGRY_TOCK_REPORT_TO = "#channel,@user";
   });
 
   beforeEach(() => {
@@ -305,7 +315,7 @@ describe("Angry Tock", () => {
       moment.duration({ hours: 4, minutes: 45 }).asMilliseconds()
     );
 
-    expect(robot.messageRoom.callCount).to.equal(3);
+    expect(robot.messageRoom.callCount).to.equal(4);
 
     expect(
       robot.messageRoom.calledWith("slack1", {
@@ -325,23 +335,26 @@ describe("Angry Tock", () => {
       })
     ).to.equal(true);
 
-    expect(
-      robot.messageRoom.calledWith("18f-gmt", {
-        attachments: [
-          {
-            fallback:
-              "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)",
-            color: "#FF0000",
-            text:
-              "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)",
-          },
-        ],
-        username: "Angry Tock",
-        icon_emoji: ":angrytock:",
-        text: "*The following users are currently truant on Tock:*",
-        as_user: false,
-      })
-    ).to.equal(true);
+    const reportMessage = {
+      attachments: [
+        {
+          fallback:
+            "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
+          color: "#FF0000",
+          text:
+            "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
+        },
+      ],
+      username: "Angry Tock",
+      icon_emoji: ":angrytock:",
+      text: "*The following users are currently truant on Tock:*",
+      as_user: false,
+    };
+
+    expect(robot.messageRoom.calledWith("#channel", reportMessage)).to.equal(
+      true
+    );
+    expect(robot.messageRoom.calledWith("@user", reportMessage)).to.equal(true);
 
     // Reset stub history, then advance to next week's first shout and make
     // sure we got fresh happy DMs.
@@ -384,15 +397,18 @@ describe("Angry Tock", () => {
       moment.duration({ hours: 4, minutes: 45 }).asMilliseconds()
     );
 
-    expect(robot.messageRoom.callCount).to.equal(1);
+    expect(robot.messageRoom.callCount).to.equal(2);
 
-    expect(
-      robot.messageRoom.calledWith("18f-gmt", {
-        username: "Happy Tock",
-        icon_emoji: ":happy-tock:",
-        text: "No Tock truants!",
-        as_user: false,
-      })
-    ).to.equal(true);
+    const happyMessage = {
+      username: "Happy Tock",
+      icon_emoji: ":happy-tock:",
+      text: "No Tock truants!",
+      as_user: false,
+    };
+
+    expect(robot.messageRoom.calledWith("#channel", happyMessage)).to.equal(
+      true
+    );
+    expect(robot.messageRoom.calledWith("@user", happyMessage)).to.equal(true);
   });
 });

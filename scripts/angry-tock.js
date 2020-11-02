@@ -17,6 +17,10 @@ const ANGRY_TOCK_SECOND_ALERT = moment(
   "HH:mm"
 );
 
+const ANGRY_TOCK_REPORT_TO = (
+  process.env.ANGRY_TOCK_REPORT_TO || "#18f-supes"
+).split(",");
+
 let util;
 
 /**
@@ -68,7 +72,7 @@ let shout = (robot) => {
           report.push([`• ${u.username} (not notified)`])
         );
 
-        robot.messageRoom("18f-gmt", {
+        const truantReport = {
           attachments: [
             {
               fallback: report.join("\n"),
@@ -80,13 +84,18 @@ let shout = (robot) => {
           icon_emoji: ":angrytock:",
           text: "*The following users are currently truant on Tock:*",
           as_user: false,
+        };
+        ANGRY_TOCK_REPORT_TO.forEach((room) => {
+          robot.messageRoom(room, truantReport);
         });
       } else {
-        robot.messageRoom("18f-gmt", {
-          username: "Happy Tock",
-          icon_emoji: ":happy-tock:",
-          text: "No Tock truants!",
-          as_user: false,
+        ANGRY_TOCK_REPORT_TO.forEach((room) => {
+          robot.messageRoom(room, {
+            username: "Happy Tock",
+            icon_emoji: ":happy-tock:",
+            text: "No Tock truants!",
+            as_user: false,
+          });
         });
       }
     }
