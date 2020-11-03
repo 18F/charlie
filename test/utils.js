@@ -113,21 +113,6 @@ describe("utility helpers", () => {
 
       await utils.cache("key", 300, callback);
       expect(callback.called).to.equal(true);
-
-      // Reset the callback history again
-      callback.resetHistory();
-
-      // Now go forward just a bit, and call again. This should bump the
-      // timestamp of the cached data up so that it survives the next pruning.
-      await clock.tickAsync(1000);
-      await utils.cache("key", 300, callback);
-      expect(callback.called).to.equal(false);
-
-      // And ensure that the callback still isn't called after the next auto-
-      // pruning, because the cached value is less than 20 minutes old.
-      await clock.tickAsync(TWENTY_MINUTES);
-      await utils.cache("key", 300, callback);
-      expect(callback.called).to.equal(false);
     });
 
     it("stores cached results for the specified time", async () => {

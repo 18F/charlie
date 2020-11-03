@@ -5,7 +5,7 @@ const CACHE_MAX_LIFE = 20 * 60 * 1000;
 const cache = (() => {
   const privateCache = new Map();
 
-  // Clear out anything over 30 minutes old, regularly, to prevent memory leaks.
+  // Clear out anything over 20 minutes old, regularly, to prevent memory leaks.
   // Otherwise caches of months-old Tock data could end up sticking around
   // forever and ever, amen.
   setInterval(() => {
@@ -27,15 +27,15 @@ const cache = (() => {
   const cacheFunction = async (key, lifetimeInMinutes, callback) => {
     if (privateCache.has(key)) {
       const { timestamp, value } = privateCache.get(key);
+
+      // The cached value is older than the allowed lifetime, so fetch it anew.
       if (timestamp + lifetimeInMinutes * 60 * 1000 < Date.now()) {
         const newValue = await callback();
 
         privateCache.set(key, { timestamp: Date.now(), value: newValue });
-
         return newValue;
       }
 
-      privateCache.set(key, { timestamp: Date.now(), value });
       return value;
     }
 
