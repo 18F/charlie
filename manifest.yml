@@ -2,7 +2,7 @@
 applications:
 - name: charlie
   buildpack: nodejs_buildpack
-  memory: 512M
+  memory: 192MB
   instances: 1
   no-route: true
   health-check-type: process
