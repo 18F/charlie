@@ -8,21 +8,25 @@ const TIMEZONES = {
   at: "America/Puerto_Rico",
   adt: "America/Puerto_Rico",
   ast: "America/Puerto_Rico",
+  ":central-time-zone:": "America/Chicago",
   ct: "America/Chicago",
   cdt: "America/Chicago",
   cst: "America/Chicago",
+  ":eastern-time-zone:": "America/New_York",
   et: "America/New_York",
   edt: "America/New_York",
   est: "America/New_York",
+  ":mountain-time-zone:": "America/Denver",
   mt: "America/Denver",
   mdt: "America/Denver",
   mst: "America/Denver",
+  ":pacific-time-zone:": "America/Los_Angeles",
   pt: "America/Los_Angeles",
   pdt: "America/Los_Angeles",
   pst: "America/Los_Angeles",
 };
 
-const matcher = /(\d{1,2}:\d{2}\s?(am|pm)?)\s?((ak|a|c|e|m|p)(s|d)?t)?/i;
+const matcher = /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
 
 module.exports = (robot) => {
   const { getSlackUsersInConversation, postEphemeralMessage } = utils.setup(
