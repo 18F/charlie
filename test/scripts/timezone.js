@@ -57,7 +57,7 @@ describe("Handy Tau-bot timezone conversions", () => {
     expect(setup.calledWith(robot)).to.equal(true);
     expect(
       robot.hear.calledWith(
-        /(\d{1,2}:\d{2}\s?(am|pm)?)\s?((ak|a|c|e|m|p)(s|d)?t)?/i,
+        /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i,
         sinon.match.func
       )
     ).to.equal(true);
@@ -123,6 +123,21 @@ describe("Handy Tau-bot timezone conversions", () => {
       ).to.equal(true);
 
       // Make sure only the above messages were posted.
+      expect(postEphemeralMessage.callCount).to.equal(4);
+    });
+
+    it("if a timezone is specified via emoji, it doesn't message people who are in the specified timezone", async() => {
+      message.message.rawMessage.text = "03:00 :eastern-time-zone:";
+      await handler(message);
+
+      expect(
+        postEphemeralMessage.calledWith({
+          ...baseResponse,
+          user: "user 1",
+          text: "That's 1:00 for you!",
+        })
+      ).to.equal(true);
+      // trusting the last test to verify contents for the other 3 users
       expect(postEphemeralMessage.callCount).to.equal(4);
     });
 
