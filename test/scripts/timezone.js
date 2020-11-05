@@ -141,6 +141,29 @@ describe("Handy Tau-bot timezone conversions", () => {
       expect(postEphemeralMessage.callCount).to.equal(4);
     });
 
+    it("if multiple timezones are specified, it only messages people in a different timezone", async() => {
+      message.message.rawMessage.text = "03:00 :eastern-time-zone: | 02:00 :central-time-zone:";
+      await handler(message);
+
+      expect(
+        postEphemeralMessage.calledWith({
+          ...baseResponse,
+          user: "user 1",
+          text: "That's 1:00 for you!",
+        })
+      ).to.equal(true);
+
+      expect(
+        postEphemeralMessage.calledWith({
+          ...baseResponse,
+          user: "user 4",
+          text: "That's 11:00 for you!",
+        })
+      ).to.equal(true)
+
+      expect(postEphemeralMessage.callCount).to.equal(2);
+    });
+
     it("if a timezone is not specified, it messages everyone except the original author", async () => {
       message.message.rawMessage.text = "03:00";
       await handler(message);

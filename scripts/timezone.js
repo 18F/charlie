@@ -38,20 +38,26 @@ module.exports = (robot) => {
     if (!matcher.test(text)) {
       return;
     }
-    const [, time, ampm, timezone] = msg.message.rawMessage.text.match(matcher);
+    let users = (await getSlackUsersInConversation(msg.message.room))
+    let m = null;
+    let ampm = null;
 
-    const sourceTz = timezone
-      ? TIMEZONES[timezone.toLowerCase()]
-      : msg.message.user.slack.tz;
+    const matches = [...text.matchAll(RegExp(matcher, "gi"))];
+    matches.forEach(([, time, ampmStr, timezone]) => {
+      const sourceTz = timezone
+        ? TIMEZONES[timezone.toLowerCase()]
+        : msg.message.user.slack.tz;
 
-    const m = moment.tz(
-      `${time.trim()}${ampm ? ` ${ampm}` : ""}`,
-      "hh:mm a",
-      sourceTz
-    );
+      if (m === null) {
+        ampm = ampmStr;
+        m = moment.tz(
+          `${time.trim()}${ampm ? ` ${ampm}` : ""}`,
+          "hh:mm a",
+          sourceTz
+        );
+      }
 
-    const users = (await getSlackUsersInConversation(msg.message.room))
-      .filter(({ deleted, id, is_bot: bot, tz }) => {
+      users = users.filter(({ deleted, id, is_bot: bot, tz }) => {
         if (deleted || bot) {
           return false;
         }
@@ -69,6 +75,7 @@ module.exports = (robot) => {
         return true;
       })
       .map(({ id, tz }) => ({ id, tz }));
+    })
 
     users.forEach(({ id, tz }) => {
       postEphemeralMessage({
