@@ -10,7 +10,14 @@ const phrasesToIgnore = [
   /guy(s|z)bot(s|z)?/gi,
 ];
 
-const collectiveNouns = ["fellow kids", "folks", "humans", "people", `y'all`];
+const collectiveNouns = [
+  "fellow kids",
+  "folks",
+  "friends",
+  "people",
+  "team",
+  `y'all`,
+];
 
 module.exports = (robot) => {
   const { addEmojiReaction, postEphemeralMessage } = utils.setup(robot);
