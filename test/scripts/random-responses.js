@@ -167,6 +167,12 @@ describe("random responder", () => {
       );
       expect(responses).to.eql({ key1: "value 1", key2: "value 2" });
     });
+
+    it("returns an empty list if misconfigured", async () => {
+      const responses = await script.getResponses({}, {});
+
+      expect(responses).to.eql([]);
+    });
   });
 
   describe("trigger attachment", () => {

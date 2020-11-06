@@ -1,10 +1,9 @@
-const fs = require('fs');
+const fs = require("fs");
+const { cache } = require("../utils");
 
 const configs = JSON.parse(
-  fs.readFileSync('config/slack-random-response.json')
+  fs.readFileSync("config/slack-random-response.json")
 );
-
-const cachedRequests = {};
 
 /**
  * Given a configuration, get a list of responses for it.
@@ -20,29 +19,18 @@ const getResponses = async (robot, config) => {
   }
 
   if (config.responseUrl) {
-    // If we've hit this URL within the past five minutes, return the cached
-    // result rather than taking the network hit again so quickly
-    if (cachedRequests[config.responseUrl]) {
-      const cached = cachedRequests[config.responseUrl];
-      if (Date.now() < cached.expiry) {
-        return cached.value;
-      }
-    }
-
-    return new Promise(resolve => {
-      robot
-        .http(config.responseUrl)
-        .header('User-Agent', '18F-bot')
-        .get()((err, res, body) => {
-        // Cache off this data and set an expiration time so we know when to
-        // go back to the network
-        cachedRequests[config.responseUrl] = {
-          expiry: Date.now() + 60000, // five minutes
-          value: JSON.parse(body)
-        };
-        resolve(JSON.parse(body));
-      });
-    });
+    return cache(
+      `random response, ${config.responseUrl}`,
+      5,
+      () =>
+        new Promise((resolve) => {
+          robot.http(config.responseUrl).header("User-Agent", "18F-bot").get()(
+            (err, res, body) => {
+              resolve(JSON.parse(body));
+            }
+          );
+        })
+    );
   }
 
   return [];
@@ -61,7 +49,7 @@ const getResponses = async (robot, config) => {
 const responseFrom = (
   robot,
   { botName = null, defaultEmoji = null, ...config } = {}
-) => async res => {
+) => async (res) => {
   const message = {};
   if (defaultEmoji) {
     message.icon_emoji = defaultEmoji;
@@ -73,10 +61,10 @@ const responseFrom = (
   const responses = await getResponses(robot, config);
   const response = res.random(responses);
 
-  if (typeof response === 'object') {
+  if (typeof response === "object") {
     message.text = response.text;
     if (response.name) {
-      message.username = response.name + (botName ? ` (${botName})` : '');
+      message.username = response.name + (botName ? ` (${botName})` : "");
     }
     if (response.emoji) {
       message.icon_emoji = response.emoji;
@@ -110,21 +98,21 @@ const responseFrom = (
  */
 const attachTrigger = (robot, { trigger, ...config }) => {
   if (Array.isArray(trigger)) {
-    trigger.forEach(t =>
-      robot.hear(new RegExp(t, 'i'), responseFrom(robot, config))
+    trigger.forEach((t) =>
+      robot.hear(new RegExp(t, "i"), responseFrom(robot, config))
     );
   } else {
-    robot.hear(new RegExp(trigger, 'i'), responseFrom(robot, config));
+    robot.hear(new RegExp(trigger, "i"), responseFrom(robot, config));
   }
 };
 
-module.exports = robot => {
+module.exports = (robot) => {
   if (Array.isArray(configs)) {
-    configs.forEach(async config => {
+    configs.forEach(async (config) => {
       attachTrigger(robot, config);
     });
 
-    robot.hear(/^fact of facts$/i, async res => {
+    robot.hear(/^fact of facts$/i, async (res) => {
       // Pick a random fact config
       const factConfig = configs[Math.floor(Math.random() * configs.length)];
 
