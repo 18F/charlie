@@ -3,28 +3,45 @@ name: pull requests
 on: [pull_request]
 
 jobs:
-  lint:
-    name: 18F ESLint
+  build:
+    name: build
     runs-on: ubuntu-latest
     container: node:14
     steps:
       - uses: actions/checkout@af513c7a
-      - uses: 18f/18f-eslint-action@v1.1.0
+      - uses: actions/cache@d1255ad
+        id: depcache
         with:
-          lint-glob: "*.js scripts/*.js test/**/*.js"
+          path: ./node_modules
+          key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
+      - name: install dependencies
+        if: steps.depcache.outputs.cache-hit != 'true'
+        run: npm ci
+
+  lint:
+    needs: [build]
+    name: lint
+    runs-on: ubuntu-latest
+    container: node:14
+    steps:
+      - uses: actions/checkout@af513c7a
+      - uses: actions/cache@d1255ad
+        with:
+          path: ./node_modules
+          key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
+      - name: lint
+        run: npm run lint
+
   test:
+    needs: [build]
     name: unit tests
     runs-on: ubuntu-latest
     container: node:14
     steps:
       - uses: actions/checkout@af513c7a
-      - uses: actions/cache@v2
-        id: dep-cache
+      - uses: actions/cache@d1255ad
         with:
           path: ./node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('./package-lock.json') }}-v2
-      - name: install dependencies
-        if: steps.dep-cache.outputs.cache-hit != 'true'
-        run: npm ci
+          key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
       - name: run tests
         run: npm test

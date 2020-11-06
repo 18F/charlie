@@ -3,7 +3,7 @@ const moment = require("moment");
 const sinon = require("sinon");
 const slackClient = require("@slack/client");
 
-const utils = require("../utils");
+let utils;
 
 describe("utility helpers", () => {
   const sandbox = sinon.createSandbox();
@@ -47,9 +47,17 @@ describe("utility helpers", () => {
   let clock;
   before(() => {
     clock = sinon.useFakeTimers();
+
+    // If utils has already been imported, remove it from the cache and then
+    // reimport it. It starts a timer when the module is loaded, so we need
+    // to make sure it's loaded after we setup fake timers.
+    delete require.cache[require.resolve("../utils")];
+    utils = require("../utils"); // eslint-disable-line global-require
   });
 
   beforeEach(() => {
+    utils.cache.clear();
+
     sandbox.resetBehavior();
     sandbox.resetHistory();
 
@@ -79,6 +87,94 @@ describe("utility helpers", () => {
     expect(typeof out.tock.get18FTockTruants === "function").to.equal(true);
   });
 
+  describe("provides cacheing support", () => {
+    // Make this the first time-based test, otherwise we get into quirky issues
+    // where the clock has ticked some and then stuff gets added to the cache
+    // so that it doesn't expire on the next auto-clean. That is correct
+    // behavior, but it's hard to account for. Having this test first moots it.
+    it("clears itself of things that are more than 20 minutes old", async () => {
+      const TWENTY_MINUTES = 20 * 60 * 1000;
+
+      const callback = sinon.stub().resolves("");
+
+      // Put something into the cache
+      await utils.cache("key", 30, callback);
+
+      // Reset the callback history so we'll know if it's been called again
+      // later.
+      callback.resetHistory();
+
+      // Call from the cache to prove that the callback isn't called.
+      await utils.cache("key", 300, callback);
+      expect(callback.called).to.equal(false);
+
+      // Zoom to the future!
+      await clock.tickAsync(TWENTY_MINUTES);
+
+      await utils.cache("key", 300, callback);
+      expect(callback.called).to.equal(true);
+    });
+
+    it("stores cached results for the specified time", async () => {
+      const lifetimeInMinutes = 3;
+      const callback = sinon.stub().resolves("first call");
+
+      const result1 = await utils.cache(
+        "test key",
+        lifetimeInMinutes,
+        callback
+      );
+      expect(result1).to.equal("first call");
+
+      // Change the behavior of the callback. It shouldn't get called again, but
+      // if it does, we want the test to fail.
+      callback.resolves("second call");
+
+      const result2 = await utils.cache(
+        "test key",
+        lifetimeInMinutes,
+        callback
+      );
+      expect(result2).to.equal(result1);
+
+      // Tick forward. We need to go one tick past the lifetime in case the
+      // comparison is strictly less than instead of less than or equal.
+      clock.tick(lifetimeInMinutes * 60 * 1000 + 1);
+
+      // Now we should get a new call to the callback.
+      const result3 = await utils.cache(
+        "test key",
+        lifetimeInMinutes,
+        callback
+      );
+      expect(result3).to.equal("second call");
+    });
+
+    it("can empty the cache", async () => {
+      const lifetimeInMinutes = 3;
+      const callback = sinon.stub().resolves("first call");
+
+      const result1 = await utils.cache(
+        "test key",
+        lifetimeInMinutes,
+        callback
+      );
+      expect(result1).to.equal("first call");
+
+      // Change the behavior of the callback, then clear the cache. If this
+      // clear fails, then the test should fail.
+      callback.resolves("second call");
+      utils.cache.clear();
+
+      const result2 = await utils.cache(
+        "test key",
+        lifetimeInMinutes,
+        callback
+      );
+      expect(result2).to.equal("second call");
+    });
+  });
+
   describe("posts an ephemeral message", () => {
     it("rejects if there is an HTTP error", async () => {
       const { postEphemeralMessage } = utils.setup(robot);
@@ -87,7 +183,7 @@ describe("utility helpers", () => {
 
       try {
         await postEphemeralMessage("this is my magical message");
-        expect(true).to.equal(false);
+        assert.fail("should not resolve");
       } catch (e) {
         expect(e).to.equal(error);
       }
@@ -103,7 +199,7 @@ describe("utility helpers", () => {
 
       try {
         await postEphemeralMessage("this is my magical message");
-        expect(true).to.equal(false);
+        assert.fail("should not resolve");
       } catch (e) {
         expect(e.message).to.equal("Unknown error with Slack API");
       }
@@ -120,7 +216,7 @@ describe("utility helpers", () => {
       try {
         await postEphemeralMessage("this is my magical message");
       } catch (e) {
-        expect(true).to.equal(false);
+        assert.fail("should not reject");
       }
 
       expect(
@@ -209,7 +305,7 @@ describe("utility helpers", () => {
         await getSlackUsers();
         // If the promise resolves, then we didn't successfully handle the error
         // from Slack, so fail the test.
-        expect(true).to.equal(false);
+        assert.fail("should not resolve");
       } catch (e) {
         expect(e).to.equal(testError);
       }
@@ -227,7 +323,7 @@ describe("utility helpers", () => {
         expect(out).to.equal("here is the result");
       } catch (_) {
         // If the promise rejects, something wonky happened, so fail the test.
-        expect(true).to.equal(false);
+        assert.fail("should not reject");
       }
     });
   });
@@ -241,7 +337,7 @@ describe("utility helpers", () => {
 
       try {
         await getSlackUsersInConversation("channel id");
-        expect(true).to.equal(false);
+        assert.fail("should not resolve");
       } catch (e) {
         expect(e).to.equal(testError);
       }
@@ -256,7 +352,7 @@ describe("utility helpers", () => {
 
       try {
         await getSlackUsersInConversation("channel id");
-        expect(true).to.equal(false);
+        assert.fail("should not resolve");
       } catch (e) {
         expect(e).to.equal(testError);
       }
@@ -285,7 +381,7 @@ describe("utility helpers", () => {
         ]);
       } catch (_) {
         // If the promise rejects, something wonky happened, so fail the test.
-        expect(true).to.equal(false);
+        assert.fail("should not reject");
       }
     });
   });
@@ -314,7 +410,7 @@ describe("utility helpers", () => {
 
         try {
           await getFromTock("/endpoint");
-          expect(true).to.equal(false);
+          assert.fail("should not resolve");
         } catch (e) {
           expect(e).to.equal(testError);
         }
@@ -333,7 +429,7 @@ describe("utility helpers", () => {
           const out = await getFromTock("/endpoint");
           expect(out).to.deep.equal(data);
         } catch (e) {
-          expect(true).to.equal(false);
+          assert.fail("should not reject");
         }
 
         expect(robot.http.calledWith("tock-api/endpoint")).to.be.equal(true);
