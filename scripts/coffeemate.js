@@ -1,13 +1,11 @@
-const defaultWebClient = require("@slack/client").WebClient;
 const utils = require("../utils");
 
 const brainKey = "coffeemate_queue";
 
-module.exports = (robot, { WebClient = defaultWebClient } = {}) => {
-  const webAPI = new WebClient(robot.adapter.options.token);
+module.exports = (robot) => {
   const queue = robot.brain.get(brainKey) || [];
 
-  const { addEmojiReaction } = utils.setup(robot);
+  const { addEmojiReaction, postEphemeralMessage } = utils.setup(robot);
 
   robot.hear(/coffee me/i, (res) => {
     addEmojiReaction("coffee", res.message.room, res.message.id);
@@ -15,7 +13,7 @@ module.exports = (robot, { WebClient = defaultWebClient } = {}) => {
     // First, is the current user in already in the queue?
     // If so, just let them know
     if (queue.includes(res.message.user.id)) {
-      webAPI.chat.postEphemeral({
+      postEphemeralMessage({
         channel: res.message.room,
         user: res.message.user.id,
         text:
@@ -32,7 +30,7 @@ module.exports = (robot, { WebClient = defaultWebClient } = {}) => {
 
     // Now do we have a pair or not?
     if (queue.length < 2) {
-      webAPI.chat.postEphemeral({
+      postEphemeralMessage({
         channel: res.message.room,
         user: res.message.user.id,
         text:
@@ -41,7 +39,7 @@ module.exports = (robot, { WebClient = defaultWebClient } = {}) => {
       });
     } else {
       // pair them up
-      webAPI.chat.postEphemeral({
+      postEphemeralMessage({
         channel: res.message.room,
         user: res.message.user.id,
         text: `You’ve been matched up for coffee with <@${queue[0]}>! `,
