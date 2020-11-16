@@ -46,5 +46,11 @@
     "defaultEmoji": ":kevin-home-alone-scream:",
     "trigger": "screambot",
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/scream.json"
+  },
+  {
+    "botName": "Randy Facts",
+    "defaultEmoji": ":tech-randy:",
+    "trigger": "randy fact",
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/randy.json"
   }
 ]
