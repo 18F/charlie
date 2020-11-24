@@ -13,7 +13,7 @@ jobs:
           cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
           cf restage $CF_APP_NAME
 
-  test, build, and deploy:
+  test-build-deploy:
     docker:
       - image: circleci/node:12
     working_directory: ~/repo
@@ -49,4 +49,4 @@ workflows:
 
   new commit:
     jobs:
-      - test, build, and deploy
+      - test-build-deploy
