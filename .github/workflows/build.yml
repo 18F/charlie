@@ -1,6 +1,10 @@
 name: pull requests
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   build:
@@ -45,3 +49,26 @@ jobs:
           key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
       - name: run tests
         run: npm test
+  
+  deploy:
+    needs: [build]
+    if: github.ref == 'refs/heads/main'
+    name: deploy to cloud.gov
+    runs-on: ubuntu-latest
+    container: governmentpaas/cf-cli
+    steps:
+      - uses: actions/checkout@af513c7a
+      - uses: actions/cache@d1255ad
+        with:
+          path: ./node_modules
+          key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
+      - name: test cf
+        env:
+          CF_API: ${{ secrets.CF_API }}
+          CF_ORG: ${{ secrets.CF_ORG }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+          CF_SPACE: ${{ secrets.CF_SPACE }}
+          CF_USERNAME: ${{ secrets.CF_USERNAME }}
+        run: |
+          cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
+          cf apps
