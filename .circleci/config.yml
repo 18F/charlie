@@ -2,9 +2,18 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2
+version: 2.1
+
 jobs:
-  build:
+  restage:
+    docker:
+      - image: governmentpaas/cf-cli
+    steps:
+      - run: |
+          cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
+          cf restage $CF_APP_NAME
+
+  test, build, and deploy:
     docker:
       - image: circleci/node:12
     working_directory: ~/repo
@@ -22,3 +31,22 @@ jobs:
             npm audit
       - deploy:
           command: ./.circleci/deploy.sh
+
+workflows:
+  version: 2
+
+  nightly restage:
+    triggers:
+      - schedule:
+          # Run at 3am UTC every day
+          cron: "0 3 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - restage
+
+  new commit:
+    jobs:
+      - test, build, and deploy
