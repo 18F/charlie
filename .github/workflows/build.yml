@@ -51,7 +51,7 @@ jobs:
         run: npm test
   
   deploy:
-    needs: [build]
+    needs: [lint, test]
     if: github.ref == 'refs/heads/main'
     name: deploy to cloud.gov
     runs-on: ubuntu-latest
