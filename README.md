@@ -1,6 +1,6 @@
-# Charlie - 18F's Hubot
+# Charlie - 18F's Plastic Pal That's Fun to Be With
 
-This is a version of GitHub's chat bot, [Hubot](https://hubot.github.com/). Hubot's pretty cool.
+A Slack app bot used within 18F for fun and work.
 
 ## What all it can do
 
@@ -38,69 +38,64 @@ Plus more! Try sending a DM to Charlie with `help` for a full list!
 
 ## Running Charlie locally
 
-The easiest way to test Charlie locally is using Docker. First, create a `.env` file
-(see the `.env-sample` for reference) that sets, at minimum, the `HUBOT_SLACK_TOKEN`
-variable. (See the configuration section on environment variables below for a list of
-all the variables you can set.) Then, run `docker-compose up`. This will get all of
-Charlie's dependencies installed, setup a redis container, hook up Charlie and redis,
-and start Charlie up.
+Because Charlie is a Slack App (rather than a legacy bot integration), you'll
+need to either have access to a Slack instance where you can create a new app or
+get a token and signing secret for an existing app instance. Drop by
+[#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) in Slack to get more
+details about creating a new app or using an existing one. If you create a new
+one, see below about configuring OAuth scopes and Slack events.
 
-If you don't want to use Docker, you can run `npm install` from the root directory,
-set your `HUBOT_SLACK_TOKEN` environment variable, and then run `sh start.sh`. This
-is a minimum execution; to enable more features, you may need to set associated
-environment variables.
+The easiest way to test Charlie locally is using Docker. First, create a `.env`
+file (see the `.env-sample` for reference) that sets, at minimum, the
+`SLACK_TOKEN` and `SLACK_SIGNING_SECRET` variables. (See the configuration
+section on environment variables below for a list of all the variables you can
+set.) Then, run `docker-compose up`. This will get all of Charlie's dependencies
+installed, setup a redis container, hook up Charlie and redis, and start
+Charlie up. In this configuration, Charlie is run using
+[nodemon](https://npm.im/nodemon), so it will automatically restart if you make
+any code changes.
+
+If you don't want to use Docker, you can run `npm install` from the root
+directory, set your `SLACK_TOKEN` and `SLACK_SIGNING_SECRET` environment
+variables, and then run `npm start-dev` to enable nodemon, or `npm start` to
+disable it. This is a minimum execution; to enable more features, you may need
+to set associated environment variables.
+
+### Important note
+
+Because Slack apps work by responding to web hooks rather than setting up a
+persistent websocket connection, the machine where Charlie runs cannot respond
+to Slack events unless it is accessible on the public internet over HTTPS. GSA
+computers are not allowed to do this, so you will need to run the app in
+cloud.gov and use
+
+[NEED SOME DOCUMENTATION HERE ABOUT RUNNING IN CLOUD.GOV]
+
+## OAuth scopes and Slack events
 
 ## Deploying
 
-18F's Hubot is named Charlie, and is deployed in [Cloud.gov](https://cloud.gov/).
+Charlie is deployed in [Cloud.gov](https://cloud.gov/).
 
 Charlie is set up with continuous deployment, just merge your code to main and
 it will get deployed with CircleCI.
 
 ## Configuration
 
-### slack-github-issues
-
-We use [hubot-slack-github-issues](https://github.com/mbland/hubot-slack-github-issues) to automatically create Github issues
-when certain emoji reactions are added to messages in certain channels. This is configured in
-[config/slack-github-issues.json](config/slack-github-issues.json).
-
-The `<token>` strings in the top part of the config are replaced by environment variables (see below) if
-provided. To add a new Github issue rule, add a new entry to the `rules` array. The properties are
-as follows:
-
-| name             | purpose                                                                                                                                                                                                         |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| reactionName     | The name of the emoji in Slack that should trigger this issue, without the colons. For example, if you want `:evergreen:` to trigger an issue, this value should be `evergreen`.                                |
-| githubRepository | The name (and only the name) of the repository where the issue should be filed. The repo owner is taken from the top level of the config, in the `githubUser` property.                                         |
-| channelNames     | A list of channel names where this reaction will trigger an issue. This lets you limit responses to just certain channels. If this is not included, then Charlie will respond to the reaction in every channel. |
-
 ### Environment variables
 
-| name                                  | purpose                                                                                                                                                                                                                                                     |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| HUBOT_SLACK_TOKEN                     | Required to connect to Slack.                                                                                                                                                                                                                               |
-| HUBOT_GITHUB_TOKEN                    | Required for Github integrations. For example, there's a script that will create a Github issue when certain emoji reactions are added to messages. This token must be set for that to work.                                                                |
-| HUBOT_TOCK_API                        | Required for Angry and Optimistic Tock bots.                                                                                                                                                                                                                |
-| HUBOT_TOCK_TOKEN                      | Required for Angry and Optimistic Tock bots.                                                                                                                                                                                                                |
-| ANGRY_TOCK_TIMEZONE                   | The timezone used for Angry Tock notifications for truant users. Defaults to `America/New_York` if unset.                                                                                                                                                   |
-| ANGRY_TOCK_FIRST_TIME                 | The time of day for the first reminder to Tock truants. This is sent at the same time to all truants, based on the timezone in `ANGRY_TOCK_TIMEZONE`.                                                                                                       |
-| ANGRY_TOCK_SECOND_TIME                | The time of day for the second reminder to Tock truants as well as supervisors. This is sent at the same time to all truants, based on the timezone in `ANGRY_TOCK_TIMEZONE`.                                                                               |
-| ANGRY_TOCK_REPORT_TO                  | A comma-delimited list of channels or users to send the second truancy report to. Defaults to `#18f-supes`. Specify users with `@username`.                                                                                                                 |
-| HUBOT_TWITTER_ACCESS_TOKEN_SECRET     | Used by the twitter stream integration                                                                                                                                                                                                                      |
-| HUBOT_TWITTER_STREAM_ACCESS_TOKEN     | Used by the twitter stream integration                                                                                                                                                                                                                      |
-| HUBOT_TWITTER_STREAM_CONSUMER_KEY     | Used by the twitter stream integration                                                                                                                                                                                                                      |
-| HUBOT_TWITTER_STREAM_CONSUMER_KEY     | Used by the twitter stream integration                                                                                                                                                                                                                      |
-| ADAPTER                               | This should either be omitted or set to `slack`                                                                                                                                                                                                             |
-| HUBOT_SLACK_GITHUB_ISSUES_CONFIG_PATH | Path to the file that configures the script that creates Github issues when emoji reactions are added. Defaults to `config/slack-github-issues.json`. The default is accurate for Charlie, but if you needed to override it for testing, you certainly can. |
-| HUBOT_LOG_LEVEL                       | Log level. When using Docker, this is set to `debug`.                                                                                                                                                                                                       |
-| REDIS_URL                             | URL to redis, if desired. The URL should be of the form `redis://:password@host:port` - note that there is not a username before the password in this URL, because redis does not support usernames.                                                        |
-
-## Documentation
-
-General information about Hubot can be found here:
-
-https://hubot.github.com/
+| name                   | purpose                                                                                                                                                                                              |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SLACK_TOKEN            | Required to connect to Slack.                                                                                                                                                                        |
+| SLACK_SIGNING_SECRET   | Reqquired to receive events from Slack.                                                                                                                                                              |
+| TOCK_API               | Required for Angry and Optimistic Tock bots.                                                                                                                                                         |
+| TOCK_TOKEN             | Required for Angry and Optimistic Tock bots.                                                                                                                                                         |
+| ANGRY_TOCK_TIMEZONE    | The timezone used for Angry Tock notifications for truant users. Defaults to `America/New_York` if unset.                                                                                            |
+| ANGRY_TOCK_FIRST_TIME  | The time of day for the first reminder to Tock truants. This is sent at the same time to all truants, based on the timezone in `ANGRY_TOCK_TIMEZONE`.                                                |
+| ANGRY_TOCK_SECOND_TIME | The time of day for the second reminder to Tock truants as well as supervisors. This is sent at the same time to all truants, based on the timezone in `ANGRY_TOCK_TIMEZONE`.                        |
+| ANGRY_TOCK_REPORT_TO   | A comma-delimited list of channels or users to send the second truancy report to. Defaults to `#18f-supes`. Specify users with `@username`.                                                          |
+| LOG_LEVEL              | Log level. When using Docker, this is set to `debug`.                                                                                                                                                |
+| REDIS_URL              | URL to redis, if desired. The URL should be of the form `redis://:password@host:port` - note that there is not a username before the password in this URL, because redis does not support usernames. |
 
 ## Contributing
 

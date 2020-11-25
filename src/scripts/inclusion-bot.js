@@ -1,15 +1,15 @@
 const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
-const utils = require("../utils");
+const {
+  slack: { addEmojiReaction, postEphemeralResponse },
+} = require("../utils");
 
 const getTriggers = () => {
   // Read in the huge list of bots from the Yaml file
   const ymlStr = fs.readFileSync(path.join(__dirname, "inclusion-bot.yaml"));
   const yml = yaml.safeLoad(ymlStr, { json: true });
   const { link, message, triggers } = yml;
-
-  console.log(Object.keys(yml));
 
   // Then for each bot, go ahead and map the list of matches and ignores into
   // regexes, so we don't need to do that on each trigger.
@@ -25,8 +25,6 @@ const getTriggers = () => {
 };
 
 module.exports = async (robot) => {
-  const { addEmojiReaction, postEphemeralMessage } = utils.setup(robot);
-
   // Use the module exported version here, so that it can be stubbed for testing
   const { link, message, triggers } = module.exports.getTriggers();
 
@@ -39,7 +37,7 @@ module.exports = async (robot) => {
     .join("|");
   const combinedRegex = new RegExp(`\\b${combinedString}\\b`, "i");
 
-  robot.hear(combinedRegex, (msg) => {
+  robot.message(combinedRegex, (msg) => {
     // Find the specific match that triggered this bot. At this point, go ahead
     // and remove things that should be ignored.
     const specificMatch = triggers
@@ -69,7 +67,7 @@ module.exports = async (robot) => {
       return;
     }
 
-    addEmojiReaction("inclusion-bot", msg.message.room, msg.message.id);
+    addEmojiReaction(msg, "inclusion-bot");
 
     // Pick a random alternative
     const pretexts = specificMatch.map(({ alternatives, text }) => {
@@ -79,7 +77,7 @@ module.exports = async (robot) => {
     });
 
     // And say hello.
-    postEphemeralMessage({
+    postEphemeralResponse(msg, {
       attachments: [
         {
           color: "#ffbe2e",
@@ -92,8 +90,6 @@ module.exports = async (robot) => {
           fallback: message,
         },
       ],
-      as_user: false,
-      channel: msg.message.room,
       icon_emoji: ":tts:",
       user: msg.message.user.id,
       username: "Inclusion Bot",

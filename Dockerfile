@@ -8,4 +8,4 @@ ADD ./package-lock.json .
 
 RUN npm ci
 
-CMD ./start.sh
+CMD npm run start-dev

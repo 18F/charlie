@@ -2,7 +2,9 @@
 dump.rdb
 slack.yml
 .circleci
-.hubot_history
+.dependabot
+.github
 .env
 .vscode
-./test
+coverage
+test

@@ -1,5 +1,7 @@
 const moment = require("moment-timezone");
-const utils = require("../utils");
+const {
+  slack: { getSlackUsersInConversation },
+} = require("../utils");
 
 const TIMEZONES = {
   akt: "America/Anchorage",
@@ -29,16 +31,14 @@ const TIMEZONES = {
 const matcher = /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
 
 module.exports = (robot) => {
-  const { getSlackUsersInConversation, postEphemeralMessage } = utils.setup(
-    robot
-  );
+  robot.message(matcher, async (msg) => {
+    const { channel, text, thread_ts: thread, user } = msg.event;
 
-  robot.hear(matcher, async (msg) => {
-    const { text, thread_ts: thread } = msg.message.rawMessage;
-    if (!matcher.test(text)) {
-      return;
-    }
-    let users = (await getSlackUsersInConversation(msg.message.room))
+    const {
+      user: { tz: authorTimezone },
+    } = await msg.client.users.info({ user });
+
+    let users = await getSlackUsersInConversation(msg);
     let m = null;
     let ampm = null;
 
@@ -46,7 +46,7 @@ module.exports = (robot) => {
     matches.forEach(([, time, ampmStr, timezone]) => {
       const sourceTz = timezone
         ? TIMEZONES[timezone.toLowerCase()]
-        : msg.message.user.slack.tz;
+        : authorTimezone;
 
       if (m === null) {
         ampm = ampmStr;
@@ -57,30 +57,30 @@ module.exports = (robot) => {
         );
       }
 
-      users = users.filter(({ deleted, id, is_bot: bot, tz }) => {
-        if (deleted || bot) {
-          return false;
-        }
-
-        // If the timezone was specified in the message, filter out the people
-        // who are in that timezone.
-        if (timezone) {
-          if (tz === sourceTz) {
+      users = users
+        .filter(({ deleted, id, is_bot: bot, tz }) => {
+          if (deleted || bot) {
             return false;
           }
-        } else if (id === msg.message.user.id) {
-          return false;
-        }
 
-        return true;
-      })
-      .map(({ id, tz }) => ({ id, tz }));
-    })
+          // If the timezone was specified in the message, filter out the people
+          // who are in that timezone.
+          if (timezone) {
+            if (tz === sourceTz) {
+              return false;
+            }
+          } else if (id === user) {
+            return false;
+          }
+
+          return true;
+        })
+        .map(({ id, tz }) => ({ id, tz }));
+    });
 
     users.forEach(({ id, tz }) => {
-      postEphemeralMessage({
-        as_user: false,
-        channel: msg.message.room,
+      msg.client.chat.postEphemeral({
+        channel,
         icon_emoji: ":timebot:",
         user: id,
         username: "Handy Tau-bot",

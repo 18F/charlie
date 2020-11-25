@@ -4,9 +4,9 @@ applications:
   buildpack: nodejs_buildpack
   memory: 192MB
   instances: 1
-  no-route: true
-  health-check-type: process
-  host: charlie
+  command: ((command))
+  routes:
+    - route: charlie-((environment)).app.cloud.gov
   services:
-    - charlie-redis32
-    - charlie-bucket
+    - charlie-brain
+    - charlie-config

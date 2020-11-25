@@ -1,35 +1,38 @@
 const holidays = require("@18f/us-federal-holidays");
 const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
-const utils = require("../utils");
+const {
+  slack: { sendDirectMessage },
+  tock: { get18FTockTruants, get18FTockSlackUsers },
+} = require("../utils");
 
-const TOCK_API_URL = process.env.HUBOT_TOCK_API;
-const TOCK_TOKEN = process.env.HUBOT_TOCK_TOKEN;
+const TOCK_API_URL = process.env.TOCK_API;
+const TOCK_TOKEN = process.env.TOCK_TOKEN;
 
-let util;
-
-let reminder = (robot) => {
+const reminder = (tz) => async () => {
   const message = {
     username: "Happy Tock",
     icon_emoji: "happytock",
     text: "Don't forget to <https://tock.18f.gov|Tock your time>!",
-    as_user: false,
   };
 
-  reminder = (tz) => async () => {
-    // Get all the folks who have not submitted their current Tock.
-    const truants = await util.tock.get18FTockTruants(moment.tz(tz), 0);
+  console.log("running optimistic tock reminders");
+  // Get all the folks who have not submitted their current Tock.
+  const truants = await get18FTockTruants(moment.tz(tz), 0);
 
-    // Now get the list of Slacky-Tocky users in the current timezone who
-    // have not submitted their Tock. Tsk tsk.
-    const tockSlackUsers = (await util.tock.get18FTockSlackUsers())
-      .filter((tockUser) => tockUser.tz === tz)
-      .filter((tockUser) => truants.some((t) => t.email === tockUser.email));
+  // Now get the list of Slacky-Tocky users in the current timezone who
+  // have not submitted their Tock. Tsk tsk.
+  const tockSlackUsers = await get18FTockSlackUsers();
 
-    tockSlackUsers.forEach(({ slack_id: slackID }) => {
-      robot.messageRoom(slackID, message);
-    });
-  };
+  const truantTockSlackUsers = tockSlackUsers
+    .filter((tockUser) => tockUser.tz === tz)
+    .filter((tockUser) => truants.some((t) => t.email === tockUser.email));
+
+  await Promise.all(
+    truantTockSlackUsers.map(async ({ slack_id: slackID }) => {
+      await sendDirectMessage(slackID, message);
+    })
+  );
 };
 
 const scheduleReminders = async () => {
@@ -47,7 +50,7 @@ const scheduleReminders = async () => {
 
   const reminderString = day.format("YYYY-MM-DDT16:00:00");
 
-  const users = await util.tock.get18FTockSlackUsers();
+  const users = await get18FTockSlackUsers();
   const now = moment();
 
   // Get a list of unique timezones by putting them into a Set.
@@ -75,16 +78,13 @@ const scheduleNext = () => {
   });
 };
 
-module.exports = async (robot) => {
+module.exports = async (app) => {
   if (!TOCK_API_URL || !TOCK_TOKEN) {
-    robot.logger.warning(
+    app.logger.warn(
       "OptimisticTock disabled: Tock API URL or access token is not set"
     );
     return;
   }
-  reminder(robot);
-
-  util = utils.setup(robot);
 
   await scheduleReminders();
   await scheduleNext();

@@ -1,10 +1,13 @@
 const holidays = require("@18f/us-federal-holidays");
 const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
-const utils = require("../utils");
+const {
+  slack: { postMessage, sendDirectMessage },
+  tock: { get18FTockSlackUsers, get18FTockTruants },
+} = require("../utils");
 
-const TOCK_API_URL = process.env.HUBOT_TOCK_API;
-const TOCK_TOKEN = process.env.HUBOT_TOCK_TOKEN;
+const TOCK_API_URL = process.env.TOCK_API;
+const TOCK_TOKEN = process.env.TOCK_TOKEN;
 
 const ANGRY_TOCK_TIMEZONE =
   process.env.ANGRY_TOCK_TIMEZONE || "America/New_York";
@@ -21,8 +24,6 @@ const ANGRY_TOCK_REPORT_TO = (
   process.env.ANGRY_TOCK_REPORT_TO || "#18f-supes"
 ).split(",");
 
-let util;
-
 /**
  * Get the current time in the configured timezone.
  * @returns {Moment} A moment object representing the current time in the
@@ -37,69 +38,65 @@ const m = () => moment.tz(ANGRY_TOCK_TIMEZONE);
  * @param {Boolean} options.calm Whether this is Happy Tock or Angry Tock. Angry
  *   Tock is not calm. Defaults to Angry Tock.
  */
-let shout = (robot) => {
-  shout = async ({ calm = false } = {}) => {
-    const message = {
-      username: `${calm ? "Disappointed" : "Angry"} Tock`,
-      icon_emoji: calm ? ":disappointed-tock:" : ":angrytock:",
-      text: calm
-        ? ":disappointed-tock: Please <https://tock.18f.gov|Tock your time>!"
-        : ":angrytock: <https://tock.18f.gov|Tock your time>! You gotta!",
-      as_user: false,
-    };
-
-    const tockSlackUsers = await util.tock.get18FTockSlackUsers();
-    const truants = await util.tock.get18FTockTruants(m());
-    const slackableTruants = tockSlackUsers.filter((tu) =>
-      truants.some((t) => t.email === tu.email)
-    );
-
-    slackableTruants.forEach(({ slack_id: slackID }) => {
-      robot.messageRoom(slackID, message);
-    });
-
-    if (!calm) {
-      if (truants.length > 0) {
-        const nonSlackableTruants = truants.filter(
-          (t) => !slackableTruants.some((s) => s.email === t.email)
-        );
-
-        const report = [];
-        slackableTruants.forEach((u) =>
-          report.push([`• <@${u.slack_id}> (notified on Slack)`])
-        );
-        nonSlackableTruants.forEach((u) =>
-          report.push([`• ${u.username} (not notified)`])
-        );
-
-        const truantReport = {
-          attachments: [
-            {
-              fallback: report.join("\n"),
-              color: "#FF0000",
-              text: report.join("\n"),
-            },
-          ],
-          username: "Angry Tock",
-          icon_emoji: ":angrytock:",
-          text: "*The following users are currently truant on Tock:*",
-          as_user: false,
-        };
-        ANGRY_TOCK_REPORT_TO.forEach((room) => {
-          robot.messageRoom(room, truantReport);
-        });
-      } else {
-        ANGRY_TOCK_REPORT_TO.forEach((room) => {
-          robot.messageRoom(room, {
-            username: "Happy Tock",
-            icon_emoji: ":happy-tock:",
-            text: "No Tock truants!",
-            as_user: false,
-          });
-        });
-      }
-    }
+const shout = async ({ calm = false } = {}) => {
+  const message = {
+    username: `${calm ? "Disappointed" : "Angry"} Tock`,
+    icon_emoji: calm ? ":disappointed-tock:" : ":angrytock:",
+    text: calm
+      ? ":disappointed-tock: Please <https://tock.18f.gov|Tock your time>!"
+      : ":angrytock: <https://tock.18f.gov|Tock your time>! You gotta!",
   };
+
+  const tockSlackUsers = await get18FTockSlackUsers();
+  const truants = await get18FTockTruants(m());
+  const slackableTruants = tockSlackUsers.filter((tu) =>
+    truants.some((t) => t.email === tu.email)
+  );
+
+  slackableTruants.forEach(({ slack_id: slackID }) => {
+    sendDirectMessage(slackID, message);
+  });
+
+  if (!calm) {
+    if (truants.length > 0) {
+      const nonSlackableTruants = truants.filter(
+        (t) => !slackableTruants.some((s) => s.email === t.email)
+      );
+
+      const report = [];
+      slackableTruants.forEach((u) =>
+        report.push([`• <@${u.slack_id}> (notified on Slack)`])
+      );
+      nonSlackableTruants.forEach((u) =>
+        report.push([`• ${u.username} (not notified)`])
+      );
+
+      const truantReport = {
+        attachments: [
+          {
+            fallback: report.join("\n"),
+            color: "#FF0000",
+            text: report.join("\n"),
+          },
+        ],
+        username: "Angry Tock",
+        icon_emoji: ":angrytock:",
+        text: "*The following users are currently truant on Tock:*",
+      };
+      ANGRY_TOCK_REPORT_TO.forEach((channel) => {
+        postMessage({ ...truantReport, channel });
+      });
+    } else {
+      ANGRY_TOCK_REPORT_TO.forEach((channel) => {
+        postMessage({
+          username: "Happy Tock",
+          icon_emoji: ":happy-tock:",
+          text: "No Tock truants!",
+          channel,
+        });
+      });
+    }
+  }
 };
 
 /**
@@ -172,20 +169,13 @@ const scheduleNextShoutingMatch = () => {
   });
 };
 
-module.exports = async (robot) => {
+module.exports = async (app) => {
   if (!TOCK_API_URL || !TOCK_TOKEN) {
-    robot.logger.warning(
+    app.logger.warn(
       "AngryTock disabled: Tock API URL or access token is not set"
     );
     return;
   }
-
-  util = utils.setup(robot);
-
-  robot.logger.info("AngryTock starting up");
-
-  // Setup the shouty method, to create a closure around the robot object.
-  shout(robot);
 
   scheduleNextShoutingMatch();
 };

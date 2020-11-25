@@ -1,36 +1,42 @@
 version: "3.2"
 services:
   database:
-    image: redis:3.2
+    image: postgres:13
+    networks:
+      - charlie-bot
+    environment:
+      - POSTGRES_DB=charlie
+      - POSTGRES_PASSWORD=charlie-bot
+      - POSTGRES_USER=charlie-bot
+    ports:
+    - 54329:5432
 
-  18f-bot:
+  charlie:
     build: .
     image: 18f/charlie
-    entrypoint: ./start.sh
+    networks:
+      - charlie-bot
     environment:
-      - ANGRY_TOCK_FIRST_TIME=${ANGRY_TOCK_FIRST_TIME}
-      - ANGRY_TOCK_SECOND_TIME=${ANGRY_TOCK_SECOND_TIME}
-      - ANGRY_TOCK_TIMEZONE=${ANGRY_TOCK_TIMEZONE}
-      - HUBOT_SLACK_TOKEN=${HUBOT_SLACK_TOKEN}
-      - HUBOT_GITHUB_TOKEN=${HUBOT_GITHUB_TOKEN}
       - HUBOT_HOLIDAY_REMINDER_CHANNEL=${HUBOT_HOLIDAY_REMINDER_CHANNEL}
       - HUBOT_HOLIDAY_REMINDER_TIME=${HUBOT_HOLIDAY_REMINDER_TIME}
       - HUBOT_HOLIDAY_REMINDER_TIMEZONE=${HUBOT_HOLIDAY_REMINDER_TIMEZONE}
-      - HUBOT_TOCK_API=${HUBOT_TOCK_API}
-      - HUBOT_TOCK_TOKEN=${HUBOT_TOCK_TOKEN}
-      - HUBOT_TWITTER_ACCESS_TOKEN_SECRET=${HUBOT_TWITTER_ACCESS_TOKEN_SECRET}
-      - HUBOT_TWITTER_STREAM_ACCESS_TOKEN=${HUBOT_TWITTER_STREAM_ACCESS_TOKEN}
-      - HUBOT_TWITTER_STREAM_CONSUMER_KEY=${HUBOT_TWITTER_STREAM_CONSUMER_KEY}
-      - HUBOT_TWITTER_STREAM_CONSUMER_KEY${HUBOT_TWITTER_STREAM_CONSUMER_KEY}
-      - HUG_BASE_URL=${HUG_BASE_URL}
-      - ADAPTER=slack
-      - HUBOT_SLACK_GITHUB_ISSUES_CONFIG_PATH=config/slack-github-issues.json
-      - HUBOT_LOG_LEVEL=debug
-      - REDIS_URL=redis://database:6379
-      - NODEMON=true
+      - ANGRY_TOCK_FIRST_TIME=${ANGRY_TOCK_FIRST_TIME}
+      - ANGRY_TOCK_SECOND_TIME=${ANGRY_TOCK_SECOND_TIME}
+      - ANGRY_TOCK_TIMEZONE=${ANGRY_TOCK_TIMEZONE}
+      - DATABASE_URL=postgres://charlie-bot:charlie-bot@database/charlie
+      - LOG_LEVEL=debug
+      - SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}
+      - SLACK_TOKEN=${SLACK_TOKEN}
+      - TOCK_API=${TOCK_API}
+      - TOCK_TOKEN=${TOCK_TOKEN}
     working_dir: /app
     volumes:
       - ./:/app
       - /app/node_modules
+    ports:
+      - 3000:3000
     links:
       - database:database
+
+networks:
+  charlie-bot:
