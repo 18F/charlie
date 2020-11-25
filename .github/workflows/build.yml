@@ -62,7 +62,7 @@ jobs:
         with:
           path: ./node_modules
           key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
-      - name: test cf
+      - name: push to cloud.gov
         env:
           CF_API: ${{ secrets.CF_API }}
           CF_ORG: ${{ secrets.CF_ORG }}
@@ -71,4 +71,4 @@ jobs:
           CF_USERNAME: ${{ secrets.CF_USERNAME }}
         run: |
           cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
-          cf apps
+          cf push -f manifest.yml
