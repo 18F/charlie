@@ -12,8 +12,8 @@ const bots = [
     alternatives: ["cruddy"],
   },
   {
-    hear: /\b(crazy|psycho|psychotic)\b/,
-    alternatives: ["chaotic"],
+    hear: /\b(crazy|insane|psycho|psychotic)\b/,
+    alternatives: ["chaotic", "difficult", "overwhelming", "unpredictable"],
   },
 ];
 

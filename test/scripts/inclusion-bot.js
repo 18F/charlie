@@ -6,7 +6,7 @@ chai.use(subset);
 const { expect } = chai;
 
 const originalUtils = require("../../utils");
-const guysBot = require("../../scripts/inclusion-bot");
+const bot = require("../../scripts/inclusion-bot");
 
 describe("Inclusion bot", () => {
   const sandbox = sinon.createSandbox();
@@ -40,7 +40,7 @@ describe("Inclusion bot", () => {
   });
 
   it("subscribes to case-insensitive utterances of uninclusive language", () => {
-    guysBot(robot);
+    bot(robot);
 
     expect(
       robot.hear.calledWith(new RegExp(/\bguy[sz]\b/, "i"), sinon.match.func)
@@ -52,7 +52,7 @@ describe("Inclusion bot", () => {
 
     expect(
       robot.hear.calledWith(
-        new RegExp(/\b(psycho|psychotic)\b/, "i"),
+        new RegExp(/\b(crazy|insane|psycho|psychotic)\b/, "i"),
         sinon.match.func
       )
     ).to.equal(true);
@@ -82,7 +82,7 @@ describe("Inclusion bot", () => {
       let handler;
 
       beforeEach(() => {
-        guysBot(robot);
+        bot(robot);
         handler = robot.hear.args[0][1];
       });
 
