@@ -12,7 +12,7 @@ const bots = [
     alternatives: ["cruddy"],
   },
   {
-    hear: /\b(psycho|psychotic)\b/,
+    hear: /\b(crazy|psycho|psychotic)\b/,
     alternatives: ["chaotic"],
   },
 ];
