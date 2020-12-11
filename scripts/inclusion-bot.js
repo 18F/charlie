@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const utils = require("../utils");
-// const bots = require("./inclusion-triggers");
 
 const getMatches = () => {
   // Read in the huge list of bots from the Yaml file
@@ -22,16 +21,17 @@ const getMatches = () => {
 module.exports = async (robot) => {
   const { addEmojiReaction, postEphemeralMessage } = utils.setup(robot);
 
-  const bots = getMatches();
+  // Use the module exported version here, so that it can be stubbed for testing
+  const bots = module.exports.getMatches();
 
   // Combine all the regexes from the map into a single regex, to reduce the
   // matching load on the bot. This way there's just one listener for inclusion
   // bot instead of one per regex in the map. This combined regex also adds
   // case-insensitivity and word boundaries.
   const combinedString = bots
-    .map(({ matches }) => `(${matches.source})`)
+    .map(({ matches }) => `${matches.source}`)
     .join("|");
-  const combinedRegex = new RegExp(`\\b(${combinedString})\\b`, "i");
+  const combinedRegex = new RegExp(`\\b${combinedString}\\b`, "i");
 
   robot.hear(combinedRegex, (msg) => {
     // Find the specific match that triggered this bot. At this point, go ahead

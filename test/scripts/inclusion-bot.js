@@ -1,3 +1,4 @@
+const fs = require("fs");
 const chai = require("chai");
 const subset = require("chai-subset");
 const sinon = require("sinon");
@@ -7,6 +8,44 @@ const { expect } = chai;
 
 const originalUtils = require("../../utils");
 const bot = require("../../scripts/inclusion-bot");
+
+describe("Inclusion bot match loader", () => {
+  before(() => {
+    sinon.stub(fs, "readFileSync").returns(`inclusion-bot:
+  - matches:
+      - match 1.1
+      - match 1.2
+    alternatives:
+      - alt 1.1
+  - matches:
+      - match 2.1
+    ignore:
+      - ignore 2.1
+    alternatives:
+      - alt 2.1
+      - alt 2.2`);
+  });
+
+  after(() => {
+    fs.readFileSync.restore();
+  });
+
+  it("do a thing", () => {
+    const matches = bot.getMatches();
+    expect(matches).to.deep.equal([
+      {
+        alternatives: ["alt 1.1"],
+        ignore: undefined,
+        matches: /(match 1.1|match 1.2)/i,
+      },
+      {
+        alternatives: ["alt 2.1", "alt 2.2"],
+        ignore: /(ignore 2.1)/gi,
+        matches: /(match 2.1)/i,
+      },
+    ]);
+  });
+});
 
 describe("Inclusion bot", () => {
   const sandbox = sinon.createSandbox();
@@ -29,6 +68,22 @@ describe("Inclusion bot", () => {
 
   before(() => {
     setup = sandbox.stub(originalUtils, "setup");
+    sinon.stub(bot, "getMatches").returns([
+      {
+        alternatives: ["a1", "a2", "a3"],
+        ignore: ["not match 1"],
+        matches: /(match 1)/i,
+      },
+      {
+        alternatives: ["b1"],
+        matches: /(match 2a|match 2b)/i,
+      },
+    ]);
+  });
+
+  after(() => {
+    setup.restore();
+    bot.getMatches.restore();
   });
 
   beforeEach(() => {
@@ -43,135 +98,80 @@ describe("Inclusion bot", () => {
     bot(robot);
 
     expect(
-      robot.hear.calledWith(new RegExp(/\bguy[sz]\b/, "i"), sinon.match.func)
-    ).to.equal(true);
-
-    expect(
-      robot.hear.calledWith(new RegExp(/\b(lame)\b/, "i"), sinon.match.func)
-    ).to.equal(true);
-
-    expect(
       robot.hear.calledWith(
-        new RegExp(/\b(crazy|insane|psycho|psychotic)\b/, "i"),
+        new RegExp(/\b(match 1)|(match 2a|match 2b)\b/, "i"),
         sinon.match.func
       )
     ).to.equal(true);
   });
 
-  const expectedEmoji = ["inclusion-bot", "channel id", "message id"];
-  const expectedTextRegex = /Did you mean \*[^*]+\*\? \(_<https:\/\/web\.archive\.org\/web\/20170714141744\/https:\/\/18f\.gsa\.gov\/2016\/01\/12\/hacking-inclusion-by-customizing-a-slack-bot\/\|What's this\?>_\)/;
-  const expectedMessage = {
-    attachments: [
-      {
-        color: "#2eb886",
-        text: `Hello! Our inclusive TTS culture is built one interaction at a time, and inclusive language is the foundation. Instead of guys, we encourage everyone to try out a new phrase to describe multiple people. This is a small way we build inclusion into our everyday work lives.`,
-        fallback: `Hello! Our inclusive TTS culture is built one interaction at a time, and inclusive language is the foundation. Instead of guys, we encourage everyone to try out a new phrase to describe multiple people. This is a small way we build inclusion into our everyday work lives.`,
-      },
-    ],
-    as_user: false,
-    channel: "channel id",
-    icon_emoji: ":tts:",
-    user: "user id",
-    username: "Inclusion Bot",
-    unfurl_links: false,
-    unfurl_media: false,
-  };
+  describe("properly responds to triggers", () => {
+    const expectedEmoji = ["inclusion-bot", "channel id", "message id"];
+    const expectedMessage = {
+      attachments: [
+        {
+          color: "#2eb886",
+          text: `Hello! Our inclusive TTS culture is built one interaction at a time, and inclusive language is the foundation. Instead of language stemming from racism, sexism, ableism, or other non-inclusive roots, we encourage everyone to try out new phrases. This is a small way we build inclusion into our everyday work lives. (See the <https://docs.google.com/document/d/1MMA7f6uUj-EctzhtYNlUyIeza6R8k4wfo1OKMDAgLog/edit#|inclusion bot document> for more info. *Content warning: offensive language.*)`,
+          fallback: `Hello! Our inclusive TTS culture is built one interaction at a time, and inclusive language is the foundation. Instead of language stemming from racism, sexism, ableism, or other non-inclusive roots, we encourage everyone to try out new phrases. This is a small way we build inclusion into our everyday work lives. (See the <https://docs.google.com/document/d/1MMA7f6uUj-EctzhtYNlUyIeza6R8k4wfo1OKMDAgLog/edit#|inclusion bot document> for more info. *Content warning: offensive language.*)`,
+        },
+      ],
+      as_user: false,
+      channel: "channel id",
+      icon_emoji: ":tts:",
+      user: "user id",
+      username: "Inclusion Bot",
+      unfurl_links: false,
+      unfurl_media: false,
+    };
 
-  describe("guys bot", () => {
-    describe("guys bot handler", () => {
-      let handler;
+    let handler;
+    beforeEach(() => {
+      bot(robot);
+      handler = robot.hear.args[0][1];
+    });
 
-      beforeEach(() => {
-        bot(robot);
-        handler = robot.hear.args[0][1];
-      });
+    it("handles a single triggering phrase", () => {
+      msg.message.text = "hello this is the match 1 trigger";
+      handler(msg);
 
-      after(() => {
-        originalUtils.setup.restore();
-      });
+      expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
+      const message = postEphemeralMessage.args[0][0];
+      expect(message).to.containSubset(expectedMessage);
+      expect(message.attachments[0].pretext).to.match(
+        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*? \(_<https:\/\/web\.archive\.org\/web\/20170714141744\/https:\/\/18f\.gsa\.gov\/2016\/01\/12\/hacking-inclusion-by-customizing-a-slack-bot\/|What's this\?>_\)/
+      );
+    });
 
-      it('does not respond to "guys" in quotes', () => {
-        ["guys", "guyz"].forEach((guy) => {
-          msg.message.text = `this has "${guy}" in double quotes`;
-          handler(msg);
-          expect(postEphemeralMessage.called).to.equal(false);
+    it("handles a single triggering phrase that should be explicitly ignored", () => {
+      msg.message.text = "hello this is the not match 1 trigger";
+      handler(msg);
 
-          msg.message.text = `this has '${guy}' in single quotes`;
-          handler(msg);
-          expect(postEphemeralMessage.called).to.equal(false);
+      expect(addEmojiReaction.called).to.equal(false);
+      expect(postEphemeralMessage.called).to.equal(false);
+    });
 
-          msg.message.text = `this has “${guy}” in smart quotes`;
-          handler(msg);
-          expect(postEphemeralMessage.called).to.equal(false);
-        });
-      });
+    it("handles two triggering phrases", () => {
+      msg.message.text = "hello this is the match 1 trigger and match 2a";
+      handler(msg);
 
-      it("does not respond to boba guys", () => {
-        msg.message.text = `this is about boba guys, not the other kind`;
-        handler(msg);
-        expect(postEphemeralMessage.called).to.equal(false);
-        expect(addEmojiReaction.called).to.equal(false);
+      expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
+      const message = postEphemeralMessage.args[0][0];
+      expect(message).to.containSubset(expectedMessage);
+      expect(message.attachments[0].pretext).to.match(
+        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?\n• Instead of saying "match 2a," how about \*b1\*? \(_<https:\/\/web\.archive\.org\/web\/20170714141744\/https:\/\/18f\.gsa\.gov\/2016\/01\/12\/hacking-inclusion-by-customizing-a-slack-bot\/|What's this\?>_\)/
+      );
+    });
 
-        msg.message.text = `this is about Boba guys, not the other kind`;
-        handler(msg);
-        expect(postEphemeralMessage.called).to.equal(false);
-        expect(addEmojiReaction.called).to.equal(false);
-      });
+    it("handles two triggering phrases where one is explicitly ignored", () => {
+      msg.message.text = "hello this is the not match 1 trigger and match 2a";
+      handler(msg);
 
-      it("does not respond to Halal guys", () => {
-        msg.message.text = `this is about Halal guys, not the other kind`;
-        handler(msg);
-        expect(postEphemeralMessage.called).to.equal(false);
-        expect(addEmojiReaction.called).to.equal(false);
-      });
-
-      it("does not respond to five guys", () => {
-        msg.message.text = `this is about 5 guys, not the other kind`;
-        handler(msg);
-        expect(postEphemeralMessage.called).to.equal(false);
-        expect(addEmojiReaction.called).to.equal(false);
-
-        msg.message.text = `this is about five guys, not the other kind`;
-        handler(msg);
-        expect(postEphemeralMessage.called).to.equal(false);
-        expect(addEmojiReaction.called).to.equal(false);
-      });
-
-      it("does respond to just guys", () => {
-        msg.message.text = "hello guys";
-        handler(msg);
-        const message = postEphemeralMessage.args[0][0];
-        expect(message).to.containSubset(expectedMessage);
-        expect(message.attachments[0].pretext).to.match(expectedTextRegex);
-        expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
-      });
-
-      it("does respond to just guys with capitals", () => {
-        msg.message.text = "hello GuYs";
-        handler(msg);
-        const message = postEphemeralMessage.args[0][0];
-        expect(message).to.containSubset(expectedMessage);
-        expect(message.attachments[0].pretext).to.match(expectedTextRegex);
-        expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
-      });
-
-      it("does respond to just guyz", () => {
-        msg.message.text = "hello guyz";
-        handler(msg);
-        const message = postEphemeralMessage.args[0][0];
-        expect(message).to.containSubset(expectedMessage);
-        expect(message.attachments[0].pretext).to.match(expectedTextRegex);
-        expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
-      });
-
-      it("does respond to just guyz with capitals", () => {
-        msg.message.text = "hello gUyZ";
-        handler(msg);
-        const message = postEphemeralMessage.args[0][0];
-        expect(message).to.containSubset(expectedMessage);
-        expect(message.attachments[0].pretext).to.match(expectedTextRegex);
-        expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
-      });
+      expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
+      const message = postEphemeralMessage.args[0][0];
+      expect(message).to.containSubset(expectedMessage);
+      expect(message.attachments[0].pretext).to.match(
+        /• Instead of saying "match 2a," how about \*b1\*? \(_<https:\/\/web\.archive\.org\/web\/20170714141744\/https:\/\/18f\.gsa\.gov\/2016\/01\/12\/hacking-inclusion-by-customizing-a-slack-bot\/|What's this\?>_\)/
+      );
     });
   });
 });
