@@ -1,0 +1,239 @@
+inclusion-bot:
+  - matches:
+      - blind to
+      - blinded to
+      - blinded by
+      - deaf to
+    alternatives:
+      - unaware of
+      - ignoring
+      - not paying attention to
+
+  - matches:
+      - crazy
+      - insane
+      - nuts
+    alternatives:
+      - hard to believe
+      - bananas
+      - wild
+      - asinine
+      - ludicrous
+      - outrageous
+      - unbelievable
+      - irrational
+      - ridiculous
+
+  - matches:
+      - psycho
+      - schizo
+      - lunatic
+      - psychopath
+      - psychotic
+    alternatives:
+      - difficult
+      - unpredictable
+      - chaotic
+      - overwhelming
+      - asinine
+      - unbelievable
+      - beserk
+
+  - matches:
+      - spaz
+      - spastic
+      - crackhead
+    alternatives:
+      - volatile
+
+  - matches:
+      - derp
+    alternatives:
+      - oops
+      - d'oh
+
+  - matches:
+      - moron
+      - imbecile
+      - daft
+      - dumb
+      - feeble-minded
+      - idiot
+      - idiotic
+      - stupid
+      - cretin
+    ignore:
+      - daft punk
+    alternatives:
+      - foolish
+      - ignorang
+      - poorly-planned
+      - careless
+      - thoughtless
+      - pointless
+
+  - matches:
+      - lame
+    ignore:
+      - lame duck # because that's what Congress is called every
+                  # two years in November and December
+    alternatives:
+      - cruddy
+      - pathetic
+      - bad
+      - disappointing
+
+  - matches:
+      - junkie
+      - addict
+    alternatives:
+      - enthusiast
+      - fan
+
+  - matches:
+      - crack
+    alternatives:
+      - weakness
+      - kryptonite
+
+  - matches:
+      - guys
+      - guyz
+    ignore:
+      - boba guys
+      - five guys
+      - 5 guys
+      - halal guys
+      - guys bot # not sure how to account for "guys" in quotes without a regex...
+        # /(?<!boba )(?<!five )(?<!5 )(?<!halal )guy(s|z)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i,
+    alternatives:
+      - y'all
+
+  - matches:
+      - ghetto
+    alternatives:
+      - haphazard
+      - distressed
+      - derelict
+      - slapdash
+
+  - matches:
+      - uppity
+    alternatives:
+      - outspoken
+      - ambitious
+      - highfalutin
+      - vocal
+      - assertive
+
+  - matches:
+      - peanut gallery
+    alternatives:
+      - teeming masses
+      - onlookers
+
+  - matches:
+      - gyp
+      - gypped
+    ignore:
+      - node gyp # Node.js build tool; shows up in error logs fairly often
+      - node-gyp
+    alternatives:
+      - swindled
+      - cheated
+
+  - matches:
+      - no can do
+    alternatives:
+      - sorry, I can't
+
+  - matches:
+      - long time no see
+    alternatives:
+      - it's been a while
+
+  - matches:
+      - sherpa
+    alternatives:
+      - guide
+      - shepherd
+      - mastermind
+
+  - matches:
+      - pow-wow
+      - powwow
+      - pow wow
+    alternatives:
+      - meeting
+      - working session
+      - huddle
+      - jam session
+
+  - matches:
+      - circle the wagons
+    alternatives:
+      - hunker down
+
+  - matches:
+      - hold down the fort
+    alternatives:
+      - keep things afloat
+      - keen an eye on things
+
+  - matches:
+      - spirit animal
+    alternatives:
+      - role model"
+      - kindred spirit"
+      - inspiration"
+      - secret twin"
+      - raison d'etre"
+      - when I grow up, I want to be..."
+
+  - matches:
+      - guru
+    alternatives:
+      - authority
+      - maestro
+      - virtuoso
+
+  - matches:
+      - ninja
+    alternatives:
+      - expert
+      - whiz
+
+  - matches:
+      - blacklist
+      - black list
+      - blacklisted
+      - black listed
+    alternatives:
+      - blocked list
+      - deny list
+      - exclude list
+      - reject list
+
+  - matches:
+      - whitelist
+      - white list
+      - whitelisted
+      - white listed
+    alternatives:
+      - unblocked list
+      - allow list
+      - permit list
+
+  - matches:
+      - dark pattern
+    alternatives:
+      - antipattern
+      - anti-UX pattern
+      - consequence design
+
+  - matches:
+      - master/slave
+      - master / slave
+    alternatives:
+      - primary/secondary
+      - primary/replica
