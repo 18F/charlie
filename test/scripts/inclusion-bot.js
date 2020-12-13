@@ -1,13 +1,70 @@
 const fs = require("fs");
+const path = require("path");
 const chai = require("chai");
 const subset = require("chai-subset");
 const sinon = require("sinon");
+const yaml = require("js-yaml");
 
 chai.use(subset);
-const { expect } = chai;
+const { assert, expect } = chai;
 
 const originalUtils = require("../../utils");
 const bot = require("../../scripts/inclusion-bot");
+
+describe("Inclusion bot config file", () => {
+  const ymlStr = fs.readFileSync(
+    path.join(
+      path.dirname(require.resolve("../../scripts/inclusion-bot")),
+      "inclusion-bot.yaml"
+    )
+  );
+  const yml = yaml.safeLoad(ymlStr, { json: true });
+
+  it("starts with a top-level inclusion-bot property", () => {
+    expect(Object.keys(yml).length).to.equal(1);
+    expect(Object.keys(yml)[0]).to.equal("inclusion-bot");
+    expect(Array.isArray(yml["inclusion-bot"])).to.equal(true);
+  });
+
+  it("each item is an object, and each property of each object is a string", () => {
+    const configs = yml["inclusion-bot"];
+    configs.forEach((config, i) => {
+      assert(typeof config === "object", `item ${i} is an object`);
+
+      const keys = Object.keys(config);
+      assert(keys.indexOf("matches") >= 0, `item ${i} has matches`);
+      assert(Array.isArray(config.matches), `item ${i}'s matches is an array`);
+      assert(keys.indexOf("alternatives") >= 0, `item ${i} has alternatives`);
+      assert(
+        Array.isArray(config.alternatives),
+        `item ${i}'s alternatives is an array`
+      );
+
+      config.matches.forEach((s, j) => {
+        assert(typeof s === "string", `item ${i}, match ${j} is a string`);
+      });
+      config.alternatives.forEach((s, j) => {
+        assert(
+          typeof s === "string",
+          `item ${i}, alternatives ${j} is a string`
+        );
+      });
+
+      if (config.ignore) {
+        assert(Array.isArray(config.ignore), `item ${i}'s ignore is an array`);
+        config.ignore.forEach((s, j) => {
+          assert(typeof s === "string", `item ${i}, ignore ${j} is a string`);
+        });
+      }
+
+      const expectedKeyCount = config.ignore ? 3 : 2;
+      assert(
+        keys.length === expectedKeyCount,
+        `item ${i} has exactly ${expectedKeyCount} keys`
+      );
+    });
+  });
+});
 
 describe("Inclusion bot match loader", () => {
   before(() => {
@@ -30,7 +87,7 @@ describe("Inclusion bot match loader", () => {
     fs.readFileSync.restore();
   });
 
-  it("do a thing", () => {
+  it("maps the YAML file to the right format", () => {
     const matches = bot.getMatches();
     expect(matches).to.deep.equal([
       {
