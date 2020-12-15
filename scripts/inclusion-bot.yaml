@@ -265,7 +265,7 @@ inclusion-bot:
   - matches:
       - master/slave
       - master / slave
-    alternatives:
+  - alternatives:
       - primary/secondary
       - primary/replica
 
