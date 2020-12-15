@@ -214,12 +214,12 @@ inclusion-bot:
   - matches:
       - spirit animal
     alternatives:
-      - role model"
-      - kindred spirit"
-      - inspiration"
-      - secret twin"
-      - raison d'etre"
-      - when I grow up, I want to be..."
+      - role model
+      - kindred spirit
+      - inspiration
+      - secret twin
+      - raison d'etre
+      - when I grow up, I want to be...
 
   - matches:
       - guru
@@ -268,3 +268,14 @@ inclusion-bot:
     alternatives:
       - primary/secondary
       - primary/replica
+
+  - matches:
+      - postmortem
+  - alternatives:
+      - project reflection 
+      - end of project review
+
+  - matches:
+      - drop-dead date
+  - alternatives:
+      - last possible date
