@@ -265,17 +265,17 @@ inclusion-bot:
   - matches:
       - master/slave
       - master / slave
-  - alternatives:
+    alternatives:
       - primary/secondary
       - primary/replica
 
   - matches:
       - postmortem
-  - alternatives:
+    alternatives:
       - project reflection 
       - end of project review
 
   - matches:
       - drop-dead date
-  - alternatives:
+    alternatives:
       - last possible date
