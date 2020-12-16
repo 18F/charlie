@@ -1,35 +1,55 @@
-inclusion-bot:
-  # How this file works:
-  #
-  # This is a YAML file. You can read a little about them here:
-  # http://thomasloven.com/blog/2018/08/YAML-For-Nonprogrammers/
-  #
-  # To add an entirely new response to the Inclusion Bot, you will need to add
-  # a block that looks like the ones below. The word "matches" but have a dash
-  # and a space before it. (The dash before the word "matches" is how the bot
-  # knows it's a new response instead of being part of the previous response.)
-  #
-  # Then, list all of the phrases that should trigger the response. There should
-  # be one phrase per line, with a dash and a space at the beginning. The dash
-  # must be indented from the line above it.
-  #
-  # Next, if there are any special cases of the phrases that should be ignored,
-  # add an "ignore:" line that starts in the same column as the word "matches"
-  # (so indented two spaces from the dash in "- matches"). Like with matches,
-  # add one ignore phrase per line, with a dash and space at the beginning.
-  #
-  # Finally, add a list of alternative phrases that should be suggested if this
-  # response is triggered. Just like with "ignore:", the "alternatives:" line
-  # should be aligned with  "matches". Then each alternative on its own line
-  # starting with a dash and space.
-  #
-  # If you think it would be useful to describe what you've added, you can do
-  # that by adding a comment. Comments are anything after a # sign, just like
-  # these lines. Comments can be a line all by themselves, or they can be at
-  # the end of a line of content. Note that once you start a comment on a line,
-  # everything else on that line will be a comment – you cannot switch a line
-  # back from comment to content!
+# How this file works:
+#
+# This is a YAML file. You can read a little about them here:
+# http://thomasloven.com/blog/2018/08/YAML-For-Nonprogrammers/
+#
+# The link property is where the "(What's this?)" links to. It is currently the
+# Internet Archive link of the 18F blog post about the original "guys bot,"
+# since the 18F blog post was removed.
+#
+# The message property is used to describe the purpose of the bot and encourage
+# people to learn more. This is displayed after the list of triggering phrases
+# and suggested alternatives.
+#
+# The triggers property is the list of phrases that will cause the bot to
+# respond, what it should ignore, and alternative words or phrases to suggest.
+#
+# To add an entirely new response to the Inclusion Bot, you will need to add
+# a block that looks like the ones below. The word "matches" but have a dash
+# and a space before it. (The dash before the word "matches" is how the bot
+# knows it's a new response instead of being part of the previous response.)
+#
+# Then, list all of the phrases that should trigger the response. There should
+# be one phrase per line, with a dash and a space at the beginning. The dash
+# must be indented from the line above it.
+#
+# Next, if there are any special cases of the phrases that should be ignored,
+# add an "ignore:" line that starts in the same column as the word "matches"
+# (so indented two spaces from the dash in "- matches"). Like with matches,
+# add one ignore phrase per line, with a dash and space at the beginning.
+#
+# Finally, add a list of alternative phrases that should be suggested if this
+# response is triggered. Just like with "ignore:", the "alternatives:" line
+# should be aligned with  "matches". Then each alternative on its own line
+# starting with a dash and space.
+#
+# If you think it would be useful to describe what you've added, you can do
+# that by adding a comment. Comments are anything after a # sign, just like
+# these lines. Comments can be a line all by themselves, or they can be at
+# the end of a line of content. Note that once you start a comment on a line,
+# everything else on that line will be a comment – you cannot switch a line
+# back from comment to content!
 
+link: https://web.archive.org/web/20170714141744/https://18f.gsa.gov/2016/01/12/hacking-inclusion-by-customizing-a-slack-bot/
+message: >
+  Hello! Our inclusive TTS culture is built one interaction at a time, and
+  <https://content-guide.18f.gov/our-style/inclusive-language/|inclusive language>
+  is the foundation. This bot helps us practice our inclusive values here in
+  TTS. Want to contribute? (See the
+  <https://docs.google.com/document/d/1MMA7f6uUj-EctzhtYNlUyIeza6R8k4wfo1OKMDAgLog/edit#|inclusion bot document>
+  for more info. *Content warning: offensive language.*)"
+
+triggers:
   - matches:
       - blind to
       - blinded to
@@ -268,6 +288,18 @@ inclusion-bot:
     alternatives:
       - primary/secondary
       - primary/replica
+
+  - matches:
+      - hysterical
+    alternatives:
+      - hilarious
+      - very funny
+
+  - matches:
+      - hysterically
+    alternatives:
+      - uncontrollably
+      - wildly
 
   - matches:
       - postmortem

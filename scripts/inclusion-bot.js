@@ -3,32 +3,38 @@ const path = require("path");
 const yaml = require("js-yaml");
 const utils = require("../utils");
 
-const getMatches = () => {
+const getTriggers = () => {
   // Read in the huge list of bots from the Yaml file
   const ymlStr = fs.readFileSync(path.join(__dirname, "inclusion-bot.yaml"));
   const yml = yaml.safeLoad(ymlStr, { json: true });
-  const bots = yml["inclusion-bot"];
+  const { link, message, triggers } = yml;
+
+  console.log(Object.keys(yml));
 
   // Then for each bot, go ahead and map the list of matches and ignores into
   // regexes, so we don't need to do that on each trigger.
-  return bots.map(({ ignore, matches, ...rest }) => ({
-    ignore: ignore && RegExp(`(${ignore.join("|")})`, "ig"),
-    matches: RegExp(`(${matches.join("|")})`, "i"),
-    ...rest,
-  }));
+  return {
+    link,
+    message,
+    triggers: triggers.map(({ ignore, matches, ...rest }) => ({
+      ignore: ignore && RegExp(`(${ignore.join("|")})`, "ig"),
+      matches: RegExp(`(${matches.join("|")})`, "i"),
+      ...rest,
+    })),
+  };
 };
 
 module.exports = async (robot) => {
   const { addEmojiReaction, postEphemeralMessage } = utils.setup(robot);
 
   // Use the module exported version here, so that it can be stubbed for testing
-  const bots = module.exports.getMatches();
+  const { link, message, triggers } = module.exports.getTriggers();
 
   // Combine all the regexes from the map into a single regex, to reduce the
   // matching load on the bot. This way there's just one listener for inclusion
   // bot instead of one per regex in the map. This combined regex also adds
   // case-insensitivity and word boundaries.
-  const combinedString = bots
+  const combinedString = triggers
     .map(({ matches }) => `${matches.source}`)
     .join("|");
   const combinedRegex = new RegExp(`\\b${combinedString}\\b`, "i");
@@ -36,7 +42,7 @@ module.exports = async (robot) => {
   robot.hear(combinedRegex, (msg) => {
     // Find the specific match that triggered this bot. At this point, go ahead
     // and remove things that should be ignored.
-    const specificMatch = bots
+    const specificMatch = triggers
       .map(({ alternatives, ignore, matches }) => {
         const { text } = msg.message;
 
@@ -76,12 +82,14 @@ module.exports = async (robot) => {
     postEphemeralMessage({
       attachments: [
         {
+          color: "#ffbe2e",
+          text: `${pretexts.join("\n")} (_<${link}|What's this?>_)`,
+          fallback: "fallback",
+        },
+        {
           color: "#2eb886",
-          pretext: `${pretexts.join(
-            "\n"
-          )} (_<https://web.archive.org/web/20170714141744/https://18f.gsa.gov/2016/01/12/hacking-inclusion-by-customizing-a-slack-bot/|What's this?>_)`,
-          text: `Hello! Our inclusive TTS culture is built one interaction at a time, and inclusive language is the foundation. Instead of language stemming from racism, sexism, ableism, or other non-inclusive roots, we encourage everyone to try out new phrases. This is a small way we build inclusion into our everyday work lives. (See the <https://docs.google.com/document/d/1MMA7f6uUj-EctzhtYNlUyIeza6R8k4wfo1OKMDAgLog/edit#|inclusion bot document> for more info. *Content warning: offensive language.*)`,
-          fallback: `Hello! Our inclusive TTS culture is built one interaction at a time, and inclusive language is the foundation. Instead of language stemming from racism, sexism, ableism, or other non-inclusive roots, we encourage everyone to try out new phrases. This is a small way we build inclusion into our everyday work lives. (See the <https://docs.google.com/document/d/1MMA7f6uUj-EctzhtYNlUyIeza6R8k4wfo1OKMDAgLog/edit#|inclusion bot document> for more info. *Content warning: offensive language.*)`,
+          text: message,
+          fallback: message,
         },
       ],
       as_user: false,
@@ -95,4 +103,4 @@ module.exports = async (robot) => {
   });
 };
 
-module.exports.getMatches = getMatches;
+module.exports.getTriggers = getTriggers;

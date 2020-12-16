@@ -20,44 +20,43 @@ describe("Inclusion bot config file", () => {
   );
   const yml = yaml.safeLoad(ymlStr, { json: true });
 
-  it("starts with a top-level inclusion-bot property", () => {
-    expect(Object.keys(yml).length).to.equal(1);
-    expect(Object.keys(yml)[0]).to.equal("inclusion-bot");
-    expect(Array.isArray(yml["inclusion-bot"])).to.equal(true);
+  it("starts with a top-level triggers property", () => {
+    expect(Object.keys(yml).length).to.equal(3);
+    expect(Array.isArray(yml.triggers)).to.equal(true);
   });
 
   it("each item is an object, and each property of each object is a string", () => {
-    const configs = yml["inclusion-bot"];
-    configs.forEach((config, i) => {
-      assert(typeof config === "object", `item ${i} is an object`);
+    const { triggers } = yml;
+    triggers.forEach((trigger, i) => {
+      assert(typeof trigger === "object", `item ${i} is an object`);
 
-      const keys = Object.keys(config);
+      const keys = Object.keys(trigger);
       assert(keys.indexOf("matches") >= 0, `item ${i} has matches`);
-      assert(Array.isArray(config.matches), `item ${i}'s matches is an array`);
+      assert(Array.isArray(trigger.matches), `item ${i}'s matches is an array`);
       assert(keys.indexOf("alternatives") >= 0, `item ${i} has alternatives`);
       assert(
-        Array.isArray(config.alternatives),
+        Array.isArray(trigger.alternatives),
         `item ${i}'s alternatives is an array`
       );
 
-      config.matches.forEach((s, j) => {
+      trigger.matches.forEach((s, j) => {
         assert(typeof s === "string", `item ${i}, match ${j} is a string`);
       });
-      config.alternatives.forEach((s, j) => {
+      trigger.alternatives.forEach((s, j) => {
         assert(
           typeof s === "string",
           `item ${i}, alternatives ${j} is a string`
         );
       });
 
-      if (config.ignore) {
-        assert(Array.isArray(config.ignore), `item ${i}'s ignore is an array`);
-        config.ignore.forEach((s, j) => {
+      if (trigger.ignore) {
+        assert(Array.isArray(trigger.ignore), `item ${i}'s ignore is an array`);
+        trigger.ignore.forEach((s, j) => {
           assert(typeof s === "string", `item ${i}, ignore ${j} is a string`);
         });
       }
 
-      const expectedKeyCount = config.ignore ? 3 : 2;
+      const expectedKeyCount = trigger.ignore ? 3 : 2;
       assert(
         keys.length === expectedKeyCount,
         `item ${i} has exactly ${expectedKeyCount} keys`
@@ -68,7 +67,11 @@ describe("Inclusion bot config file", () => {
 
 describe("Inclusion bot match loader", () => {
   before(() => {
-    sinon.stub(fs, "readFileSync").returns(`inclusion-bot:
+    sinon.stub(fs, "readFileSync").returns(`
+link: https://link.url
+message: "This is the message"
+
+triggers:
   - matches:
       - match 1.1
       - match 1.2
@@ -88,19 +91,23 @@ describe("Inclusion bot match loader", () => {
   });
 
   it("maps the YAML file to the right format", () => {
-    const matches = bot.getMatches();
-    expect(matches).to.deep.equal([
-      {
-        alternatives: ["alt 1.1"],
-        ignore: undefined,
-        matches: /(match 1.1|match 1.2)/i,
-      },
-      {
-        alternatives: ["alt 2.1", "alt 2.2"],
-        ignore: /(ignore 2.1)/gi,
-        matches: /(match 2.1)/i,
-      },
-    ]);
+    const matches = bot.getTriggers();
+    expect(matches).to.deep.equal({
+      link: "https://link.url",
+      message: "This is the message",
+      triggers: [
+        {
+          alternatives: ["alt 1.1"],
+          ignore: undefined,
+          matches: /(match 1.1|match 1.2)/i,
+        },
+        {
+          alternatives: ["alt 2.1", "alt 2.2"],
+          ignore: /(ignore 2.1)/gi,
+          matches: /(match 2.1)/i,
+        },
+      ],
+    });
   });
 });
 
@@ -125,22 +132,26 @@ describe("Inclusion bot", () => {
 
   before(() => {
     setup = sandbox.stub(originalUtils, "setup");
-    sinon.stub(bot, "getMatches").returns([
-      {
-        alternatives: ["a1", "a2", "a3"],
-        ignore: ["not match 1"],
-        matches: /(match 1)/i,
-      },
-      {
-        alternatives: ["b1"],
-        matches: /(match 2a|match 2b)/i,
-      },
-    ]);
+    sinon.stub(bot, "getTriggers").returns({
+      link: "http://link.url",
+      message: "This is the message",
+      triggers: [
+        {
+          alternatives: ["a1", "a2", "a3"],
+          ignore: ["not match 1"],
+          matches: /(match 1)/i,
+        },
+        {
+          alternatives: ["b1"],
+          matches: /(match 2a|match 2b)/i,
+        },
+      ],
+    });
   });
 
   after(() => {
     setup.restore();
-    bot.getMatches.restore();
+    bot.getTriggers.restore();
   });
 
   beforeEach(() => {
@@ -168,8 +179,8 @@ describe("Inclusion bot", () => {
       attachments: [
         {
           color: "#2eb886",
-          text: `Hello! Our inclusive TTS culture is built one interaction at a time, and inclusive language is the foundation. Instead of language stemming from racism, sexism, ableism, or other non-inclusive roots, we encourage everyone to try out new phrases. This is a small way we build inclusion into our everyday work lives. (See the <https://docs.google.com/document/d/1MMA7f6uUj-EctzhtYNlUyIeza6R8k4wfo1OKMDAgLog/edit#|inclusion bot document> for more info. *Content warning: offensive language.*)`,
-          fallback: `Hello! Our inclusive TTS culture is built one interaction at a time, and inclusive language is the foundation. Instead of language stemming from racism, sexism, ableism, or other non-inclusive roots, we encourage everyone to try out new phrases. This is a small way we build inclusion into our everyday work lives. (See the <https://docs.google.com/document/d/1MMA7f6uUj-EctzhtYNlUyIeza6R8k4wfo1OKMDAgLog/edit#|inclusion bot document> for more info. *Content warning: offensive language.*)`,
+          text: "This is the message",
+          fallback: "This is the message",
         },
       ],
       as_user: false,
@@ -194,8 +205,8 @@ describe("Inclusion bot", () => {
       expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
       const message = postEphemeralMessage.args[0][0];
       expect(message).to.containSubset(expectedMessage);
-      expect(message.attachments[0].pretext).to.match(
-        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*? \(_<https:\/\/web\.archive\.org\/web\/20170714141744\/https:\/\/18f\.gsa\.gov\/2016\/01\/12\/hacking-inclusion-by-customizing-a-slack-bot\/|What's this\?>_\)/
+      expect(message.attachments[0].text).to.match(
+        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*? \(_<https:\/\/link\.url|What's this\?>_\)/
       );
     });
 
@@ -214,8 +225,8 @@ describe("Inclusion bot", () => {
       expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
       const message = postEphemeralMessage.args[0][0];
       expect(message).to.containSubset(expectedMessage);
-      expect(message.attachments[0].pretext).to.match(
-        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?\n• Instead of saying "match 2a," how about \*b1\*? \(_<https:\/\/web\.archive\.org\/web\/20170714141744\/https:\/\/18f\.gsa\.gov\/2016\/01\/12\/hacking-inclusion-by-customizing-a-slack-bot\/|What's this\?>_\)/
+      expect(message.attachments[0].text).to.match(
+        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?\n• Instead of saying "match 2a," how about \*b1\*? \(_<https:\/\/link\.url|What's this\?>_\)/
       );
     });
 
@@ -226,8 +237,8 @@ describe("Inclusion bot", () => {
       expect(addEmojiReaction.calledWith(...expectedEmoji)).to.equal(true);
       const message = postEphemeralMessage.args[0][0];
       expect(message).to.containSubset(expectedMessage);
-      expect(message.attachments[0].pretext).to.match(
-        /• Instead of saying "match 2a," how about \*b1\*? \(_<https:\/\/web\.archive\.org\/web\/20170714141744\/https:\/\/18f\.gsa\.gov\/2016\/01\/12\/hacking-inclusion-by-customizing-a-slack-bot\/|What's this\?>_\)/
+      expect(message.attachments[0].text).to.match(
+        /• Instead of saying "match 2a," how about \*b1\*? \(_<https:\/\/link\.url|What's this\?>_\)/
       );
     });
   });
