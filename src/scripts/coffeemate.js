@@ -11,10 +11,10 @@ const baseResponse = {
   username: "Coffeemate",
 };
 
-module.exports = (robot) => {
-  const queue = robot.brain.get(brainKey) || [];
+module.exports = (app) => {
+  const queue = app.brain.get(brainKey) || [];
 
-  robot.message(/coffee me/i, async (message) => {
+  app.message(/coffee me/i, async (message) => {
     await addEmojiReaction(message, "coffee");
     const {
       event: { user },
@@ -33,7 +33,7 @@ module.exports = (robot) => {
 
     // If we didn't bail out already, add the current user to the queue
     queue.push(user);
-    robot.brain.set(brainKey, queue);
+    app.brain.set(brainKey, queue);
 
     // Now do we have a pair or not?
     if (queue.length < 2) {
@@ -50,11 +50,11 @@ module.exports = (robot) => {
       });
 
       // Now start a 1:1 DM chat between the people in queue.
-      sendDirectMessage(queue, baseResponse);
+      await sendDirectMessage([...queue], baseResponse);
 
       // then empty the queue again
       queue.length = 0;
-      robot.brain.set(brainKey, queue);
+      app.brain.set(brainKey, queue);
     }
   });
 };

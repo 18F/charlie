@@ -30,8 +30,8 @@ const TIMEZONES = {
 
 const matcher = /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
 
-module.exports = (robot) => {
-  robot.message(matcher, async (msg) => {
+module.exports = (app) => {
+  app.message(matcher, async (msg) => {
     const { channel, text, thread_ts: thread, user } = msg.event;
 
     const {
@@ -43,6 +43,14 @@ module.exports = (robot) => {
     let ampm = null;
 
     const matches = [...text.matchAll(RegExp(matcher, "gi"))];
+
+    // If there aren't any matches, that can be because this was crossposted.
+    // We don't want to have the bot respond to those because the authorship of
+    // the message (and thus the origin timezone) gets goofy.
+    if (matches.length === 0) {
+      return;
+    }
+
     matches.forEach(([, time, ampmStr, timezone]) => {
       const sourceTz = timezone
         ? TIMEZONES[timezone.toLowerCase()]

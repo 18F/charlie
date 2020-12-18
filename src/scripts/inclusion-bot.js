@@ -24,7 +24,7 @@ const getTriggers = () => {
   };
 };
 
-module.exports = async (robot) => {
+module.exports = async (app) => {
   // Use the module exported version here, so that it can be stubbed for testing
   const { link, message, triggers } = module.exports.getTriggers();
 
@@ -37,7 +37,7 @@ module.exports = async (robot) => {
     .join("|");
   const combinedRegex = new RegExp(`\\b${combinedString}\\b`, "i");
 
-  robot.message(combinedRegex, (msg) => {
+  app.message(combinedRegex, (msg) => {
     // Find the specific match that triggered this bot. At this point, go ahead
     // and remove things that should be ignored.
     const specificMatch = triggers

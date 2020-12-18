@@ -49,7 +49,7 @@ const getSlackUsersInConversation = async ({ client, event: { channel } }) => {
     const { members: channelUsers } = await client.conversations.members({
       channel,
     });
-    const allUsers = await getSlackUsers(client);
+    const allUsers = await getSlackUsers();
 
     return allUsers.filter(({ id }) => channelUsers.includes(id));
   });
@@ -60,17 +60,12 @@ const postEphemeralResponse = async (toMsg, message) => {
     client,
     event: { channel, thread_ts: thread, user },
   } = toMsg;
-  try {
-    await client.chat.postEphemeral({
-      ...message,
-      user,
-      channel,
-      thread_ts: thread,
-    });
-  } catch (e) {
-    console.log(JSON.stringify(message, null, 2));
-    console.log(e);
-  }
+  await client.chat.postEphemeral({
+    ...message,
+    user,
+    channel,
+    thread_ts: thread,
+  });
 };
 
 const postMessage = async (message) => {

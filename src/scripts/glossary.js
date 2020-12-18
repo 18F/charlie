@@ -26,8 +26,8 @@ const findCaseInsensitively = (list, searchTerm) => {
   return null;
 };
 
-module.exports = (robot) => {
-  robot.message(
+module.exports = (app) => {
+  app.message(
     directMention(),
     /(glossary|define) (.+)/i,
     async ({ context, event: { thread_ts: thread }, say }) => {
@@ -38,14 +38,10 @@ module.exports = (robot) => {
 
       const abbreviations = await cache("glossary fetch", 60, async () => {
         const { data } = await axios.get(
-          "https://api.github.com/repos/18f/procurement-glossary/contents/abbreviations.yml"
+          "https://raw.githubusercontent.com/18F/procurement-glossary/master/abbreviations.yml"
         );
 
-        // GitHub sends back an object with metadata. The actual content is
-        // a base64-encoded property on the response body.
-        return yaml.safeLoad(Buffer.from(data.content, "base64").toString(), {
-          json: true,
-        }).abbreviations;
+        return yaml.safeLoad(data, { json: true }).abbreviations;
       });
 
       const terms = Object.keys(abbreviations);

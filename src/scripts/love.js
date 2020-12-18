@@ -16,8 +16,8 @@ const {
   slack: { getChannelID },
 } = require("../utils");
 
-module.exports = (robot) => {
-  robot.message(
+module.exports = (app) => {
+  app.message(
     /^\s*(love|<3|:heart\w*:)\s+((<@[\w-]+>\s*)+)(.*)$/i,
     async ({
       client,

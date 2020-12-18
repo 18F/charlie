@@ -7,20 +7,20 @@
 
 const { directMention } = require("@slack/bolt");
 
-const getTockLines = (robot) => {
-  let tockLines = robot.brain.get("tockLines");
+const getTockLines = (app) => {
+  let tockLines = app.brain.get("tockLines");
   if (!tockLines) {
     tockLines = {};
   }
   return tockLines;
 };
 
-module.exports = (robot) => {
-  robot.message(
+module.exports = (app) => {
+  app.message(
     directMention(),
     /tock( line)?$/i,
     ({ event: { channel, text, thread_ts: thread }, say }) => {
-      const tockLines = getTockLines(robot);
+      const tockLines = getTockLines(app);
       if (tockLines[channel]) {
         say({
           icon_emoji: ":happytock:",
@@ -40,13 +40,13 @@ module.exports = (robot) => {
     }
   );
 
-  robot.message(
+  app.message(
     directMention(),
     /set tock( line)? (.*)$/i,
     ({ context: { matches }, event: { channel, thread_ts: thread }, say }) => {
-      const tockLines = getTockLines(robot);
+      const tockLines = getTockLines(app);
       tockLines[channel] = matches[2];
-      robot.brain.set("tockLines", tockLines);
+      app.brain.set("tockLines", tockLines);
       say({
         icon_emoji: ":happytock:",
         text: "Okay, I set the tock line for this room",

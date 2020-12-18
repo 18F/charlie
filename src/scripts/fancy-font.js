@@ -54,8 +54,8 @@ const fancy = {
   "!": "!",
 };
 
-module.exports = (robot) => {
-  robot.message(/^fancy font (.*)$/i, ({ context, message, say }) => {
+module.exports = (app) => {
+  app.message(/^fancy font (.*)$/i, ({ context, message, say }) => {
     const plain = context.matches[1];
     const out = plain
       .split("")

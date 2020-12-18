@@ -2,9 +2,8 @@ const axios = require("axios");
 const fs = require("fs");
 const { cache } = require("../utils");
 
-const configs = JSON.parse(
-  fs.readFileSync("config/slack-random-response.json")
-);
+const loadConfigs = async () =>
+  JSON.parse(fs.readFileSync("config/slack-random-response.json"));
 
 /**
  * Given a configuration, get a list of responses for it.
@@ -95,10 +94,11 @@ const attachTrigger = (app, { trigger, ...config }) => {
   }
 };
 
-module.exports = (app) => {
+module.exports = async (app) => {
+  const configs = await loadConfigs();
   if (Array.isArray(configs)) {
     configs.forEach(async (config) => {
-      attachTrigger(app, config);
+      module.exports.attachTrigger(app, config);
     });
 
     app.message(/fact of facts/i, async (res) => {
@@ -106,7 +106,7 @@ module.exports = (app) => {
       const factConfig = configs[Math.floor(Math.random() * configs.length)];
 
       // Get a message handler for the chosen configuration and then run it!
-      responseFrom(factConfig)(res);
+      module.exports.responseFrom(factConfig)(res);
     });
   }
 };

@@ -6,8 +6,8 @@
     "lint": "18f-eslint '**/*.js'",
     "start": "node src/main.js",
     "start-dev": "npx nodemon src/main.js",
-    "test": "mocha src/test/*",
-    "test-coverage": "nyc --reporter=lcov --reporter=text-summary mocha src/test/*"
+    "test": "jest 'src/.+/.+\\.test\\.js'",
+    "test-coverage": "jest 'src/.+/.+\\.test\\.js' --coverage"
   },
   "dependencies": {
     "@18f/us-federal-holidays": "^1.4.0",
@@ -42,6 +42,9 @@
     "mocha": "^7.1.2",
     "nyc": "^15.0.1",
     "sinon": "^9.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "prettier": {}
 }
