@@ -14,6 +14,10 @@
 # The triggers property is the list of phrases that will cause the bot to
 # respond, what it should ignore, and alternative words or phrases to suggest.
 #
+# The content of this YAML file is the responsibility of the TTS Diversity
+# Guild. Before making significant changes, it can be helpful to drop by the
+# #g-diversity channel in Slack to discuss with the whole guild.
+#
 # To add an entirely new response to the Inclusion Bot, you will need to add
 # a block that looks like the ones below. The word "matches" but have a dash
 # and a space before it. (The dash before the word "matches" is how the bot
