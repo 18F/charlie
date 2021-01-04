@@ -80,6 +80,12 @@ triggers:
       - ridiculous
 
   - matches:
+      - insanely
+    alternatives:
+      - absurdly
+      - wildly
+
+  - matches:
       - psycho
       - schizo
       - lunatic
