@@ -10,6 +10,9 @@ module.exports = {
     const message = jest.fn();
     return {
       brain: new Map(),
+      logger: {
+        warn: jest.fn(),
+      },
       message,
 
       /**

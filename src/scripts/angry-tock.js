@@ -106,7 +106,7 @@ const shout = async ({ calm = false } = {}) => {
  */
 const isAngryTockDay = (now) => {
   const d = now || m();
-  return d.format("dddd") === "Monday" && !holidays.isAHoliday();
+  return d.format("dddd") === "Monday" && !holidays.isAHoliday(d.toDate());
 };
 
 /**
@@ -134,16 +134,16 @@ const scheduleNextShoutingMatch = () => {
     if (day.isBefore(firstTockShoutTime)) {
       // ...and Angry Tock should not have shouted at all yet, schedule a calm
       // shout.
-      return scheduler.scheduleJob(firstTockShoutTime.toDate(), () => {
-        shout({ calm: true });
+      return scheduler.scheduleJob(firstTockShoutTime.toDate(), async () => {
+        await shout({ calm: true });
         setTimeout(() => scheduleNextShoutingMatch(), 1000);
       });
     }
     if (day.isBefore(secondTockShoutTime)) {
       // ...and Angry Tock should have shouted once, schedule an un-calm shout.
-      return scheduler.scheduleJob(secondTockShoutTime.toDate(), () => {
-        shout({ calm: false });
+      return scheduler.scheduleJob(secondTockShoutTime.toDate(), async () => {
         setTimeout(() => scheduleNextShoutingMatch(), 1000);
+        await shout({ calm: false });
       });
     }
 
@@ -163,13 +163,13 @@ const scheduleNextShoutingMatch = () => {
   day.minute(firstMinute);
   day.second(0);
 
-  return scheduler.scheduleJob(day.toDate(), () => {
-    shout({ calm: true });
+  return scheduler.scheduleJob(day.toDate(), async () => {
     setTimeout(() => scheduleNextShoutingMatch(), 1000);
+    await shout({ calm: true });
   });
 };
 
-module.exports = async (app) => {
+module.exports = (app) => {
   if (!TOCK_API_URL || !TOCK_TOKEN) {
     app.logger.warn(
       "AngryTock disabled: Tock API URL or access token is not set"

@@ -21,65 +21,64 @@ const {
   slack: { getChannelID },
 } = require("../utils");
 
-const appEnv = CFENV.getAppEnv();
-const s3Creds = appEnv.getServiceCreds("charlie-bucket");
+module.exports = (app) => {
+  const appEnv = CFENV.getAppEnv();
+  const s3Creds = appEnv.getServiceCreds("charlie-bucket");
 
-if (s3Creds !== null) {
-  const creds = new AWS.Credentials(
-    s3Creds.access_key_id,
-    s3Creds.secret_access_key
-  );
-  const BUCKET = s3Creds.bucket;
-  const REGION = s3Creds.region;
-  const s3 = new AWS.S3({ region: REGION, credentials: creds });
+  if (s3Creds !== null) {
+    const creds = new AWS.Credentials(
+      s3Creds.access_key_id,
+      s3Creds.secret_access_key
+    );
+    const BUCKET = s3Creds.bucket;
+    const REGION = s3Creds.region;
+    const s3 = new AWS.S3({ region: REGION, credentials: creds });
 
-  const hugUrl = ({ Key }) => {
-    const rand = Math.floor(Math.random() * 10000);
-    return `https://s3-${REGION}.amazonaws.com/${BUCKET}/${Key}?rnd=${rand}`;
-  };
+    const hugUrl = ({ Key }) => {
+      const rand = Math.floor(Math.random() * 10000);
+      return `https://s3-${REGION}.amazonaws.com/${BUCKET}/${Key}?rnd=${rand}`;
+    };
 
-  const hugBomb = (count, { say }) => {
-    s3.listObjects({ Bucket: BUCKET }, async (err, data) => {
-      if (err) {
-        say(`Error retrieving images: ${err}`);
-      } else {
-        // Get some random things
-        const s3Objects = [...Array(count)].map(() =>
-          data.Contents.splice(
-            Math.floor(Math.random() * data.Contents.length),
-            1
-          ).pop()
-        );
+    module.exports.hugBomb = (count, { say }) =>
+      new Promise((resolve) => {
+        s3.listObjects({ Bucket: BUCKET }, async (err, data) => {
+          if (err) {
+            say(`Error retrieving images: ${err}`);
+            resolve();
+          } else {
+            // Get some random things
+            const s3Objects = [...Array(count)].map(() =>
+              data.Contents.splice(
+                Math.floor(Math.random() * data.Contents.length),
+                1
+              ).pop()
+            );
 
-        const blocks = s3Objects.map((s3Object) => ({
-          type: "image",
-          title: { type: "plain_text", text: "Please enjoy this warm hug" },
-          image_url: hugUrl(s3Object),
-          alt_text: "Someone giving you a nice hug",
-        }));
+            const blocks = s3Objects.map((s3Object) => ({
+              type: "image",
+              title: { type: "plain_text", text: "Please enjoy this warm hug" },
+              image_url: hugUrl(s3Object),
+              alt_text: "Someone giving you a nice hug",
+            }));
 
-        const channelID = await getChannelID("bots");
+            const channelID = await getChannelID("bots");
 
-        blocks.push({
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: `_If you would like to be added, send a picture in <#${channelID}>_`,
-          },
+            blocks.push({
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: `_If you would like to be added, send a picture in <#${channelID}>_`,
+              },
+            });
+
+            say({ blocks });
+            resolve();
+          }
         });
-
-        say({ blocks });
-      }
-    });
-  };
-
-  module.exports = (app) => {
-    if (s3Creds === null) {
-      return;
-    }
+      });
 
     app.message(directMention(), /hug me/i, (msg) => {
-      hugBomb(1, msg);
+      module.exports.hugBomb(1, msg);
     });
 
     app.message(
@@ -87,10 +86,10 @@ if (s3Creds !== null) {
       /hug bomb( (\d+))?/i,
       ({ context: { matches }, ...msg }) => {
         const count = +matches[2] || 3;
-        hugBomb(count, msg);
+        module.exports.hugBomb(count, msg);
       }
     );
-  };
-} else {
-  console.log("Unable to find service creds for 'charlie-bucket'.");
-}
+  } else {
+    console.log("Unable to find service creds for 'charlie-bucket'.");
+  }
+};
