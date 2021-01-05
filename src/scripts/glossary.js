@@ -41,7 +41,7 @@ module.exports = (app) => {
           "https://raw.githubusercontent.com/18F/procurement-glossary/master/abbreviations.yml"
         );
 
-        return yaml.safeLoad(data, { json: true }).abbreviations;
+        return yaml.load(data, { json: true }).abbreviations;
       });
 
       const terms = Object.keys(abbreviations);

@@ -90,7 +90,7 @@ describe("Inclusion bot config file", () => {
       "inclusion-bot.yaml"
     )
   );
-  const yml = yaml.safeLoad(ymlStr, { json: true });
+  const yml = yaml.load(ymlStr, { json: true });
 
   it("starts with a top-level triggers property", () => {
     expect(Object.keys(yml).length).toEqual(3);

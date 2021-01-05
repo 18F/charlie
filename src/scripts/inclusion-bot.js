@@ -8,7 +8,7 @@ const {
 const getTriggers = () => {
   // Read in the huge list of bots from the Yaml file
   const ymlStr = fs.readFileSync(path.join(__dirname, "inclusion-bot.yaml"));
-  const yml = yaml.safeLoad(ymlStr, { json: true });
+  const yml = yaml.load(ymlStr, { json: true });
   const { link, message, triggers } = yml;
 
   // Then for each bot, go ahead and map the list of matches and ignores into

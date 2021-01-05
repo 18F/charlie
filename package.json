@@ -6,42 +6,29 @@
     "lint": "18f-eslint '**/*.js'",
     "start": "node src/main.js",
     "start-dev": "npx nodemon src/main.js",
-    "test": "jest 'src/.+/.+\\.test\\.js'",
-    "test-coverage": "jest 'src/.+/.+\\.test\\.js' --coverage"
+    "test": "jest 'src/.+/?.+\\.test\\.js'",
+    "test-coverage": "jest 'src/.+/?.+\\.test\\.js' --coverage"
   },
   "dependencies": {
     "@18f/us-federal-holidays": "^1.4.0",
-    "@slack/bolt": "^2.4.1",
-    "@slack/client": "^5.0.2",
-    "aws-sdk": "^2.782.0",
-    "axios": "^0.21.0",
+    "@slack/bolt": "^2.6.0",
+    "aws-sdk": "^2.822.0",
+    "axios": "^0.21.1",
     "cfenv": "^1.2.3",
-    "coffeescript": "^1.12.7",
-    "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
-    "js-yaml": "^3.14.0",
-    "json": "^9.0.4",
+    "js-yaml": "^4.0.0",
     "moment": "^2.27.0",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.32",
     "node-schedule": "^1.3.2",
-    "pg": "^8.5.1",
-    "request": "^2.88.2",
-    "twit": "^2.2.11",
-    "underscore": "^1.10.2"
+    "pg": "^8.5.1"
   },
   "engines": {
     "node": "^12.11.1"
   },
   "devDependencies": {
     "@18f/18f-eslint": "^1.2.5",
-    "chai": "^4.2.0",
-    "chai-subset": "^1.6.0",
-    "co": "^4.6.0",
-    "eslint-plugin-coffeescript": "^1.0.0",
     "jest": "^26.6.3",
-    "mocha": "^7.1.2",
-    "nyc": "^15.0.1",
-    "sinon": "^9.0.2"
+    "sinon": "^9.2.2"
   },
   "jest": {
     "testEnvironment": "node"

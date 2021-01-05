@@ -1,8 +1,13 @@
 {
-  "extends": ["airbnb-base", "prettier"],
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
   "rules": {
     "no-console": 0,
-    "prefer-destructuring": [0]
+    "prefer-destructuring": [
+      0
+    ]
   },
   "env": {
     "es6": true,
@@ -10,7 +15,9 @@
   },
   "overrides": [
     {
-      "files": ["src/test/**/*.js"],
+      "files": [
+        "src/test/**/*.js"
+      ],
       "env": {
         "mocha": true
       },
@@ -19,8 +26,13 @@
       }
     },
     {
-      "files": ["src/**/*.test.js", "src/utils/test.js"],
-      "env": { "jest": true }
+      "files": [
+        "src/**/*.test.js",
+        "src/utils/test.js"
+      ],
+      "env": {
+        "jest": true
+      }
     }
   ]
 }
