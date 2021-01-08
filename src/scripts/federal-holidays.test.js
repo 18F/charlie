@@ -12,7 +12,8 @@ describe("federal holidays bot", () => {
     bot(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      /(when is( the)? )?next holiday/i,
+      expect.any(Function),
+      /(when is( the)? )?next (federal )?holiday/i,
       expect.any(Function)
     );
   });
