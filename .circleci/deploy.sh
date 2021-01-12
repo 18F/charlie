@@ -13,7 +13,7 @@ then
 
   # Log into CF and push
   cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
-  cf push -f manifest.yml
+  cf push -f manifest.yml --vars-file ./prod.yml
 else
   echo "Not on the main branch.  Not deploying."
 fi

@@ -16,17 +16,6 @@
   "overrides": [
     {
       "files": [
-        "src/test/**/*.js"
-      ],
-      "env": {
-        "mocha": true
-      },
-      "rules": {
-        "import/no-extraneous-dependencies": 0
-      }
-    },
-    {
-      "files": [
         "src/**/*.test.js",
         "src/utils/test.js"
       ],

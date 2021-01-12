@@ -16,7 +16,6 @@ const reminder = (tz) => async () => {
     text: "Don't forget to <https://tock.18f.gov|Tock your time>!",
   };
 
-  console.log("running optimistic tock reminders");
   // Get all the folks who have not submitted their current Tock.
   const truants = await get18FTockTruants(moment.tz(tz), 0);
 

@@ -7,4 +7,4 @@ slack.yml
 .env
 .vscode
 coverage
-test
+*.test.js
