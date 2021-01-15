@@ -1,7 +1,7 @@
 const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
-const holidays = require("@18f/us-federal-holidays");
 const {
+  dates: { getNextHoliday },
   slack: { postMessage },
 } = require("../utils");
 
@@ -11,35 +11,6 @@ const reportingTime = moment(
   process.env.HOLIDAY_REMINDER_TIME || "15:00",
   "HH:mm"
 );
-const SUPPRESS_HERE = process.env.HOLIDAY_REMINDER_SUPPRESS_HERE;
-
-const suppressHere = (() => {
-  if (SUPPRESS_HERE) {
-    const upper = SUPPRESS_HERE.toUpperCase();
-    if (upper === "TRUE" || upper === "YES" || upper === "Y") {
-      return true;
-    }
-
-    if (!Number.isNaN(+SUPPRESS_HERE) && +SUPPRESS_HERE > 0) {
-      return true;
-    }
-  }
-  return false;
-})();
-
-const getNextHoliday = () => {
-  const now = moment.tz(TIMEZONE);
-
-  return holidays
-    .allForYear(now.year())
-    .concat(holidays.allForYear(now.year() + 1))
-    .map((h) => ({
-      ...h,
-      date: moment.tz(h.dateString, "YYYY-MM-DD", TIMEZONE),
-    }))
-    .filter((h) => h.date.isAfter(now))
-    .shift();
-};
 
 const previousWeekday = (date) => {
   const source = moment(date);
@@ -57,14 +28,14 @@ const previousWeekday = (date) => {
 const postReminder = (holiday) => {
   postMessage({
     channel: CHANNEL,
-    text: `${suppressHere ? "" : "@here "}Remember that *${holiday.date.format(
+    text: `@here Remember that *${holiday.date.format(
       "dddd"
     )}* is a federal holiday in observance of *${holiday.name}*!`,
   });
 };
 
 const scheduleReminder = () => {
-  const nextHoliday = module.exports.getNextHoliday();
+  const nextHoliday = module.exports.getNextHoliday(TIMEZONE);
   const target = module.exports.previousWeekday(nextHoliday.date);
 
   target.hour(reportingTime.hour());

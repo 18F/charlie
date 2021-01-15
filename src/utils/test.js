@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { cache, slack, tock } = require("./index");
+const { cache, dates, slack, tock } = require("./index");
 
 // Mock axios and the utility functions, to make it easier for tests to use.
 jest.mock("axios");
@@ -34,6 +34,7 @@ module.exports = {
   axios,
   utils: {
     cache,
+    dates,
     slack,
     tock,
   },

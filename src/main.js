@@ -28,6 +28,7 @@ app.start(port).then(async () => {
   const files = (await fs.readdir(path.join(__dirname, "scripts"))).filter(
     (file) => file.endsWith(".js") && !file.endsWith(".test.js")
   );
+
   files.forEach((file) => {
     const script = require(`./scripts/${file}`); // eslint-disable-line global-require,import/no-dynamic-require
     if (typeof script === "function") {

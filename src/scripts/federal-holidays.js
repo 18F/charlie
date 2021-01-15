@@ -1,31 +1,24 @@
 const { directMention } = require("@slack/bolt");
-const fedHolidays = require("@18f/us-federal-holidays");
 const moment = require("moment");
+const {
+  dates: { getNextHoliday },
+} = require("../utils");
 
 module.exports = (app) => {
   app.message(
     directMention(),
     /(when is( the)? )?next (federal )?holiday/i,
     ({ say }) => {
-      const now = new Date();
-      const holidays = fedHolidays.allForYear(now.getFullYear());
-      let i = 0;
-
-      while (i < holidays.length) {
-        if (holidays[i].date >= now) {
-          const nextOne = moment(holidays[i].date);
-          const daysUntil = Math.ceil(
-            moment.duration(nextOne.utc().format("x") - Date.now()).asDays()
-          );
-          say(
-            `The next federal holiday is ${
-              holidays[i].name
-            } in ${daysUntil} days on ${nextOne.utc().format("dddd, MMMM Do")}`
-          );
-          break;
-        }
-        i += 1;
-      }
+      const holiday = getNextHoliday();
+      const nextOne = moment(holiday.date);
+      const daysUntil = Math.ceil(
+        moment.duration(nextOne.utc().format("x") - Date.now()).asDays()
+      );
+      say(
+        `The next federal holiday is ${
+          holiday.name
+        } in ${daysUntil} days on ${nextOne.utc().format("dddd, MMMM Do")}`
+      );
     }
   );
 };

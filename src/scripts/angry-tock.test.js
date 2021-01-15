@@ -91,27 +91,33 @@ describe("Angry Tock", () => {
     clock.restore();
   });
 
-  it("issues a warning and does not schedule a shouting match if un/mis-configured", async () => {
-    process.env.TOCK_API = "";
-    process.env.TOCK_TOKEN = "";
-    let angryTock = await load();
-    angryTock(app);
-    expect(app.logger.warn).toHaveBeenCalled();
-    expect(scheduleJob).not.toHaveBeenCalled();
+  describe("issues a warning and does not schedule a shouting match if un/mis-configured", () => {
+    it("if there is neither a Tock API URL or token", async () => {
+      process.env.TOCK_API = "";
+      process.env.TOCK_TOKEN = "";
+      const angryTock = await load();
+      angryTock(app);
+      expect(app.logger.warn).toHaveBeenCalled();
+      expect(scheduleJob).not.toHaveBeenCalled();
+    });
 
-    process.env.TOCK_API = "set";
-    process.env.TOCK_TOKEN = "";
-    angryTock = await load();
-    angryTock(app);
-    expect(app.logger.warn).toHaveBeenCalled();
-    expect(scheduleJob).not.toHaveBeenCalled();
+    it("if there is a Tock API URL but no token", async () => {
+      process.env.TOCK_API = "set";
+      process.env.TOCK_TOKEN = "";
+      const angryTock = await load();
+      angryTock(app);
+      expect(app.logger.warn).toHaveBeenCalled();
+      expect(scheduleJob).not.toHaveBeenCalled();
+    });
 
-    process.env.TOCK_API = "";
-    process.env.TOCK_TOKEN = "set";
-    angryTock = await load();
-    angryTock(app);
-    expect(app.logger.warn).toHaveBeenCalled();
-    expect(scheduleJob).not.toHaveBeenCalled();
+    it("if there is a Tock token but no API URL", async () => {
+      process.env.TOCK_API = "";
+      process.env.TOCK_TOKEN = "set";
+      const angryTock = await load();
+      angryTock(app);
+      expect(app.logger.warn).toHaveBeenCalled();
+      expect(scheduleJob).not.toHaveBeenCalled();
+    });
   });
 
   describe("schedules the next shouting match on startup", () => {
@@ -156,6 +162,8 @@ describe("Angry Tock", () => {
     it("if it is shouty day, after the second-shout time, schedules a first-shout for the next shouty day", async () => {
       // Monday, January 20, 1997 - Bill Clinton is sworn into his second term
       // as President of the United States.
+      // Angry Tock is not location aware, but inauguration day is a holiday for
+      // DC-area federal employees. So... just a note for the future!
       const initial = moment.tz(
         "1997-01-27 20:00:00",
         process.env.ANGRY_TOCK_TIMEZONE
@@ -215,7 +223,7 @@ describe("Angry Tock", () => {
     const angryTock = await load();
     angryTock(app);
 
-    // This should have scheduled a calm "shout. Grab the handler off the
+    // This should have scheduled a calm "shout." Grab the handler off the
     // scheduler and run it, but first advance the time so that the "angry"
     // shout gets scheduled next. We need to advance time up to the initial
     // "shout" time so that future shouts are scheduled correctly.

@@ -29,6 +29,19 @@ describe("environment configurator", () => {
     expect(config).toHaveBeenCalled();
   });
 
+  it("configurates the environment if there are VCAP services but no charlie config", () => {
+    process.env.VCAP_SERVICES = JSON.stringify({
+      "user-provided": [
+        { name: "ignore these", credentials: { ohno: "should not exist" } },
+      ],
+    });
+
+    require("./env");
+
+    expect(config).toHaveBeenCalled();
+    expect(process.env.ohno).toBeUndefined();
+  });
+
   it("configurates the environment with VCAP services", () => {
     process.env.VCAP_SERVICES = JSON.stringify({
       "user-provided": [

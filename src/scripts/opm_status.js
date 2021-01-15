@@ -42,8 +42,10 @@ module.exports = (robot) => {
       } catch (e) {
         say({
           text:
-            "I didn't get a response from OPM, so... what does Capital Weather Gang say?",
+            "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
           thread_ts: thread,
+          unfurl_links: false,
+          unfurl_media: false,
         });
       }
     }

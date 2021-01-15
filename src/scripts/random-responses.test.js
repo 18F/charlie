@@ -34,59 +34,61 @@ describe("random responder", () => {
     });
 
     const responsePermutations = [
-      [
-        "simple string response",
-        ["a message"],
-        { text: "a message", thread_ts: "thread timestamp" },
-      ],
-      [
-        "string with emoji",
-        [":emoji: b message"],
-        {
+      {
+        testName: "simple string response",
+        responseList: ["a message"],
+        expected: { text: "a message", thread_ts: "thread timestamp" },
+      },
+      {
+        testName: "string with emoji",
+        responseList: [":emoji: b message"],
+        expected: {
           text: "b message",
           thread_ts: "thread timestamp",
           icon_emoji: ":emoji:",
         },
-      ],
-      [
-        "message object with no name or emoji",
-        [{ text: "c message" }],
-        { text: "c message", thread_ts: "thread timestamp" },
-      ],
-      [
-        "message object with no name",
-        [{ text: "d message", emoji: ":emoji:" }],
-        {
+      },
+      {
+        testName: "message object with no name or emoji",
+        responseList: [{ text: "c message" }],
+        expected: { text: "c message", thread_ts: "thread timestamp" },
+      },
+      {
+        testName: "message object with no name",
+        responseList: [{ text: "d message", emoji: ":emoji:" }],
+        expected: {
           text: "d message",
           thread_ts: "thread timestamp",
           icon_emoji: ":emoji:",
         },
-      ],
-      [
-        "message object with no emoji",
-        [{ text: "e message", name: "bob" }],
-        { text: "e message", thread_ts: "thread timestamp", username: "bob" },
-      ],
-      [
-        "full message object",
-        [{ text: "f message", emoji: ":emoji:", name: "bob" }],
-        {
+      },
+      {
+        testName: "message object with no emoji",
+        responseList: [{ text: "e message", name: "bob" }],
+        expected: {
+          text: "e message",
+          thread_ts: "thread timestamp",
+          username: "bob",
+        },
+      },
+      {
+        testName: "full message object",
+        responseList: [{ text: "f message", emoji: ":emoji:", name: "bob" }],
+        expected: {
           text: "f message",
           thread_ts: "thread timestamp",
           icon_emoji: ":emoji:",
           username: "bob",
         },
-      ],
+      },
     ];
 
     describe("with no config", () => {
-      responsePermutations.forEach(([responseName, responses, expected]) => {
-        it(responseName, async () => {
+      responsePermutations.forEach(({ testName, responseList, expected }) => {
+        it(testName, async () => {
           random.mockReturnValue(0);
 
-          await script.responseFrom({ ...config, responseList: responses })(
-            message
-          );
+          await script.responseFrom({ ...config, responseList })(message);
 
           expect(random).toHaveBeenCalledWith();
           expect(message.say).toHaveBeenCalledWith(expected);
@@ -97,14 +99,12 @@ describe("random responder", () => {
     describe("with default emoji set", () => {
       const baseExpectation = { icon_emoji: ":default-emoji:" };
 
-      responsePermutations.forEach(([responseName, responses, expected]) => {
-        it(responseName, async () => {
+      responsePermutations.forEach(({ testName, responseList, expected }) => {
+        it(testName, async () => {
           config.defaultEmoji = ":default-emoji:";
           random.mockReturnValue(0);
 
-          await script.responseFrom({ ...config, responseList: responses })(
-            message
-          );
+          await script.responseFrom({ ...config, responseList })(message);
 
           expect(random).toHaveBeenCalled();
           expect(message.say).toHaveBeenCalledWith({
@@ -118,17 +118,15 @@ describe("random responder", () => {
     describe("with bot name set", () => {
       const baseExpectation = { username: "bot name" };
 
-      responsePermutations.forEach(([responseName, responses, expected]) => {
-        it(responseName, async () => {
+      responsePermutations.forEach(({ testName, responseList, expected }) => {
+        it(testName, async () => {
           config.botName = "bot name";
           if (expected.username) {
             expected.username += " (bot name)"; // eslint-disable-line no-param-reassign
           }
           random.mockReturnValue(0);
 
-          await script.responseFrom({ ...config, responseList: responses })(
-            message
-          );
+          await script.responseFrom({ ...config, responseList })(message);
 
           expect(random).toHaveBeenCalled();
           expect(message.say).toHaveBeenCalledWith({

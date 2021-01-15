@@ -49,8 +49,8 @@ const shout = async ({ calm = false } = {}) => {
 
   const tockSlackUsers = await get18FTockSlackUsers();
   const truants = await get18FTockTruants(m());
-  const slackableTruants = tockSlackUsers.filter((tu) =>
-    truants.some((t) => t.email === tu.email)
+  const slackableTruants = tockSlackUsers.filter((tockUser) =>
+    truants.some((truant) => truant.email === tockUser.email)
   );
 
   slackableTruants.forEach(({ slack_id: slackID }) => {
@@ -60,7 +60,10 @@ const shout = async ({ calm = false } = {}) => {
   if (!calm) {
     if (truants.length > 0) {
       const nonSlackableTruants = truants.filter(
-        (t) => !slackableTruants.some((s) => s.email === t.email)
+        (truant) =>
+          !slackableTruants.some(
+            (slackableTruant) => slackableTruant.email === truant.email
+          )
       );
 
       const report = [];

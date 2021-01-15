@@ -17,15 +17,12 @@ const getChannelName = (() => {
   };
 })();
 
-const travelIsClosed = () =>
-  holidays.isAHoliday() || closedDays.includes(moment().format("dddd"));
+const travelIsClosed = (day = moment()) =>
+  holidays.isAHoliday(day.toDate()) || closedDays.includes(day.format("dddd"));
 
 const getNextWorkday = () => {
   const m = moment().add(1, "day");
-  while (
-    closedDays.includes(m.format("dddd")) ||
-    holidays.isAHoliday(m.toDate())
-  ) {
+  while (travelIsClosed(m)) {
     m.add(1, "day");
   }
   return m.format("dddd");

@@ -1,9 +1,10 @@
 const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
-const sinon = require("sinon");
+// const sinon = require("sinon");
 
 const {
   utils: {
+    dates: { getNextHoliday },
     slack: { postMessage },
   },
 } = require("../utils/test");
@@ -28,64 +29,10 @@ describe("holiday reminder", () => {
 
   beforeEach(() => {
     delete process.env.HOLIDAY_REMINDER_CHANNEL;
-    delete process.env.HOLIDAY_REMINDER_SUPPRESS_HERE;
     delete process.env.HOLIDAY_REMINDER_TIME;
     delete process.env.HOLIDAY_REMINDER_TIMEZONE;
 
     jest.resetAllMocks();
-  });
-
-  describe("gets the next holiday", () => {
-    it("defaults to America/New_York time", async () => {
-      // Midnight on May 28 in eastern timezone
-      const clock = sinon.useFakeTimers(
-        +moment.tz("2012-05-28", "YYYY-MM-DD", "America/New_York").format("x")
-      );
-
-      const bot = await load();
-      const nextHoliday = bot.getNextHoliday();
-
-      expect(moment(nextHoliday.date).isValid()).toBe(true);
-
-      // remove this from the object match, otherwise
-      // it becomes a whole big thing, dependent on
-      // moment not changing its internal object structure
-      delete nextHoliday.date;
-
-      expect(nextHoliday).toEqual({
-        name: "Independence Day",
-        dateString: "2012-7-4",
-      });
-
-      clock.restore();
-    });
-
-    it("respects the configured timezone", async () => {
-      process.env.HOLIDAY_REMINDER_TIMEZONE = "America/Chicago";
-
-      // Midnight on May 28 in US eastern timezone.  Because our reminder
-      // timezone is US central timezone, "now" is still May 27, so the
-      // "next" holiday should be May 28 - Memorial Day
-      const clock = sinon.useFakeTimers(
-        +moment.tz("2012-05-28", "YYYY-MM-DD", "America/New_York").format("x")
-      );
-
-      const bot = await load();
-      const nextHoliday = bot.getNextHoliday();
-
-      expect(moment(nextHoliday.date).isValid()).toBe(true);
-
-      // remove this from the object match, otherwise
-      // it becomes a whole big thing, dependent on
-      // moment not changing its internal object structure
-      delete nextHoliday.date;
-
-      expect(nextHoliday).toEqual({
-        name: "Memorial Day",
-        dateString: "2012-5-28",
-      });
-      clock.restore();
-    });
   });
 
   describe("gets the previous weekday", () => {
@@ -164,44 +111,6 @@ describe("holiday reminder", () => {
           "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
       });
     });
-
-    describe("honors the HOLIDAY_REMINDER_SUPPRESS_HERE env var", () => {
-      ["true", "yes", "y", "1", "100"].forEach((flag) => {
-        it(`suppresses if the env var is set to "${flag}"`, async () => {
-          process.env.HOLIDAY_REMINDER_SUPPRESS_HERE = flag;
-          const bot = await load();
-
-          bot.postReminder({
-            date: moment("2018-11-12", "YYYY-MM-DD"),
-            name: "Test Holiday",
-          });
-
-          expect(postMessage).toHaveBeenCalledWith({
-            channel: "general",
-            text:
-              "Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
-          });
-        });
-      });
-
-      ["false", "no", "n", "0", ""].forEach((flag) => {
-        it(`does not suppress if the env var is set to "${flag}"`, async () => {
-          process.env.HOLIDAY_REMINDER_SUPPRESS_HERE = flag;
-          const bot = await load();
-
-          bot.postReminder({
-            date: moment("2018-11-12", "YYYY-MM-DD"),
-            name: "Test Holiday",
-          });
-
-          expect(postMessage).toHaveBeenCalledWith({
-            channel: "general",
-            text:
-              "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
-          });
-        });
-      });
-    });
   });
 
   describe("schedules a reminder", () => {
@@ -209,7 +118,7 @@ describe("holiday reminder", () => {
       const bot = await load();
 
       const nextHoliday = { date: "in the future" };
-      jest.spyOn(bot, "getNextHoliday").mockReturnValue(nextHoliday);
+      getNextHoliday.mockReturnValue(nextHoliday);
 
       const weekdayBefore = moment("2000-01-01", "YYYY-MM-DD");
       jest.spyOn(bot, "previousWeekday").mockReturnValue(weekdayBefore);
@@ -244,7 +153,7 @@ describe("holiday reminder", () => {
       const bot = await load();
 
       const nextHoliday = { date: "in the future" };
-      jest.spyOn(bot, "getNextHoliday").mockReturnValue(nextHoliday);
+      getNextHoliday.mockReturnValue(nextHoliday);
 
       const weekdayBefore = moment("2000-01-01", "YYYY-MM-DD");
       jest.spyOn(bot, "previousWeekday").mockReturnValue(weekdayBefore);

@@ -23,7 +23,7 @@ describe("OPM status for DC-area offices", () => {
     );
   });
 
-  it(`handles the case where it doesn't get a response`, async () => {
+  it("handles the case where it doesn't get a response", async () => {
     opm(app);
     const handler = app.getHandler();
 
@@ -33,8 +33,10 @@ describe("OPM status for DC-area offices", () => {
 
     expect(message.say).toHaveBeenCalledWith({
       text:
-        "I didn't get a response from OPM, so... what does Capital Weather Gang say?",
+        "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
       thread_ts: "thread id",
+      unfurl_links: false,
+      unfurl_media: false,
     });
   });
 
@@ -48,8 +50,10 @@ describe("OPM status for DC-area offices", () => {
 
     expect(message.say).toHaveBeenCalledWith({
       text:
-        "I didn't get a response from OPM, so... what does Capital Weather Gang say?",
+        "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
       thread_ts: "thread id",
+      unfurl_links: false,
+      unfurl_media: false,
     });
   });
 

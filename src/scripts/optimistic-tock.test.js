@@ -100,27 +100,33 @@ describe("Optimistic Tock", () => {
     sandbox.restore();
   });
 
-  it("issues a warning and does not schedule a shouting match if un/mis-configured", async () => {
-    process.env.TOCK_API = "";
-    process.env.TOCK_TOKEN = "";
-    let optimisticTock = await load();
-    optimisticTock(app);
-    expect(app.logger.warn).toHaveBeenCalled();
-    expect(scheduleJob).not.toHaveBeenCalled();
+  describe("issues a warning and does not schedule a shouting match if un/mis-configured", () => {
+    it("if there is neither a Tock API URL or token", async () => {
+      process.env.TOCK_API = "";
+      process.env.TOCK_TOKEN = "";
+      const optimisticTock = await load();
+      optimisticTock(app);
+      expect(app.logger.warn).toHaveBeenCalled();
+      expect(scheduleJob).not.toHaveBeenCalled();
+    });
 
-    process.env.TOCK_API = "set";
-    process.env.TOCK_TOKEN = "";
-    optimisticTock = await load();
-    optimisticTock(app);
-    expect(app.logger.warn).toHaveBeenCalled();
-    expect(scheduleJob).not.toHaveBeenCalled();
+    it("if there is a Tock API URL but no token", async () => {
+      process.env.TOCK_API = "set";
+      process.env.TOCK_TOKEN = "";
+      const optimisticTock = await load();
+      optimisticTock(app);
+      expect(app.logger.warn).toHaveBeenCalled();
+      expect(scheduleJob).not.toHaveBeenCalled();
+    });
 
-    process.env.TOCK_API = "";
-    process.env.TOCK_TOKEN = "set";
-    optimisticTock = await load();
-    optimisticTock(app);
-    expect(app.logger.warn).toHaveBeenCalled();
-    expect(scheduleJob).not.toHaveBeenCalled();
+    it("if there is a Tock token but no API URL", async () => {
+      process.env.TOCK_API = "";
+      process.env.TOCK_TOKEN = "set";
+      const optimisticTock = await load();
+      optimisticTock(app);
+      expect(app.logger.warn).toHaveBeenCalled();
+      expect(scheduleJob).not.toHaveBeenCalled();
+    });
   });
 
   describe("it schedules future reminders", () => {
