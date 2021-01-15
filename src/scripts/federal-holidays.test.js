@@ -1,3 +1,4 @@
+const moment = require("moment-timezone");
 const sinon = require("sinon");
 const { getApp } = require("../utils/test");
 const bot = require("./federal-holidays");
@@ -31,7 +32,7 @@ describe("federal holidays bot", () => {
     const say = jest.fn();
 
     getNextHoliday.mockReturnValue({
-      date: "1970-01-02T00:00:00",
+      date: moment.tz("1970-01-02T00:00:00", "UTC"),
       name: "Test Holiday day",
     });
 
@@ -39,7 +40,7 @@ describe("federal holidays bot", () => {
 
     expect(say.mock.calls.length).toBe(1);
     expect(say).toHaveBeenCalledWith(
-      "The next federal holiday is Test Holiday day in 2 days on Friday, January 2nd"
+      "The next federal holiday is Test Holiday day in 1 days on Friday, January 2nd"
     );
     clock.restore();
   });
