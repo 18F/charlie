@@ -28,14 +28,12 @@ describe("the jokey March 2020 date thingy", () => {
     const handler = app.getHandler();
     const say = jest.fn();
 
-    clock.tick(Date.parse("2020-05-03T00:00:00Z"));
+    clock.tick(Date.parse("2021-01-23T12:00:00Z"));
 
     handler({ say });
 
     expect(say).toHaveBeenCalledWith(
-      expect.stringMatching(
-        /Today is (Saturday|Blursday), (March|Evermarch) 63, 2020/
-      )
+      "Today is Saturday, January 23rd, 2021. It has been 4 days since March 2020."
     );
   });
 });
