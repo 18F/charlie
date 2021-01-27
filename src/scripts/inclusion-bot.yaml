@@ -63,6 +63,14 @@ triggers:
       - unaware of
       - ignoring
       - not paying attention to
+      
+  - matches:
+      - blind leading the blind
+    alternatives:
+      - winging it
+      - feeling around in the dark
+      - building the airplane while we fly it
+      - finding our way together
 
   - matches:
       - crazy
