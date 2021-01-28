@@ -93,6 +93,11 @@ triggers:
       - lunatic
       - psychopath
       - psychotic
+      - bipolar
+      - manic
+      - maniac
+    ignore:
+      - manic monday
     alternatives:
       - difficult
       - unpredictable
@@ -100,7 +105,6 @@ triggers:
       - overwhelming
       - asinine
       - unbelievable
-      - berserk
 
   - matches:
       - spaz
@@ -108,12 +112,12 @@ triggers:
       - crackhead
     alternatives:
       - volatile
+      - unpredictable
 
   - matches:
       - derp
     alternatives:
       - oops
-      - d'oh
 
   - matches:
       - moron
@@ -154,10 +158,9 @@ triggers:
       - fan
 
   - matches:
-      - crack
+      - like crack
     alternatives:
-      - weakness
-      - kryptonite
+      - irresistible
 
   - matches:
       - guys
@@ -220,7 +223,7 @@ triggers:
     alternatives:
       - guide
       - shepherd
-      - mastermind
+      - coach
 
   - matches:
       - pow-wow
@@ -250,7 +253,6 @@ triggers:
       - kindred spirit
       - inspiration
       - secret twin
-      - raison d'etre
       - when I grow up, I want to be...
 
   - matches:
@@ -292,7 +294,7 @@ triggers:
     alternatives:
       - antipattern
       - anti-UX pattern
-      - consequence design
+      - deceptive design pattern
 
   - matches:
       - master/slave
@@ -317,9 +319,22 @@ triggers:
       - postmortem
     alternatives:
       - project reflection 
-      - end of project review
+      - project or incident review
+      - retrospective
+      - retro
 
   - matches:
       - drop-dead date
     alternatives:
       - last possible date
+
+  - matches:
+      - open kimono
+      - open the kimono
+    alternatives:
+      - share information      
+
+  - matches:
+      - grandfathered
+    alternatives:
+      - legacy
