@@ -1,0 +1,4 @@
+ergs:
+  Bob:
+    description: Bob's little channel
+    channel: "#love"
