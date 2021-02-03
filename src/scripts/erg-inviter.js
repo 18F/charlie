@@ -44,7 +44,7 @@ const getAllChannels = async (robot, cursor) =>
   });
 
 const getERGs = async (robot) => {
-  // Read in the huge list of bots from the Yaml file
+  // Read in the list of ERGs from the Yaml file
   const ymlStr = fs.readFileSync(path.join(__dirname, "erg-inviter.yaml"));
   const { ergs } = yaml.safeLoad(ymlStr, { json: true });
 
@@ -56,78 +56,69 @@ const getERGs = async (robot) => {
   return ergs;
 };
 
-const getMessageText = async (robot, room, timestamp) =>
-  new Promise((resolve, reject) => {
-    robot.adapter.client.web.conversations.history(
-      room,
-      { latest: timestamp, limit: 1, inclusive: true },
-      (err, response) => {
-        if (err || !response.ok) {
-          return reject();
-        }
-        return resolve(response.messages[0].text);
-      }
-    );
-  });
-
 module.exports = async (robot) => {
   const ergs = await getERGs(robot);
+  const messageMap = new Map();
 
-  const messages = Object.entries(ergs).map(
-    ([name, { description }]) => `• *${name}*: ${description}`
+  robot.respond(
+    "ergs",
+    ({
+      message: {
+        user: { id: userId },
+      },
+    }) => {
+      robot.messageRoom(userId, {
+        as_user: true,
+        icon_emoji: ":tts:",
+        text:
+          "Here are the available employee afinity group channels. Add an emoji reaction to the one(s) you'd like to be invited into, and the appropriate channel will get a notification!",
+        username: "Inclusion Bot",
+      });
+
+      Object.entries(ergs).forEach(
+        ([name, { channelId: targetChannelId, description }]) => {
+          console.log(name);
+          robot.messageRoom(
+            userId,
+            {
+              as_user: true,
+              icon_emoji: ":tts:",
+              text: `• *${name}:* ${description}`,
+              username: "Inclusion Bot",
+            },
+            (err, [{ channel: dmChannelId, ok, ts }]) => {
+              if (ok) {
+                console.log(`${dmChannelId} | ${ts}`, targetChannelId);
+                messageMap.set(`${dmChannelId} | ${ts}`, targetChannelId);
+              }
+            }
+          );
+        }
+      );
+    }
   );
-
-  robot.respond("ergs", (msg) => {
-    msg.reply(
-      "Here are the available employee afinity group channels. Add an emoji reaction to the one(s) you'd like to be invited into, and the appropriate channel will get a notification!"
-    );
-    messages.forEach((message) => msg.reply(message));
-  });
 
   robot.react(
     async ({
       message: {
-        event_ts: ts,
-        item_user: {
-          slack: {
-            profile: { bot_id: isReactionToBot },
-          },
-        },
+        item: { ts },
         room,
         type,
         user: { id: userID },
       },
     }) => {
-      if (type === "added" && !!isReactionToBot) {
-        const text = await getMessageText(robot, room, ts);
-        const requestMatch = text.match(/^• \*([^*]+)\*/);
+      const messageId = `${room} | ${ts}`;
 
-        if (requestMatch && ergs[requestMatch[1]]) {
-          const { channelId } = ergs[requestMatch[1]];
-          robot.messageRoom(
-            channelId,
-            `<@${userID}> has requested to join this channel. Add an emoji reaction to this message to invite them.`
-          );
-          return;
-        }
+      if (type === "added" && messageMap.has(messageId)) {
+        const channel = messageMap.get(messageId);
+        console.log(`${userID} -> ${channel}`);
 
-        console.log(text);
-
-        const inviteMatch = text.match(
-          /^<@([^>]+)> has requested to join this channel\./
-        );
-        console.log(inviteMatch);
-
-        if (inviteMatch) {
-          const known = Object.values(ergs).some(
-            ({ channelId }) => channelId === room
-          );
-          if (known) {
-            const [, userId] = inviteMatch;
-
-            robot.adapter.client.web.conversations.invite(room, userId);
-          }
-        }
+        robot.messageRoom(channel, {
+          as_user: false,
+          icon_emoji: ":tts:",
+          text: `<@${userID}> has requested to join this channel.`,
+          username: "Inclusion Bot",
+        });
       }
     }
   );

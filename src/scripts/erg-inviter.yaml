@@ -1,4 +1,31 @@
 ergs:
-  Bob:
-    description: Bob's little channel
-    channel: "love"
+  Latinx:
+    description: >
+      A space for people who identify as Latinx, Hispanic, Chicanx,
+      Boricua, Cubano, etc.
+    channel: channel-name-here
+
+  Asian and Pacific Islanders:
+    description: >
+      A place for Asian and Pacific Islander TTSers to hang out and talk.
+    channel: channel-name-here
+
+  Working While Black:
+    description: >
+      A space for Black TTSers.
+    channel: channel-name-here
+
+  Shalom Jews:
+    description: >
+      A space for TTS Jews to schmooze. There is no gatekeeping of this
+      channel. Feel free to come join no matter what your connection to
+      Judaism -- if you consider yourself Jewish, Jew-ish, Jew-curious,
+      culturally Jewish, or anything else!
+    channel: channel-name-here
+
+  People with Disabilities (PwD):
+    description: >
+      Private channel for anyone who identifies themselves as disabled.
+      You may share about your disability/disabilities at the level of
+      your comfort, but you don't have to disclose to join.
+    channel: channel-name-here
