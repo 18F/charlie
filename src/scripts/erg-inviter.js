@@ -2,62 +2,16 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 
-const getAllChannels = async (robot, cursor) =>
-  new Promise((resolve, reject) => {
-    const options = {
-      exclude_archived: true,
-      types: "public_channel,private_channel",
-    };
-    if (cursor) {
-      options.cursor = cursor;
-    }
-
-    robot.adapter.client.web.conversations.list(
-      options,
-      async (err, conversations) => {
-        if (err || !conversations.ok) {
-          return reject();
-        }
-
-        const list = conversations.channels.reduce(
-          (all, { id, name }) => ({
-            ...all,
-            [name]: id,
-          }),
-          {}
-        );
-
-        if (
-          conversations.response_metadata &&
-          conversations.response_metadata.next_cursor
-        ) {
-          const nextPage = await getAllChannels(
-            robot,
-            conversations.response_metadata.next_cursor
-          );
-          Object.assign(list, nextPage);
-        }
-
-        return resolve(list);
-      }
-    );
-  });
-
-const getERGs = async (robot) => {
+const getERGs = () => {
   // Read in the list of ERGs from the Yaml file
   const ymlStr = fs.readFileSync(path.join(__dirname, "erg-inviter.yaml"));
   const { ergs } = yaml.safeLoad(ymlStr, { json: true });
-
-  const channels = await getAllChannels(robot);
-  Object.values(ergs).forEach((erg) => {
-    erg.channelId = channels[erg.channel]; // eslint-disable-line no-param-reassign
-  });
 
   return ergs;
 };
 
 module.exports = async (robot) => {
-  const ergs = await getERGs(robot);
+  const ergs = getERGs();
   const messageMap = new Map();
 
   robot.respond(
@@ -76,8 +30,7 @@ module.exports = async (robot) => {
       });
 
       Object.entries(ergs).forEach(
-        ([name, { channelId: targetChannelId, description }]) => {
-          console.log(name);
+        ([name, { channel: targetChannel, description }]) => {
           robot.messageRoom(
             userId,
             {
@@ -88,8 +41,7 @@ module.exports = async (robot) => {
             },
             (err, [{ channel: dmChannelId, ok, ts }]) => {
               if (ok) {
-                console.log(`${dmChannelId} | ${ts}`, targetChannelId);
-                messageMap.set(`${dmChannelId} | ${ts}`, targetChannelId);
+                messageMap.set(`${dmChannelId} | ${ts}`, targetChannel);
               }
             }
           );
@@ -111,7 +63,6 @@ module.exports = async (robot) => {
 
       if (type === "added" && messageMap.has(messageId)) {
         const channel = messageMap.get(messageId);
-        console.log(`${userID} -> ${channel}`);
 
         robot.messageRoom(channel, {
           as_user: false,
