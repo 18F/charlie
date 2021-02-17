@@ -7,8 +7,10 @@ jest.mock("./index");
 
 module.exports = {
   getApp: () => {
+    const action = jest.fn();
     const message = jest.fn();
     return {
+      action,
       brain: new Map(),
       logger: {
         warn: jest.fn(),
