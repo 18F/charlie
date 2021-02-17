@@ -1,0 +1,2 @@
+command: npm run start-dev
+environment: dev

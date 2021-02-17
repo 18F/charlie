@@ -1,106 +1,161 @@
-# Charlie - 18F's Hubot
+# Charlie - 18F's Plastic Pal That's Fun to Be With
 
-This is a version of GitHub's chat bot, [Hubot](https://hubot.github.com/). Hubot's pretty cool.
+A Slack app bot used within 18F for fun and work.
 
 ## What all it can do
 
-`coffee me`
-Charlie will add you to the queue for virtual coffee, or if someone else is
-already in the queue, Charlie will match you up and send you each a DM!
+### Interactive bots
 
-`@charlie define <term>` or `@charlie glossary <term>`  
-Charlie will attempt to look the term up in the
+##### Coffeemate
+
+Schedule virtual coffees with random teammates! Not sure who you should talk to?
+Charlie can help! Say `coffee me` to get put into the virual coffee queue. As
+soon as someone else signs up, Charlie will connect you.
+
+##### Facts
+
+Charlie knows **_so many_** facts. Dog facts, cat facts, giraffe facts, dolphin
+facts. There are just so many facts. You can just say `dog fact` (or
+`giraffe fact`, etc.)to get Charlie to share its knowledge with you.
+
+##### Fancy font
+
+Feeling fancy, and want your message to reflect that? Charlie is here! Just say
+`fancy font <your message>` and Charlie will respond with a very fancy version
+of your message. So fancy!
+
+##### Federal holidays
+
+Itching for a day off and want to know when the next holiday is? Charlie knows
+all the (standard, recurring) holidays! Just say
+`@charlie when is the next holiday` and Charlie will let you know.
+
+##### HugMe
+
+Need to see a little hug in your life? Friends from TTS past have left us a gift
+and Charlie will deliver it whenever you need. Just say `@charlie hug me` or
+`@charlie hug bomb <number>` to get a little happiness dropped right on your
+screen.
+
+##### Love/Kudos bot
+
+What's that? Someone did something awesome and you want everyone to know about
+it? Charlie's got you covered. Just say `love @user for the thing` and Charlie
+will share the love in the `#love` channel for everyone to see. Share the love!
+
+##### March 2020 bot
+
+Ask `@charlie what day is it?`, and Charlie will let you know what day it is in
+the Evermarch 2020 reckoning. It's... it's been a very long March.
+
+##### OPM's DC offices status
+
+Working in DC and want to know if the office is closed due to snow or, perhaps,
+raven attack? Charlie knows all! Say `@charlie opm status` and it will ask OPM
+for the latest information and then pass that along to you. No more having to
+open a web browser all by yourself!
+
+##### Procurement glossary
+
+Not sure what a procurement term means? Charlie might be able to help! Say
+`@charlie define <term>` and it will attempt to look the term up in the
 [18F Procurement Glossary](https://github.com/18f/procurement-glossary)
-and report what it finds
+and report what it finds.
 
-`@charlie hug me` or `@charlie hug bomb <number>`  
-Charlie will send you a picture of a hug-offering colleague, or several!
+##### Tock line
 
-`love @someone for the thing` (or :heart: or `<3` them)  
-Charlie will exclaim about even more love, and will post in the #love channel
+What Tock line do I bill this project to? Ugh, who can remember? Charlie can!
+In a channel, you can say `@charlie set tock <number>` and Charlie will remember
+the Tock line for that room. In the future, if you need to know what to bill to,
+say `@charlie tock` and it will let you know. Handy!
 
-`@charlie opm status`  
-Charlie will check with OPM about whether or not DC offices are open today
+##### Zen bot
 
-`@charlie set tock <tock line>` or `@charlie set tock line <tock line>`  
-Charlie will associate the current channel to the given tock line
+Say `@charlie zen` to get Charlie to fetch a product-, techy-, or code-focused
+message of zen. Read it, and breathe.
 
-`@charlie tock` or `@charlie tock line`  
-Charlie will tell you what tock line is associated with the current channel, if any
+### Non-interactive bots
 
-`giraffe/dag/cat fact`
-Charlie will tell you something fascinating.
+##### Helpful tau bot
 
-`@charlie when is the next holiday?`
-Charlie will tell you when the next federal holiday is
+If Charlie sees something it recognizes as a time posted into chat, it will send
+a message that only you can see, letting you know what that time is in your
+timezone. Charlie tries really hard.
 
-Plus more! Try sending a DM to Charlie with `help` for a full list!
+##### Holiday reminders
+
+On the business day before a federal holiday, Charlie will post a reminder in
+#general-talk. Take the day off, don't do work for the government, and observe
+it in the way that is most suitable for you!
+
+##### Inclusion bot
+
+Charlie passively listens for language with racist, ableist, sexist, or other
+exclusionary histories. When it hears such words or phrases, it quietly lets the
+speaker know and offers some suggestions. What a great bot, helping nudge us all
+to thoughtful, inclusive language!
+
+##### Optimistic / Angry Tock
+
+At the end of the work week, Charlie will send a private message to any Tockable
+people who haven't submitted their Tock yet to remind them to do it. At the
+start of the next work week, Charlie will send a message to people who still
+haven't submitted their Tock. Finally, at the end of the first day of the work
+week, Charlie will send a message to 18F supervisors letting them know about
+anyone whose Tock report is late.
+
+##### Travel team
+
+Did you know that the TTS Travel team takes weekends and holidays too? It's
+true, they do! And Charlie knows it too. If you drop a question or comment in
+the travel channel on a closed day, Charlie will remind you that the office is
+closed and offer some helpful tips to get you through. It will also let you know
+when the Travel team will be back in the office!
 
 ## Running Charlie locally
 
-The easiest way to test Charlie locally is using Docker. First, create a `.env` file
-(see the `.env-sample` for reference) that sets, at minimum, the `HUBOT_SLACK_TOKEN`
-variable. (See the configuration section on environment variables below for a list of
-all the variables you can set.) Then, run `docker-compose up`. This will get all of
-Charlie's dependencies installed, setup a redis container, hook up Charlie and redis,
-and start Charlie up.
+Because Charlie is a Slack App (rather than a legacy bot integration), you'll
+need to either have access to a Slack instance where you can create a new app or
+get a token and signing secret for an existing app instance. Drop by
+[#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) in Slack to get more
+details about creating a new app or using an existing one. If you create a new
+one, see below about configuring OAuth scopes and Slack events.
 
-If you don't want to use Docker, you can run `npm install` from the root directory,
-set your `HUBOT_SLACK_TOKEN` environment variable, and then run `sh start.sh`. This
-is a minimum execution; to enable more features, you may need to set associated
-environment variables.
+The easiest way to test Charlie locally is using Docker. First, create a `.env`
+file (see the `.env-sample` for reference) that sets, at minimum, the
+`SLACK_TOKEN` and `SLACK_SIGNING_SECRET` variables. (See the configuration
+section on environment variables below for a list of all the variables you can
+set.) Then, run `docker-compose up`. This will get all of Charlie's dependencies
+installed, setup a PostgreSQL container, hook up Charlie and postgres, and start
+Charlie up. In this configuration, Charlie is run using
+[nodemon](https://npm.im/nodemon), so it will automatically restart if you make
+any code changes.
+
+If you don't want to use Docker, you can run `npm install` from the root
+directory, set your `SLACK_TOKEN` and `SLACK_SIGNING_SECRET` environment
+variables, and then run `npm start-dev` to enable nodemon, or `npm start` to
+disable it. This is a minimum execution; to enable more features, you may need
+to set associated environment variables.
+
+### Important note
+
+Because Slack apps work by responding to web hooks rather than setting up a
+persistent websocket connection, the machine where Charlie runs cannot respond
+to Slack events unless it is accessible on the public internet over HTTPS. GSA
+policy says our computers must not do this, so you will need to run the app in
+cloud.gov to test it.
 
 ## Deploying
 
-18F's Hubot is named Charlie, and is deployed in [Cloud.gov](https://cloud.gov/).
+Charlie is deployed in [Cloud.gov](https://cloud.gov/).
 
 Charlie is set up with continuous deployment, just merge your code to main and
 it will get deployed with CircleCI.
 
 ## Configuration
 
-### slack-github-issues
-
-We use [hubot-slack-github-issues](https://github.com/mbland/hubot-slack-github-issues) to automatically create Github issues
-when certain emoji reactions are added to messages in certain channels. This is configured in
-[config/slack-github-issues.json](config/slack-github-issues.json).
-
-The `<token>` strings in the top part of the config are replaced by environment variables (see below) if
-provided. To add a new Github issue rule, add a new entry to the `rules` array. The properties are
-as follows:
-
-| name             | purpose                                                                                                                                                                                                         |
-| ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| reactionName     | The name of the emoji in Slack that should trigger this issue, without the colons. For example, if you want `:evergreen:` to trigger an issue, this value should be `evergreen`.                                |
-| githubRepository | The name (and only the name) of the repository where the issue should be filed. The repo owner is taken from the top level of the config, in the `githubUser` property.                                         |
-| channelNames     | A list of channel names where this reaction will trigger an issue. This lets you limit responses to just certain channels. If this is not included, then Charlie will respond to the reaction in every channel. |
-
-### Environment variables
-
-| name                                  | purpose                                                                                                                                                                                                                                                     |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| HUBOT_SLACK_TOKEN                     | Required to connect to Slack.                                                                                                                                                                                                                               |
-| HUBOT_GITHUB_TOKEN                    | Required for Github integrations. For example, there's a script that will create a Github issue when certain emoji reactions are added to messages. This token must be set for that to work.                                                                |
-| HUBOT_TOCK_API                        | Required for Angry and Optimistic Tock bots.                                                                                                                                                                                                                |
-| HUBOT_TOCK_TOKEN                      | Required for Angry and Optimistic Tock bots.                                                                                                                                                                                                                |
-| ANGRY_TOCK_TIMEZONE                   | The timezone used for Angry Tock notifications for truant users. Defaults to `America/New_York` if unset.                                                                                                                                                   |
-| ANGRY_TOCK_FIRST_TIME                 | The time of day for the first reminder to Tock truants. This is sent at the same time to all truants, based on the timezone in `ANGRY_TOCK_TIMEZONE`.                                                                                                       |
-| ANGRY_TOCK_SECOND_TIME                | The time of day for the second reminder to Tock truants as well as supervisors. This is sent at the same time to all truants, based on the timezone in `ANGRY_TOCK_TIMEZONE`.                                                                               |
-| ANGRY_TOCK_REPORT_TO                  | A comma-delimited list of channels or users to send the second truancy report to. Defaults to `#18f-supes`. Specify users with `@username`.                                                                                                                 |
-| HUBOT_TWITTER_ACCESS_TOKEN_SECRET     | Used by the twitter stream integration                                                                                                                                                                                                                      |
-| HUBOT_TWITTER_STREAM_ACCESS_TOKEN     | Used by the twitter stream integration                                                                                                                                                                                                                      |
-| HUBOT_TWITTER_STREAM_CONSUMER_KEY     | Used by the twitter stream integration                                                                                                                                                                                                                      |
-| HUBOT_TWITTER_STREAM_CONSUMER_KEY     | Used by the twitter stream integration                                                                                                                                                                                                                      |
-| ADAPTER                               | This should either be omitted or set to `slack`                                                                                                                                                                                                             |
-| HUBOT_SLACK_GITHUB_ISSUES_CONFIG_PATH | Path to the file that configures the script that creates Github issues when emoji reactions are added. Defaults to `config/slack-github-issues.json`. The default is accurate for Charlie, but if you needed to override it for testing, you certainly can. |
-| HUBOT_LOG_LEVEL                       | Log level. When using Docker, this is set to `debug`.                                                                                                                                                                                                       |
-| REDIS_URL                             | URL to redis, if desired. The URL should be of the form `redis://:password@host:port` - note that there is not a username before the password in this URL, because redis does not support usernames.                                                        |
-
-## Documentation
-
-General information about Hubot can be found here:
-
-https://hubot.github.com/
+- [OAuth scopes and events](oauth.md) are required for integration with Slack
+- [Environment variables](env.md) are required to connect and change bot behaviors
 
 ## Contributing
 

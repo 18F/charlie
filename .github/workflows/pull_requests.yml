@@ -8,8 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     container: node:14
     steps:
-      - uses: actions/checkout@af513c7a
-      - uses: actions/cache@d1255ad
+      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
         id: depcache
         with:
           path: ./node_modules
@@ -24,8 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     container: node:14
     steps:
-      - uses: actions/checkout@af513c7a
-      - uses: actions/cache@d1255ad
+      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
         with:
           path: ./node_modules
           key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
@@ -38,8 +38,8 @@ jobs:
     runs-on: ubuntu-latest
     container: node:14
     steps:
-      - uses: actions/checkout@af513c7a
-      - uses: actions/cache@d1255ad
+      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
         with:
           path: ./node_modules
           key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1

@@ -16,10 +16,11 @@
   "overrides": [
     {
       "files": [
-        "test/**/*.js"
+        "src/**/*.test.js",
+        "src/utils/test.js"
       ],
       "env": {
-        "mocha": true
+        "jest": true
       }
     }
   ]

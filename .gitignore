@@ -1,9 +1,6 @@
 .DS_Store*
-dump.rdb
-slack.yml
-.hubot_history
 .env
-node_modules
-.vscode
 .nyc_output
+.vscode
 coverage
+node_modules
