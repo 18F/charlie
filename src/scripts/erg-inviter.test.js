@@ -60,6 +60,11 @@ describe("ERG inviter", () => {
         text: ":wave: <@user id> has requested an invitation to this channel.",
         username: "Inclusion Bot",
       });
+      expect(sendDirectMessage).toHaveBeenCalledWith("user id", {
+        icon_emoji: ":tts:",
+        text: "Okay, I've sent your request to join that channel.",
+        username: "Inclusion Bot",
+      });
     });
   });
 
@@ -95,8 +100,7 @@ describe("ERG inviter", () => {
             type: "section",
             text: {
               type: "mrkdwn",
-              text:
-                "Here are the available employee afinity group channels. Add an emoji reaction to the one(s) you'd like to be invited into, and the appropriate channel will get a notification!",
+              text: "Here are the available employee afinity group channels.",
             },
           },
           {
@@ -130,6 +134,7 @@ describe("ERG inviter", () => {
             },
           },
         ],
+        text: "Here are the available employee afinity group channels.",
         username: "Inclusion Bot",
       });
     });

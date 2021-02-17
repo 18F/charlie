@@ -36,20 +36,26 @@ module.exports = async (app) => {
         text: `:wave: <@${userId}> has requested an invitation to this channel.`,
         username: "Inclusion Bot",
       });
+
+      sendDirectMessage(userId, {
+        icon_emoji: ":tts:",
+        text: "Okay, I've sent your request to join that channel.",
+        username: "Inclusion Bot",
+      });
     }
   );
 
   app.message(directMention(), /ergs/i, ({ event: { user } }) => {
     sendDirectMessage(user, {
       icon_emoji: ":tts:",
+      text: "Here are the available employee afinity group channels.",
       username: "Inclusion Bot",
       blocks: [
         {
           type: "section",
           text: {
             type: "mrkdwn",
-            text:
-              "Here are the available employee afinity group channels. Add an emoji reaction to the one(s) you'd like to be invited into, and the appropriate channel will get a notification!",
+            text: "Here are the available employee afinity group channels.",
           },
         },
         ...Object.entries(ergs).map(([name, { channel, description }]) => ({
