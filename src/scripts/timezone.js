@@ -31,6 +31,19 @@ const TIMEZONES = {
 const matcher = /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
 
 module.exports = (app) => {
+  app.action(
+    "disable_tau",
+    async ({
+      ack,
+      body: {
+        user: { id: userId },
+      },
+    }) => {
+      console.log(`User ${userId} doesn't want baby tock`);
+      ack();
+    }
+  );
+
   app.message(matcher, async (msg) => {
     const { channel, text, thread_ts: thread, user } = msg.event;
 
@@ -97,6 +110,31 @@ module.exports = (app) => {
           .tz(tz)
           .format(`h:mm${ampm ? " a" : ""}`)} for you!`,
         thread_ts: thread,
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `That's ${m
+                .clone()
+                .tz(tz)
+                .format(`h:mm${ampm ? " a" : ""}`)} for you!`,
+            },
+            accessory: {
+              action_id: "disable_tau",
+              type: "overflow",
+              options: [
+                {
+                  text: {
+                    type: "plain_text",
+                    text: "Don't show me this anymore",
+                  },
+                  value: "disable",
+                },
+              ],
+            },
+          },
+        ],
       });
     });
   });
