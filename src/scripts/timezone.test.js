@@ -1,6 +1,6 @@
 const {
   getApp,
-  utils: { slack },
+  utils: { optOut, slack },
 } = require("../utils/test");
 
 const timezone = require("./timezone");
@@ -9,6 +9,8 @@ describe("Handy Tau-bot timezone conversions", () => {
   const app = getApp();
 
   const postEphemeral = jest.fn();
+
+  const isOptedOut = jest.fn();
 
   const message = {
     client: {
@@ -27,20 +29,34 @@ describe("Handy Tau-bot timezone conversions", () => {
     },
   };
 
-  const baseResponse = {
+  const responseFor = (user, time) => ({
+    blocks: [
+      {
+        type: "section",
+        text: { type: "mrkdwn", text: `That's ${time} for you!` },
+        button: "goes here",
+      },
+    ],
     channel: "channel id",
     icon_emoji: ":timebot:",
-    user: "user 1",
-    username: "Handy Tau-bot",
-    text: "That's 1:00 for you!",
+    text: `That's ${time} for you!`,
     thread_ts: "thread id",
-  };
+    user,
+    username: "Handy Tau-bot",
+  });
 
   beforeEach(() => {
     jest.resetAllMocks();
 
     message.client.users.info.mockResolvedValue({
       user: { tz: "America/Chicago" },
+    });
+
+    isOptedOut.mockReturnValue(false);
+
+    optOut.mockReturnValue({
+      button: { button: "goes here" },
+      isOptedOut,
     });
 
     slack.getSlackUsersInConversation.mockResolvedValue([
@@ -74,45 +90,35 @@ describe("Handy Tau-bot timezone conversions", () => {
       message.event.text = "03:00 est";
       await handler(message);
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 1",
-        text: "That's 1:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 1", "1:00")
+      );
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 3",
-        text: "That's 2:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 3", "2:00")
+      );
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 4",
-        text: "That's 11:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 4", "11:00")
+      );
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user id",
-        text: "That's 2:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user id", "2:00")
+      );
 
       // Make sure only the above messages were posted.
-      expect(postEphemeral.mock.calls.length).toEqual(4);
+      expect(slack.postEphemeralMessage.mock.calls.length).toEqual(4);
     });
 
     it("if a timezone is specified via emoji, it doesn't message people who are in the specified timezone", async () => {
       message.event.text = "03:00 :eastern-time-zone:";
       await handler(message);
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 1",
-        text: "That's 1:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 1", "1:00")
+      );
       // trusting the last test to verify contents for the other 3 users
-      expect(postEphemeral.mock.calls.length).toEqual(4);
+      expect(slack.postEphemeralMessage.mock.calls.length).toEqual(4);
     });
 
     it("if multiple timezones are specified, it only messages people in a different timezone", async () => {
@@ -120,71 +126,75 @@ describe("Handy Tau-bot timezone conversions", () => {
         "03:00 :eastern-time-zone: | 02:00 :central-time-zone:";
       await handler(message);
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 1",
-        text: "That's 1:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 1", "1:00")
+      );
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 4",
-        text: "That's 11:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 4", "11:00")
+      );
 
-      expect(postEphemeral.mock.calls.length).toEqual(2);
+      expect(slack.postEphemeralMessage.mock.calls.length).toEqual(2);
     });
 
     it("if a timezone is not specified, it messages everyone except the original author", async () => {
       message.event.text = "03:00";
       await handler(message);
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 1",
-        text: "That's 2:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 1", "2:00")
+      );
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 2",
-        text: "That's 4:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 2", "4:00")
+      );
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 3",
-        text: "That's 3:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 3", "3:00")
+      );
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 4",
-        text: "That's 12:00 for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 4", "12:00")
+      );
 
       // Make sure only the above messages were posted.
-      expect(postEphemeral.mock.calls.length).toEqual(4);
+      expect(slack.postEphemeralMessage.mock.calls.length).toEqual(4);
     });
 
     it("includes AM/PM in the message if it was included in the original", async () => {
       message.event.text = "03:00 PM";
       await handler(message);
 
-      expect(postEphemeral).toHaveBeenCalledWith({
-        ...baseResponse,
-        user: "user 1",
-        text: "That's 2:00 pm for you!",
-      });
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 1", "2:00 pm")
+      );
 
       // Not testing filtering here, so trust the previous tests.
+    });
+
+    it("does not message users who have opted-out", async () => {
+      isOptedOut.mockImplementation((userId) => userId === "user 1");
+
+      message.event.text = "3:00";
+      await handler(message);
+
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 2", "4:00")
+      );
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 3", "3:00")
+      );
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 4", "12:00")
+      );
+      expect(slack.postEphemeralMessage.mock.calls.length).toEqual(3);
     });
 
     it("does not respond at all if the user text is empty (e.g., crossposted messages", async () => {
       message.event.text = "";
       await handler(message);
 
-      expect(postEphemeral).not.toHaveBeenCalled();
+      expect(slack.postEphemeralMessage).not.toHaveBeenCalled();
     });
   });
 });
