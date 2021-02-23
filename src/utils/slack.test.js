@@ -54,6 +54,7 @@ describe("utils / slack", () => {
         { name: "c2", id: "id2" },
         { name: "c3", id: "id3" },
       ],
+      response_metadata: {},
     });
 
     const id = await getChannelID("c2");
@@ -64,13 +65,46 @@ describe("utils / slack", () => {
     expect(id).toEqual("id2");
   });
 
+  it("can get a channel ID from a channel name when channels are paginated", async () => {
+    defaultClient.conversations.list.mockResolvedValueOnce({
+      channels: [
+        { name: "c1", id: "id1" },
+        { name: "c2", id: "id2" },
+        { name: "c3", id: "id3" },
+      ],
+      response_metadata: { next_cursor: "page 2" },
+    });
+    defaultClient.conversations.list.mockResolvedValueOnce({
+      channels: [{ name: "c4", id: "id4" }],
+      response_metadata: {},
+    });
+
+    // Use an ID that wasn't in the previous test. This will bypass the internal
+    // cache-map.
+    const id = await getChannelID("c4");
+
+    expect(defaultClient.conversations.list).toHaveBeenCalledWith({
+      token: "slack token",
+    });
+    expect(defaultClient.conversations.list).toHaveBeenCalledWith({
+      cursor: "page 2",
+      token: "slack token",
+    });
+    expect(id).toEqual("id4");
+  });
+
   it("can get a list of all Slack users", async () => {
-    defaultClient.users.list.mockResolvedValue({
+    defaultClient.users.list.mockResolvedValueOnce({
       members: [
         { id: 1, name: "one" },
         { id: 2, name: "two" },
         { id: 3, name: "three" },
       ],
+      response_metadata: { next_cursor: "page 2" },
+    });
+    defaultClient.users.list.mockResolvedValueOnce({
+      members: [{ id: 4, name: "four" }],
+      response_metadata: {},
     });
 
     const users = await getSlackUsers();
@@ -82,6 +116,7 @@ describe("utils / slack", () => {
       { id: 1, name: "one" },
       { id: 2, name: "two" },
       { id: 3, name: "three" },
+      { id: 4, name: "four" },
     ]);
   });
 
@@ -92,6 +127,7 @@ describe("utils / slack", () => {
         { id: 2, name: "two" },
         { id: 3, name: "three" },
       ],
+      response_metadata: {},
     });
 
     const msg = {
