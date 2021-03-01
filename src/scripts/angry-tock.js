@@ -23,6 +23,9 @@ const ANGRY_TOCK_SECOND_ALERT = moment(
 const ANGRY_TOCK_REPORT_TO = (
   process.env.ANGRY_TOCK_REPORT_TO || "#18f-supes"
 ).split(",");
+const HAPPY_TOCK_REPORT_TO = (process.env.HAPPY_TOCK_REPORT_TO || "#18f").split(
+  ","
+);
 
 /**
  * Get the current time in the configured timezone.
@@ -90,7 +93,7 @@ const shout = async ({ calm = false } = {}) => {
         postMessage({ ...truantReport, channel });
       });
     } else {
-      ANGRY_TOCK_REPORT_TO.forEach((channel) => {
+      [...ANGRY_TOCK_REPORT_TO, ...HAPPY_TOCK_REPORT_TO].forEach((channel) => {
         postMessage({
           username: "Happy Tock",
           icon_emoji: ":happy-tock:",
