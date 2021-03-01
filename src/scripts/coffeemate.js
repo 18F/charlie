@@ -12,9 +12,13 @@ const baseResponse = {
 };
 
 module.exports = (app) => {
-  const queue = app.brain.get(brainKey) || [];
+  app.message(/coffee me( .+)?/i, async (message) => {
+    const [, scopeMatch] = message.context.matches;
+    const scope = scopeMatch ? scopeMatch.trim().toLowerCase() : "";
 
-  app.message(/coffee me/i, async (message) => {
+    const key = `${brainKey}${scope}`;
+    const queue = app.brain.get(key) || [];
+
     await addEmojiReaction(message, "coffee");
     const {
       event: { user },
@@ -25,22 +29,24 @@ module.exports = (app) => {
     if (queue.includes(user)) {
       await postEphemeralResponse(message, {
         ...baseResponse,
-        text:
-          "You’re already in the queue. As soon as we find someone else to meet with, we’ll introduce you!",
+        text: `You’re already in the${
+          scope ? ` ${scope}` : ""
+        } queue. As soon as we find someone else to meet with, we’ll introduce you!`,
       });
       return;
     }
 
     // If we didn't bail out already, add the current user to the queue
     queue.push(user);
-    app.brain.set(brainKey, queue);
+    app.brain.set(key, queue);
 
     // Now do we have a pair or not?
     if (queue.length < 2) {
       await postEphemeralResponse(message, {
         ...baseResponse,
-        text:
-          "You’re in line for coffee! You’ll be introduced to the next person who wants to meet up.",
+        text: `You’re in line for${
+          scope ? ` ${scope}` : ""
+        } coffee! You’ll be introduced to the next person who wants to meet up.`,
       });
     } else {
       // pair them up
@@ -54,7 +60,7 @@ module.exports = (app) => {
 
       // then empty the queue again
       queue.length = 0;
-      app.brain.set(brainKey, queue);
+      app.brain.set(key, queue);
     }
   });
 };
