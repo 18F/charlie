@@ -111,6 +111,20 @@ describe("holiday reminder", () => {
           "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
       });
     });
+
+    it("includes an emoji for holidays with known emoji mappings", async () => {
+      const bot = await load();
+      bot.postReminder({
+        date: moment("2018-11-12", "YYYY-MM-DD"),
+        name: "Veterans Day",
+      });
+
+      expect(postMessage).toHaveBeenCalledWith({
+        channel: "general",
+        text:
+          "@here Remember that *Monday* is a federal holiday in observance of *Veterans Day* :salute-you:!",
+      });
+    });
   });
 
   describe("schedules a reminder", () => {

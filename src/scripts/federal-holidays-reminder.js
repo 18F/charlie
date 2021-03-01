@@ -2,6 +2,7 @@ const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
 const {
   dates: { getNextHoliday },
+  holidays: { emojis },
   slack: { postMessage },
 } = require("../utils");
 
@@ -26,11 +27,15 @@ const previousWeekday = (date) => {
 };
 
 const postReminder = (holiday) => {
+  const emoji = emojis.get(holiday.name);
+
   postMessage({
     channel: CHANNEL,
     text: `@here Remember that *${holiday.date.format(
       "dddd"
-    )}* is a federal holiday in observance of *${holiday.name}*!`,
+    )}* is a federal holiday in observance of *${holiday.name}*${
+      emoji ? ` ${emoji}` : ""
+    }!`,
   });
 };
 
