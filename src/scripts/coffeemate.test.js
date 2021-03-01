@@ -18,7 +18,7 @@ describe("coffeemate", () => {
     coffeemate(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      /coffee me( .+)?/i,
+      /coffee me( \S+$)?/i,
       expect.any(Function)
     );
   });
@@ -89,6 +89,19 @@ describe("coffeemate", () => {
         icon_emoji: ":coffee:",
         text:
           "You’re already in the test scope queue. As soon as we find someone else to meet with, we’ll introduce you!",
+        username: "Coffeemate",
+      });
+    });
+
+    it("sends an ephemeral message subsequent times a user asks for coffee, but does not acknowledge 'please' as a scope", async () => {
+      message.context.matches = [null, " please"];
+      await handler(message);
+
+      expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
+      expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
+        icon_emoji: ":coffee:",
+        text:
+          "You’re already in the queue. As soon as we find someone else to meet with, we’ll introduce you!",
         username: "Coffeemate",
       });
     });

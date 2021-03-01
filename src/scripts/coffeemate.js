@@ -12,9 +12,12 @@ const baseResponse = {
 };
 
 module.exports = (app) => {
-  app.message(/coffee me( .+)?/i, async (message) => {
+  app.message(/coffee me( \S+$)?/i, async (message) => {
     const [, scopeMatch] = message.context.matches;
-    const scope = scopeMatch ? scopeMatch.trim().toLowerCase() : "";
+    const scope = (() => {
+      const out = scopeMatch ? scopeMatch.trim().toLowerCase() : "";
+      return out === "please" ? "" : out;
+    })();
 
     const key = `${brainKey}${scope}`;
     const queue = app.brain.get(key) || [];
