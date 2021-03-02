@@ -1,7 +1,7 @@
 const emojis = new Map([
-  [`New Year's Day`, ":baby-new-year:"],
+  ["New Year's Day", ":baby-new-year:"],
   ["Birthday of Martin Luther King, Jr.", ":mlk:"],
-  [`Washington's Birthday`, ":george:"],
+  ["Washington's Birthday", ":george:"],
   ["Memorial Day", ":poppy-flowers:"],
   ["Independence Day", ":fireworks:"],
   ["Labor Day", ":flex::skin-tone-2:"],
