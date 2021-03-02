@@ -5,6 +5,7 @@ describe("utils / index", () => {
     expect(Object.keys(utils)).toEqual([
       "cache",
       "dates",
+      "holidays",
       "optOut",
       "slack",
       "tock",
