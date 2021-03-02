@@ -14,23 +14,20 @@ describe("coffeemate", () => {
     jest.resetAllMocks();
   });
 
-  it('subscribes to "coffee me" messages and loads the existing queue from the brain', () => {
-    const brainSpy = jest.spyOn(app.brain, "get").mockReturnValue();
-
+  it('subscribes to "coffee me" messages', () => {
     coffeemate(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      /coffee me/i,
+      /coffee me( \S+$)?/i,
       expect.any(Function)
     );
-    expect(app.brain.get).toHaveBeenCalledWith("coffeemate_queue");
-    brainSpy.mockRestore();
   });
 
-  describe("when the coffee queue is initially empty", () => {
+  describe("with an the coffee queue is initially empty", () => {
     let handler;
 
     const message = {
+      context: { matches: [] },
       event: {
         user: "user id 1",
       },
@@ -41,6 +38,7 @@ describe("coffeemate", () => {
     });
 
     beforeEach(() => {
+      message.context.matches = [];
       coffeemate(app);
       handler = app.getHandler();
     });
@@ -58,6 +56,45 @@ describe("coffeemate", () => {
     });
 
     it("sends an ephemeral message subsequent times a user asks for coffee and does nothing to the queue", async () => {
+      await handler(message);
+
+      expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
+      expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
+        icon_emoji: ":coffee:",
+        text:
+          "You’re already in the queue. As soon as we find someone else to meet with, we’ll introduce you!",
+        username: "Coffeemate",
+      });
+    });
+
+    it("sends an ephemeral message the first time a user asks for a coffee in a different scope", async () => {
+      message.context.matches = [null, " test scope"];
+      await handler(message);
+
+      expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
+      expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
+        icon_emoji: ":coffee:",
+        text:
+          "You’re in line for test scope coffee! You’ll be introduced to the next person who wants to meet up.",
+        username: "Coffeemate",
+      });
+    });
+
+    it("sends an ephemeral message subsequent times a user asks for coffee in the same scope", async () => {
+      message.context.matches = [null, " test scope"];
+      await handler(message);
+
+      expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
+      expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
+        icon_emoji: ":coffee:",
+        text:
+          "You’re already in the test scope queue. As soon as we find someone else to meet with, we’ll introduce you!",
+        username: "Coffeemate",
+      });
+    });
+
+    it("sends an ephemeral message subsequent times a user asks for coffee, but does not acknowledge 'please' as a scope", async () => {
+      message.context.matches = [null, " please"];
       await handler(message);
 
       expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
