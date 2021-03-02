@@ -37,6 +37,7 @@ describe("Angry Tock", () => {
     process.env.ANGRY_TOCK_TIMEZONE = "Asia/Tokyo";
     process.env.ANGRY_TOCK_FIRST_TIME = "10:00";
     process.env.ANGRY_TOCK_SECOND_TIME = "14:45";
+    process.env.HAPPY_TOCK_REPORT_TO = "#happy";
 
     get18FTockTruants.mockResolvedValue([
       {
@@ -312,7 +313,7 @@ describe("Angry Tock", () => {
       text: "No Tock truants!",
     };
 
-    expect(postMessage.mock.calls.length).toBe(2);
+    expect(postMessage.mock.calls.length).toBe(3);
     expect(sendDirectMessage.mock.calls.length).toBe(0);
 
     expect(postMessage).toHaveBeenCalledWith({
@@ -322,6 +323,10 @@ describe("Angry Tock", () => {
     expect(postMessage).toHaveBeenCalledWith({
       ...happyMessage,
       channel: "@user",
+    });
+    expect(postMessage).toHaveBeenCalledWith({
+      ...happyMessage,
+      channel: "#happy",
     });
   });
 });

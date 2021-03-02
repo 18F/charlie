@@ -97,12 +97,18 @@ const getSlackUsersInConversation = async ({ client, event: { channel } }) => {
   });
 };
 
+const postEphemeralMessage = async (message) => {
+  await defaultClient.chat.postEphemeral({
+    ...message,
+    token: process.env.SLACK_TOKEN,
+  });
+};
+
 const postEphemeralResponse = async (toMsg, message) => {
   const {
-    client,
     event: { channel, thread_ts: thread, user },
   } = toMsg;
-  await client.chat.postEphemeral({
+  await postEphemeralMessage({
     ...message,
     user,
     channel,
@@ -136,6 +142,7 @@ module.exports = {
   getChannelID,
   getSlackUsers,
   getSlackUsersInConversation,
+  postEphemeralMessage,
   postEphemeralResponse,
   postMessage,
   sendDirectMessage,
