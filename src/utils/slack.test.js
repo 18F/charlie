@@ -3,6 +3,7 @@ const {
   getChannelID,
   getSlackUsers,
   getSlackUsersInConversation,
+  postEphemeralMessage,
   postEphemeralResponse,
   postMessage,
   sendDirectMessage,
@@ -11,7 +12,7 @@ const {
 
 describe("utils / slack", () => {
   const defaultClient = {
-    chat: { postMessage: jest.fn() },
+    chat: { postEphemeral: jest.fn(), postMessage: jest.fn() },
     conversations: { list: jest.fn(), open: jest.fn() },
     users: { list: jest.fn() },
   };
@@ -147,9 +148,20 @@ describe("utils / slack", () => {
     ]);
   });
 
+  it("can post an ephemeral message", async () => {
+    const msg = { this: "is", my: "message" };
+
+    await postEphemeralMessage(msg);
+
+    expect(defaultClient.chat.postEphemeral).toHaveBeenCalledWith({
+      this: "is",
+      my: "message",
+      token: "slack token",
+    });
+  });
+
   it("can post an ephemeral response to a message", async () => {
     const msg = {
-      client: { chat: { postEphemeral: jest.fn() } },
       event: {
         channel: "channel id",
         thread_ts: "message timestamp",
@@ -159,10 +171,11 @@ describe("utils / slack", () => {
 
     await postEphemeralResponse(msg, { text: "bob" });
 
-    expect(msg.client.chat.postEphemeral).toHaveBeenCalledWith({
+    expect(defaultClient.chat.postEphemeral).toHaveBeenCalledWith({
       channel: "channel id",
       text: "bob",
       thread_ts: "message timestamp",
+      token: "slack token",
       user: "user id",
     });
   });
