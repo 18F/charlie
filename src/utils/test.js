@@ -17,7 +17,6 @@ module.exports = {
       logger: {
         warn: jest.fn(),
       },
-      action,
       message,
 
       /**
