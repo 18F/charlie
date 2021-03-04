@@ -1,8 +1,10 @@
 const axios = require("axios");
-const { cache, dates, slack, tock } = require("./index");
+const brain = require("../brain");
+const { cache, dates, optOut, slack, tock } = require("./index");
 
 // Mock axios and the utility functions, to make it easier for tests to use.
 jest.mock("axios");
+jest.mock("../brain");
 jest.mock("./index");
 
 module.exports = {
@@ -15,6 +17,7 @@ module.exports = {
       logger: {
         warn: jest.fn(),
       },
+      action,
       message,
 
       /**
@@ -34,9 +37,11 @@ module.exports = {
     };
   },
   axios,
+  brain,
   utils: {
     cache,
     dates,
+    optOut,
     slack,
     tock,
   },

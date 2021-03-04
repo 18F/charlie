@@ -44,4 +44,24 @@ describe("federal holidays bot", () => {
     );
     clock.restore();
   });
+
+  it("includes an emoji for well-known holidays", () => {
+    const clock = sinon.useFakeTimers();
+    bot(app);
+    const handler = app.getHandler();
+    const say = jest.fn();
+
+    getNextHoliday.mockReturnValue({
+      date: moment.tz("1970-01-02T00:00:00", "UTC"),
+      name: "Christmas Day",
+    });
+
+    handler({ say });
+
+    expect(say.mock.calls.length).toBe(1);
+    expect(say).toHaveBeenCalledWith(
+      "The next federal holiday is Christmas Day :christmas_tree: in 1 days on Friday, January 2nd"
+    );
+    clock.restore();
+  });
 });

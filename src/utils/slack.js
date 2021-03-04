@@ -20,11 +20,32 @@ const getChannelID = (() => {
 
   return async (channelName) => {
     if (!channelIDs.get(channelName)) {
-      const all = await defaultClient.conversations.list({
-        token: process.env.SLACK_TOKEN,
-      });
+      const all = [];
+      let cursor;
 
-      all.channels.forEach(({ name, id }) => channelIDs.set(name, id));
+      do {
+        /* eslint-disable no-await-in-loop */
+        // The no-await-in-loop rule is there to encourage parallelization and
+        // using Promise.all to collect the waiting promises. However, in this
+        // case, the iterations of the loop are dependent on each other and
+        // cannot be parallelized, so just disable the rule.
+
+        const {
+          channels,
+          response_metadata: { next_cursor: nextCursor },
+        } = await defaultClient.conversations.list({
+          cursor,
+          token: process.env.SLACK_TOKEN,
+        });
+
+        cursor = nextCursor;
+        all.push(...channels);
+
+        /* eslint-enable no-await-in-loop */
+        // But be sure to turn the rule back on.
+      } while (cursor);
+
+      all.forEach(({ name, id }) => channelIDs.set(name, id));
     }
     return channelIDs.get(channelName);
   };
@@ -36,11 +57,32 @@ const getChannelID = (() => {
  * @returns {Promise<Array<Object>>} A list of Slack users.
  */
 const getSlackUsers = async () => {
-  return cache("get slack users", 60, async () => {
-    const { members } = await defaultClient.users.list({
-      token: process.env.SLACK_TOKEN,
-    });
-    return members;
+  return cache("get slack users", 1440, async () => {
+    const all = [];
+    let cursor;
+
+    do {
+      /* eslint-disable no-await-in-loop */
+      // The no-await-in-loop rule is there to encourage parallelization and
+      // using Promise.all to collect the waiting promises. However, in this
+      // case, the iterations of the loop are dependent on each other and
+      // cannot be parallelized, so just disable the rule.
+      const {
+        members,
+        response_metadata: { next_cursor: nextCursor },
+      } = await defaultClient.users.list({
+        cursor,
+        token: process.env.SLACK_TOKEN,
+      });
+
+      cursor = nextCursor;
+      all.push(...members);
+
+      /* eslint-enable no-await-in-loop */
+      // But be sure to turn the rule back on.
+    } while (cursor);
+
+    return all;
   });
 };
 
@@ -55,12 +97,18 @@ const getSlackUsersInConversation = async ({ client, event: { channel } }) => {
   });
 };
 
+const postEphemeralMessage = async (message) => {
+  await defaultClient.chat.postEphemeral({
+    ...message,
+    token: process.env.SLACK_TOKEN,
+  });
+};
+
 const postEphemeralResponse = async (toMsg, message) => {
   const {
-    client,
     event: { channel, thread_ts: thread, user },
   } = toMsg;
-  await client.chat.postEphemeral({
+  await postEphemeralMessage({
     ...message,
     user,
     channel,
@@ -94,6 +142,7 @@ module.exports = {
   getChannelID,
   getSlackUsers,
   getSlackUsersInConversation,
+  postEphemeralMessage,
   postEphemeralResponse,
   postMessage,
   sendDirectMessage,

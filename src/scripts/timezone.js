@@ -1,6 +1,7 @@
 const moment = require("moment-timezone");
 const {
-  slack: { getSlackUsersInConversation },
+  optOut,
+  slack: { getSlackUsersInConversation, postEphemeralMessage },
 } = require("../utils");
 
 const TIMEZONES = {
@@ -31,6 +32,8 @@ const TIMEZONES = {
 const matcher = /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
 
 module.exports = (app) => {
+  const optout = optOut("handy_tau_bot");
+
   app.message(matcher, async (msg) => {
     const { channel, text, thread_ts: thread, user } = msg.event;
 
@@ -71,6 +74,10 @@ module.exports = (app) => {
             return false;
           }
 
+          if (optout.isOptedOut(id)) {
+            return false;
+          }
+
           // If the timezone was specified in the message, filter out the people
           // who are in that timezone.
           if (timezone) {
@@ -87,7 +94,7 @@ module.exports = (app) => {
     });
 
     users.forEach(({ id, tz }) => {
-      msg.client.chat.postEphemeral({
+      postEphemeralMessage({
         channel,
         icon_emoji: ":timebot:",
         user: id,
@@ -97,6 +104,19 @@ module.exports = (app) => {
           .tz(tz)
           .format(`h:mm${ampm ? " a" : ""}`)} for you!`,
         thread_ts: thread,
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `That's ${m
+                .clone()
+                .tz(tz)
+                .format(`h:mm${ampm ? " a" : ""}`)} for you!`,
+            },
+            ...optout.button,
+          },
+        ],
       });
     });
   });
