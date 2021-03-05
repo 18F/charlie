@@ -5,8 +5,7 @@ describe("opt-out generic action", () => {
   const app = getApp();
   optOut(app);
 
-  // TODO: Update the test utils to allow getting action handlers
-  const handler = app.action.mock.calls[0][1];
+  const handler = app.getActionHandler();
 
   beforeEach(() => {
     jest.resetAllMocks();

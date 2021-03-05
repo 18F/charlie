@@ -43,8 +43,7 @@ describe("ERG inviter", () => {
 
     it("sends a message to the appropriate channel when a user requests an invitation", async () => {
       bot(app);
-      // TODO: Update the test utils to allow getting action handlers
-      const handler = app.action.mock.calls[0][1];
+      const handler = app.getActionHandler();
       const ack = jest.fn().mockResolvedValue();
 
       await handler({
