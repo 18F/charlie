@@ -51,7 +51,7 @@ describe("love bot", () => {
     await handler(message);
 
     expect(message.client.chat.postMessage).toHaveBeenCalledWith({
-      channel: "love",
+      channel: love.loveChannel,
       icon_emoji: ":heart:",
       text: "<@user id> loves loved person! <http://perma-url|link>",
       unfurl_links: true,
