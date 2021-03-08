@@ -16,6 +16,8 @@ const {
   slack: { getChannelID },
 } = require("../utils");
 
+const LOVE_CHANNEL = "kudos";
+
 module.exports = (app) => {
   app.message(
     /^\s*(love|<3|:heart\w*:)\s+((<@[\w-]+>\s*)+)(.*)$/i,
@@ -32,10 +34,10 @@ module.exports = (app) => {
         message_ts: message,
       });
 
-      const channelID = await getChannelID("love");
+      const channelID = await getChannelID(LOVE_CHANNEL);
 
       client.chat.postMessage({
-        channel: "love",
+        channel: LOVE_CHANNEL,
         icon_emoji: ":heart:",
         text: `<@${user}> loves ${lovees}! <${permalink}|link>`,
         unfurl_links: true,
@@ -49,3 +51,5 @@ module.exports = (app) => {
     }
   );
 };
+
+module.exports.loveChannel = LOVE_CHANNEL;
