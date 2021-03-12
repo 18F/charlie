@@ -6,7 +6,7 @@ const {
 const baseUrl =
   "https://search.usa.gov/search/?utf8=no&affiliate=tts-handbook&format=json&query=";
 
-const identity = { icon_emoji: ":dolores:", username: "Mrs. Landingham" };
+const identity = { icon_emoji: ":tts:", username: "TTS Handbot" };
 
 const getBlocksFromResults = (results) =>
   results.reduce((blocks, result) => {
