@@ -17,7 +17,7 @@ describe("TTS Handbook search (Handbot)", () => {
   it("subscribes to the right message", () => {
     handbot(app);
     expect(app.message).toHaveBeenCalledWith(
-      /@?handbo(ok|t) (.+)$/i,
+      /^@?handbo(ok|t) (.+)$/i,
       expect.any(Function)
     );
   });

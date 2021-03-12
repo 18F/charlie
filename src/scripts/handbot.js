@@ -27,7 +27,7 @@ const getBlocksFromResults = (results) =>
   }, []);
 
 module.exports = (app) => {
-  app.message(/@?handbo(ok|t) (.+)$/i, async (msg) => {
+  app.message(/^@?handbo(ok|t) (.+)$/i, async (msg) => {
     const {
       context: {
         matches: [, , search],
