@@ -6,6 +6,8 @@ const {
 const baseUrl =
   "https://search.usa.gov/search/?utf8=no&affiliate=tts-handbook&format=json&query=";
 
+const identity = { icon_emoji: ":tts:", username: "TTS Handbot" };
+
 const getBlocksFromResults = (results) =>
   results.reduce((blocks, result) => {
     blocks.push({ type: "divider" });
@@ -47,15 +49,13 @@ module.exports = (app) => {
 
       if (results.length === 0) {
         say({
-          icon_emoji: ":tts:",
-          username: "TTS Handbot",
+          ...identity,
           thread_ts: thread || ts,
           text: `I couldn't find any results for "${searchString}"`,
         });
       } else {
         say({
-          icon_emoji: ":tts:",
-          username: "TTS Handbot",
+          ...identity,
           thread_ts: thread || ts,
           blocks: [
             {
@@ -71,8 +71,7 @@ module.exports = (app) => {
       }
     } catch (e) {
       postEphemeralResponse(msg, {
-        icon_emoji: ":tts:",
-        username: "TTS Handbot",
+        ...identity,
         text:
           "Something went wrong trying to search the Handbook. Please try later!",
       });
