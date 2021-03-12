@@ -6,8 +6,30 @@ const {
 const baseUrl =
   "https://search.usa.gov/search/?utf8=no&affiliate=tts-handbook&format=json&query=";
 
+const identity = { icon_emoji: ":tts:", username: "TTS Handbot" };
+
+const getBlocksFromResults = (results) =>
+  results.reduce((blocks, result) => {
+    blocks.push({ type: "divider" });
+    blocks.push({
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `<${result.link}|${result.title.replace(
+          /[^ -~]+/g,
+          ""
+        )}>\n${result.body.replace(/[^ -~]+/g, "")}`,
+      },
+    });
+    blocks.push({
+      type: "context",
+      elements: [{ type: "mrkdwn", text: result.link }],
+    });
+    return blocks;
+  }, []);
+
 module.exports = (app) => {
-  app.message(/@?handbo(ok|t) (.+)$/i, async (msg) => {
+  app.message(/^@?handbo(ok|t) (.+)$/i, async (msg) => {
     const {
       context: {
         matches: [, , search],
@@ -27,15 +49,13 @@ module.exports = (app) => {
 
       if (results.length === 0) {
         say({
-          icon_emoji: ":tts:",
-          username: "TTS Handbot",
+          ...identity,
           thread_ts: thread || ts,
           text: `I couldn't find any results for "${searchString}"`,
         });
       } else {
         say({
-          icon_emoji: ":tts:",
-          username: "TTS Handbot",
+          ...identity,
           thread_ts: thread || ts,
           blocks: [
             {
@@ -45,31 +65,13 @@ module.exports = (app) => {
                 text: `Handbook search results for "${searchString}"`,
               },
             },
-            ...results.reduce((blocks, result) => {
-              blocks.push({ type: "divider" });
-              blocks.push({
-                type: "section",
-                text: {
-                  type: "mrkdwn",
-                  text: `<${result.link}|${result.title.replace(
-                    /[^ -~]+/g,
-                    ""
-                  )}>\n${result.body.replace(/[^ -~]+/g, "")}`,
-                },
-              });
-              blocks.push({
-                type: "context",
-                elements: [{ type: "mrkdwn", text: result.link }],
-              });
-              return blocks;
-            }, []),
+            ...getBlocksFromResults(results),
           ],
         });
       }
     } catch (e) {
       postEphemeralResponse(msg, {
-        icon_emoji: ":tts:",
-        username: "TTS Handbot",
+        ...identity,
         text:
           "Something went wrong trying to search the Handbook. Please try later!",
       });
