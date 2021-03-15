@@ -172,6 +172,40 @@ describe("Handy Tau-bot timezone conversions", () => {
       // Not testing filtering here, so trust the previous tests.
     });
 
+    it("correctly includes AM/PM when crossing noon", async () => {
+      message.event.text = "12:15 pm";
+      await handler(message);
+
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 1", "11:15 am")
+      );
+
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 2", "1:15 pm")
+      );
+
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 4", "9:15 am")
+      );
+    });
+
+    it("correctly includes AM/PM when crossing midnight", async () => {
+      message.event.text = "12:15 am";
+      await handler(message);
+
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 1", "11:15 pm")
+      );
+
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 2", "1:15 am")
+      );
+
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user 4", "9:15 pm")
+      );
+    });
+
     it("does not message users who have opted-out", async () => {
       isOptedOut.mockImplementation((userId) => userId === "user 1");
 
