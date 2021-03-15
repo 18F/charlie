@@ -242,5 +242,19 @@ describe("Handy Tau-bot timezone conversions", () => {
       expect(slack.postEphemeralMessage).not.toHaveBeenCalled();
     });
 
+    // currently failing but may be worth investigating in future
+    it.skip("correctly converts 24 hour time", async () => {
+      message.event.text = "23:42 cst";
+      await handler(message);
+
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user ny", "12:42 est")
+      );
+
+      expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
+        responseFor("user la", "9:42 pst")
+      );
+    });
+
   });
 });
