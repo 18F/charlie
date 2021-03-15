@@ -235,5 +235,12 @@ describe("Handy Tau-bot timezone conversions", () => {
       expect(slack.postEphemeralMessage).not.toHaveBeenCalled();
     });
 
+    it("does not respond to an invalid time", async () => {
+      message.event.text = "25:12";
+      await handler(message);
+
+      expect(slack.postEphemeralMessage).not.toHaveBeenCalled();
+    });
+
   });
 });
