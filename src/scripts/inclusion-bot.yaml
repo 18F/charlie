@@ -302,6 +302,8 @@ triggers:
     alternatives:
       - primary/secondary
       - primary/replica
+      - leader/worker
+      - main/replica
 
   - matches:
       - hysterical
