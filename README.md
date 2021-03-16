@@ -2,6 +2,18 @@
 
 A Slack app bot used within 18F for fun and work.
 
+- [What all it can do](#what-all-it-can-do)
+	- [Interactive bots](#interactive-bots)
+	- [Non-interactive bots](#non-interactive-bots)
+- [Development](#development)
+	- [Important note](#important-note)
+	- [Docker](#docker)
+	- [Local development](#local-development)
+- [Deploying](#deploying)
+- [Configuration](#configuration)
+- [Contributing](#contributing)
+- [Public domain](#public-domain)
+
 ## What all it can do
 
 ### Interactive bots
@@ -112,30 +124,15 @@ the travel channel on a closed day, Charlie will remind you that the office is
 closed and offer some helpful tips to get you through. It will also let you know
 when the Travel team will be back in the office!
 
-## Running Charlie locally
+## Development
 
-Because Charlie is a Slack App (rather than a legacy bot integration), you'll
-need to either have access to a Slack instance where you can create a new app or
-get a token and signing secret for an existing app instance. Drop by
+Because Charlie is a Slack App (rather than a legacy bot integration), if you
+want to test against Slack itself you'll need to either have access to a Slack
+instance where you can create a new app or get a token and signing secret for
+an existing app instance. Drop by
 [#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) in Slack to get more
 details about creating a new app or using an existing one. If you create a new
 one, see below about configuring OAuth scopes and Slack events.
-
-The easiest way to test Charlie locally is using Docker. First, create a `.env`
-file (see the `.env-sample` for reference) that sets, at minimum, the
-`SLACK_TOKEN` and `SLACK_SIGNING_SECRET` variables. (See the configuration
-section on environment variables below for a list of all the variables you can
-set.) Then, run `docker-compose up`. This will get all of Charlie's dependencies
-installed, setup a PostgreSQL container, hook up Charlie and postgres, and start
-Charlie up. In this configuration, Charlie is run using
-[nodemon](https://npm.im/nodemon), so it will automatically restart if you make
-any code changes.
-
-If you don't want to use Docker, you can run `npm install` from the root
-directory, set your `SLACK_TOKEN` and `SLACK_SIGNING_SECRET` environment
-variables, and then run `npm start-dev` to enable nodemon, or `npm start` to
-disable it. This is a minimum execution; to enable more features, you may need
-to set associated environment variables.
 
 ### Important note
 
@@ -144,6 +141,41 @@ persistent websocket connection, the machine where Charlie runs cannot respond
 to Slack events unless it is accessible on the public internet over HTTPS. GSA
 policy says our computers must not do this, so you will need to run the app in
 cloud.gov to test it.
+
+### Docker
+
+The easiest way to test Charlie locally is using Docker. First, create a `.env`
+file (see the `.env-sample` for reference) that sets, at minimum, the
+`SLACK_TOKEN` and `SLACK_SIGNING_SECRET` variables. (See the configuration
+section on environment variables below for a list of all the variables you can
+set.)
+
+Start it up:
+
+```bash
+docker-compose up
+```
+
+This will get all of Charlie's dependencies
+installed, set up a PostgreSQL container, hook up Charlie and postgres, and
+start Charlie. In this configuration, Charlie is run using
+[nodemon](https://npm.im/nodemon), so it will automatically restart if you make
+any code changes.
+
+Run linter and tests:
+
+```bash
+docker exec -it charlie_charlie_1 npm run lint
+docker exec -it charlie_charlie_1 npm test
+```
+
+### Local development
+
+If you don't want to use Docker, you can run `npm install` from the root
+directory, set your `SLACK_TOKEN` and `SLACK_SIGNING_SECRET` environment
+variables, and then run `npm start-dev` to enable nodemon, or `npm start` to
+disable it. This is a minimum execution; to enable more features, you may need
+to set associated environment variables.
 
 ## Deploying
 
