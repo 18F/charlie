@@ -6,6 +6,28 @@ const setClient = (client) => {
   defaultClient = client;
 };
 
+const paginate = async (apiMethod, apiArgs, handlerCallback) => {
+  let cursor;
+
+  do {
+    /* eslint-disable no-await-in-loop */
+    // The no-await-in-loop rule is there to encourage parallelization and
+    // using Promise.all to collect the waiting promises. However, in this
+    // case, the iterations of the loop are dependent on each other and
+    // cannot be parallelized, so just disable the rule.
+    const {
+      response_metadata: { next_cursor: nextCursor },
+      ...rest
+    } = await apiMethod({ ...apiArgs, cursor });
+    cursor = nextCursor;
+
+    handlerCallback(rest);
+
+    /* eslint-enable no-await-in-loop */
+    // But be sure to turn the rule back on.
+  } while (cursor);
+};
+
 const addEmojiReaction = async (msg, reaction) => {
   const {
     client,
@@ -15,35 +37,27 @@ const addEmojiReaction = async (msg, reaction) => {
   return client.reactions.add({ name: reaction, channel, timestamp });
 };
 
+const getChannels = () =>
+  cache("get channels", 60, async () => {
+    const all = [];
+
+    await paginate(
+      defaultClient.conversations.list,
+      { token: process.env.SLACK_TOKEN },
+      ({ channels }) => {
+        all.push(...channels);
+      }
+    );
+
+    return all;
+  });
+
 const getChannelID = (() => {
   const channelIDs = new Map();
 
   return async (channelName) => {
     if (!channelIDs.get(channelName)) {
-      const all = [];
-      let cursor;
-
-      do {
-        /* eslint-disable no-await-in-loop */
-        // The no-await-in-loop rule is there to encourage parallelization and
-        // using Promise.all to collect the waiting promises. However, in this
-        // case, the iterations of the loop are dependent on each other and
-        // cannot be parallelized, so just disable the rule.
-
-        const {
-          channels,
-          response_metadata: { next_cursor: nextCursor },
-        } = await defaultClient.conversations.list({
-          cursor,
-          token: process.env.SLACK_TOKEN,
-        });
-
-        cursor = nextCursor;
-        all.push(...channels);
-
-        /* eslint-enable no-await-in-loop */
-        // But be sure to turn the rule back on.
-      } while (cursor);
+      const all = await getChannels();
 
       all.forEach(({ name, id }) => channelIDs.set(name, id));
     }
@@ -59,28 +73,14 @@ const getChannelID = (() => {
 const getSlackUsers = async () => {
   return cache("get slack users", 1440, async () => {
     const all = [];
-    let cursor;
 
-    do {
-      /* eslint-disable no-await-in-loop */
-      // The no-await-in-loop rule is there to encourage parallelization and
-      // using Promise.all to collect the waiting promises. However, in this
-      // case, the iterations of the loop are dependent on each other and
-      // cannot be parallelized, so just disable the rule.
-      const {
-        members,
-        response_metadata: { next_cursor: nextCursor },
-      } = await defaultClient.users.list({
-        cursor,
-        token: process.env.SLACK_TOKEN,
-      });
-
-      cursor = nextCursor;
-      all.push(...members);
-
-      /* eslint-enable no-await-in-loop */
-      // But be sure to turn the rule back on.
-    } while (cursor);
+    await paginate(
+      defaultClient.users.list,
+      { token: process.env.SLACK_TOKEN },
+      ({ members }) => {
+        all.push(...members);
+      }
+    );
 
     return all;
   });
@@ -139,9 +139,11 @@ const sendDirectMessage = async (to, message) => {
 
 module.exports = {
   addEmojiReaction,
+  getChannels,
   getChannelID,
   getSlackUsers,
   getSlackUsersInConversation,
+  paginate,
   postEphemeralMessage,
   postEphemeralResponse,
   postMessage,
