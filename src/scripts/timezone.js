@@ -93,6 +93,11 @@ module.exports = (app) => {
         .map(({ id, tz }) => ({ id, tz }));
     });
 
+    // if the detected time is invalid, nothing should be sent to users
+    if (!m.isValid()) {
+      return;
+    }
+
     users.forEach(({ id, tz }) => {
       postEphemeralMessage({
         channel,
