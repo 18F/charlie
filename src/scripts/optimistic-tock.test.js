@@ -5,6 +5,7 @@ const scheduler = require("node-schedule");
 const {
   getApp,
   utils: {
+    optOut,
     slack: { sendDirectMessage },
     tock: { get18FTockSlackUsers, get18FTockTruants },
   },
@@ -23,6 +24,8 @@ describe("Optimistic Tock", () => {
 
   const sandbox = sinon.createSandbox();
 
+  const isOptedOut = jest.fn();
+
   const app = getApp();
 
   let clock;
@@ -33,6 +36,8 @@ describe("Optimistic Tock", () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
+
+    optOut.mockReturnValue({ button: { button: "goes here" }, isOptedOut });
 
     process.env.TOCK_API = "tock url";
     process.env.TOCK_TOKEN = "tock token";
@@ -247,27 +252,52 @@ describe("Optimistic Tock", () => {
     });
   });
 
-  it("sends a friendly reminder when it's time to tock", async () => {
-    // The Bell System is broken up by antitrust action.
-    const time = moment.tz("1984-01-01T12:00:00", "America/New_York");
-    clock.tick(time.toDate().getTime());
+  describe("sends a friendly reminder when it's time to tock", () => {
+    let reminderFunction;
 
-    const optimisticTock = await load();
-    await optimisticTock(app);
+    beforeAll(async () => {
+      // The Bell System is broken up by antitrust action.
+      const time = moment.tz("1984-01-01T12:00:00", "America/New_York");
+      clock.tick(time.toDate().getTime());
 
-    // Don't fiddle with the clock. That's node-schedule's job. Instead, grab
-    // the first scheduled job and check that it behaves as expected.
-    const reminderFunction = scheduleJob.mock.calls[0][1];
-    await reminderFunction();
+      const optimisticTock = await load();
+      await optimisticTock(app);
 
-    // It should remind our New_York timezone users who have not yet tocked.
-    // There's just one of those.
-    expect(sendDirectMessage).toHaveBeenCalledWith("slack 1", {
-      icon_emoji: "happytock",
-      text: "Don't forget to <https://tock.18f.gov|Tock your time>!",
-      username: "Happy Tock",
+      // Don't fiddle with the clock. That's node-schedule's job. Instead, grab
+      // the first scheduled job and check that it behaves as expected.
+      reminderFunction = scheduleJob.mock.calls[0][1];
     });
 
-    expect(sendDirectMessage.mock.calls.length).toBe(1);
+    it("to users who are not opted out", async () => {
+      isOptedOut.mockReturnValue(false);
+      await reminderFunction();
+
+      // It should remind our New_York timezone users who have not yet tocked.
+      // There's just one of those.
+      expect(sendDirectMessage).toHaveBeenCalledWith("slack 1", {
+        icon_emoji: "happytock",
+        text: "Don't forget to <https://tock.18f.gov|Tock your time>!",
+        username: "Happy Tock",
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: "Don't forget to <https://tock.18f.gov|Tock your time>!",
+            },
+            button: "goes here",
+          },
+        ],
+      });
+
+      expect(sendDirectMessage.mock.calls.length).toBe(1);
+    });
+
+    it("skips users who are opted out", async () => {
+      isOptedOut.mockReturnValue(true);
+      await reminderFunction();
+
+      expect(sendDirectMessage).not.toHaveBeenCalled();
+    });
   });
 });
