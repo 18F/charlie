@@ -71,4 +71,4 @@ jobs:
           CF_USERNAME: ${{ secrets.CF_USERNAME }}
         run: |
           cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
-          cf push -f manifest.yml
+          cf push -f manifest.yml --vars-file ./prod.yml
