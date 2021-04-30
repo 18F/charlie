@@ -61,6 +61,12 @@ triggers:
       - unaware of
       - ignoring
       - not paying attention to
+    why: >
+      Referring to inattentiveness or disinterest as "*blindness*" or
+      "*deafness*" can be othering to blind, deaf, and other visually- or
+      hearing-impaired people. Rather than blame our distractions on a physical
+      condition we may not have, we suggest using more honest language such as
+      "*ignoring*" or "*unaware of*!"
       
   - matches:
       - blind leading the blind
@@ -87,6 +93,12 @@ triggers:
       - unbelievable
       - irrational
       - ridiculous
+    why: >
+      "*:TRIGGER:*" has historically been used to refer to people with mental
+      illnesses. More recently it also come to mean things that are irrational
+      or unexpected. Rather than continue to stigmatize mental illness, we
+      prefer to use words with clearer intent, such as "*bananas*" or
+      "*outrageous*."
 
   - matches:
       - psycho
@@ -176,6 +188,13 @@ triggers:
         # /(?<!boba )(?<!five )(?<!5 )(?<!halal )guy(s|z)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i,
     alternatives:
       - y'all
+    why: >
+      "*:TRIGGER:*" is commonly used to refer to groups of people, but it is a
+      gendered pronoun. It can make people who do not identify as "guys" feel
+      excluded, even if that's not the intent. Regardless of cultural background
+      or innocent intent, we recommend alternative language that makes it clear
+      everyone is included in the conversation! Consider a word like "*y'all*"
+      or "*folks*" instead!
 
   - matches:
       - ghetto
@@ -226,6 +245,11 @@ triggers:
       - guide
       - shepherd
       - coach
+    why: >
+      "*Sherpa*" is a Tibetan ethnic group, but the word is often used to refer
+      to mountain guides. Out of respect for the humanity of these people, we
+      encourage using words that describe a job rather than the people, such as
+      "*shepherd*" or "*coach*".
 
   - matches:
       - pow-wow
@@ -336,7 +360,7 @@ triggers:
       - open kimono
       - open the kimono
     alternatives:
-      - share information      
+      - share information
 
   - matches:
       - grandfathered
