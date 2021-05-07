@@ -62,7 +62,10 @@ module.exports = async (app) => {
     const day = moment.tz("Pacific/Samoa");
 
     // Proceed to the next Friday, then back up if it's a holiday.
-    while (day.format("dddd") !== "Friday") {
+    while (
+      day.format("dddd") !== "Friday" ||
+      day.isSame(moment.tz("2021-05-07", "Pacific/Samoa"), "day")
+    ) {
       day.add(1, "day");
     }
     while (holidays.isAHoliday(day.toDate())) {
