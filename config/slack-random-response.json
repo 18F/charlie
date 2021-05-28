@@ -58,5 +58,11 @@
     "defaultEmoji": ":tech-randy:",
     "trigger": "randy fact",
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/randy.json"
+  },
+  {
+    "botName": "Ally and the A11y Friends",
+    "defaultEmoji": ":a11y-ally:",
+    "trigger": "ask ally",
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/a11y.json"
   }
 ]
