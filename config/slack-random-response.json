@@ -3,61 +3,61 @@
     "botName": "Alumni Dag Bot",
     "defaultEmoji": ":dag:",
     "trigger": "alumni d(o|a)g facts?",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/dags-alumni.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/dags-alumni.json"
   },
   {
     "botName": "Dag Bot",
     "defaultEmoji": ":dog:",
     "trigger": "(?<!alumni )d(o|a)g facts?",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/dags.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/dags.json"
   },
   {
     "botName": "Cat Bot",
     "defaultEmoji": ":smile_cat:",
     "trigger": "cat fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/cats.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/cats.json"
   },
   {
     "botName": "Giraffe Bot",
     "defaultEmoji": ":giraffe:",
     "trigger": "giraffe fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/giraffes.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/giraffes.json"
   },
   {
     "botName": "Alan Bot",
     "defaultEmoji": ":alda:",
     "trigger": "alan fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/alan.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/alan.json"
   },
   {
     "botName": "Dolphin Bot",
     "defaultEmoji": ":dolphin:",
     "trigger": "dolphin fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/dolphins.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/dolphins.json"
   },
   {
     "botName": "Ed Simulator",
     "defaultEmoji": ":edmullen:",
     "trigger": "ed simulator",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/ed.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/ed.json"
   },
   {
     "botName": "Minnesota Facts",
     "defaultEmoji": ":minn:",
     "trigger": "minnesota facts",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/Minnesota.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/Minnesota.json"
   },
   {
     "botName": "screambot",
     "defaultEmoji": ":kevin-home-alone-scream:",
     "trigger": "screambot",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/scream.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/scream.json"
   },
   {
     "botName": "Randy Facts",
     "defaultEmoji": ":tech-randy:",
     "trigger": "randy fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/randy.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/randy.json"
   },
   {
     "botName": "Ally and the A11y Friends",
