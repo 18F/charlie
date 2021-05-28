@@ -63,6 +63,6 @@
     "botName": "Ally and the A11y Friends",
     "defaultEmoji": ":a11y-ally:",
     "trigger": "ask ally",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/master/a11y.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/a11y-facts.json"
   }
 ]
