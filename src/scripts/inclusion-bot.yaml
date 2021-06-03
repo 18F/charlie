@@ -76,6 +76,7 @@ triggers:
       - nuts
     ignore:
       - grape nuts
+      - nuts and bolts
     alternatives:
       - hard to believe
       - bananas
@@ -98,6 +99,7 @@ triggers:
       - maniac
     ignore:
       - manic monday
+      - bipolar disorder
     alternatives:
       - difficult
       - unpredictable
