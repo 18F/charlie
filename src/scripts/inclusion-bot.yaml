@@ -62,11 +62,10 @@ triggers:
       - ignoring
       - not paying attention to
     why: >
-      Referring to inattentiveness or disinterest as "*blindness*" or
-      "*deafness*" can be othering to blind, deaf, and other visually- or
-      hearing-impaired people. Rather than blame our distractions on a physical
-      condition we may not have, we suggest using more honest language such as
-      "*ignoring*" or "*unaware of*!"
+      ":TRIGGER:" refers to inattention or ignorance. Blind, Deaf, and other
+      visually- or hearing-impaired people are not inattentive or ignorant.
+      Phrases like this create a negative connotation with blindness and
+      deafness.
       
   - matches:
       - blind leading the blind
@@ -75,6 +74,10 @@ triggers:
       - feeling around in the dark
       - building the airplane while we fly it
       - finding our way together
+    why: >
+      ":TRIGGER:" refers to ignorance. Blind and other visually-impaired people
+      are not ignorant. Using phrases like this create a negative connotation
+      with blindness.
 
   - matches:
       - crazy
@@ -94,11 +97,8 @@ triggers:
       - irrational
       - ridiculous
     why: >
-      "*:TRIGGER:*" has historically been used to refer to people with mental
-      illnesses. More recently it also come to mean things that are irrational
-      or unexpected. Rather than continue to stigmatize mental illness, we
-      prefer to use words with clearer intent, such as "*bananas*" or
-      "*outrageous*."
+      ":TRIGGER:" arose as a derogatory reference to people with mental
+      illnesses. We want to avoid stigmatizing mental illness.
 
   - matches:
       - psycho
@@ -119,6 +119,9 @@ triggers:
       - overwhelming
       - asinine
       - unbelievable
+    why: >
+      ":TRIGGER:" arose as a derogatory reference to people with mental
+      illnesses. We want to avoid stigmatizing mental illness.
 
   - matches:
       - spaz
@@ -127,11 +130,19 @@ triggers:
     alternatives:
       - volatile
       - unpredictable
+    why: >
+      ":TRIGGER:" arose as a derogatory reference to people with motor control
+      impairments due to illness or substance use.  We want to avoid
+      stigmatizing mental illness and addiction.
 
   - matches:
       - derp
     alternatives:
       - oops
+    why: >
+      ":TRIGGER:" term arose as a derogatory reference to people with
+      intellectual disabilities. It was popularized on the TV show South Park
+      to mock a character. We want to avoid stigmatizing disabilities.
 
   - matches:
       - moron
@@ -152,6 +163,9 @@ triggers:
       - careless
       - thoughtless
       - pointless
+    why: >
+      ":TRIGGER:" arose as a derogatory reference to people with intellectual
+      disabilities. We want to avoid stigmatizing disabilities.
 
   - matches:
       - lame
@@ -163,6 +177,9 @@ triggers:
       - pathetic
       - bad
       - disappointing
+    why: >
+      ":TRIGGER:" arose as a derogatory reference to people with disabilities.
+      We want to avoid stigmatizing intellectual disabilities.
 
   - matches:
       - junkie
@@ -170,11 +187,20 @@ triggers:
     alternatives:
       - enthusiast
       - fan
+    why: >
+      ":TRIGGER:" refers to someone who has a substance abuse disorder.
+      Addiction is a disease, not a choice or moral failing. We want to avoid
+      stigmatizing illness and addiction.
 
   - matches:
       - like crack
     alternatives:
       - irresistible
+    why: >
+      ":TRIGGER:" refers to something tempting. Addiction is a disease, not a
+      choice or moral failing. We want to avoid stigmatizing addiction. Crack
+      cocaine usage has also been racialized, resulting in discriminatory
+      policies that target Black people.
 
   - matches:
       - guys
@@ -203,6 +229,10 @@ triggers:
       - distressed
       - derelict
       - slapdash
+    why: >
+      ":TRIGGER:" is used to describe neighborhoods that the speaker considers
+      undesirable. This term has a deeply racist history against Jewish and
+      Black communities.
 
   - matches:
       - uppity
@@ -212,12 +242,19 @@ triggers:
       - highfalutin
       - vocal
       - assertive
+    why: >
+      ":TRIGGER:" is usually used to silence Black people and imply that they do
+      not have a right to be assertive.
 
   - matches:
       - peanut gallery
     alternatives:
       - teeming masses
       - onlookers
+    why: >
+      ":TRIGGER:" refers to people who are seen as rowdy or disruptive,
+      indicating that their viewpoints should be ignored. This term arose from
+      theater performance seating, and has racist and classist origins.
 
   - matches:
       - gyp
@@ -228,16 +265,23 @@ triggers:
     alternatives:
       - swindled
       - cheated
+    why: >
+      ":TRIGGER:" is an abbreviated form of “gypsy,” and is based on a racist
+      stereotype that Romani people are dishonest or thieves.
 
   - matches:
       - no can do
     alternatives:
       - sorry, I can't
+    why: >
+      ":TRIGGER:" phrase originated as mocking Chinese immigrants’ English.
 
   - matches:
       - long time no see
     alternatives:
       - it's been a while
+    why: >
+      ":TRIGGER:" phrase originated as mocking Chinese immigrants’ English.
 
   - matches:
       - sherpa
@@ -246,10 +290,8 @@ triggers:
       - shepherd
       - coach
     why: >
-      "*Sherpa*" is a Tibetan ethnic group, but the word is often used to refer
-      to mountain guides. Out of respect for the humanity of these people, we
-      encourage using words that describe a job rather than the people, such as
-      "*shepherd*" or "*coach*".
+      The Sherpa are a Tibetan ethnic group, but the word is often used to refer
+      to mountain guides. Sherpa are a people, not a job.
 
   - matches:
       - pow-wow
@@ -260,17 +302,27 @@ triggers:
       - working session
       - huddle
       - jam session
+    why: >
+      Powwows are a sacred component of some Indigneous spiritual traditions. We
+      want to show respect towards all religious traditions.
 
   - matches:
       - circle the wagons
     alternatives:
       - hunker down
+    why: >
+      ":TRIGGER:" arose from colonization, and interactions between Native
+      Americans and settlers. We want to avoid this association.
 
   - matches:
       - hold down the fort
     alternatives:
       - keep things afloat
       - keen an eye on things
+    why: >
+      ":TRIGGER:" arose as a military phrase and is also viewed as a metaphor
+      for colonization and violence against Native Americans. We want to avoid
+      this association.
 
   - matches:
       - spirit animal
@@ -280,6 +332,17 @@ triggers:
       - inspiration
       - secret twin
       - when I grow up, I want to be...
+    why: >
+      Spirit animals are a sacred component of some Indigneous spiritual
+      traditions. We want to show respect towards all religious traditions.
+
+  - matches:
+      - totem pole
+    alternatives:
+      - level of seniority
+    why: >
+      Totem poles are a sacred component of some Indigneous spiritual
+      traditions. We want to show respect towards all religious traditions.
 
   - matches:
       - guru
@@ -287,12 +350,19 @@ triggers:
       - authority
       - maestro
       - virtuoso
+    why: >
+      A guru is a sacred role in some Indian spiritual traditions and is not
+      merely an expert or guide. We want to show respect towards all religious
+      traditions.
 
   - matches:
       - ninja
     alternatives:
       - expert
       - whiz
+    why: >
+      A ninja was a covert mercenary in feudal Japan. We want to show respect
+      towards cultural traditions.
 
   - matches:
       - blacklist
@@ -304,6 +374,9 @@ triggers:
       - deny list
       - exclude list
       - reject list
+    why: >
+      ":TRIGGER:" implies an association between being Black and being bad. We
+      want to avoid this association.
 
   - matches:
       - whitelist
@@ -314,6 +387,9 @@ triggers:
       - unblocked list
       - allow list
       - permit list
+    why: >
+      ":TRIGGER:" implies that being white is the only way of being good. We
+      want to avoid this association.
 
   - matches:
       - dark pattern
@@ -321,6 +397,9 @@ triggers:
       - antipattern
       - anti-UX pattern
       - deceptive design pattern
+    why: >
+      ":TRIGGER:" implies an association between darkness and Blackness and
+      being bad. We want to avoid this association.
 
   - matches:
       - master/slave
@@ -330,18 +409,45 @@ triggers:
       - primary/replica
       - leader/worker
       - main/replica
+    why: >
+      ":TRIGGER:" is rooted in the enslavement of human beings. We want to avoid
+      slavery references. 
+
+  - matches:
+      - open the kimono
+      - open kimono
+    alternatives:
+      - share information
+    why: >
+      ":TRIGGER:" arises from the sexualization of Asian women. We want to avoid
+      sexist, racist, and sexual references.
+
+  - matches:
+      - grandfathered
+    alternatives:
+      - legacy
+      - included retroactively
+    why: >
+      ":TRIGGER:" arose from voter restrictions that prevented Black people from
+      voting. We want to avoid slavery and racist oppression references. 
 
   - matches:
       - hysterical
     alternatives:
       - hilarious
       - very funny
+    why: >
+      Hysteria was a historical medical term used to dismiss and demean women.
+      We want to avoid sexist references. 
 
   - matches:
       - hysterically
     alternatives:
       - uncontrollably
       - wildly
+    why: >
+      Hysteria was a historical medical term used to dismiss and demean women.
+      We want to avoid sexist references. 
 
   - matches:
       - postmortem
@@ -350,19 +456,14 @@ triggers:
       - project or incident review
       - retrospective
       - retro
+    why: >
+      ":TRIGGER:" can trigger emotions related to death that employees may not
+      want to process at work.
 
   - matches:
       - drop-dead date
     alternatives:
       - last possible date
-
-  - matches:
-      - open kimono
-      - open the kimono
-    alternatives:
-      - share information
-
-  - matches:
-      - grandfathered
-    alternatives:
-      - legacy
+    why: >
+      ":TRIGGER:" can trigger emotions related to death that employees may not
+      want to process at work

@@ -20,6 +20,7 @@ triggers:
       - match 1.2
     alternatives:
       - alt 1.1
+    why: a string goes here
   - matches:
       - match 2.1
     ignore:
@@ -38,6 +39,7 @@ triggers:
           alternatives: ["alt 1.1"],
           ignore: undefined,
           matches: /(match 1.1|match 1.2)/i,
+          why: "a string goes here",
         },
         {
           alternatives: ["alt 2.1", "alt 2.2"],
@@ -97,8 +99,25 @@ describe("Inclusion bot", () => {
       attachments: [
         {
           color: "#ffbe2e",
-          text: "",
           fallback: "fallback",
+          blocks: [
+            {
+              accessory: {
+                action_id: "inclusion_modal",
+                text: {
+                  text: "What's this?",
+                  type: "plain_text",
+                },
+                type: "button",
+                value: "match 1",
+              },
+              text: {
+                text: "",
+                type: "mrkdwn",
+              },
+              type: "section",
+            },
+          ],
         },
         {
           color: "#2eb886",
@@ -125,8 +144,8 @@ describe("Inclusion bot", () => {
 
       expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
 
-      expectedMessage.attachments[0].text = expect.stringMatching(
-        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*? \(_<https:\/\/link\.url|What's this\?>_\)/
+      expectedMessage.attachments[0].blocks[0].text.text = expect.stringMatching(
+        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?/
       );
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
     });
@@ -143,24 +162,44 @@ describe("Inclusion bot", () => {
       msg.message.text = "hello this is the match 1 trigger and match 2a";
       handler(msg);
 
+      expectedMessage.attachments[0].blocks[0].accessory.value =
+        "match 1|match 2a";
+      expectedMessage.attachments[0].blocks.push({
+        type: "section",
+        text: { type: "mrkdwn", text: "" },
+      });
+
       expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
 
-      expectedMessage.attachments[0].text = expect.stringMatching(
-        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?\n• Instead of saying "match 2a," how about \*b1\*? \(_<https:\/\/link\.url|What's this\?>_\)/
+      expectedMessage.attachments[0].blocks[0].text.text = expect.stringMatching(
+        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?/
       );
+      expectedMessage.attachments[0].blocks[1].text.text = expect.stringMatching(
+        /• Instead of saying "match 2a," how about \*b1\*?/
+      );
+
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
+
+      // Reset the parts of the expected message that we changed above.
+      expectedMessage.attachments[0].blocks[0].accessory.value = "match 1";
+      expectedMessage.attachments[0].blocks.splice(1, 1);
     });
 
     it("handles two triggering phrases where one is explicitly ignored", () => {
       msg.message.text = "hello this is the not match 1 trigger and match 2a";
       handler(msg);
 
+      expectedMessage.attachments[0].blocks[0].accessory.value = "match 2a";
+
       expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
 
-      expectedMessage.attachments[0].text = expect.stringMatching(
-        /• Instead of saying "match 2a," how about \*b1\*? \(_<https:\/\/link\.url|What's this\?>_\)/
+      expectedMessage.attachments[0].blocks[0].text.text = expect.stringMatching(
+        /• Instead of saying "match 2a," how about \*b1\*?/
       );
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
+
+      // Reset the parts of the expected message that we changed above.
+      expectedMessage.attachments[0].blocks[0].accessory.value = "match 1";
     });
   });
 });
