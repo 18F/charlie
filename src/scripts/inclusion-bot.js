@@ -136,7 +136,7 @@ module.exports = async (app) => {
           .pop();
 
         const text = match?.why
-          ? match.why.replace(/:trigger:/gi, capitalize(word))
+          ? match.why.replace(/:term:/gi, capitalize(word))
           : `We haven't finished building an explanation for "*${word.toLowerCase()}*." Please ask in #g-diversity!`;
 
         return {

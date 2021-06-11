@@ -13,6 +13,8 @@
 #
 # The triggers property is the list of phrases that will cause the bot to
 # respond, what it should ignore, and alternative words or phrases to suggest.
+# Optionally, there is a place to explain more about why the phrase triggered
+# the bot's response.
 #
 # The content of this YAML file is the responsibility of the TTS Diversity
 # Guild. Before making significant changes, it can be helpful to drop by the
@@ -32,10 +34,18 @@
 # (so indented two spaces from the dash in "- matches"). Like with matches,
 # add one ignore phrase per line, with a dash and space at the beginning.
 #
-# Finally, add a list of alternative phrases that should be suggested if this
+# Now add a list of alternative phrases that should be suggested if this
 # response is triggered. Just like with "ignore:", the "alternatives:" line
 # should be aligned with  "matches". Then each alternative on its own line
 # starting with a dash and space.
+#
+# Finally, you can add some text explaining why the triggering phrase is
+# problematic with the "why:" property. It should align with the previous ones.
+# You can make your text cover multiple lines by starting with ">", going to the
+# next line, and indenting a bit further. Your text will continue until you
+# start a new property (see some of the existing "why" text below for examples
+# of how to do it). You can use :TERM: in your text and it will be replaced with
+# the specific text that triggered the bot to respond.
 #
 # If you think it would be useful to describe what you've added, you can do
 # that by adding a comment. Comments are anything after a # sign, just like
@@ -62,8 +72,8 @@ triggers:
       - ignoring
       - not paying attention to
     why: >
-      ":TRIGGER:" refers to inattention or ignorance. Blind, Deaf, and other
-      visually- or hearing-impaired people are not inattentive or ignorant.
+      ":TERM:" refers to inattention or ignorance. Blind, Deaf, and other
+      visually or hearing-impaired people are not inattentive or ignorant.
       Phrases like this create a negative connotation with blindness and
       deafness.
       
@@ -75,7 +85,7 @@ triggers:
       - building the airplane while we fly it
       - finding our way together
     why: >
-      ":TRIGGER:" refers to ignorance. Blind and other visually-impaired people
+      ":TERM:" refers to ignorance. Blind and other visually impaired people
       are not ignorant. Using phrases like this create a negative connotation
       with blindness.
 
@@ -97,7 +107,7 @@ triggers:
       - irrational
       - ridiculous
     why: >
-      ":TRIGGER:" arose as a derogatory reference to people with mental
+      ":TERM:" arose as a derogatory reference to people with mental
       illnesses. We want to avoid stigmatizing mental illness.
 
   - matches:
@@ -120,7 +130,7 @@ triggers:
       - asinine
       - unbelievable
     why: >
-      ":TRIGGER:" arose as a derogatory reference to people with mental
+      ":TERM:" arose as a derogatory reference to people with mental
       illnesses. We want to avoid stigmatizing mental illness.
 
   - matches:
@@ -131,7 +141,7 @@ triggers:
       - volatile
       - unpredictable
     why: >
-      ":TRIGGER:" arose as a derogatory reference to people with motor control
+      ":TERM:" arose as a derogatory reference to people with motor control
       impairments due to illness or substance use.  We want to avoid
       stigmatizing mental illness and addiction.
 
@@ -140,7 +150,7 @@ triggers:
     alternatives:
       - oops
     why: >
-      ":TRIGGER:" term arose as a derogatory reference to people with
+      ":TERM:" term arose as a derogatory reference to people with
       intellectual disabilities. It was popularized on the TV show South Park
       to mock a character. We want to avoid stigmatizing disabilities.
 
@@ -164,7 +174,7 @@ triggers:
       - thoughtless
       - pointless
     why: >
-      ":TRIGGER:" arose as a derogatory reference to people with intellectual
+      ":TERM:" arose as a derogatory reference to people with intellectual
       disabilities. We want to avoid stigmatizing disabilities.
 
   - matches:
@@ -178,7 +188,7 @@ triggers:
       - bad
       - disappointing
     why: >
-      ":TRIGGER:" arose as a derogatory reference to people with disabilities.
+      ":TERM:" arose as a derogatory reference to people with disabilities.
       We want to avoid stigmatizing intellectual disabilities.
 
   - matches:
@@ -188,7 +198,7 @@ triggers:
       - enthusiast
       - fan
     why: >
-      ":TRIGGER:" refers to someone who has a substance abuse disorder.
+      ":TERM:" refers to someone who has a substance abuse disorder.
       Addiction is a disease, not a choice or moral failing. We want to avoid
       stigmatizing illness and addiction.
 
@@ -197,7 +207,7 @@ triggers:
     alternatives:
       - irresistible
     why: >
-      ":TRIGGER:" refers to something tempting. Addiction is a disease, not a
+      ":TERM:" refers to something tempting. Addiction is a disease, not a
       choice or moral failing. We want to avoid stigmatizing addiction. Crack
       cocaine usage has also been racialized, resulting in discriminatory
       policies that target Black people.
@@ -215,7 +225,7 @@ triggers:
     alternatives:
       - y'all
     why: >
-      "*:TRIGGER:*" is commonly used to refer to groups of people, but it is a
+      "*:TERM:*" is commonly used to refer to groups of people, but it is a
       gendered pronoun. It can make people who do not identify as "guys" feel
       excluded, even if that's not the intent. Regardless of cultural background
       or innocent intent, we recommend alternative language that makes it clear
@@ -230,7 +240,7 @@ triggers:
       - derelict
       - slapdash
     why: >
-      ":TRIGGER:" is used to describe neighborhoods that the speaker considers
+      ":TERM:" is used to describe neighborhoods that the speaker considers
       undesirable. This term has a deeply racist history against Jewish and
       Black communities.
 
@@ -243,7 +253,7 @@ triggers:
       - vocal
       - assertive
     why: >
-      ":TRIGGER:" is usually used to silence Black people and imply that they do
+      ":TERM:" is usually used to silence Black people and imply that they do
       not have a right to be assertive.
 
   - matches:
@@ -252,7 +262,7 @@ triggers:
       - teeming masses
       - onlookers
     why: >
-      ":TRIGGER:" refers to people who are seen as rowdy or disruptive,
+      ":TERM:" refers to people who are seen as rowdy or disruptive,
       indicating that their viewpoints should be ignored. This term arose from
       theater performance seating, and has racist and classist origins.
 
@@ -266,7 +276,7 @@ triggers:
       - swindled
       - cheated
     why: >
-      ":TRIGGER:" is an abbreviated form of “gypsy,” and is based on a racist
+      ":TERM:" is an abbreviated form of “gypsy,” and is based on a racist
       stereotype that Romani people are dishonest or thieves.
 
   - matches:
@@ -274,14 +284,14 @@ triggers:
     alternatives:
       - sorry, I can't
     why: >
-      ":TRIGGER:" phrase originated as mocking Chinese immigrants’ English.
+      ":TERM:" phrase originated as mocking Chinese immigrants’ English.
 
   - matches:
       - long time no see
     alternatives:
       - it's been a while
     why: >
-      ":TRIGGER:" phrase originated as mocking Chinese immigrants’ English.
+      ":TERM:" phrase originated as mocking Chinese immigrants’ English.
 
   - matches:
       - sherpa
@@ -311,7 +321,7 @@ triggers:
     alternatives:
       - hunker down
     why: >
-      ":TRIGGER:" arose from colonization, and interactions between Native
+      ":TERM:" arose from colonization, and interactions between Native
       Americans and settlers. We want to avoid this association.
 
   - matches:
@@ -320,7 +330,7 @@ triggers:
       - keep things afloat
       - keen an eye on things
     why: >
-      ":TRIGGER:" arose as a military phrase and is also viewed as a metaphor
+      ":TERM:" arose as a military phrase and is also viewed as a metaphor
       for colonization and violence against Native Americans. We want to avoid
       this association.
 
@@ -375,7 +385,7 @@ triggers:
       - exclude list
       - reject list
     why: >
-      ":TRIGGER:" implies an association between being Black and being bad. We
+      ":TERM:" implies an association between being Black and being bad. We
       want to avoid this association.
 
   - matches:
@@ -388,7 +398,7 @@ triggers:
       - allow list
       - permit list
     why: >
-      ":TRIGGER:" implies that being white is the only way of being good. We
+      ":TERM:" implies that being white is the only way of being good. We
       want to avoid this association.
 
   - matches:
@@ -398,7 +408,7 @@ triggers:
       - anti-UX pattern
       - deceptive design pattern
     why: >
-      ":TRIGGER:" implies an association between darkness and Blackness and
+      ":TERM:" implies an association between darkness and Blackness and
       being bad. We want to avoid this association.
 
   - matches:
@@ -410,7 +420,7 @@ triggers:
       - leader/worker
       - main/replica
     why: >
-      ":TRIGGER:" is rooted in the enslavement of human beings. We want to avoid
+      ":TERM:" is rooted in the enslavement of human beings. We want to avoid
       slavery references. 
 
   - matches:
@@ -419,7 +429,7 @@ triggers:
     alternatives:
       - share information
     why: >
-      ":TRIGGER:" arises from the sexualization of Asian women. We want to avoid
+      ":TERM:" arises from the sexualization of Asian women. We want to avoid
       sexist, racist, and sexual references.
 
   - matches:
@@ -428,7 +438,7 @@ triggers:
       - legacy
       - included retroactively
     why: >
-      ":TRIGGER:" arose from voter restrictions that prevented Black people from
+      ":TERM:" arose from voter restrictions that prevented Black people from
       voting. We want to avoid slavery and racist oppression references. 
 
   - matches:
@@ -457,7 +467,7 @@ triggers:
       - retrospective
       - retro
     why: >
-      ":TRIGGER:" can trigger emotions related to death that employees may not
+      ":TERM:" can trigger emotions related to death that employees may not
       want to process at work.
 
   - matches:
@@ -465,5 +475,5 @@ triggers:
     alternatives:
       - last possible date
     why: >
-      ":TRIGGER:" can trigger emotions related to death that employees may not
+      ":TERM:" can trigger emotions related to death that employees may not
       want to process at work
