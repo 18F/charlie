@@ -19,6 +19,18 @@ describe("Inclusion bot config file", () => {
       return { message: () => {}, pass: true };
     },
 
+    isString: (value, index) => {
+      if (typeof value !== "string") {
+        return {
+          message: () =>
+            `item ${index} is a ${typeof value}, but should be a string`,
+          pass: false,
+        };
+      }
+
+      return { message: () => {}, pass: true };
+    },
+
     isValidTrigger: (trigger, index) => {
       if (typeof trigger !== "object") {
         return {
@@ -65,9 +77,15 @@ describe("Inclusion bot config file", () => {
         };
       }
 
-      const invalidKeys = keys.filter(
-        (key) => key !== "matches" && key !== "alternatives" && key !== "ignore"
-      );
+      if (keys.indexOf("why") >= 0 && typeof trigger.why !== "string") {
+        return {
+          message: () => `item ${index} why is not a string`,
+          pass: false,
+        };
+      }
+
+      const validKeys = ["matches", "alternatives", "ignore", "why"];
+      const invalidKeys = keys.filter((key) => !validKeys.includes(key));
 
       if (invalidKeys.length > 0) {
         return {
@@ -108,6 +126,10 @@ describe("Inclusion bot config file", () => {
 
       if (trigger.ignore) {
         expect(trigger.ignore).isArrayOfStrings(i, "ignores");
+      }
+
+      if (trigger.why) {
+        expect(trigger.why).isString(i);
       }
     });
   });

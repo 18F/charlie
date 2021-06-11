@@ -13,6 +13,8 @@
 #
 # The triggers property is the list of phrases that will cause the bot to
 # respond, what it should ignore, and alternative words or phrases to suggest.
+# Optionally, there is a place to explain more about why the phrase triggered
+# the bot's response.
 #
 # The content of this YAML file is the responsibility of the TTS Diversity
 # Guild. Before making significant changes, it can be helpful to drop by the
@@ -32,10 +34,18 @@
 # (so indented two spaces from the dash in "- matches"). Like with matches,
 # add one ignore phrase per line, with a dash and space at the beginning.
 #
-# Finally, add a list of alternative phrases that should be suggested if this
+# Now add a list of alternative phrases that should be suggested if this
 # response is triggered. Just like with "ignore:", the "alternatives:" line
 # should be aligned with  "matches". Then each alternative on its own line
 # starting with a dash and space.
+#
+# Finally, you can add some text explaining why the triggering phrase is
+# problematic with the "why:" property. It should align with the previous ones.
+# You can make your text cover multiple lines by starting with ">", going to the
+# next line, and indenting a bit further. Your text will continue until you
+# start a new property (see some of the existing "why" text below for examples
+# of how to do it). You can use :TERM: in your text and it will be replaced with
+# the specific text that triggered the bot to respond.
 #
 # If you think it would be useful to describe what you've added, you can do
 # that by adding a comment. Comments are anything after a # sign, just like
@@ -61,6 +71,11 @@ triggers:
       - unaware of
       - ignoring
       - not paying attention to
+    why: >
+      ":TERM:" refers to inattention or ignorance. Blind, Deaf, and other
+      visually or hearing-impaired people are not inattentive or ignorant.
+      Phrases like this create a negative connotation with blindness and
+      deafness.
       
   - matches:
       - blind leading the blind
@@ -69,6 +84,10 @@ triggers:
       - feeling around in the dark
       - building the airplane while we fly it
       - finding our way together
+    why: >
+      ":TERM:" refers to ignorance. Blind and other visually impaired people
+      are not ignorant. Using phrases like this create a negative connotation
+      with blindness.
 
   - matches:
       - crazy
@@ -87,6 +106,9 @@ triggers:
       - unbelievable
       - irrational
       - ridiculous
+    why: >
+      ":TERM:" arose as a derogatory reference to people with mental
+      illnesses. We want to avoid stigmatizing mental illness.
 
   - matches:
       - psycho
@@ -107,6 +129,9 @@ triggers:
       - overwhelming
       - asinine
       - unbelievable
+    why: >
+      ":TERM:" arose as a derogatory reference to people with mental
+      illnesses. We want to avoid stigmatizing mental illness.
 
   - matches:
       - spaz
@@ -115,11 +140,19 @@ triggers:
     alternatives:
       - volatile
       - unpredictable
+    why: >
+      ":TERM:" arose as a derogatory reference to people with motor control
+      impairments due to illness or substance use.  We want to avoid
+      stigmatizing mental illness and addiction.
 
   - matches:
       - derp
     alternatives:
       - oops
+    why: >
+      ":TERM:" term arose as a derogatory reference to people with
+      intellectual disabilities. It was popularized on the TV show South Park
+      to mock a character. We want to avoid stigmatizing disabilities.
 
   - matches:
       - moron
@@ -140,6 +173,9 @@ triggers:
       - careless
       - thoughtless
       - pointless
+    why: >
+      ":TERM:" arose as a derogatory reference to people with intellectual
+      disabilities. We want to avoid stigmatizing disabilities.
 
   - matches:
       - lame
@@ -151,6 +187,9 @@ triggers:
       - pathetic
       - bad
       - disappointing
+    why: >
+      ":TERM:" arose as a derogatory reference to people with disabilities.
+      We want to avoid stigmatizing intellectual disabilities.
 
   - matches:
       - junkie
@@ -158,11 +197,20 @@ triggers:
     alternatives:
       - enthusiast
       - fan
+    why: >
+      ":TERM:" refers to someone who has a substance abuse disorder.
+      Addiction is a disease, not a choice or moral failing. We want to avoid
+      stigmatizing illness and addiction.
 
   - matches:
       - like crack
     alternatives:
       - irresistible
+    why: >
+      ":TERM:" refers to something tempting. Addiction is a disease, not a
+      choice or moral failing. We want to avoid stigmatizing addiction. Crack
+      cocaine usage has also been racialized, resulting in discriminatory
+      policies that target Black people.
 
   - matches:
       - guys
@@ -176,6 +224,13 @@ triggers:
         # /(?<!boba )(?<!five )(?<!5 )(?<!halal )guy(s|z)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i,
     alternatives:
       - y'all
+    why: >
+      "*:TERM:*" is commonly used to refer to groups of people, but it is a
+      gendered pronoun. It can make people who do not identify as "guys" feel
+      excluded, even if that's not the intent. Regardless of cultural background
+      or innocent intent, we recommend alternative language that makes it clear
+      everyone is included in the conversation! Consider a word like "*y'all*"
+      or "*folks*" instead!
 
   - matches:
       - ghetto
@@ -184,6 +239,10 @@ triggers:
       - distressed
       - derelict
       - slapdash
+    why: >
+      ":TERM:" is used to describe neighborhoods that the speaker considers
+      undesirable. This term has a deeply racist history against Jewish and
+      Black communities.
 
   - matches:
       - uppity
@@ -193,12 +252,29 @@ triggers:
       - highfalutin
       - vocal
       - assertive
+    why: >
+      ":TERM:" is usually used to silence Black people and imply that they do
+      not have a right to be assertive.
 
   - matches:
       - peanut gallery
     alternatives:
       - teeming masses
       - onlookers
+    why: >
+      ":TERM:" refers to people who are seen as rowdy or disruptive,
+      indicating that their viewpoints should be ignored. This term arose from
+      theater performance seating, and has racist and classist origins.
+
+  - matches:
+      - gypsy
+      - gypsies
+    alternatives:
+      - a member of the Romani people
+      - a nomad
+    why: >
+      The term "gypsy" has historically been used as a racial slur against the
+      Romani people.
 
   - matches:
       - gyp
@@ -209,16 +285,24 @@ triggers:
     alternatives:
       - swindled
       - cheated
+    why: >
+      ":TERM:" is an abbreviated form of “gypsy” (a term that has historically
+      been used as a racist slur for Romani people), and is based on a racist
+      stereotype that Romani people are dishonest or thieves.
 
   - matches:
       - no can do
     alternatives:
       - sorry, I can't
+    why: >
+      ":TERM:" phrase originated as mocking Chinese immigrants’ English.
 
   - matches:
       - long time no see
     alternatives:
       - it's been a while
+    why: >
+      ":TERM:" phrase originated as mocking Chinese immigrants’ English.
 
   - matches:
       - sherpa
@@ -226,6 +310,9 @@ triggers:
       - guide
       - shepherd
       - coach
+    why: >
+      The Sherpa are a Tibetan ethnic group, but the word is often used to refer
+      to mountain guides. Sherpa are a people, not a job.
 
   - matches:
       - pow-wow
@@ -236,17 +323,27 @@ triggers:
       - working session
       - huddle
       - jam session
+    why: >
+      Powwows are a sacred component of some Indigneous spiritual traditions. We
+      want to show respect towards all religious traditions.
 
   - matches:
       - circle the wagons
     alternatives:
       - hunker down
+    why: >
+      ":TERM:" arose from colonization, and interactions between Native
+      Americans and settlers. We want to avoid this association.
 
   - matches:
       - hold down the fort
     alternatives:
       - keep things afloat
       - keen an eye on things
+    why: >
+      ":TERM:" arose as a military phrase and is also viewed as a metaphor
+      for colonization and violence against Native Americans. We want to avoid
+      this association.
 
   - matches:
       - spirit animal
@@ -256,6 +353,17 @@ triggers:
       - inspiration
       - secret twin
       - when I grow up, I want to be...
+    why: >
+      Spirit animals are a sacred component of some Indigneous spiritual
+      traditions. We want to show respect towards all religious traditions.
+
+  - matches:
+      - totem pole
+    alternatives:
+      - level of seniority
+    why: >
+      Totem poles are a sacred component of some Indigneous spiritual
+      traditions. We want to show respect towards all religious traditions.
 
   - matches:
       - guru
@@ -263,12 +371,19 @@ triggers:
       - authority
       - maestro
       - virtuoso
+    why: >
+      A guru is a sacred role in some Indian spiritual traditions and is not
+      merely an expert or guide. We want to show respect towards all religious
+      traditions.
 
   - matches:
       - ninja
     alternatives:
       - expert
       - whiz
+    why: >
+      A ninja was a covert mercenary in feudal Japan. We want to show respect
+      towards cultural traditions.
 
   - matches:
       - blacklist
@@ -280,6 +395,9 @@ triggers:
       - deny list
       - exclude list
       - reject list
+    why: >
+      ":TERM:" implies an association between being Black and being bad. We
+      want to avoid this association.
 
   - matches:
       - whitelist
@@ -290,6 +408,9 @@ triggers:
       - unblocked list
       - allow list
       - permit list
+    why: >
+      ":TERM:" implies that being white is the only way of being good. We
+      want to avoid this association.
 
   - matches:
       - dark pattern
@@ -297,6 +418,9 @@ triggers:
       - antipattern
       - anti-UX pattern
       - deceptive design pattern
+    why: >
+      ":TERM:" implies an association between darkness and Blackness and
+      being bad. We want to avoid this association.
 
   - matches:
       - master/slave
@@ -306,18 +430,45 @@ triggers:
       - primary/replica
       - leader/worker
       - main/replica
+    why: >
+      ":TERM:" is rooted in the enslavement of human beings. We want to avoid
+      slavery references. 
+
+  - matches:
+      - open the kimono
+      - open kimono
+    alternatives:
+      - share information
+    why: >
+      ":TERM:" arises from the sexualization of Asian women. We want to avoid
+      sexist, racist, and sexual references.
+
+  - matches:
+      - grandfathered
+    alternatives:
+      - legacy
+      - included retroactively
+    why: >
+      ":TERM:" arose from voter restrictions that prevented Black people from
+      voting. We want to avoid slavery and racist oppression references. 
 
   - matches:
       - hysterical
     alternatives:
       - hilarious
       - very funny
+    why: >
+      Hysteria was a historical medical term used to dismiss and demean women.
+      We want to avoid sexist references. 
 
   - matches:
       - hysterically
     alternatives:
       - uncontrollably
       - wildly
+    why: >
+      Hysteria was a historical medical term used to dismiss and demean women.
+      We want to avoid sexist references. 
 
   - matches:
       - postmortem
@@ -326,19 +477,14 @@ triggers:
       - project or incident review
       - retrospective
       - retro
+    why: >
+      ":TERM:" can trigger emotions related to death that employees may not
+      want to process at work.
 
   - matches:
       - drop-dead date
     alternatives:
       - last possible date
-
-  - matches:
-      - open kimono
-      - open the kimono
-    alternatives:
-      - share information      
-
-  - matches:
-      - grandfathered
-    alternatives:
-      - legacy
+    why: >
+      ":TERM:" can trigger emotions related to death that employees may not
+      want to process at work

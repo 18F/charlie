@@ -3,7 +3,7 @@
   "version": "2.7.1",
   "private": true,
   "scripts": {
-    "lint": "18f-eslint '**/*.js'",
+    "lint": "eslint '**/*.js'",
     "start": "node src/main.js",
     "start-dev": "npx nodemon src/main.js",
     "test": "jest 'src/.+/?.+\\.test\\.js'",
@@ -23,11 +23,15 @@
     "pg": "^8.5.1"
   },
   "engines": {
-    "node": "^12.11.1"
+    "node": "^14.16.0"
   },
   "devDependencies": {
-    "@18f/18f-eslint": "^1.2.5",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
     "jest": "^26.6.3",
+    "prettier": "^2.2.1",
     "sinon": "^10.0.0"
   },
   "jest": {

@@ -5,6 +5,8 @@ const {
   slack: { addEmojiReaction, postEphemeralResponse },
 } = require("../utils");
 
+const capitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
+
 const getTriggers = () => {
   // Read in the huge list of bots from the Yaml file
   const ymlStr = fs.readFileSync(path.join(__dirname, "inclusion-bot.yaml"));
@@ -48,7 +50,7 @@ module.exports = async (app) => {
         // in the middle of a block of text. This is especially important for
         // things like Google Docs links, which might contain any variety of
         // unfortunate randomish-letter combinations.
-        const matchRegex = new RegExp(`\\b${matches.source}\\b`);
+        const matchRegex = new RegExp(`\\b${matches.source}\\b`, "i");
         const ignoreRegex = ignore || "";
 
         // Remove things that should be removed before testing for matches. This
@@ -81,7 +83,22 @@ module.exports = async (app) => {
       attachments: [
         {
           color: "#ffbe2e",
-          text: `${pretexts.join("\n")} (_<${link}|What's this?>_)`,
+          blocks: pretexts.map((text, i) => {
+            const block = {
+              type: "section",
+              text: { type: "mrkdwn", text },
+            };
+
+            if (i === 0) {
+              block.accessory = {
+                type: "button",
+                text: { type: "plain_text", text: "What's this?" },
+                value: specificMatch.map(({ text: t }) => t).join("|"),
+                action_id: "inclusion_modal",
+              };
+            }
+            return block;
+          }),
           fallback: "fallback",
         },
         {
@@ -97,6 +114,63 @@ module.exports = async (app) => {
       unfurl_media: false,
     });
   });
+
+  app.action(
+    "inclusion_modal",
+    async ({
+      ack,
+      action: { value },
+      body: { trigger_id: trigger },
+      client,
+    }) => {
+      ack();
+
+      const matchWords = value.split("|");
+
+      const blocks = matchWords.map((word) => {
+        const match = triggers
+          .filter(({ matches }) => {
+            matches.test(word);
+            return matches.test(word);
+          })
+          .pop();
+
+        const text = match?.why
+          ? match.why.replace(/:term:/gi, capitalize(word))
+          : `We haven't finished building an explanation for "*${word.toLowerCase()}*." Please ask in #g-diversity!`;
+
+        return {
+          type: "section",
+          text: { type: "mrkdwn", text },
+        };
+      });
+
+      for (let i = 0; i < blocks.length; i += 1) {
+        blocks.splice(i + 1, 0, {
+          type: "divider",
+        });
+        i += 1;
+      }
+      blocks.push({
+        type: "context",
+        elements: [
+          {
+            type: "mrkdwn",
+            text: `See our <${link}|blog post> for more information about this bot.`,
+          },
+        ],
+      });
+
+      client.views.open({
+        trigger_id: trigger,
+        view: {
+          type: "modal",
+          title: { type: "plain_text", text: "Inclusion Bot" },
+          blocks,
+        },
+      });
+    }
+  );
 };
 
 module.exports.getTriggers = getTriggers;
