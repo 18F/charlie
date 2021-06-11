@@ -267,6 +267,16 @@ triggers:
       theater performance seating, and has racist and classist origins.
 
   - matches:
+      - gypsy
+      - gypsies
+    alternatives:
+      - a member of the Romani people
+      - a nomad
+    why: >
+      The term "gypsy" has historically been used as a racial slur against the
+      Romani people.
+
+  - matches:
       - gyp
       - gypped
     ignore:
@@ -276,7 +286,8 @@ triggers:
       - swindled
       - cheated
     why: >
-      ":TERM:" is an abbreviated form of “gypsy,” and is based on a racist
+      ":TERM:" is an abbreviated form of “gypsy” (a term that has historically
+      been used as a racist slur for Romani people), and is based on a racist
       stereotype that Romani people are dishonest or thieves.
 
   - matches:
