@@ -56,8 +56,8 @@ const getChannelID = (() => {
  * @async
  * @returns {Promise<Array<Object>>} A list of Slack users.
  */
-const getSlackUsers = async () => {
-  return cache("get slack users", 1440, async () => {
+const getSlackUsers = async () =>
+  cache("get slack users", 1440, async () => {
     const all = [];
     let cursor;
 
@@ -84,10 +84,9 @@ const getSlackUsers = async () => {
 
     return all;
   });
-};
 
-const getSlackUsersInConversation = async ({ client, event: { channel } }) => {
-  return cache(`get slack users in conversation ${channel}`, 10, async () => {
+const getSlackUsersInConversation = async ({ client, event: { channel } }) =>
+  cache(`get slack users in conversation ${channel}`, 10, async () => {
     const { members: channelUsers } = await client.conversations.members({
       channel,
     });
@@ -95,7 +94,6 @@ const getSlackUsersInConversation = async ({ client, event: { channel } }) => {
 
     return allUsers.filter(({ id }) => channelUsers.includes(id));
   });
-};
 
 const postEphemeralMessage = async (message) => {
   await defaultClient.chat.postEphemeral({
@@ -116,12 +114,11 @@ const postEphemeralResponse = async (toMsg, message) => {
   });
 };
 
-const postMessage = async (message) => {
-  return defaultClient.chat.postMessage({
+const postMessage = async (message) =>
+  defaultClient.chat.postMessage({
     ...message,
     token: process.env.SLACK_TOKEN,
   });
-};
 
 const sendDirectMessage = async (to, message) => {
   const {

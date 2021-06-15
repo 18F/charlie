@@ -3,9 +3,7 @@ const { Client } = require("pg");
 let client;
 const brain = new Map();
 
-const get = (key) => {
-  return brain.get(key);
-};
+const get = (key) => brain.get(key);
 
 const set = async (key, value) => {
   brain.set(key, value);

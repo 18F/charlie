@@ -11,11 +11,11 @@
   },
   "dependencies": {
     "@18f/us-federal-holidays": "^1.4.0",
-    "@slack/bolt": "^3.3.0",
-    "aws-sdk": "^2.822.0",
+    "@slack/bolt": "^3.4.0",
+    "aws-sdk": "^2.927.0",
     "axios": "^0.21.1",
     "cfenv": "^1.2.3",
-    "dotenv": "^8.2.0",
+    "dotenv": "^10.0.0",
     "js-yaml": "^4.1.0",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.32",
@@ -26,13 +26,13 @@
     "node": "^14.16.0"
   },
   "devDependencies": {
-    "eslint": "^7.25.0",
+    "eslint": "^7.28.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-import": "^2.22.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
     "jest": "^26.6.3",
-    "prettier": "^2.2.1",
-    "sinon": "^10.0.0"
+    "prettier": "^2.3.1",
+    "sinon": "^11.1.1"
   },
   "jest": {
     "testEnvironment": "node"
