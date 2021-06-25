@@ -3,6 +3,7 @@ const emojis = new Map([
   ["Birthday of Martin Luther King, Jr.", ":mlk:"],
   ["Washington's Birthday", ":george:"],
   ["Memorial Day", ":poppy-flowers:"],
+  ["Juneteenth", ":juneteenth-star:"],
   ["Independence Day", ":fireworks:"],
   ["Labor Day", ":flex::skin-tone-2:"],
   ["Columbus Day", ":ohio:"],
