@@ -48,6 +48,12 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/Minnesota.json"
   },
   {
+    "botName": "Wisconsin Facts",
+    "defaultEmoji": ":wisconsin-wi:",
+    "trigger": "wisconsin facts",
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/Wisconsin.json"
+  },
+  {
     "botName": "screambot",
     "defaultEmoji": ":kevin-home-alone-scream:",
     "trigger": "screambot",
