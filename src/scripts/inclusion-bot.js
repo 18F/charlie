@@ -21,6 +21,10 @@ const getTriggers = () => {
     triggers: triggers.map(({ ignore, matches, ...rest }) => ({
       ignore: ignore && RegExp(`(${ignore.join("|")})`, "ig"),
       matches: RegExp(
+        // The backend of this regex (starting at "(?=") is using a positive
+        // lookahead to un-match things that are inside quotes (regular double
+        // quotes, single quote, or smart quotes). You can play around with the
+        // regex here: https://regexr.com/61eiq
         `(${matches.join("|")})(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)`,
         "i"
       ),
