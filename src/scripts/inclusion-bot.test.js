@@ -38,13 +38,14 @@ triggers:
         {
           alternatives: ["alt 1.1"],
           ignore: undefined,
-          matches: /(match 1.1|match 1.2)/i,
+          matches:
+            /(match 1.1|match 1.2)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i,
           why: "a string goes here",
         },
         {
           alternatives: ["alt 2.1", "alt 2.2"],
           ignore: /(ignore 2.1)/gi,
-          matches: /(match 2.1)/i,
+          matches: /(match 2.1)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i,
         },
       ],
     });
@@ -63,33 +64,38 @@ describe("Inclusion bot", () => {
     },
   };
 
-  beforeAll(() => {
-    bot.getTriggers = () => ({
-      link: "http://link.url",
-      message: "This is the message",
-      triggers: [
-        {
-          alternatives: ["a1", "a2", "a3"],
-          ignore: ["not match 1"],
-          matches: /(match 1)/i,
-        },
-        {
-          alternatives: ["b1"],
-          matches: /(match 2a|match 2b)/i,
-        },
-      ],
-    });
-  });
-
   beforeEach(() => {
     jest.resetAllMocks();
+
+    fs.readFileSync.mockReturnValue(`
+link: https://link.url
+message: "This is the message"
+
+triggers:
+  - matches:
+      - match 1
+    alternatives:
+      - a1
+      - a2
+      - a3
+    ignore:
+      - not match 1
+  - matches:
+      - match 2a
+      - match 2b
+    alternatives:
+      - b1
+`);
   });
 
   it("subscribes to case-insensitive utterances of uninclusive language", () => {
     bot(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      new RegExp(/\b(match 1)|(match 2a|match 2b)\b/, "i"),
+      new RegExp(
+        /\b(match 1)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)|(match 2a|match 2b)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)\b/,
+        "i"
+      ),
       expect.any(Function)
     );
   });
@@ -144,9 +150,10 @@ describe("Inclusion bot", () => {
 
       expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
 
-      expectedMessage.attachments[0].blocks[0].text.text = expect.stringMatching(
-        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?/
-      );
+      expectedMessage.attachments[0].blocks[0].text.text =
+        expect.stringMatching(
+          /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?/
+        );
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
     });
 
@@ -171,12 +178,14 @@ describe("Inclusion bot", () => {
 
       expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
 
-      expectedMessage.attachments[0].blocks[0].text.text = expect.stringMatching(
-        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?/
-      );
-      expectedMessage.attachments[0].blocks[1].text.text = expect.stringMatching(
-        /• Instead of saying "match 2a," how about \*b1\*?/
-      );
+      expectedMessage.attachments[0].blocks[0].text.text =
+        expect.stringMatching(
+          /• Instead of saying "match 1," how about \*(a1|a2|a3)\*?/
+        );
+      expectedMessage.attachments[0].blocks[1].text.text =
+        expect.stringMatching(
+          /• Instead of saying "match 2a," how about \*b1\*?/
+        );
 
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
 
@@ -193,9 +202,36 @@ describe("Inclusion bot", () => {
 
       expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
 
-      expectedMessage.attachments[0].blocks[0].text.text = expect.stringMatching(
-        /• Instead of saying "match 2a," how about \*b1\*?/
-      );
+      expectedMessage.attachments[0].blocks[0].text.text =
+        expect.stringMatching(
+          /• Instead of saying "match 2a," how about \*b1\*?/
+        );
+      expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
+
+      // Reset the parts of the expected message that we changed above.
+      expectedMessage.attachments[0].blocks[0].accessory.value = "match 1";
+    });
+
+    it("does not trigger on phrases that are contained within quotes", () => {
+      msg.message.text = `this "is match 1 but" in quotes and also "match 1" without anything else in the quotes`;
+      handler(msg);
+
+      expect(addEmojiReaction).not.toHaveBeenCalled();
+      expect(postEphemeralResponse).not.toHaveBeenCalled();
+    });
+
+    it("but it does trigger if one phrase is unquoted", () => {
+      msg.message.text = `here is "match 1" but match 2a is not quoted`;
+      handler(msg);
+
+      expectedMessage.attachments[0].blocks[0].accessory.value = "match 2a";
+
+      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
+
+      expectedMessage.attachments[0].blocks[0].text.text =
+        expect.stringMatching(
+          /• Instead of saying "match 2a," how about \*b1\*?/
+        );
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
 
       // Reset the parts of the expected message that we changed above.

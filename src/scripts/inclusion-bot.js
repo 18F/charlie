@@ -20,7 +20,10 @@ const getTriggers = () => {
     message,
     triggers: triggers.map(({ ignore, matches, ...rest }) => ({
       ignore: ignore && RegExp(`(${ignore.join("|")})`, "ig"),
-      matches: RegExp(`(${matches.join("|")})`, "i"),
+      matches: RegExp(
+        `(${matches.join("|")})(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)`,
+        "i"
+      ),
       ...rest,
     })),
   };
