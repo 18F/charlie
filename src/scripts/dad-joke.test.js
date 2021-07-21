@@ -127,7 +127,7 @@ describe("dad jokes (are the best worst)", () => {
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":dog-joke:",
           text: "joke setup here",
-          username: "Charlie the Dad",
+          username: "Jed Bartlett",
         });
 
         // Ensure the punchline part comes after a delay by clearing out the
@@ -138,7 +138,7 @@ describe("dad jokes (are the best worst)", () => {
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":dog-joke:",
           text: "the funny part",
-          username: "Charlie the Dad",
+          username: "Jed Bartlett",
         });
       });
     });
