@@ -27,14 +27,14 @@ module.exports = (app) => {
       say({
         icon_emoji: ":dog-joke:",
         text: joke.setup,
-        username: "Charlie the Dad",
+        username: "Jed Bartlett",
       });
 
       setTimeout(() => {
         say({
           icon_emoji: ":dog-joke:",
           text: joke.punchline,
-          username: "Charlie the Dad",
+          username: "Jed Bartlett",
         });
       }, 5000);
     }
