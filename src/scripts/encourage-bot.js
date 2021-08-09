@@ -1,3 +1,10 @@
+// Periodically posts a message to #random telling someone they're awesome. The
+// bot picks from the list of users in #random who are currently within nominal
+// working hours of 9am to 5pm in their local time. After posting, schedules the
+// next one for 2-48 hours in the future, skipping weekends and holidays, and
+// making sure the schedule time is within working hours for at least one person
+// in the #random channel.
+
 const holidays = require("@18f/us-federal-holidays");
 const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
@@ -5,7 +12,7 @@ const {
   slack: { getChannelID, getSlackUsersInConversation, postMessage },
 } = require("../utils");
 
-const CHANNEL = "charlie-testing";
+const CHANNEL = "random";
 
 const messages = [
   "You are awesome.",
