@@ -15,6 +15,7 @@ module.exports = {
       action,
       brain: new Map(),
       logger: {
+        info: jest.fn(),
         warn: jest.fn(),
       },
       message,
