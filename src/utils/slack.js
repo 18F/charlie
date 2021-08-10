@@ -85,7 +85,10 @@ const getSlackUsers = async () =>
     return all;
   });
 
-const getSlackUsersInConversation = async ({ client, event: { channel } }) =>
+const getSlackUsersInConversation = async ({
+  client = defaultClient,
+  event: { channel },
+}) =>
   cache(`get slack users in conversation ${channel}`, 10, async () => {
     const { members: channelUsers } = await client.conversations.members({
       channel,
