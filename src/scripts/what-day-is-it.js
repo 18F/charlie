@@ -4,14 +4,8 @@
    with what we've got.
 */
 
-const { Temporal, toTemporalInstant, Intl } = require("@js-temporal/polyfill");
+const { Temporal, Intl } = require("@js-temporal/polyfill");
 const { directMention } = require("@slack/bolt");
-
-// This will be able to go away when the polyfill is replaced with a native
-// implementation, probably sometime in 2022. The polyfill is not for production
-// use anyway, so all of this is just playing, getting ready.
-// eslint-disable-next-line no-extend-native
-Date.prototype.toTemporalInstant = toTemporalInstant;
 
 const lastOfMarch2020 = Temporal.PlainDate.from({
   year: 2021,

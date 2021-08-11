@@ -1,6 +1,6 @@
 const axios = require("axios");
-const moment = require("moment");
 const sinon = require("sinon");
+const { Temporal } = require("@js-temporal/polyfill");
 const slack = require("./slack");
 
 describe("utils / tock", () => {
@@ -202,8 +202,14 @@ describe("utils / tock", () => {
     });
 
     it("defaults to looking at the reporting period from a week ago", async () => {
-      const date = moment("2020-10-14");
-      clock.tick(date.toDate().getTime());
+      const date = Temporal.PlainDate.from("2020-10-14");
+      clock.tick(
+        Date.parse(
+          date
+            .toZonedDateTime({ timeZone: Temporal.Now.timeZone() })
+            .toInstant()
+        )
+      );
       const truants = await get18FTockTruants(date);
 
       // Only user 1 is truant from the previous period.
@@ -213,8 +219,14 @@ describe("utils / tock", () => {
     });
 
     it("defaults to looking at the reporting period from this week", async () => {
-      const date = moment("2020-10-14");
-      clock.tick(date.toDate().getTime());
+      const date = Temporal.PlainDate.from("2020-10-14");
+      clock.tick(
+        Date.parse(
+          date
+            .toZonedDateTime({ timeZone: Temporal.Now.timeZone() })
+            .toInstant()
+        )
+      );
       const truants = await get18FTockTruants(date, 0);
 
       // Only user 5 is truant in the current period.

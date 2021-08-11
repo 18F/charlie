@@ -281,8 +281,7 @@ describe("Angry Tock", () => {
           fallback:
             "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
           color: "#FF0000",
-          text:
-            "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
+          text: "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
         },
       ],
       username: "Angry Tock",

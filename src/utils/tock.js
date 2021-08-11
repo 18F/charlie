@@ -1,3 +1,4 @@
+const { Temporal } = require("@js-temporal/polyfill");
 const axios = require("axios");
 const { cache } = require("./cache");
 const { getSlackUsers } = require("./slack");
@@ -38,7 +39,7 @@ const getCurrent18FTockUsers = async () => {
   // Keep just the bits we care about.
   const users = usersBody
     .filter((u) => userDataObjs.includes(u.username))
-    .filter((u) => u.email !== 'andrew.hyder@gsa.gov') // ❤️ 🕊
+    .filter((u) => u.email !== "andrew.hyder@gsa.gov") // ❤️ 🕊
     .map((u) => ({
       user: u.username,
       email: u.email,
@@ -52,19 +53,21 @@ const getCurrent18FTockUsers = async () => {
  * Get the 18F truant users for the most recent completed Tock reporting
  * period.
  * @async
- * @param {Object} now Moment object representing the current time.
+ * @param {Object} now PlainDateTime-like Temporal object representing the
+ *                     current time.
  * @param {Number} weeksAgo How many weeks in the past to check. Defaults to 1.
  * @returns {<Promise<Array<Object>>} The list of truant users
  */
 const get18FTockTruants = async (now, weeksAgo = 1) => {
-  while (now.format("dddd") !== "Sunday") {
-    now.subtract(1, "day");
+  let reportStart = now;
+  while (reportStart.dayOfWeek !== 7) {
+    reportStart = reportStart.subtract({ days: 1 });
   }
   // We're now at the nearest past Sunday, but that's the start of the
   // current reporting period. Now back up the appropriate number of weeks.
-  now.subtract(7 * weeksAgo, "days");
+  reportStart = reportStart.subtract({ days: 7 * weeksAgo });
 
-  const reportingPeriodStart = now.format("YYYY-MM-DD");
+  const reportingPeriodStart = Temporal.PlainDate.from(reportStart).toString();
 
   const tockUsers = await getCurrent18FTockUsers();
 

@@ -1,5 +1,5 @@
+const { Temporal } = require("@js-temporal/polyfill");
 const holidays = require("@18f/us-federal-holidays");
-const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
 const {
   slack: { postMessage, sendDirectMessage },
@@ -11,13 +11,11 @@ const TOCK_TOKEN = process.env.TOCK_TOKEN;
 
 const ANGRY_TOCK_TIMEZONE =
   process.env.ANGRY_TOCK_TIMEZONE || "America/New_York";
-const ANGRY_TOCK_FIRST_ALERT = moment(
-  process.env.ANGRY_TOCK_FIRST_TIME || "10:00",
-  "HH:mm"
+const ANGRY_TOCK_FIRST_ALERT = Temporal.PlainTime.from(
+  process.env.ANGRY_TOCK_FIRST_TIME || "10:00"
 );
-const ANGRY_TOCK_SECOND_ALERT = moment(
-  process.env.ANGRY_TOCK_SECOND_TIME || "16:00",
-  "HH:mm"
+const ANGRY_TOCK_SECOND_ALERT = Temporal.PlainTime.from(
+  process.env.ANGRY_TOCK_SECOND_TIME || "16:00"
 );
 
 const ANGRY_TOCK_REPORT_TO = (
@@ -27,12 +25,19 @@ const HAPPY_TOCK_REPORT_TO = (process.env.HAPPY_TOCK_REPORT_TO || "#18f").split(
   ","
 );
 
+const dateFromZonedDateTime = (zonedDateTime) =>
+  new Date(Date.parse(zonedDateTime.toInstant()));
+
 /**
  * Get the current time in the configured timezone.
- * @returns {Moment} A moment object representing the current time in the
- *   configured timezone.
+ * @returns {Temporal.ZonedDateTime} A Temporal object representing the current
+ *   time in the configured timezone.
  */
-const m = () => moment.tz(ANGRY_TOCK_TIMEZONE);
+const m = () =>
+  Temporal.Now.instant().toZonedDateTime({
+    calendar: "iso8601",
+    timeZone: ANGRY_TOCK_TIMEZONE,
+  });
 
 /**
  * Shout at all the truant users.
@@ -112,64 +117,61 @@ const shout = async ({ calm = false } = {}) => {
  */
 const isAngryTockDay = (now) => {
   const d = now || m();
-  return d.format("dddd") === "Monday" && !holidays.isAHoliday(d.toDate());
+  return d.dayOfWeek === 1 && !holidays.isAHoliday(dateFromZonedDateTime(m()));
 };
 
 /**
  * Schedules the next time to shout at users.
  */
 const scheduleNextShoutingMatch = () => {
-  const day = moment.tz(ANGRY_TOCK_TIMEZONE);
+  const day = m();
 
-  const firstHour = ANGRY_TOCK_FIRST_ALERT.hour();
-  const firstMinute = ANGRY_TOCK_FIRST_ALERT.minute();
-  const firstTockShoutTime = day.clone();
-  firstTockShoutTime.hour(firstHour);
-  firstTockShoutTime.minute(firstMinute);
-  firstTockShoutTime.second(0);
+  const firstTockShoutTime = day.withPlainTime(ANGRY_TOCK_FIRST_ALERT);
+  const secondTockShoutTime = day.withPlainTime(ANGRY_TOCK_SECOND_ALERT);
 
-  const secondHour = ANGRY_TOCK_SECOND_ALERT.hour();
-  const secondMinute = ANGRY_TOCK_SECOND_ALERT.minute();
-  const secondTockShoutTime = day.clone();
-  secondTockShoutTime.hour(secondHour);
-  secondTockShoutTime.minute(secondMinute);
-  secondTockShoutTime.second(0);
+  let next = day;
 
   if (isAngryTockDay(day)) {
     // If today is the normal day for Angry Tock to shout...
-    if (day.isBefore(firstTockShoutTime)) {
+    if (Temporal.ZonedDateTime.compare(day, firstTockShoutTime) < 0) {
+      // day.isBefore(firstTockShoutTime)) {
       // ...and Angry Tock should not have shouted at all yet, schedule a calm
       // shout.
-      return scheduler.scheduleJob(firstTockShoutTime.toDate(), async () => {
-        await shout({ calm: true });
-        setTimeout(() => scheduleNextShoutingMatch(), 1000);
-      });
+      return scheduler.scheduleJob(
+        dateFromZonedDateTime(firstTockShoutTime),
+        async () => {
+          await shout({ calm: true });
+          setTimeout(() => scheduleNextShoutingMatch(), 1000);
+        }
+      );
     }
-    if (day.isBefore(secondTockShoutTime)) {
+    if (Temporal.ZonedDateTime.compare(day, secondTockShoutTime) < 0) {
+      // if (day.isBefore(secondTockShoutTime)) {
       // ...and Angry Tock should have shouted once, schedule an un-calm shout.
-      return scheduler.scheduleJob(secondTockShoutTime.toDate(), async () => {
-        setTimeout(() => scheduleNextShoutingMatch(), 1000);
-        await shout({ calm: false });
-      });
+      return scheduler.scheduleJob(
+        dateFromZonedDateTime(secondTockShoutTime),
+        async () => {
+          setTimeout(() => scheduleNextShoutingMatch(), 1000);
+          await shout({ calm: false });
+        }
+      );
     }
 
     // ...and Angry Tock should have shouted twice already, advance a day and
     // schedule a shout for next week.
-    day.add(1, "day");
+    next = next.add({ days: 1 });
   }
 
   // ...and Angry Tock should have already shouted twice today, advance to the
   // next shouting day.
-  while (!isAngryTockDay(day)) {
-    day.add(1, "day");
+  while (!isAngryTockDay(next)) {
+    next = next.add({ days: 1 });
   }
 
   // Schedule a calm shout for the next shouting day.
-  day.hour(firstHour);
-  day.minute(firstMinute);
-  day.second(0);
+  next = next.withPlainTime(ANGRY_TOCK_FIRST_ALERT);
 
-  return scheduler.scheduleJob(day.toDate(), async () => {
+  return scheduler.scheduleJob(dateFromZonedDateTime(next), async () => {
     setTimeout(() => scheduleNextShoutingMatch(), 1000);
     await shout({ calm: true });
   });
