@@ -78,7 +78,7 @@ describe("Handy Tau-bot timezone conversions", () => {
     timezone(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i,
+      /(\d{1,2}):(\d{2})\s?(am|pm)?\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i,
       expect.any(Function)
     );
   });
@@ -257,8 +257,6 @@ describe("Handy Tau-bot timezone conversions", () => {
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
         responseFor("user la", "10:42")
       );
-
     });
-
   });
 });

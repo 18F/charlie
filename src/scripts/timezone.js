@@ -1,4 +1,5 @@
-const moment = require("moment-timezone");
+const { Temporal } = require("@js-temporal/polyfill");
+
 const {
   optOut,
   slack: { getSlackUsersInConversation, postEphemeralMessage },
@@ -29,7 +30,27 @@ const TIMEZONES = {
   pst: "America/Los_Angeles",
 };
 
-const matcher = /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
+const timeString = (zonedDateTime, ampm) => {
+  const { hour: h, minute } = Temporal.PlainTime.from(zonedDateTime);
+
+  let ampmStr = "";
+  if (ampm) {
+    if (h < 12) {
+      ampmStr = " am";
+    } else {
+      ampmStr = " pm";
+    }
+  }
+
+  const hour = h === 0 ? 12 : h;
+
+  return `${hour > 12 ? hour - 12 : hour}:${
+    minute > 10 ? "" : "0"
+  }${minute}${ampmStr}`;
+};
+
+const matcher =
+  /(\d{1,2}):(\d{2})\s?(am|pm)?\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
 
 module.exports = (app) => {
   const optout = optOut("handy_tau_bot");
@@ -54,18 +75,30 @@ module.exports = (app) => {
       return;
     }
 
-    matches.forEach(([, time, ampmStr, timezone]) => {
+    matches.forEach(([, h, min, ampmStr, timezone]) => {
       const sourceTz = timezone
         ? TIMEZONES[timezone.toLowerCase()]
         : authorTimezone;
 
       if (m === null) {
         ampm = ampmStr;
-        m = moment.tz(
-          `${time.trim()}${ampm ? ` ${ampm}` : ""}`,
-          "hh:mm a",
-          sourceTz
-        );
+
+        let hour = +h;
+        const minute = +min;
+
+        if (ampm?.toLowerCase() === "pm" && hour < 12) {
+          hour += 12;
+        } else if (ampm?.toLowerCase() === "am" && hour === 12) {
+          hour = 0;
+        }
+
+        if (hour > 23 || minute > 59) {
+          return;
+        }
+
+        m = Temporal.Now.instant()
+          .toZonedDateTime({ calendar: "iso8601", timeZone: sourceTz })
+          .withPlainTime({ hour, minute });
       }
 
       users = users
@@ -94,7 +127,7 @@ module.exports = (app) => {
     });
 
     // if the detected time is invalid, nothing should be sent to users
-    if (!m.isValid()) {
+    if (!m) {
       return;
     }
 
@@ -104,20 +137,20 @@ module.exports = (app) => {
         icon_emoji: ":timebot:",
         user: id,
         username: "Handy Tau-bot",
-        text: `That's ${m
-          .clone()
-          .tz(tz)
-          .format(`h:mm${ampm ? " a" : ""}`)} for you!`,
+        text: `That's ${timeString(
+          m.withTimeZone({ timeZone: tz }),
+          ampm
+        )} for you!`,
         thread_ts: thread,
         blocks: [
           {
             type: "section",
             text: {
               type: "mrkdwn",
-              text: `That's ${m
-                .clone()
-                .tz(tz)
-                .format(`h:mm${ampm ? " a" : ""}`)} for you!`,
+              text: `That's ${timeString(
+                m.withTimeZone({ timeZone: tz }),
+                ampm
+              )} for you!`,
             },
             ...optout.button,
           },
