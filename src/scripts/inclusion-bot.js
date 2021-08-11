@@ -89,29 +89,25 @@ module.exports = async (app) => {
     postEphemeralResponse(msg, {
       attachments: [
         {
+          color: "#2eb886",
+          text: message,
+          fallback: message,
+        },
+        {
           color: "#ffbe2e",
-          blocks: pretexts.map((text, i) => {
-            const block = {
+          blocks: [
+            {
               type: "section",
-              text: { type: "mrkdwn", text },
-            };
-
-            if (i === 0) {
-              block.accessory = {
+              text: { type: "mrkdwn", text: pretexts.join("\n") },
+              accessory: {
                 type: "button",
                 text: { type: "plain_text", text: "What's this?" },
                 value: specificMatch.map(({ text: t }) => t).join("|"),
                 action_id: "inclusion_modal",
-              };
-            }
-            return block;
-          }),
+              },
+            },
+          ],
           fallback: "fallback",
-        },
-        {
-          color: "#2eb886",
-          text: message,
-          fallback: message,
         },
       ],
       icon_emoji: ":tts:",
