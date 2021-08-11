@@ -33,7 +33,7 @@ describe("the jokey March 2020 date thingy", () => {
     handler({ say });
 
     expect(say).toHaveBeenCalledWith(
-      "Today is Saturday, January 23rd, 2021. It has been 4 days since March 2020."
+      "Today is Saturday, January 23, 2021. It has been 4 days since March 2020."
     );
   });
 });
