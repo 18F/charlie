@@ -1,7 +1,7 @@
 const holidays = require("@18f/us-federal-holidays");
-const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
 const {
+  dates: { getNow, getToday, zonedDateTimeToDate, DAYS },
   optOut,
   slack: { sendDirectMessage },
   tock: { get18FTockTruants, get18FTockSlackUsers },
@@ -38,7 +38,7 @@ module.exports = async (app) => {
     };
 
     // Get all the folks who have not submitted their current Tock.
-    const truants = await get18FTockTruants(moment.tz(tz), 0);
+    const truants = await get18FTockTruants(getToday(tz), 0);
 
     // Now get the list of Slacky-Tocky users in the current timezone who
     // have not submitted their Tock. Tsk tsk.
@@ -59,44 +59,49 @@ module.exports = async (app) => {
   const scheduleReminders = async () => {
     // Westernmost US timezone. Everyone else in the US should be at this time
     // or later, so this is where we want to begin.
-    const day = moment.tz("Pacific/Samoa");
+    let day = getNow("Pacific/Samoa");
 
     // Proceed to the next Friday, then back up if it's a holiday.
-    while (
-      day.format("dddd") !== "Friday" ||
-      day.isSame(moment.tz("2021-05-07", "Pacific/Samoa"), "day")
-    ) {
-      day.add(1, "day");
+    while (day.dayOfWeek !== DAYS.Friday) {
+      day = day.add({ days: 1 });
     }
-    while (holidays.isAHoliday(day.toDate())) {
-      day.subtract(1, "day");
+    while (holidays.isAHoliday(zonedDateTimeToDate(day))) {
+      day = day.subtract({ days: 1 });
     }
 
-    const reminderString = day.format("YYYY-MM-DDT16:00:00");
+    const reminderString = `${day.toPlainDate().toString()}T16:00:00`;
 
     const users = await get18FTockSlackUsers();
-    const now = moment();
+    const now = getNow();
 
     // Get a list of unique timezones by putting them into a Set.
     new Set(users.map((u) => u.tz)).forEach((tz) => {
-      const tzReminderTime = moment.tz(reminderString, tz);
-      if (tzReminderTime.isAfter(now)) {
+      const tzReminderTime = Temporal.ZonedDateTime.from(
+        `${reminderString}[${tz}]`
+      );
+      if (Temporal.ZonedDateTime.compare(tzReminderTime, now) > 0) {
         // If the reminder time is in the past, don't schedule it. That'd be
         // a really silly thing to do.
-        scheduler.scheduleJob(tzReminderTime.toDate(), reminder(tz));
+        scheduler.scheduleJob(
+          zonedDateTimeToDate(tzReminderTime),
+          reminder(tz)
+        );
       }
     });
   };
 
   const scheduleNext = () => {
-    const nextSunday = moment().day("Sunday");
+    let nextSunday = getNow();
+    while (nextSunday.dayOfWeek !== DAYS.Sunday) {
+      nextSunday = nextSunday.add({ days: 1 });
+    }
     // "Not after" rather than "before" to handle the edge where these
     // two are identical. So... Sundays. Also the tests.
-    if (!nextSunday.isAfter(moment())) {
-      nextSunday.add(7, "days");
+    if (Temporal.ZonedDateTime.compare(nextSunday, getNow()) <= 0) {
+      nextSunday = nextSunday.add({ days: 7 });
     }
 
-    scheduler.scheduleJob(nextSunday.toDate(), async () => {
+    scheduler.scheduleJob(zonedDateTimeToDate(nextSunday), async () => {
       await scheduleReminders();
       await scheduleNext();
     });

@@ -1,6 +1,5 @@
 const axios = require("axios");
 const sinon = require("sinon");
-const { Temporal } = require("@js-temporal/polyfill");
 const slack = require("./slack");
 
 describe("utils / tock", () => {

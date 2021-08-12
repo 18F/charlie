@@ -1,7 +1,21 @@
 const holidays = require("@18f/us-federal-holidays");
-const moment = require("moment");
+const {
+  dates: { getNow, DAYS },
+} = require("../utils");
 
-const closedDays = ["Saturday", "Sunday"];
+// Saturday and Sunday; day numbers are according to the Temporal spec. Weekday
+// indexes now start at 1, and 0 is undefined.
+const closedDays = [DAYS.Saturday, DAYS.Sunday];
+const dows = [
+  undefined,
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 
 const getChannelName = (() => {
   let allChannels = null;
@@ -17,15 +31,16 @@ const getChannelName = (() => {
   };
 })();
 
-const travelIsClosed = (day = moment()) =>
-  holidays.isAHoliday(day.toDate()) || closedDays.includes(day.format("dddd"));
+const travelIsClosed = (day = getNow()) =>
+  holidays.isAHoliday(new Date(Date.parse(day.toInstant()))) ||
+  closedDays.includes(day.dayOfWeek);
 
 const getNextWorkday = () => {
-  const m = moment().add(1, "day");
+  let m = getNow().add({ days: 1 });
   while (travelIsClosed(m)) {
-    m.add(1, "day");
+    m = m.add({ days: 1 });
   }
-  return m.format("dddd");
+  return dows[m.dayOfWeek];
 };
 
 const pastResponses = [];

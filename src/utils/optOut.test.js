@@ -1,5 +1,6 @@
 const { brain } = require("./test");
-const optOutModule = require("./optOut");
+
+const optOutModule = jest.requireActual("./optOut");
 
 describe("opt-out utility", () => {
   let optOut;

@@ -1,4 +1,3 @@
-const moment = require("moment-timezone");
 const sinon = require("sinon");
 const { getApp } = require("../utils/test");
 const bot = require("./federal-holidays");
@@ -27,12 +26,13 @@ describe("federal holidays bot", () => {
 
   it("responds to a request for the next federal holiday", () => {
     const clock = sinon.useFakeTimers();
+    clock.tick(1000 * 60 * 60 * 12);
     bot(app);
     const handler = app.getHandler();
     const say = jest.fn();
 
     getNextHoliday.mockReturnValue({
-      date: moment.tz("1970-01-02T00:00:00", "UTC"),
+      date: Temporal.PlainDate.from("1970-01-02"),
       name: "Test Holiday day",
     });
 
@@ -47,12 +47,13 @@ describe("federal holidays bot", () => {
 
   it("includes an emoji for well-known holidays", () => {
     const clock = sinon.useFakeTimers();
+    clock.tick(1000 * 60 * 60 * 12);
     bot(app);
     const handler = app.getHandler();
     const say = jest.fn();
 
     getNextHoliday.mockReturnValue({
-      date: moment.tz("1970-01-02T00:00:00", "UTC"),
+      date: Temporal.PlainDate.from("1970-01-02"),
       name: "Christmas Day",
     });
 

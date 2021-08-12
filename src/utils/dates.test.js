@@ -1,21 +1,27 @@
-const moment = require("moment-timezone");
 const sinon = require("sinon");
 const { getNextHoliday } = require("./dates");
+
+const midnight = ({ year, month, day }) =>
+  Date.parse(
+    Temporal.ZonedDateTime.from({
+      year,
+      month,
+      day,
+      timeZone: "America/New_York",
+    }).toInstant()
+  );
 
 describe("gets the next holiday", () => {
   it("defaults to America/New_York time", async () => {
     // Midnight on May 28 in eastern timezone
     const clock = sinon.useFakeTimers(
-      +moment.tz("2012-05-28", "YYYY-MM-DD", "America/New_York").format("x")
+      midnight({ year: 2012, month: 5, day: 28 })
     );
 
     const nextHoliday = getNextHoliday();
 
-    expect(moment(nextHoliday.date).isValid()).toBe(true);
-
-    // remove this from the object match, otherwise
-    // it becomes a whole big thing, dependent on
-    // moment not changing its internal object structure
+    // remove this from the object match, because jest doesn't currently have
+    // Temporal type matchers
     delete nextHoliday.date;
 
     expect(nextHoliday).toEqual({
@@ -31,16 +37,13 @@ describe("gets the next holiday", () => {
     // timezone is US central timezone, "now" is still May 27, so the
     // "next" holiday should be May 28 - Memorial Day
     const clock = sinon.useFakeTimers(
-      +moment.tz("2012-05-28", "YYYY-MM-DD", "America/New_York").format("x")
+      midnight({ year: 2012, month: 5, day: 28 })
     );
 
     const nextHoliday = getNextHoliday("America/Chicago");
 
-    expect(moment(nextHoliday.date).isValid()).toBe(true);
-
-    // remove this from the object match, otherwise
-    // it becomes a whole big thing, dependent on
-    // moment not changing its internal object structure
+    // remove this from the object match, because jest doesn't currently have
+    // Temporal type matchers
     delete nextHoliday.date;
 
     expect(nextHoliday).toEqual({

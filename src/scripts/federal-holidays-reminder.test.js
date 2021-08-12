@@ -1,6 +1,4 @@
-const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
-// const sinon = require("sinon");
 
 const {
   utils: {
@@ -8,13 +6,6 @@ const {
     slack: { postMessage },
   },
 } = require("../utils/test");
-
-expect.extend({
-  toMatchMoment: (received, expected) => ({
-    message: () => `expected ${expected} to be ${received}`,
-    pass: moment(expected).isSame(received),
-  }),
-});
 
 describe("holiday reminder", () => {
   const scheduleJob = jest.spyOn(scheduler, "scheduleJob");
@@ -39,43 +30,43 @@ describe("holiday reminder", () => {
     [
       {
         title: "gets Friday from Saturday",
-        start: new Date(2018, 10, 10),
+        start: Temporal.PlainDate.from("2018-11-10"),
         end: "2018-11-09",
       },
       {
         title: "gets Friday from Sunday",
-        start: new Date(2018, 10, 11),
+        start: Temporal.PlainDate.from("2018-11-11"),
         end: "2018-11-09",
       },
       {
         title: "gets Friday from Monday",
-        start: new Date(2018, 10, 12),
+        start: Temporal.PlainDate.from("2018-11-12"),
         end: "2018-11-09",
       },
       {
         title: "gets Monday from Tuesday",
-        start: new Date(2018, 10, 13),
+        start: Temporal.PlainDate.from("2018-11-13"),
         end: "2018-11-12",
       },
       {
         title: "gets Tuesday from Wednesday",
-        start: new Date(2018, 10, 14),
+        start: Temporal.PlainDate.from("2018-11-14"),
         end: "2018-11-13",
       },
       {
         title: "gets Wednesday from Thursday",
-        start: new Date(2018, 10, 15),
+        start: Temporal.PlainDate.from("2018-11-15"),
         end: "2018-11-14",
       },
       {
         title: "gets Thursday from Friday",
-        start: new Date(2018, 10, 16),
+        start: Temporal.PlainDate.from("2018-11-16"),
         end: "2018-11-15",
       },
     ].forEach(({ title, start, end }) => {
       it(title, async () => {
         const bot = await load();
-        const out = bot.previousWeekday(start).format("YYYY-MM-DD");
+        const out = bot.previousWeekday(start).toString();
         expect(out).toEqual(end);
       });
     });
@@ -85,14 +76,13 @@ describe("holiday reminder", () => {
     it("defaults to #general", async () => {
       const bot = await load();
       bot.postReminder({
-        date: moment("2018-11-12", "YYYY-MM-DD"),
+        date: Temporal.PlainDate.from("2018-11-12"),
         name: "Test Holiday",
       });
 
       expect(postMessage).toHaveBeenCalledWith({
         channel: "general",
-        text:
-          "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
+        text: "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
       });
     });
 
@@ -101,28 +91,26 @@ describe("holiday reminder", () => {
       const bot = await load();
 
       bot.postReminder({
-        date: moment("2018-11-12", "YYYY-MM-DD"),
+        date: Temporal.PlainDate.from("2018-11-12"),
         name: "Test Holiday",
       });
 
       expect(postMessage).toHaveBeenCalledWith({
         channel: "fred",
-        text:
-          "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
+        text: "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
       });
     });
 
     it("includes an emoji for holidays with known emoji mappings", async () => {
       const bot = await load();
       bot.postReminder({
-        date: moment("2018-11-12", "YYYY-MM-DD"),
+        date: Temporal.PlainDate.from("2018-11-12"),
         name: "Veterans Day",
       });
 
       expect(postMessage).toHaveBeenCalledWith({
         channel: "general",
-        text:
-          "@here Remember that *Monday* is a federal holiday in observance of *Veterans Day* :salute-you:!",
+        text: "@here Remember that *Monday* is a federal holiday in observance of *Veterans Day* :salute-you:!",
       });
     });
   });
@@ -134,18 +122,21 @@ describe("holiday reminder", () => {
       const nextHoliday = { date: "in the future" };
       getNextHoliday.mockReturnValue(nextHoliday);
 
-      const weekdayBefore = moment("2000-01-01", "YYYY-MM-DD");
+      const weekdayBefore = Temporal.PlainDate.from("2000-01-01");
       jest.spyOn(bot, "previousWeekday").mockReturnValue(weekdayBefore);
 
       jest.spyOn(bot, "postReminder").mockReturnValue();
 
       bot();
 
-      expect(weekdayBefore.hour()).toBe(15);
-      expect(weekdayBefore.minute()).toBe(0);
-
       expect(scheduleJob).toHaveBeenCalledWith(
-        expect.toMatchMoment(weekdayBefore),
+        new Date(
+          Date.parse(
+            Temporal.ZonedDateTime.from(
+              "2000-01-01T15:00:00[America/New_York]"
+            ).toInstant()
+          )
+        ),
         expect.any(Function)
       );
 
@@ -154,8 +145,18 @@ describe("holiday reminder", () => {
 
       expect(bot.postReminder).toHaveBeenCalledWith(nextHoliday);
 
+      // The scheduled job should setup a future job to schedule the *next*
+      // reminder. The future job should run one day after the current one. The
+      // test here is sublte, but note that it checks for January SECOND instead
+      // of January first like the previous expect.
       expect(scheduleJob).toHaveBeenCalledWith(
-        expect.toMatchMoment(weekdayBefore),
+        new Date(
+          Date.parse(
+            Temporal.ZonedDateTime.from(
+              "2000-01-02T15:00:00[America/New_York]"
+            ).toInstant()
+          )
+        ),
         expect.any(Function)
       );
 
@@ -169,7 +170,7 @@ describe("holiday reminder", () => {
       const nextHoliday = { date: "in the future" };
       getNextHoliday.mockReturnValue(nextHoliday);
 
-      const weekdayBefore = moment("2000-01-01", "YYYY-MM-DD");
+      const weekdayBefore = Temporal.PlainDate.from("2000-01-01");
       jest.spyOn(bot, "previousWeekday").mockReturnValue(weekdayBefore);
 
       jest.spyOn(bot, "postReminder").mockReturnValue();
@@ -178,21 +179,33 @@ describe("holiday reminder", () => {
 
       expect(bot.previousWeekday).toHaveBeenCalledWith("in the future");
 
-      expect(weekdayBefore.hour()).toBe(4);
-      expect(weekdayBefore.minute()).toBe(32);
-
       expect(scheduleJob).toHaveBeenCalledWith(
-        expect.toMatchMoment(weekdayBefore),
+        new Date(
+          Date.parse(
+            Temporal.ZonedDateTime.from(
+              "2000-01-01T04:32:00[America/New_York]"
+            ).toInstant()
+          )
+        ),
         expect.any(Function)
       );
 
-      // call the scheduled job
+      // The scheduled job should setup a future job to schedule the *next*
+      // reminder. The future job should run one day after the current one. The
+      // test here is sublte, but note that it checks for January SECOND instead
+      // of January first like the previous expect.
       scheduleJob.mock.calls[0][1]();
 
       expect(bot.postReminder).toHaveBeenCalledWith(nextHoliday);
 
       expect(scheduleJob).toHaveBeenCalledWith(
-        expect.toMatchMoment(weekdayBefore),
+        new Date(
+          Date.parse(
+            Temporal.ZonedDateTime.from(
+              "2000-01-02T04:32:00[America/New_York]"
+            ).toInstant()
+          )
+        ),
         expect.any(Function)
       );
 

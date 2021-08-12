@@ -1,5 +1,4 @@
 const { isAHoliday } = require("@18f/us-federal-holidays");
-const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
 
 const {
@@ -39,37 +38,43 @@ describe("Encouragement bot", () => {
         // Guarantees that we will advance either hours or weekends, but there's
         // no guarantee we'll do both.
         desc: "on a Friday afternoon",
-        when: "2021-08-06 17:00",
+        when: Temporal.ZonedDateTime.from("2021-08-06T17:00[America/New_York]"),
       },
       {
         // Guarantees that we will advance through the second holiday check.
         desc: "on a Friday afternoon before a holiday",
-        when: "2021-09-03 17:00",
+        when: Temporal.ZonedDateTime.from("2021-09-03T17:00[America/New_York]"),
       },
       // I would love to figure out how to guarantee all the date checks will
       // run, ideally in isolation.
     ].forEach(({ desc, when }) => {
       it(desc, async () => {
-        const time = moment.tz(when, "America/New_York");
-        jest.setSystemTime(time.toDate());
+        jest.setSystemTime(when.toInstant().epochMilliseconds);
 
         await bot(app);
         expect(scheduleJob).toHaveBeenCalled();
 
-        const early = moment.tz(
-          scheduleJob.mock.calls[0][0],
-          "America/New_York"
-        );
-        const late = moment.tz(
-          scheduleJob.mock.calls[0][0],
-          "America/Los_Angeles"
-        );
+        const early = Temporal.Instant.fromEpochMilliseconds(
+          scheduleJob.mock.calls[0][0]
+        ).toZonedDateTime({
+          calendar: "iso8601",
+          timeZone: "America/New_York",
+        });
 
-        expect(early.day()).not.toBe(0);
-        expect(early.day()).not.toBe(6);
-        expect(early.hour()).toBeGreaterThanOrEqual(9);
-        expect(late.hour()).toBeLessThan(17);
-        expect(isAHoliday(early.toDate())).toBe(false);
+        const late = Temporal.Instant.fromEpochMilliseconds(
+          scheduleJob.mock.calls[0][0]
+        ).toZonedDateTime({
+          calendar: "iso8601",
+          timeZone: "America/Los_Angeles",
+        });
+
+        expect(early.dayOfWeek).not.toBe(7);
+        expect(early.dayOfWeek).not.toBe(6);
+        expect(early.hour).toBeGreaterThanOrEqual(9);
+        expect(late.hour).toBeLessThan(17);
+        expect(isAHoliday(new Date(early.toInstant().epochMilliseconds))).toBe(
+          false
+        );
       });
     });
   });

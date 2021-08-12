@@ -4,7 +4,6 @@
    with what we've got.
 */
 
-const { Temporal, Intl } = require("@js-temporal/polyfill");
 const { directMention } = require("@slack/bolt");
 
 const lastOfMarch2020 = Temporal.PlainDate.from({

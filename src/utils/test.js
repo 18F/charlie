@@ -4,8 +4,19 @@ const { cache, dates, optOut, slack, tock } = require("./index");
 
 // Mock axios and the utility functions, to make it easier for tests to use.
 jest.mock("axios");
+
+// Mock our stuff individually. Some of these don't need to be mocked, like
+// the ones that just operate on or generate constants (specifically the date
+// utilities).
 jest.mock("../brain");
-jest.mock("./index");
+jest.mock("./cache");
+jest.mock("./dates", () => ({
+  ...jest.requireActual("./dates"),
+  getNextHoliday: jest.fn(),
+}));
+jest.mock("./optOut");
+jest.mock("./slack");
+jest.mock("./tock");
 
 module.exports = {
   getApp: () => {

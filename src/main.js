@@ -1,3 +1,5 @@
+require("./polyfill");
+
 require("./env");
 const { App, LogLevel } = require("@slack/bolt");
 const fs = require("fs").promises;

@@ -1,5 +1,3 @@
-const { Temporal } = require("@js-temporal/polyfill");
-
 const {
   optOut,
   slack: { getSlackUsersInConversation, postEphemeralMessage },

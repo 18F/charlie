@@ -8,6 +8,9 @@
     "es6": true,
     "node": true
   },
+  "globals": {
+    "Temporal": "readonly"
+  },
   "parserOptions": { "ecmaVersion": 2020 },
   "overrides": [
     {

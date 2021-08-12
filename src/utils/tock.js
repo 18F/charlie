@@ -1,7 +1,7 @@
-const { Temporal } = require("@js-temporal/polyfill");
 const axios = require("axios");
 const { cache } = require("./cache");
 const { getSlackUsers } = require("./slack");
+const { DAYS } = require("./dates");
 
 const tockAPI = axios.create({
   baseURL: process.env.TOCK_API,
@@ -60,7 +60,7 @@ const getCurrent18FTockUsers = async () => {
  */
 const get18FTockTruants = async (now, weeksAgo = 1) => {
   let reportStart = now;
-  while (reportStart.dayOfWeek !== 7) {
+  while (reportStart.dayOfWeek !== DAYS.Sunday) {
     reportStart = reportStart.subtract({ days: 1 });
   }
   // We're now at the nearest past Sunday, but that's the start of the

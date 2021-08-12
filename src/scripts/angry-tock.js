@@ -1,7 +1,7 @@
-const { Temporal } = require("@js-temporal/polyfill");
 const holidays = require("@18f/us-federal-holidays");
 const scheduler = require("node-schedule");
 const {
+  dates: { DAYS },
   slack: { postMessage, sendDirectMessage },
   tock: { get18FTockSlackUsers, get18FTockTruants },
 } = require("../utils");
@@ -112,12 +112,15 @@ const shout = async ({ calm = false } = {}) => {
 
 /**
  * Gets whether or not a given date/time is a Angry Tock shouting day.
- * @param {Moment} now The date/time to check, as a Moment object
+ * @param {Temporal.ZonedDateTime} now The date/time to check, as a Temporal.ZonedDateTime object
  * @returns {Boolean} True if the passed date/time is a good day for shouting
  */
 const isAngryTockDay = (now) => {
   const d = now || m();
-  return d.dayOfWeek === 1 && !holidays.isAHoliday(dateFromZonedDateTime(m()));
+  return (
+    d.dayOfWeek === DAYS.Monday &&
+    !holidays.isAHoliday(dateFromZonedDateTime(m()))
+  );
 };
 
 /**
@@ -134,7 +137,6 @@ const scheduleNextShoutingMatch = () => {
   if (isAngryTockDay(day)) {
     // If today is the normal day for Angry Tock to shout...
     if (Temporal.ZonedDateTime.compare(day, firstTockShoutTime) < 0) {
-      // day.isBefore(firstTockShoutTime)) {
       // ...and Angry Tock should not have shouted at all yet, schedule a calm
       // shout.
       return scheduler.scheduleJob(

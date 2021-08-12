@@ -1,4 +1,3 @@
-const moment = require("moment-timezone");
 const sinon = require("sinon");
 const scheduler = require("node-schedule");
 
@@ -125,37 +124,34 @@ describe("Angry Tock", () => {
     it("if it is shouty day and before first-shout time, schedules a first-shout", async () => {
       // Monday, April 8, 1974: Hank Aaron hits his 715th career homerun,
       // breaking Babe Ruth's record.
-      const time = moment.tz(
-        "1974-04-08 00:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
+      const time = Temporal.ZonedDateTime.from(
+        `1974-04-08T00:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
-      clock.tick(time.toDate().getTime());
+      clock.tick(time.toInstant().epochMilliseconds);
 
       const angryTock = await load();
       angryTock(app);
 
-      time.hour(10);
       expect(scheduleJob).toHaveBeenCalledWith(
-        time.toDate(),
+        new Date(time.with({ hour: 10 }).toInstant().epochMilliseconds),
         expect.any(Function)
       );
     });
 
     it("if it is shouty day, after the first-shout time but before the second-shout time, schedules a second-shout", async () => {
       // Monday, May 20, 1991: Michael Jordan named NBA MVP.
-      const time = moment.tz(
-        "1991-05-20 11:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
+      const time = Temporal.ZonedDateTime.from(
+        `1991-05-20 11:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
-      clock.tick(time.toDate().getTime());
+      clock.tick(time.toInstant().epochMilliseconds);
 
       const angryTock = await load();
       angryTock(app);
 
-      time.hour(14);
-      time.minute(45);
       expect(scheduleJob).toHaveBeenCalledWith(
-        time.toDate(),
+        new Date(
+          time.with({ hour: 14, minute: 45 }).toInstant().epochMilliseconds
+        ),
         expect.any(Function)
       );
     });
@@ -165,23 +161,21 @@ describe("Angry Tock", () => {
       // as President of the United States.
       // Angry Tock is not location aware, but inauguration day is a holiday for
       // DC-area federal employees. So... just a note for the future!
-      const initial = moment.tz(
-        "1997-01-27 20:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
+      const initial = Temporal.ZonedDateTime.from(
+        `1997-01-27 20:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
-      clock.tick(initial.toDate().getTime());
+      clock.tick(initial.toInstant().epochMilliseconds);
 
       const angryTock = await load();
       angryTock(app);
 
       // Monday, February 3, 1997 - Cornell University faculty, staff, and
       // students gathered for a public memorial for Carl Sagan.
-      const scheduled = moment.tz(
-        "1997-02-03 10:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
+      const scheduled = Temporal.ZonedDateTime.from(
+        `1997-02-03 10:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
       expect(scheduleJob).toHaveBeenCalledWith(
-        scheduled.toDate(),
+        new Date(scheduled.toInstant().epochMilliseconds),
         expect.any(Function)
       );
     });
@@ -190,23 +184,21 @@ describe("Angry Tock", () => {
       // Friday, October 18, 2019 - First all-female spacewalk conducted by NASA
       // astronauts Christina Koch and Jessica Meir outside of the Internaional
       // Space Station.
-      const initial = moment.tz(
-        "2019-10-18 09:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
+      const initial = Temporal.ZonedDateTime.from(
+        `2019-10-18 09:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
-      clock.tick(initial.toDate().getTime());
+      clock.tick(initial.toInstant().epochMilliseconds);
 
       const angryTock = await load();
       angryTock(app);
 
       // Monday, October 21, 2019 - World's oldest natural pearl, dated at 8,000
       // years old, is found new Abu Dhabi.
-      const scheduled = moment.tz(
-        "2019-10-21 10:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
+      const scheduled = Temporal.ZonedDateTime.from(
+        `2019-10-21 10:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
       expect(scheduleJob).toHaveBeenCalledWith(
-        scheduled.toDate(),
+        new Date(scheduled.toInstant().epochMilliseconds),
         expect.any(Function)
       );
     });
@@ -215,11 +207,10 @@ describe("Angry Tock", () => {
   it("sends a calm/disappointed message first, then an angry message and truant report", async () => {
     // Monday, May 1, 1978 - Ernest Nathan Morial, first African-American mayor
     // of New Orleans, is inaugurated.
-    const initial = moment.tz(
-      "1978-05-01 09:00:00",
-      process.env.ANGRY_TOCK_TIMEZONE
+    const initial = Temporal.ZonedDateTime.from(
+      `1978-05-01 09:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
     );
-    clock.tick(initial.toDate().getTime());
+    clock.tick(initial.toInstant().epochMilliseconds);
 
     const angryTock = await load();
     angryTock(app);
@@ -228,7 +219,7 @@ describe("Angry Tock", () => {
     // scheduler and run it, but first advance the time so that the "angry"
     // shout gets scheduled next. We need to advance time up to the initial
     // "shout" time so that future shouts are scheduled correctly.
-    await clock.tickAsync(moment.duration({ hours: 2 }).asMilliseconds());
+    await clock.tickAsync(2 * 60 * 60 * 1000);
     const calmShout = scheduleJob.mock.calls[0][1];
     await calmShout();
 

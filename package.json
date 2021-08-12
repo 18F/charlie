@@ -36,6 +36,7 @@
     "sinon": "^11.1.2"
   },
   "jest": {
+    "setupFiles": ["./src/polyfill.js"],
     "testEnvironment": "node"
   },
   "prettier": {}
