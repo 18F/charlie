@@ -1,7 +1,7 @@
 const holidays = require("@18f/us-federal-holidays");
 const scheduler = require("node-schedule");
 const {
-  dates: { DAYS },
+  dates: { getNow, zonedDateTimeToDate, DAYS },
   slack: { postMessage, sendDirectMessage },
   tock: { get18FTockSlackUsers, get18FTockTruants },
 } = require("../utils");
@@ -25,20 +25,6 @@ const HAPPY_TOCK_REPORT_TO = (process.env.HAPPY_TOCK_REPORT_TO || "#18f").split(
   ","
 );
 
-const dateFromZonedDateTime = (zonedDateTime) =>
-  new Date(Date.parse(zonedDateTime.toInstant()));
-
-/**
- * Get the current time in the configured timezone.
- * @returns {Temporal.ZonedDateTime} A Temporal object representing the current
- *   time in the configured timezone.
- */
-const m = () =>
-  Temporal.Now.instant().toZonedDateTime({
-    calendar: "iso8601",
-    timeZone: ANGRY_TOCK_TIMEZONE,
-  });
-
 /**
  * Shout at all the truant users.
  * @async
@@ -56,7 +42,7 @@ const shout = async ({ calm = false } = {}) => {
   };
 
   const tockSlackUsers = await get18FTockSlackUsers();
-  const truants = await get18FTockTruants(m());
+  const truants = await get18FTockTruants(getNow(ANGRY_TOCK_TIMEZONE));
   const slackableTruants = tockSlackUsers.filter((tockUser) =>
     truants.some((truant) => truant.email === tockUser.email)
   );
@@ -116,10 +102,10 @@ const shout = async ({ calm = false } = {}) => {
  * @returns {Boolean} True if the passed date/time is a good day for shouting
  */
 const isAngryTockDay = (now) => {
-  const d = now || m();
+  const d = now || getNow(ANGRY_TOCK_TIMEZONE);
   return (
     d.dayOfWeek === DAYS.Monday &&
-    !holidays.isAHoliday(dateFromZonedDateTime(m()))
+    !holidays.isAHoliday(zonedDateTimeToDate(getNow(ANGRY_TOCK_TIMEZONE)))
   );
 };
 
@@ -127,7 +113,7 @@ const isAngryTockDay = (now) => {
  * Schedules the next time to shout at users.
  */
 const scheduleNextShoutingMatch = () => {
-  const day = m();
+  const day = getNow(ANGRY_TOCK_TIMEZONE);
 
   const firstTockShoutTime = day.withPlainTime(ANGRY_TOCK_FIRST_ALERT);
   const secondTockShoutTime = day.withPlainTime(ANGRY_TOCK_SECOND_ALERT);
@@ -140,7 +126,7 @@ const scheduleNextShoutingMatch = () => {
       // ...and Angry Tock should not have shouted at all yet, schedule a calm
       // shout.
       return scheduler.scheduleJob(
-        dateFromZonedDateTime(firstTockShoutTime),
+        zonedDateTimeToDate(firstTockShoutTime),
         async () => {
           await shout({ calm: true });
           setTimeout(() => scheduleNextShoutingMatch(), 1000);
@@ -148,10 +134,9 @@ const scheduleNextShoutingMatch = () => {
       );
     }
     if (Temporal.ZonedDateTime.compare(day, secondTockShoutTime) < 0) {
-      // if (day.isBefore(secondTockShoutTime)) {
       // ...and Angry Tock should have shouted once, schedule an un-calm shout.
       return scheduler.scheduleJob(
-        dateFromZonedDateTime(secondTockShoutTime),
+        zonedDateTimeToDate(secondTockShoutTime),
         async () => {
           setTimeout(() => scheduleNextShoutingMatch(), 1000);
           await shout({ calm: false });
@@ -173,7 +158,7 @@ const scheduleNextShoutingMatch = () => {
   // Schedule a calm shout for the next shouting day.
   next = next.withPlainTime(ANGRY_TOCK_FIRST_ALERT);
 
-  return scheduler.scheduleJob(dateFromZonedDateTime(next), async () => {
+  return scheduler.scheduleJob(zonedDateTimeToDate(next), async () => {
     setTimeout(() => scheduleNextShoutingMatch(), 1000);
     await shout({ calm: true });
   });
