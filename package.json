@@ -18,8 +18,6 @@
     "cfenv": "^1.2.3",
     "dotenv": "^10.0.0",
     "js-yaml": "^4.1.0",
-    "moment": "^2.27.0",
-    "moment-timezone": "^0.5.32",
     "node-schedule": "^2.0.0",
     "pg": "^8.7.1"
   },
@@ -36,7 +34,9 @@
     "sinon": "^11.1.2"
   },
   "jest": {
-    "setupFiles": ["./src/polyfill.js"],
+    "setupFiles": [
+      "./src/polyfill.js"
+    ],
     "testEnvironment": "node"
   },
   "prettier": {}
