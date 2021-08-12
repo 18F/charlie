@@ -28,23 +28,14 @@ const TIMEZONES = {
   pst: "America/Los_Angeles",
 };
 
+const timeFormatter = new Intl.DateTimeFormat("en", {
+  hour: "numeric",
+  minute: "numeric",
+});
+
 const timeString = (zonedDateTime, ampm) => {
-  const { hour: h, minute } = Temporal.PlainTime.from(zonedDateTime);
-
-  let ampmStr = "";
-  if (ampm) {
-    if (h < 12) {
-      ampmStr = " am";
-    } else {
-      ampmStr = " pm";
-    }
-  }
-
-  const hour = h === 0 ? 12 : h;
-
-  return `${hour > 12 ? hour - 12 : hour}:${
-    minute > 10 ? "" : "0"
-  }${minute}${ampmStr}`;
+  const str = timeFormatter.format(zonedDateTime.toPlainTime()).toLowerCase();
+  return ampm ? str : str.replace(/(a|p)m/gi, "").trim();
 };
 
 const matcher =
