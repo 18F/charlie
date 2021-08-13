@@ -131,11 +131,9 @@ describe("holiday reminder", () => {
 
       expect(scheduleJob).toHaveBeenCalledWith(
         new Date(
-          Date.parse(
-            Temporal.ZonedDateTime.from(
-              "2000-01-01T15:00:00[America/New_York]"
-            ).toInstant()
-          )
+          Temporal.ZonedDateTime.from(
+            "2000-01-01T15:00:00[America/New_York]"
+          ).epochMilliseconds
         ),
         expect.any(Function)
       );
@@ -151,11 +149,9 @@ describe("holiday reminder", () => {
       // of January first like the previous expect.
       expect(scheduleJob).toHaveBeenCalledWith(
         new Date(
-          Date.parse(
-            Temporal.ZonedDateTime.from(
-              "2000-01-02T15:00:00[America/New_York]"
-            ).toInstant()
-          )
+          Temporal.ZonedDateTime.from(
+            "2000-01-02T15:00:00[America/New_York]"
+          ).epochMilliseconds
         ),
         expect.any(Function)
       );
@@ -181,11 +177,9 @@ describe("holiday reminder", () => {
 
       expect(scheduleJob).toHaveBeenCalledWith(
         new Date(
-          Date.parse(
-            Temporal.ZonedDateTime.from(
-              "2000-01-01T04:32:00[America/New_York]"
-            ).toInstant()
-          )
+          Temporal.ZonedDateTime.from(
+            "2000-01-01T04:32:00[America/New_York]"
+          ).epochMilliseconds
         ),
         expect.any(Function)
       );
@@ -200,11 +194,9 @@ describe("holiday reminder", () => {
 
       expect(scheduleJob).toHaveBeenCalledWith(
         new Date(
-          Date.parse(
-            Temporal.ZonedDateTime.from(
-              "2000-01-02T04:32:00[America/New_York]"
-            ).toInstant()
-          )
+          Temporal.ZonedDateTime.from(
+            "2000-01-02T04:32:00[America/New_York]"
+          ).epochMilliseconds
         ),
         expect.any(Function)
       );

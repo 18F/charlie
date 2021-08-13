@@ -52,7 +52,7 @@ module.exports = (app) => {
     } = await msg.client.users.info({ user });
 
     let users = await getSlackUsersInConversation(msg);
-    let m = null;
+    let timeToTranslate = null;
     let ampm = null;
 
     const matches = [...text.matchAll(RegExp(matcher, "gi"))];
@@ -69,7 +69,7 @@ module.exports = (app) => {
         ? TIMEZONES[timezone.toLowerCase()]
         : authorTimezone;
 
-      if (m === null) {
+      if (timeToTranslate === null) {
         ampm = ampmStr;
 
         let hour = +h;
@@ -85,7 +85,7 @@ module.exports = (app) => {
           return;
         }
 
-        m = Temporal.Now.instant()
+        timeToTranslate = Temporal.Now.instant()
           .toZonedDateTime({ calendar: "iso8601", timeZone: sourceTz })
           .withPlainTime({ hour, minute });
       }
@@ -116,7 +116,7 @@ module.exports = (app) => {
     });
 
     // if the detected time is invalid, nothing should be sent to users
-    if (!m) {
+    if (!timeToTranslate) {
       return;
     }
 
@@ -127,7 +127,7 @@ module.exports = (app) => {
         user: id,
         username: "Handy Tau-bot",
         text: `That's ${timeString(
-          m.withTimeZone({ timeZone: tz }),
+          timeToTranslate.withTimeZone({ timeZone: tz }),
           ampm
         )} for you!`,
         thread_ts: thread,
@@ -137,7 +137,7 @@ module.exports = (app) => {
             text: {
               type: "mrkdwn",
               text: `That's ${timeString(
-                m.withTimeZone({ timeZone: tz }),
+                timeToTranslate.withTimeZone({ timeZone: tz }),
                 ampm
               )} for you!`,
             },

@@ -220,7 +220,9 @@ describe("Optimistic Tock", () => {
       // Before we call the re-scheduler, reset the mock to clear out the set of
       // scheduled jobs from start-up.. Also fast-forward in time by a week.
       scheduleJob.mockClear();
-      clock.tick(7 * 24 * 60 * 60 * 1000);
+      clock.tick(
+        Temporal.Duration.from({ days: 7 }).total({ unit: "millisecond" })
+      );
 
       // Now let's see what happens!
       await rescheduler();

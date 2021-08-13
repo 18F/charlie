@@ -2,14 +2,12 @@ const sinon = require("sinon");
 const { getNextHoliday } = require("./dates");
 
 const midnight = ({ year, month, day }) =>
-  Date.parse(
-    Temporal.ZonedDateTime.from({
-      year,
-      month,
-      day,
-      timeZone: "America/New_York",
-    }).toInstant()
-  );
+  Temporal.ZonedDateTime.from({
+    year,
+    month,
+    day,
+    timeZone: "America/New_York",
+  }).epochMilliseconds;
 
 describe("gets the next holiday", () => {
   it("defaults to America/New_York time", async () => {

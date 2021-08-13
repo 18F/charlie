@@ -4,8 +4,6 @@ const {
   holidays: { emojis },
 } = require("../utils");
 
-// The PluralRules API is not implemented in the polyfill, so revert to the
-// global instance.
 const pr = new Intl.PluralRules("en-US", { type: "ordinal" });
 const suffixes = new Map([
   ["one", "st"],
@@ -31,7 +29,7 @@ module.exports = (app) => {
       const holiday = getNextHoliday();
       const today = getToday();
 
-      const { days: daysUntil } = today.until(holiday.date);
+      const daysUntil = today.until(holiday.date).total({ unit: "day" });
 
       const emoji = emojis.get(holiday.name);
 

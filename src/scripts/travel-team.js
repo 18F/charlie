@@ -1,6 +1,6 @@
 const holidays = require("@18f/us-federal-holidays");
 const {
-  dates: { getNow, DAYS },
+  dates: { getNow, zonedDateTimeToDate, DAYS },
 } = require("../utils");
 
 // Saturday and Sunday; day numbers are according to the Temporal spec. Weekday
@@ -32,15 +32,15 @@ const getChannelName = (() => {
 })();
 
 const travelIsClosed = (day = getNow()) =>
-  holidays.isAHoliday(new Date(Date.parse(day.toInstant()))) ||
+  holidays.isAHoliday(zonedDateTimeToDate(day)) ||
   closedDays.includes(day.dayOfWeek);
 
 const getNextWorkday = () => {
-  let m = getNow().add({ days: 1 });
-  while (travelIsClosed(m)) {
-    m = m.add({ days: 1 });
+  let nextWorkDay = getNow().add({ days: 1 });
+  while (travelIsClosed(nextWorkDay)) {
+    nextWorkDay = nextWorkDay.add({ days: 1 });
   }
-  return dows[m.dayOfWeek];
+  return dows[nextWorkDay.dayOfWeek];
 };
 
 const pastResponses = [];

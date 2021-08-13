@@ -95,8 +95,14 @@ module.exports = async (app) => {
     while (nextSunday.dayOfWeek !== DAYS.Sunday) {
       nextSunday = nextSunday.add({ days: 1 });
     }
-    // "Not after" rather than "before" to handle the edge where these
-    // two are identical. So... Sundays. Also the tests.
+    // If today is Sunday, then the loop above wouldn't have done anything, so
+    // advance forward a week. This check is primarily only necessary at bot
+    // start up: it first schedules the most immediate reminder and then calls
+    // this function to schedule the following reminder. If the bot starts on a
+    // Sunday, then the scheduleJob below would be run immediately, meaning the
+    // most immediate reminders would run twice. So, if the bot starts on a
+    // Sunday, punt the next schedulefest for a week. There's probably a much
+    // cleaner way to address this.
     if (Temporal.ZonedDateTime.compare(nextSunday, getNow()) <= 0) {
       nextSunday = nextSunday.add({ days: 7 });
     }

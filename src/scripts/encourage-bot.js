@@ -8,10 +8,9 @@
 const holidays = require("@18f/us-federal-holidays");
 const scheduler = require("node-schedule");
 const {
-  dates: { getNow },
+  dates: { getNow, zonedDateTimeToDate, DAYS },
   slack: { getChannelID, getSlackUsersInConversation, postMessage },
 } = require("../utils");
-const { DAYS, zonedDateTimeToDate } = require("../utils/dates");
 
 const CHANNEL = "random";
 
@@ -67,26 +66,31 @@ const tellSomeoneTheyAreAwesome = async (channel) => {
 };
 
 const tzCompare = "2000-01-01T00:00:00.000";
+
+const sorter = (timezoneA, timezoneB) =>
+  // I'm pretty sure this isn't the best and safest way to sort timezones by
+  // "early"ness, but for the set of timezones and hours that this bot is
+  // working with, it gets the job done.
+  Temporal.ZonedDateTime.compare(
+    Temporal.ZonedDateTime.from(`${tzCompare}[${timezoneA}]`),
+    Temporal.ZonedDateTime.from(`${tzCompare}[${timezoneB}]`)
+  );
+
 const scheduleAnotherReminder = async (app, channel) => {
   const users = await getChannelUsers(channel);
-  const timezones = Array.from(new Set(users.map(({ tz }) => tz))).sort(
-    (a, b) =>
-      Temporal.ZonedDateTime.compare(
-        Temporal.ZonedDateTime.from(`${tzCompare}[${a}]`),
-        Temporal.ZonedDateTime.from(`${tzCompare}[${b}]`)
-      )
-  );
+  const timezones = Array.from(new Set(users.map(({ tz }) => tz))).sort(sorter);
 
   const earliest = timezones[0];
   const latest = timezones.pop();
 
-  const { hours: tzSpan } = Temporal.ZonedDateTime.from(
-    `${tzCompare}[${earliest}]`
-  ).until(
-    Temporal.ZonedDateTime.from(`${tzCompare}[${latest}]`, {
-      largestUnit: "hour",
-      smallestUnit: "hour",
-    })
+  // This SHOULD always be a whole number of hours, but it doesn't strictly HAVE
+  // to be, so we'll just round up to make sure we don't leave anyone out.
+  const tzSpan = Math.ceil(
+    Temporal.ZonedDateTime.from(`${tzCompare}[${earliest}]`)
+      .until(Temporal.ZonedDateTime.from(`${tzCompare}[${latest}]`))
+      .total({
+        unit: "hour",
+      })
   );
 
   // Tell someone else. Wait at least 2 hours, but not more than 48 hours, and

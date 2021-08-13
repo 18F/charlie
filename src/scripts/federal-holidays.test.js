@@ -26,7 +26,12 @@ describe("federal holidays bot", () => {
 
   it("responds to a request for the next federal holiday", () => {
     const clock = sinon.useFakeTimers();
-    clock.tick(1000 * 60 * 60 * 12);
+    // This gets us past midnight on January 1, 1970 in half the world, which is
+    // necessary for internal code that uses Date objects, since they can't
+    // handle times before then.
+    clock.tick(
+      Temporal.Duration.from({ hours: 12 }).total({ unit: "millisecond" })
+    );
     bot(app);
     const handler = app.getHandler();
     const say = jest.fn();
@@ -47,7 +52,9 @@ describe("federal holidays bot", () => {
 
   it("includes an emoji for well-known holidays", () => {
     const clock = sinon.useFakeTimers();
-    clock.tick(1000 * 60 * 60 * 12);
+    clock.tick(
+      Temporal.Duration.from({ hours: 12 }).total({ unit: "millisecond" })
+    );
     bot(app);
     const handler = app.getHandler();
     const say = jest.fn();

@@ -29,7 +29,9 @@ describe("utils / cache", () => {
   // so that it doesn't expire on the next auto-clean. That is correct
   // behavior, but it's hard to account for. Having this test first moots it.
   it("clears itself of things that are more than 20 minutes old", async () => {
-    const TWENTY_MINUTES = 20 * 60 * 1000;
+    const TWENTY_MINUTES = Temporal.Duration.from({ minutes: 20 }).total({
+      unit: "milliseconds",
+    });
 
     const callback = jest.fn().mockResolvedValue("");
 

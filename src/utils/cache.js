@@ -1,4 +1,6 @@
-const CACHE_MAX_LIFE = 20 * 60 * 1000;
+const CACHE_MAX_LIFE = Temporal.Duration.from({ minutes: 20 }).total({
+  unit: "milliseconds",
+});
 
 const cache = (() => {
   const privateCache = new Map();

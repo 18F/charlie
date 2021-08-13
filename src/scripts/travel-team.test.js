@@ -72,8 +72,7 @@ describe("Travel team weekend/holiday notice", () => {
 
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":tts:",
-          text:
-            "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Friday morning and someone will respond promptly.",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Friday morning and someone will respond promptly.",
           thread_ts: "thread id",
           username: "TTS Travel Team",
         });
@@ -89,8 +88,7 @@ describe("Travel team weekend/holiday notice", () => {
 
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":tts:",
-          text:
-            "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
           thread_ts: "thread id",
           username: "TTS Travel Team",
         });
@@ -105,8 +103,7 @@ describe("Travel team weekend/holiday notice", () => {
 
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":tts:",
-          text:
-            "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
           thread_ts: "thread id",
           username: "TTS Travel Team",
         });
@@ -121,8 +118,7 @@ describe("Travel team weekend/holiday notice", () => {
 
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":tts:",
-          text:
-            "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
           thread_ts: "thread id",
           username: "TTS Travel Team",
         });
@@ -144,7 +140,9 @@ describe("Travel team weekend/holiday notice", () => {
         message.say.mockClear();
 
         // Now move forwar 3 hours and see that we get a new message for the user
-        clock.tick(3 * 60 * 60 * 1000);
+        clock.tick(
+          Temporal.Duration.from({ hours: 3 }).total({ unit: "milliseconds" })
+        );
         await handler(message);
 
         expect(message.say).toHaveBeenCalled();

@@ -203,11 +203,8 @@ describe("utils / tock", () => {
     it("defaults to looking at the reporting period from a week ago", async () => {
       const date = Temporal.PlainDate.from("2020-10-14");
       clock.tick(
-        Date.parse(
-          date
-            .toZonedDateTime({ timeZone: Temporal.Now.timeZone() })
-            .toInstant()
-        )
+        date.toZonedDateTime({ timeZone: Temporal.Now.timeZone() })
+          .epochMilliseconds
       );
       const truants = await get18FTockTruants(date);
 
@@ -220,11 +217,8 @@ describe("utils / tock", () => {
     it("defaults to looking at the reporting period from this week", async () => {
       const date = Temporal.PlainDate.from("2020-10-14");
       clock.tick(
-        Date.parse(
-          date
-            .toZonedDateTime({ timeZone: Temporal.Now.timeZone() })
-            .toInstant()
-        )
+        date.toZonedDateTime({ timeZone: Temporal.Now.timeZone() })
+          .epochMilliseconds
       );
       const truants = await get18FTockTruants(date, 0);
 
