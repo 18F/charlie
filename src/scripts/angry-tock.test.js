@@ -217,7 +217,9 @@ describe("Angry Tock", () => {
     // scheduler and run it, but first advance the time so that the "angry"
     // shout gets scheduled next. We need to advance time up to the initial
     // "shout" time so that future shouts are scheduled correctly.
-    await clock.tickAsync(2 * 60 * 60 * 1000);
+    await clock.tickAsync(
+      Temporal.Duration.from({ hours: 2 }).total({ unit: "millisecond" })
+    );
     const calmShout = scheduleJob.mock.calls[0][1];
     await calmShout();
 
