@@ -18,32 +18,26 @@ const getNow = (timeZone = "America/New_York") =>
 const getToday = (timeZone = "America/New_York") =>
   getNow(timeZone).toPlainDate();
 
-const zonedDateTimeToDate = (zdt) =>
-  new Date(zdt.toInstant().epochMilliseconds);
+const zonedDateTimeToDate = (zdt) => new Date(zdt.epochMilliseconds);
 
 const getNextHoliday = (timeZone = "America/New_York") => {
   const now = getToday(timeZone);
 
-  return (
-    holidays
-      .allForYear(now.year)
-      .concat(holidays.allForYear(now.year + 1))
-      .map((h) => {
-        const [year, m, d] = h.dateString.split("-");
-        const month = String(m).padStart(2, "0");
-        const day = String(d).padStart(2, "0");
+  return holidays
+    .allForYear(now.year)
+    .concat(holidays.allForYear(now.year + 1))
+    .map((h) => {
+      const [year, m, d] = h.dateString.split("-");
+      const month = String(m).padStart(2, "0");
+      const day = String(d).padStart(2, "0");
 
-        return {
-          ...h,
-          date: Temporal.PlainDate.from(`${[year, month, day].join("-")}`),
-        };
-      })
-      .filter(({ date }) => Temporal.PlainDate.compare(date, now) > 0)
-      // Eventually this could just return Temporal.PlainDate objects, but not yet
-      // because downstream code expects this to return legacy Date objects
-      // .map((h) => ({ ...h, date: new Date(Date.parse(h.date.toInstant())) }))
-      .shift()
-  );
+      return {
+        ...h,
+        date: Temporal.PlainDate.from(`${[year, month, day].join("-")}`),
+      };
+    })
+    .filter(({ date }) => Temporal.PlainDate.compare(date, now) > 0)
+    .shift();
 };
 
 module.exports = {

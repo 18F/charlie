@@ -49,7 +49,7 @@ describe("Encouragement bot", () => {
       // run, ideally in isolation.
     ].forEach(({ desc, when }) => {
       it(desc, async () => {
-        jest.setSystemTime(when.toInstant().epochMilliseconds);
+        jest.setSystemTime(when.epochMilliseconds);
 
         await bot(app);
         expect(scheduleJob).toHaveBeenCalled();
@@ -72,7 +72,7 @@ describe("Encouragement bot", () => {
         expect(early.dayOfWeek).not.toBe(6);
         expect(early.hour).toBeGreaterThanOrEqual(9);
         expect(late.hour).toBeLessThan(17);
-        expect(isAHoliday(new Date(early.toInstant().epochMilliseconds))).toBe(
+        expect(isAHoliday(new Date(early.epochMilliseconds))).toBe(
           false
         );
       });

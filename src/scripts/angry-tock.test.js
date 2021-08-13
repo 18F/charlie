@@ -127,13 +127,13 @@ describe("Angry Tock", () => {
       const time = Temporal.ZonedDateTime.from(
         `1974-04-08T00:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
-      clock.tick(time.toInstant().epochMilliseconds);
+      clock.tick(time.epochMilliseconds);
 
       const angryTock = await load();
       angryTock(app);
 
       expect(scheduleJob).toHaveBeenCalledWith(
-        new Date(time.with({ hour: 10 }).toInstant().epochMilliseconds),
+        new Date(time.with({ hour: 10 }).epochMilliseconds),
         expect.any(Function)
       );
     });
@@ -143,15 +143,13 @@ describe("Angry Tock", () => {
       const time = Temporal.ZonedDateTime.from(
         `1991-05-20 11:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
-      clock.tick(time.toInstant().epochMilliseconds);
+      clock.tick(time.epochMilliseconds);
 
       const angryTock = await load();
       angryTock(app);
 
       expect(scheduleJob).toHaveBeenCalledWith(
-        new Date(
-          time.with({ hour: 14, minute: 45 }).toInstant().epochMilliseconds
-        ),
+        new Date(time.with({ hour: 14, minute: 45 }).epochMilliseconds),
         expect.any(Function)
       );
     });
@@ -164,7 +162,7 @@ describe("Angry Tock", () => {
       const initial = Temporal.ZonedDateTime.from(
         `1997-01-27 20:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
-      clock.tick(initial.toInstant().epochMilliseconds);
+      clock.tick(initial.epochMilliseconds);
 
       const angryTock = await load();
       angryTock(app);
@@ -175,7 +173,7 @@ describe("Angry Tock", () => {
         `1997-02-03 10:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
       expect(scheduleJob).toHaveBeenCalledWith(
-        new Date(scheduled.toInstant().epochMilliseconds),
+        new Date(scheduled.epochMilliseconds),
         expect.any(Function)
       );
     });
@@ -187,7 +185,7 @@ describe("Angry Tock", () => {
       const initial = Temporal.ZonedDateTime.from(
         `2019-10-18 09:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
-      clock.tick(initial.toInstant().epochMilliseconds);
+      clock.tick(initial.epochMilliseconds);
 
       const angryTock = await load();
       angryTock(app);
@@ -198,7 +196,7 @@ describe("Angry Tock", () => {
         `2019-10-21 10:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
       );
       expect(scheduleJob).toHaveBeenCalledWith(
-        new Date(scheduled.toInstant().epochMilliseconds),
+        new Date(scheduled.epochMilliseconds),
         expect.any(Function)
       );
     });
@@ -210,7 +208,7 @@ describe("Angry Tock", () => {
     const initial = Temporal.ZonedDateTime.from(
       `1978-05-01 09:00:00[${process.env.ANGRY_TOCK_TIMEZONE}]`
     );
-    clock.tick(initial.toInstant().epochMilliseconds);
+    clock.tick(initial.epochMilliseconds);
 
     const angryTock = await load();
     angryTock(app);

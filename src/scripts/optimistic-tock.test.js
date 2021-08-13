@@ -134,7 +134,7 @@ describe("Optimistic Tock", () => {
   });
 
   const dateFrom = (str) =>
-    new Date(Temporal.ZonedDateTime.from(str).toInstant().epochMilliseconds);
+    new Date(Temporal.ZonedDateTime.from(str).epochMilliseconds);
 
   describe("it schedules future reminders", () => {
     it("for the next Friday if it is not a holiday", async () => {
