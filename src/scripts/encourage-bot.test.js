@@ -16,6 +16,7 @@ describe("Encouragement bot", () => {
   const scheduleJob = jest.spyOn(scheduler, "scheduleJob");
 
   beforeEach(() => {
+    app.brain.clear();
     jest.resetAllMocks();
     jest.useFakeTimers("modern");
     jest.setSystemTime(0);
@@ -34,6 +35,47 @@ describe("Encouragement bot", () => {
   });
 
   describe("schedules an encouragement when starting...", () => {
+    describe("when the brain contains a previously-scheduled encouragement", () => {
+      it("uses the time if it is in the future", async () => {
+        // The television show Night Court premiers on NBC
+        const time = moment.tz("1984-01-04T12:34:56-0500", "America/New_York");
+        app.brain.set("encourage-bot-schedule", time.toISOString());
+        jest.setSystemTime(moment(time).subtract(1, "minute").toDate());
+
+        await bot(app);
+        expect(scheduleJob).toHaveBeenCalledWith(
+          time.toDate(),
+          expect.any(Function)
+        );
+      });
+
+      it("uses a random time if the stored time is right now", async () => {
+        // Jay Leno takes over as the host of The Tonight Show
+        const time = moment.tz("1992-05-25T20:00:00-0500", "America/New_York");
+        app.brain.set("encourage-bot-schedule", time.toISOString());
+        jest.setSystemTime(time.toDate());
+
+        await bot(app);
+        expect(scheduleJob).not.toHaveBeenCalledWith(
+          time.toDate(),
+          expect.any(Function)
+        );
+      });
+
+      it("uses a random time if the stored time is in the past", async () => {
+        // The television show NCIS LA premiers on CBS
+        const time = moment.tz("2009-09-22T18:00:00-0500", "America/New_York");
+        app.brain.set("encourage-bot-schedule", time.toISOString());
+        jest.setSystemTime(moment(time).add(1, "minute").toDate());
+
+        await bot(app);
+        expect(scheduleJob).not.toHaveBeenCalledWith(
+          time.toDate(),
+          expect.any(Function)
+        );
+      });
+    });
+
     [
       {
         // Guarantees that we will advance either hours or weekends, but there's
