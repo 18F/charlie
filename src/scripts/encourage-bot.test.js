@@ -18,7 +18,7 @@ describe("Encouragement bot", () => {
   beforeEach(() => {
     app.brain.clear();
     jest.resetAllMocks();
-    jest.useFakeTimers("modern");
+    jest.useFakeTimers();
     jest.setSystemTime(0);
 
     getChannelID.mockResolvedValue("channel-id");

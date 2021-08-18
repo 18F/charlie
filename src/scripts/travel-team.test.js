@@ -1,4 +1,3 @@
-const sinon = require("sinon");
 const { getApp } = require("../utils/test");
 const travel = require("./travel-team");
 
@@ -18,9 +17,14 @@ describe("Travel team weekend/holiday notice", () => {
       say: jest.fn(),
     };
 
-    let clock;
     let handler;
+
+    beforeAll(() => {
+      jest.useFakeTimers();
+    });
+
     beforeEach(() => {
+      jest.setSystemTime(0);
       jest.resetAllMocks();
 
       message.client.conversations.list.mockResolvedValue({
@@ -32,11 +36,10 @@ describe("Travel team weekend/holiday notice", () => {
 
       travel(app);
       handler = app.getHandler();
-      clock = sinon.useFakeTimers();
     });
 
-    afterEach(() => {
-      clock.restore();
+    afterAll(() => {
+      jest.useRealTimers();
     });
 
     it("ignores messages that are not in the Travel channel", async () => {
@@ -57,7 +60,7 @@ describe("Travel team weekend/holiday notice", () => {
       it("does nothing if the current time is during the work week", async () => {
         // Tuesday, Jnuary 17, 1984: US Supreme Court rules that recording on VHS
         // tapes for later playback does not violate federal copyright laws.
-        clock.tick(443188800000);
+        jest.setSystemTime(443188800000);
 
         await handler(message);
 
@@ -66,14 +69,13 @@ describe("Travel team weekend/holiday notice", () => {
 
       it("sends a message if the current time is during a federal holiday", async () => {
         // Thursday, July 4, 1996: Hotmail is born.
-        clock.tick(836481600000);
+        jest.setSystemTime(836481600000);
 
         await handler(message);
 
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":tts:",
-          text:
-            "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Friday morning and someone will respond promptly.",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Friday morning and someone will respond promptly.",
           thread_ts: "thread id",
           username: "TTS Travel Team",
         });
@@ -83,14 +85,13 @@ describe("Travel team weekend/holiday notice", () => {
         // Saturday, July 31, 1999: NASA crashes the lunar probe Lunar Prospect
         // into the moon as the final portion of its mission to detect frozen
         // water on the moon's surface.
-        clock.tick(933422400000);
+        jest.setSystemTime(933422400000);
 
         await handler(message);
 
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":tts:",
-          text:
-            "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
           thread_ts: "thread id",
           username: "TTS Travel Team",
         });
@@ -99,14 +100,13 @@ describe("Travel team weekend/holiday notice", () => {
       it("sends a message if the current time is during a Sunday", async () => {
         // Sunday, October 19, 2003: Mother Teresa is beatified by Pope John
         // Paul II.
-        clock.tick(1066564800000);
+        jest.setSystemTime(1066564800000);
 
         await handler(message);
 
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":tts:",
-          text:
-            "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
           thread_ts: "thread id",
           username: "TTS Travel Team",
         });
@@ -115,14 +115,13 @@ describe("Travel team weekend/holiday notice", () => {
       it("does not send a message to the same user for at least 3 hours", async () => {
         // Sunday, September 7, 2014: Serena Williams wins her third consecutive
         // US Open title.
-        clock.tick(1410091200000);
+        jest.setSystemTime(1410091200000);
 
         await handler(message);
 
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":tts:",
-          text:
-            "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Monday morning and someone will respond promptly.",
           thread_ts: "thread id",
           username: "TTS Travel Team",
         });
@@ -144,7 +143,7 @@ describe("Travel team weekend/holiday notice", () => {
         message.say.mockClear();
 
         // Now move forwar 3 hours and see that we get a new message for the user
-        clock.tick(3 * 60 * 60 * 1000);
+        jest.advanceTimersByTime(3 * 60 * 60 * 1000);
         await handler(message);
 
         expect(message.say).toHaveBeenCalled();

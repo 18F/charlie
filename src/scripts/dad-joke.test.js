@@ -1,4 +1,3 @@
-const sinon = require("sinon");
 const {
   axios,
   getApp,
@@ -9,10 +8,9 @@ const script = require("./dad-joke");
 
 describe("dad jokes (are the best worst)", () => {
   const app = getApp();
-  let clock;
 
   beforeAll(() => {
-    clock = sinon.useFakeTimers();
+    jest.useFakeTimers();
   });
 
   beforeEach(() => {
@@ -20,7 +18,7 @@ describe("dad jokes (are the best worst)", () => {
   });
 
   afterAll(() => {
-    clock.restore();
+    jest.useRealTimers();
   });
 
   it("subscribes to dad joke requests", () => {
@@ -133,7 +131,7 @@ describe("dad jokes (are the best worst)", () => {
         // Ensure the punchline part comes after a delay by clearing out the
         // existing mock calls.
         message.say.mockClear();
-        clock.tick(5000);
+        jest.advanceTimersByTime(5000);
 
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":dog-joke:",

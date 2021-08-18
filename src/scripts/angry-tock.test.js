@@ -1,5 +1,4 @@
 const moment = require("moment-timezone");
-const sinon = require("sinon");
 
 const {
   getApp,
@@ -21,14 +20,13 @@ describe("Angry Tock", () => {
   const app = getApp();
   const scheduleJob = jest.fn();
   jest.doMock("node-schedule", () => ({ scheduleJob }));
-  let clock;
 
   beforeAll(() => {
-    clock = sinon.useFakeTimers();
+    jest.useFakeTimers();
   });
 
   beforeEach(() => {
-    clock.reset();
+    jest.setSystemTime(0);
     jest.resetAllMocks();
 
     process.env.TOCK_API = "tock url";
@@ -89,7 +87,7 @@ describe("Angry Tock", () => {
   });
 
   afterAll(() => {
-    clock.restore();
+    jest.useRealTimers();
   });
 
   describe("issues a warning and does not schedule a shouting match if un/mis-configured", () => {
@@ -129,7 +127,7 @@ describe("Angry Tock", () => {
         "1974-04-08 00:00:00",
         process.env.ANGRY_TOCK_TIMEZONE
       );
-      clock.tick(time.toDate().getTime());
+      jest.setSystemTime(time.toDate());
 
       const angryTock = await load();
       angryTock(app);
@@ -147,7 +145,7 @@ describe("Angry Tock", () => {
         "1991-05-20 11:00:00",
         process.env.ANGRY_TOCK_TIMEZONE
       );
-      clock.tick(time.toDate().getTime());
+      jest.setSystemTime(time.toDate());
 
       const angryTock = await load();
       angryTock(app);
@@ -169,7 +167,7 @@ describe("Angry Tock", () => {
         "1997-01-27 20:00:00",
         process.env.ANGRY_TOCK_TIMEZONE
       );
-      clock.tick(initial.toDate().getTime());
+      jest.setSystemTime(initial.toDate());
 
       const angryTock = await load();
       angryTock(app);
@@ -194,7 +192,7 @@ describe("Angry Tock", () => {
         "2019-10-18 09:00:00",
         process.env.ANGRY_TOCK_TIMEZONE
       );
-      clock.tick(initial.toDate().getTime());
+      jest.setSystemTime(initial.toDate());
 
       const angryTock = await load();
       angryTock(app);
@@ -219,7 +217,7 @@ describe("Angry Tock", () => {
       "1978-05-01 09:00:00",
       process.env.ANGRY_TOCK_TIMEZONE
     );
-    clock.tick(initial.toDate().getTime());
+    jest.setSystemTime(initial.toDate());
 
     const angryTock = await load();
     angryTock(app);
@@ -228,7 +226,7 @@ describe("Angry Tock", () => {
     // scheduler and run it, but first advance the time so that the "angry"
     // shout gets scheduled next. We need to advance time up to the initial
     // "shout" time so that future shouts are scheduled correctly.
-    await clock.tickAsync(moment.duration({ hours: 2 }).asMilliseconds());
+    jest.advanceTimersByTime(moment.duration({ hours: 2 }).asMilliseconds());
     const calmShout = scheduleJob.mock.calls[0][1];
     await calmShout();
 
@@ -255,7 +253,7 @@ describe("Angry Tock", () => {
     // After the calm "shout", there's a short delay and then an "angry" shout
     // should be scheduled. Advance time so the angry shout is scheduled
     // correctly, then grab that handler.
-    clock.tick(10000);
+    jest.advanceTimersByTime(10000);
     const angryShout = scheduleJob.mock.calls[0][1];
     await angryShout();
 

@@ -1,5 +1,4 @@
 const moment = require("moment-timezone");
-const sinon = require("sinon");
 
 const {
   getApp,
@@ -22,18 +21,16 @@ describe("Optimistic Tock", () => {
   const scheduleJob = jest.fn();
   jest.doMock("node-schedule", () => ({ scheduleJob }));
 
-  const sandbox = sinon.createSandbox();
-
   const isOptedOut = jest.fn();
 
   const app = getApp();
 
-  let clock;
   beforeAll(() => {
-    clock = sinon.useFakeTimers();
+    jest.useFakeTimers();
   });
 
   beforeEach(() => {
+    jest.setSystemTime(0);
     jest.resetAllMocks();
 
     optOut.mockReturnValue({ button: { button: "goes here" }, isOptedOut });
@@ -94,14 +91,8 @@ describe("Optimistic Tock", () => {
     ]);
   });
 
-  afterEach(() => {
-    clock.reset();
-    sandbox.resetHistory();
-  });
-
   afterAll(() => {
-    clock.restore();
-    sandbox.restore();
+    jest.useRealTimers();
   });
 
   describe("issues a warning and does not schedule a shouting match if un/mis-configured", () => {
@@ -137,7 +128,7 @@ describe("Optimistic Tock", () => {
     it("for the next Friday if it is not a holiday", async () => {
       // The Bell System is broken up by antitrust action.
       const time = moment.tz("1984-01-01T12:32:18", "America/New_York");
-      clock.tick(time.toDate().getTime());
+      jest.setSystemTime(time.toDate());
 
       const times = [
         moment.tz("1984-01-06T16:00:00", "America/New_York").toDate(),
@@ -173,7 +164,7 @@ describe("Optimistic Tock", () => {
       // I don't know if this is a significant date, but July 4 was a Friday
       // in 1986, so it meets our test criteria.
       const time = moment.tz("1986-07-01T12:43:44", "America/New_York");
-      clock.tick(time.toDate().getTime());
+      jest.setSystemTime(time.toDate());
 
       const times = [
         moment.tz("1986-07-03T16:00:00", "America/New_York").toDate(),
@@ -209,7 +200,7 @@ describe("Optimistic Tock", () => {
       // The wreck of the Titanic is found. A Monday. We all feel a little like
       // wrecks on Mondays, don't we?
       const time = moment.tz("1985-09-02T09:45:00", "America/New_York");
-      clock.tick(time.toDate().getTime());
+      jest.setSystemTime(time.toDate());
 
       const optimisticTock = await load();
       await optimisticTock(app);
@@ -220,7 +211,7 @@ describe("Optimistic Tock", () => {
       // Before we call the re-scheduler, reset the mock to clear out the set of
       // scheduled jobs from start-up.. Also fast-forward in time by a week.
       scheduleJob.mockClear();
-      clock.tick(moment.duration(7, "days").asMilliseconds());
+      jest.advanceTimersByTime(moment.duration(7, "days").asMilliseconds());
 
       // Now let's see what happens!
       await rescheduler();
@@ -257,7 +248,7 @@ describe("Optimistic Tock", () => {
     beforeAll(async () => {
       // The Bell System is broken up by antitrust action.
       const time = moment.tz("1984-01-01T12:00:00", "America/New_York");
-      clock.tick(time.toDate().getTime());
+      jest.setSystemTime(time.toDate());
 
       const optimisticTock = await load();
       await optimisticTock(app);
