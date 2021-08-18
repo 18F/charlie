@@ -32,12 +32,14 @@ describe("holiday reminder", () => {
       it("defaults to 15:00", async () => {
         const bot = await load();
 
-        const nextHoliday = { date: moment("2021-08-16T12:00:00Z") };
+        const nextHoliday = {
+          date: moment.tz("2021-08-16T12:00:00", "America/New_York"),
+        };
         getNextHoliday.mockReturnValue(nextHoliday);
 
         bot();
         expect(scheduleJob).toHaveBeenCalledWith(
-          new Date(Date.parse("2021-08-13T15:00:00-0500")),
+          moment(nextHoliday.date).subtract(3, "days").hour(15).toDate(),
           expect.any(Function)
         );
       });
@@ -46,12 +48,18 @@ describe("holiday reminder", () => {
         process.env.HOLIDAY_REMINDER_TIME = "04:32";
         const bot = await load();
 
-        const nextHoliday = { date: moment("2021-08-16T12:00:00Z") };
+        const nextHoliday = {
+          date: moment.tz("2021-08-16T12:00:00", "America/New_York"),
+        };
         getNextHoliday.mockReturnValue(nextHoliday);
 
         bot();
         expect(scheduleJob).toHaveBeenCalledWith(
-          new Date(Date.parse("2021-08-13T04:32:00-0500")),
+          moment(nextHoliday.date)
+            .subtract(3, "days")
+            .hour(4)
+            .minute(32)
+            .toDate(),
           expect.any(Function)
         );
       });
@@ -66,7 +74,7 @@ describe("holiday reminder", () => {
 
         bot();
         expect(scheduleJob).toHaveBeenCalledWith(
-          new Date(Date.parse("2021-08-18T15:00:00-0500")),
+          moment(nextHoliday.date).subtract(1, "day").hour(15).toDate(),
           expect.any(Function)
         );
       });
@@ -80,7 +88,11 @@ describe("holiday reminder", () => {
 
         bot();
         expect(scheduleJob).toHaveBeenCalledWith(
-          new Date(Date.parse("2021-08-18T04:32:00-0500")),
+          moment(nextHoliday.date)
+            .subtract(1, "day")
+            .hour(4)
+            .minute(32)
+            .toDate(),
           expect.any(Function)
         );
       });
@@ -88,11 +100,13 @@ describe("holiday reminder", () => {
   });
 
   describe("posts a reminder", () => {
+    const date = moment.tz("2021-08-19T12:00:00", "America/New_York");
+
     const getReminderFn = async (holiday = "test holiday") => {
       const bot = await load();
 
       const nextHoliday = {
-        date: moment("2021-08-19T12:00:00Z"),
+        date,
         name: holiday,
       };
       getNextHoliday.mockReturnValue(nextHoliday);
@@ -111,9 +125,12 @@ describe("holiday reminder", () => {
         text: "@here Remember that *Thursday* is a federal holiday in observance of *test holiday*!",
       });
 
-      // Sets up a job for tomorrow to schedule the next reminder
+      // Sets up a job for tomorrow to schedule the next reminder. Because the
+      // scheduled job above runs the day before the holiday, this upcoming job
+      // (1 day later) will be ON the holiday, at 15:00. This logic is the same
+      // for the subsequent tests below.
       expect(scheduleJob).toHaveBeenCalledWith(
-        new Date(Date.parse("2021-08-19T15:00:00-0500")),
+        moment(date).hour(15).toDate(),
         expect.any(Function)
       );
     });
@@ -130,7 +147,7 @@ describe("holiday reminder", () => {
 
       // Sets up a job for tomorrow to schedule the next reminder
       expect(scheduleJob).toHaveBeenCalledWith(
-        new Date(Date.parse("2021-08-19T15:00:00-0500")),
+        moment(date).hour(15).toDate(),
         expect.any(Function)
       );
     });
@@ -146,7 +163,7 @@ describe("holiday reminder", () => {
 
       // Sets up a job for tomorrow to schedule the next reminder
       expect(scheduleJob).toHaveBeenCalledWith(
-        new Date(Date.parse("2021-08-19T15:00:00-0500")),
+        moment(date).hour(15).toDate(),
         expect.any(Function)
       );
     });
@@ -162,7 +179,7 @@ describe("holiday reminder", () => {
 
       nextSchedule();
       expect(scheduleJob).toHaveBeenCalledWith(
-        new Date(Date.parse("2021-08-31T15:00:00-0500")),
+        moment(nextHoliday.date).subtract(1, "day").hour(15).toDate(),
         expect.any(Function)
       );
     });
