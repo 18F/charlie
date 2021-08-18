@@ -1,6 +1,5 @@
 const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
-// const sinon = require("sinon");
 
 const {
   utils: {
@@ -8,13 +7,6 @@ const {
     slack: { postMessage },
   },
 } = require("../utils/test");
-
-expect.extend({
-  toMatchMoment: (received, expected) => ({
-    message: () => `expected ${expected} to be ${received}`,
-    pass: moment(expected).isSame(received),
-  }),
-});
 
 describe("holiday reminder", () => {
   const scheduleJob = jest.spyOn(scheduler, "scheduleJob");
@@ -35,168 +27,144 @@ describe("holiday reminder", () => {
     jest.resetAllMocks();
   });
 
-  describe("gets the previous weekday", () => {
-    [
-      {
-        title: "gets Friday from Saturday",
-        start: new Date(2018, 10, 10),
-        end: "2018-11-09",
-      },
-      {
-        title: "gets Friday from Sunday",
-        start: new Date(2018, 10, 11),
-        end: "2018-11-09",
-      },
-      {
-        title: "gets Friday from Monday",
-        start: new Date(2018, 10, 12),
-        end: "2018-11-09",
-      },
-      {
-        title: "gets Monday from Tuesday",
-        start: new Date(2018, 10, 13),
-        end: "2018-11-12",
-      },
-      {
-        title: "gets Tuesday from Wednesday",
-        start: new Date(2018, 10, 14),
-        end: "2018-11-13",
-      },
-      {
-        title: "gets Wednesday from Thursday",
-        start: new Date(2018, 10, 15),
-        end: "2018-11-14",
-      },
-      {
-        title: "gets Thursday from Friday",
-        start: new Date(2018, 10, 16),
-        end: "2018-11-15",
-      },
-    ].forEach(({ title, start, end }) => {
-      it(title, async () => {
+  describe("schedules a reminder on startup", () => {
+    describe("reminds on Friday for holidays on Monday", () => {
+      it("defaults to 15:00", async () => {
         const bot = await load();
-        const out = bot.previousWeekday(start).format("YYYY-MM-DD");
-        expect(out).toEqual(end);
+
+        const nextHoliday = { date: moment("2021-08-16T12:00:00Z") };
+        getNextHoliday.mockReturnValue(nextHoliday);
+
+        bot();
+        expect(scheduleJob).toHaveBeenCalledWith(
+          new Date(Date.parse("2021-08-13T15:00:00-0500")),
+          expect.any(Function)
+        );
+      });
+
+      it("respects HOLIDAY_REMINDER_TIME", async () => {
+        process.env.HOLIDAY_REMINDER_TIME = "04:32";
+        const bot = await load();
+
+        const nextHoliday = { date: moment("2021-08-16T12:00:00Z") };
+        getNextHoliday.mockReturnValue(nextHoliday);
+
+        bot();
+        expect(scheduleJob).toHaveBeenCalledWith(
+          new Date(Date.parse("2021-08-13T04:32:00-0500")),
+          expect.any(Function)
+        );
+      });
+    });
+
+    describe("reminds on Wednesday for holidays on Thursday", () => {
+      it("defaults to 15:00", async () => {
+        const bot = await load();
+
+        const nextHoliday = { date: moment("2021-08-19T12:00:00Z") };
+        getNextHoliday.mockReturnValue(nextHoliday);
+
+        bot();
+        expect(scheduleJob).toHaveBeenCalledWith(
+          new Date(Date.parse("2021-08-18T15:00:00-0500")),
+          expect.any(Function)
+        );
+      });
+
+      it("respects HOLIDAY_REMINDER_TIME", async () => {
+        process.env.HOLIDAY_REMINDER_TIME = "04:32";
+        const bot = await load();
+
+        const nextHoliday = { date: moment("2021-08-19T12:00:00Z") };
+        getNextHoliday.mockReturnValue(nextHoliday);
+
+        bot();
+        expect(scheduleJob).toHaveBeenCalledWith(
+          new Date(Date.parse("2021-08-18T04:32:00-0500")),
+          expect.any(Function)
+        );
       });
     });
   });
 
   describe("posts a reminder", () => {
-    it("defaults to #general", async () => {
-      const bot = await load();
-      bot.postReminder({
-        date: moment("2018-11-12", "YYYY-MM-DD"),
-        name: "Test Holiday",
-      });
-
-      expect(postMessage).toHaveBeenCalledWith({
-        channel: "general",
-        text:
-          "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
-      });
-    });
-
-    it("honors the HOLIDAY_REMINDER_CHANNEL env var", async () => {
-      process.env.HOLIDAY_REMINDER_CHANNEL = "fred";
+    const getReminderFn = async (holiday = "test holiday") => {
       const bot = await load();
 
-      bot.postReminder({
-        date: moment("2018-11-12", "YYYY-MM-DD"),
-        name: "Test Holiday",
-      });
-
-      expect(postMessage).toHaveBeenCalledWith({
-        channel: "fred",
-        text:
-          "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
-      });
-    });
-
-    it("includes an emoji for holidays with known emoji mappings", async () => {
-      const bot = await load();
-      bot.postReminder({
-        date: moment("2018-11-12", "YYYY-MM-DD"),
-        name: "Veterans Day",
-      });
-
-      expect(postMessage).toHaveBeenCalledWith({
-        channel: "general",
-        text:
-          "@here Remember that *Monday* is a federal holiday in observance of *Veterans Day* :salute-you:!",
-      });
-    });
-  });
-
-  describe("schedules a reminder", () => {
-    it("defaults to 15:00", async () => {
-      const bot = await load();
-
-      const nextHoliday = { date: "in the future" };
+      const nextHoliday = {
+        date: moment("2021-08-19T12:00:00Z"),
+        name: holiday,
+      };
       getNextHoliday.mockReturnValue(nextHoliday);
-
-      const weekdayBefore = moment("2000-01-01", "YYYY-MM-DD");
-      jest.spyOn(bot, "previousWeekday").mockReturnValue(weekdayBefore);
-
-      jest.spyOn(bot, "postReminder").mockReturnValue();
 
       bot();
 
-      expect(weekdayBefore.hour()).toBe(15);
-      expect(weekdayBefore.minute()).toBe(0);
+      return scheduleJob.mock.calls[0][1];
+    };
 
+    it("defaults to general channel", async () => {
+      const postReminder = await getReminderFn();
+      await postReminder();
+
+      expect(postMessage).toHaveBeenCalledWith({
+        channel: "general",
+        text: "@here Remember that *Thursday* is a federal holiday in observance of *test holiday*!",
+      });
+
+      // Sets up a job for tomorrow to schedule the next reminder
       expect(scheduleJob).toHaveBeenCalledWith(
-        expect.toMatchMoment(weekdayBefore),
+        new Date(Date.parse("2021-08-19T15:00:00-0500")),
         expect.any(Function)
       );
-
-      // call the scheduled job
-      scheduleJob.mock.calls[0][1]();
-
-      expect(bot.postReminder).toHaveBeenCalledWith(nextHoliday);
-
-      expect(scheduleJob).toHaveBeenCalledWith(
-        expect.toMatchMoment(weekdayBefore),
-        expect.any(Function)
-      );
-
-      expect(scheduleJob.mock.calls.length).toBe(2);
     });
 
-    it("respects HOLIDAY_REMINDER_TIME", async () => {
-      process.env.HOLIDAY_REMINDER_TIME = "04:32";
-      const bot = await load();
+    it("respects HOLIDAY_REMINDER_CHANNEL", async () => {
+      process.env.HOLIDAY_REMINDER_CHANNEL = "test channel";
+      const postReminder = await getReminderFn();
+      await postReminder();
 
-      const nextHoliday = { date: "in the future" };
+      expect(postMessage).toHaveBeenCalledWith({
+        channel: "test channel",
+        text: "@here Remember that *Thursday* is a federal holiday in observance of *test holiday*!",
+      });
+
+      // Sets up a job for tomorrow to schedule the next reminder
+      expect(scheduleJob).toHaveBeenCalledWith(
+        new Date(Date.parse("2021-08-19T15:00:00-0500")),
+        expect.any(Function)
+      );
+    });
+
+    it("includes an emoji for holidays with known emoji", async () => {
+      const postReminder = await getReminderFn("Veterans Day");
+      await postReminder();
+
+      expect(postMessage).toHaveBeenCalledWith({
+        channel: "general",
+        text: "@here Remember that *Thursday* is a federal holiday in observance of *Veterans Day* :salute-you:!",
+      });
+
+      // Sets up a job for tomorrow to schedule the next reminder
+      expect(scheduleJob).toHaveBeenCalledWith(
+        new Date(Date.parse("2021-08-19T15:00:00-0500")),
+        expect.any(Function)
+      );
+    });
+
+    it("waits a day and then schedules the next holiday", async () => {
+      const postReminder = await getReminderFn();
+      await postReminder();
+
+      const nextSchedule = scheduleJob.mock.calls[1][1];
+
+      const nextHoliday = { date: moment("2021-09-01T12:00:00Z") };
       getNextHoliday.mockReturnValue(nextHoliday);
 
-      const weekdayBefore = moment("2000-01-01", "YYYY-MM-DD");
-      jest.spyOn(bot, "previousWeekday").mockReturnValue(weekdayBefore);
-
-      jest.spyOn(bot, "postReminder").mockReturnValue();
-
-      bot();
-
-      expect(bot.previousWeekday).toHaveBeenCalledWith("in the future");
-
-      expect(weekdayBefore.hour()).toBe(4);
-      expect(weekdayBefore.minute()).toBe(32);
-
+      nextSchedule();
       expect(scheduleJob).toHaveBeenCalledWith(
-        expect.toMatchMoment(weekdayBefore),
+        new Date(Date.parse("2021-08-31T15:00:00-0500")),
         expect.any(Function)
       );
-
-      // call the scheduled job
-      scheduleJob.mock.calls[0][1]();
-
-      expect(bot.postReminder).toHaveBeenCalledWith(nextHoliday);
-
-      expect(scheduleJob).toHaveBeenCalledWith(
-        expect.toMatchMoment(weekdayBefore),
-        expect.any(Function)
-      );
-
-      expect(scheduleJob.mock.calls.length).toBe(2);
     });
   });
 });
