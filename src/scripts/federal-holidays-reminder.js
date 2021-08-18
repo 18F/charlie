@@ -26,10 +26,10 @@ const previousWeekday = (date) => {
   return source;
 };
 
-const postReminder = (holiday) => {
+const postReminder = async (holiday) => {
   const emoji = emojis.get(holiday.name);
 
-  postMessage({
+  await postMessage({
     channel: CHANNEL,
     text: `@here Remember that *${holiday.date.format(
       "dddd"
@@ -40,14 +40,14 @@ const postReminder = (holiday) => {
 };
 
 const scheduleReminder = () => {
-  const nextHoliday = module.exports.getNextHoliday(TIMEZONE);
-  const target = module.exports.previousWeekday(nextHoliday.date);
+  const nextHoliday = getNextHoliday(TIMEZONE);
+  const target = previousWeekday(nextHoliday.date);
 
   target.hour(reportingTime.hour());
   target.minute(reportingTime.minute());
 
-  scheduler.scheduleJob(target.toDate(), () => {
-    module.exports.postReminder(nextHoliday);
+  scheduler.scheduleJob(target.toDate(), async () => {
+    await postReminder(nextHoliday);
 
     // Tomorrow, schedule the next holiday reminder
     scheduler.scheduleJob(target.add(1, "day").toDate(), () => {
@@ -57,8 +57,3 @@ const scheduleReminder = () => {
 };
 
 module.exports = scheduleReminder;
-
-// Expose for testing
-module.exports.getNextHoliday = getNextHoliday;
-module.exports.postReminder = postReminder;
-module.exports.previousWeekday = previousWeekday;
