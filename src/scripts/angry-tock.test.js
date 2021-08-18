@@ -1,6 +1,5 @@
 const moment = require("moment-timezone");
 const sinon = require("sinon");
-const scheduler = require("node-schedule");
 
 const {
   getApp,
@@ -20,7 +19,8 @@ describe("Angry Tock", () => {
     });
 
   const app = getApp();
-  const scheduleJob = jest.spyOn(scheduler, "scheduleJob");
+  const scheduleJob = jest.fn();
+  jest.doMock("node-schedule", () => ({ scheduleJob }));
   let clock;
 
   beforeAll(() => {
@@ -281,8 +281,7 @@ describe("Angry Tock", () => {
           fallback:
             "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
           color: "#FF0000",
-          text:
-            "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
+          text: "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
         },
       ],
       username: "Angry Tock",

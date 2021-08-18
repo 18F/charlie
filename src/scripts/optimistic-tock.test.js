@@ -1,6 +1,5 @@
 const moment = require("moment-timezone");
 const sinon = require("sinon");
-const scheduler = require("node-schedule");
 
 const {
   getApp,
@@ -20,7 +19,8 @@ describe("Optimistic Tock", () => {
       });
     });
 
-  const scheduleJob = jest.spyOn(scheduler, "scheduleJob");
+  const scheduleJob = jest.fn();
+  jest.doMock("node-schedule", () => ({ scheduleJob }));
 
   const sandbox = sinon.createSandbox();
 
@@ -31,7 +31,6 @@ describe("Optimistic Tock", () => {
   let clock;
   beforeAll(() => {
     clock = sinon.useFakeTimers();
-    sandbox.spy(scheduler, "scheduleJob");
   });
 
   beforeEach(() => {

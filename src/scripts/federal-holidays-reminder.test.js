@@ -1,6 +1,4 @@
 const moment = require("moment-timezone");
-const scheduler = require("node-schedule");
-// const sinon = require("sinon");
 
 const {
   utils: {
@@ -17,7 +15,9 @@ expect.extend({
 });
 
 describe("holiday reminder", () => {
-  const scheduleJob = jest.spyOn(scheduler, "scheduleJob");
+  // const scheduleJob = jest.spyOn(scheduler, "scheduleJob");
+  const scheduleJob = jest.fn();
+  jest.doMock("node-schedule", () => ({ scheduleJob }));
 
   const load = async () =>
     new Promise((resolve) => {
@@ -91,8 +91,7 @@ describe("holiday reminder", () => {
 
       expect(postMessage).toHaveBeenCalledWith({
         channel: "general",
-        text:
-          "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
+        text: "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
       });
     });
 
@@ -107,8 +106,7 @@ describe("holiday reminder", () => {
 
       expect(postMessage).toHaveBeenCalledWith({
         channel: "fred",
-        text:
-          "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
+        text: "@here Remember that *Monday* is a federal holiday in observance of *Test Holiday*!",
       });
     });
 
@@ -121,8 +119,7 @@ describe("holiday reminder", () => {
 
       expect(postMessage).toHaveBeenCalledWith({
         channel: "general",
-        text:
-          "@here Remember that *Monday* is a federal holiday in observance of *Veterans Day* :salute-you:!",
+        text: "@here Remember that *Monday* is a federal holiday in observance of *Veterans Day* :salute-you:!",
       });
     });
   });
