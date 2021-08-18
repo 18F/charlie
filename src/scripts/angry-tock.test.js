@@ -122,68 +122,72 @@ describe("Angry Tock", () => {
   });
 
   describe("schedules the next shouting match on startup", () => {
-    it("if it is shouty day and before first-shout time, schedules a first-shout", async () => {
-      // Monday, April 8, 1974: Hank Aaron hits his 715th career homerun,
-      // breaking Babe Ruth's record.
-      const time = moment.tz(
-        "1974-04-08 00:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
-      );
-      clock.tick(time.toDate().getTime());
+    describe("if it is a shouty day", () => {
+      it("before first-shout time, schedules a first-shout", async () => {
+        // Monday, April 8, 1974: Hank Aaron hits his 715th career homerun,
+        // breaking Babe Ruth's record.
+        const time = moment.tz(
+          "1974-04-08 00:00:00",
+          process.env.ANGRY_TOCK_TIMEZONE
+        );
+        clock.tick(time.toDate().getTime());
 
-      const angryTock = await load();
-      angryTock(app);
+        const angryTock = await load();
+        angryTock(app);
 
-      time.hour(10);
-      expect(scheduleJob).toHaveBeenCalledWith(
-        time.toDate(),
-        expect.any(Function)
-      );
-    });
+        time.hour(10);
+        expect(scheduleJob).toHaveBeenCalledWith(
+          time.toDate(),
+          expect.any(Function)
+        );
+      });
 
-    it("if it is shouty day, after the first-shout time but before the second-shout time, schedules a second-shout", async () => {
-      // Monday, May 20, 1991: Michael Jordan named NBA MVP.
-      const time = moment.tz(
-        "1991-05-20 11:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
-      );
-      clock.tick(time.toDate().getTime());
+      describe("after the first shout", () => {
+        it("before the second-shout time, schedules a second-shout", async () => {
+          // Monday, May 20, 1991: Michael Jordan named NBA MVP.
+          const time = moment.tz(
+            "1991-05-20 11:00:00",
+            process.env.ANGRY_TOCK_TIMEZONE
+          );
+          clock.tick(time.toDate().getTime());
 
-      const angryTock = await load();
-      angryTock(app);
+          const angryTock = await load();
+          angryTock(app);
 
-      time.hour(14);
-      time.minute(45);
-      expect(scheduleJob).toHaveBeenCalledWith(
-        time.toDate(),
-        expect.any(Function)
-      );
-    });
+          time.hour(14);
+          time.minute(45);
+          expect(scheduleJob).toHaveBeenCalledWith(
+            time.toDate(),
+            expect.any(Function)
+          );
+        });
 
-    it("if it is shouty day, after the second-shout time, schedules a first-shout for the next shouty day", async () => {
-      // Monday, January 20, 1997 - Bill Clinton is sworn into his second term
-      // as President of the United States.
-      // Angry Tock is not location aware, but inauguration day is a holiday for
-      // DC-area federal employees. So... just a note for the future!
-      const initial = moment.tz(
-        "1997-01-27 20:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
-      );
-      clock.tick(initial.toDate().getTime());
+        it("after the second-shout time, schedules a first-shout for the next shouty day", async () => {
+          // Monday, January 20, 1997 - Bill Clinton is sworn into his second term
+          // as President of the United States.
+          // Angry Tock is not location aware, but inauguration day is a holiday for
+          // DC-area federal employees. So... just a note for the future!
+          const initial = moment.tz(
+            "1997-01-27 20:00:00",
+            process.env.ANGRY_TOCK_TIMEZONE
+          );
+          clock.tick(initial.toDate().getTime());
 
-      const angryTock = await load();
-      angryTock(app);
+          const angryTock = await load();
+          angryTock(app);
 
-      // Monday, February 3, 1997 - Cornell University faculty, staff, and
-      // students gathered for a public memorial for Carl Sagan.
-      const scheduled = moment.tz(
-        "1997-02-03 10:00:00",
-        process.env.ANGRY_TOCK_TIMEZONE
-      );
-      expect(scheduleJob).toHaveBeenCalledWith(
-        scheduled.toDate(),
-        expect.any(Function)
-      );
+          // Monday, February 3, 1997 - Cornell University faculty, staff, and
+          // students gathered for a public memorial for Carl Sagan.
+          const scheduled = moment.tz(
+            "1997-02-03 10:00:00",
+            process.env.ANGRY_TOCK_TIMEZONE
+          );
+          expect(scheduleJob).toHaveBeenCalledWith(
+            scheduled.toDate(),
+            expect.any(Function)
+          );
+        });
+      });
     });
 
     it("if it is not shouty, schedules a first-shout for the next shouty day", async () => {
@@ -281,8 +285,7 @@ describe("Angry Tock", () => {
           fallback:
             "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
           color: "#FF0000",
-          text:
-            "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
+          text: "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
         },
       ],
       username: "Angry Tock",
