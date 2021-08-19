@@ -8,7 +8,6 @@ const {
 } = require("../utils/test");
 
 describe("holiday reminder", () => {
-  // const scheduleJob = jest.spyOn(scheduler, "scheduleJob");
   const scheduleJob = jest.fn();
   jest.doMock("node-schedule", () => ({ scheduleJob }));
 
