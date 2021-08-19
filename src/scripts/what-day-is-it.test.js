@@ -1,17 +1,19 @@
-const sinon = require("sinon");
 const { getApp } = require("../utils/test");
 const day = require("./what-day-is-it");
 
 describe("the jokey March 2020 date thingy", () => {
   const app = getApp();
-  let clock;
 
   beforeAll(() => {
-    clock = sinon.useFakeTimers();
+    jest.useFakeTimers();
+  });
+
+  beforeEach(() => {
+    jest.setSystemTime(0);
   });
 
   afterAll(() => {
-    clock.restore();
+    jest.useRealTimers();
   });
 
   it("hooks up the right listener", () => {
@@ -28,7 +30,7 @@ describe("the jokey March 2020 date thingy", () => {
     const handler = app.getHandler();
     const say = jest.fn();
 
-    clock.tick(Date.parse("2021-01-23T12:00:00Z"));
+    jest.setSystemTime(Date.parse("2021-01-23T12:00:00Z"));
 
     handler({ say });
 

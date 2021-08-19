@@ -38,7 +38,7 @@ const getCurrent18FTockUsers = async () => {
   // Keep just the bits we care about.
   const users = usersBody
     .filter((u) => userDataObjs.includes(u.username))
-    .filter((u) => u.email !== 'andrew.hyder@gsa.gov') // ❤️ 🕊
+    .filter((u) => u.email !== "andrew.hyder@gsa.gov") // ❤️ 🕊
     .map((u) => ({
       user: u.username,
       email: u.email,

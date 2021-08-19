@@ -1,5 +1,4 @@
 const moment = require("moment-timezone");
-const sinon = require("sinon");
 const { getApp } = require("../utils/test");
 const bot = require("./federal-holidays");
 const {
@@ -11,8 +10,17 @@ const {
 describe("federal holidays bot", () => {
   const app = getApp();
 
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
   beforeEach(() => {
+    jest.setSystemTime(0);
     jest.resetAllMocks();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
   });
 
   it("registers a responder for federal holidays", () => {
@@ -26,7 +34,6 @@ describe("federal holidays bot", () => {
   });
 
   it("responds to a request for the next federal holiday", () => {
-    const clock = sinon.useFakeTimers();
     bot(app);
     const handler = app.getHandler();
     const say = jest.fn();
@@ -42,11 +49,9 @@ describe("federal holidays bot", () => {
     expect(say).toHaveBeenCalledWith(
       "The next federal holiday is Test Holiday day in 1 days on Friday, January 2nd"
     );
-    clock.restore();
   });
 
   it("includes an emoji for well-known holidays", () => {
-    const clock = sinon.useFakeTimers();
     bot(app);
     const handler = app.getHandler();
     const say = jest.fn();
@@ -62,6 +67,5 @@ describe("federal holidays bot", () => {
     expect(say).toHaveBeenCalledWith(
       "The next federal holiday is Christmas Day :christmas_tree: in 1 days on Friday, January 2nd"
     );
-    clock.restore();
   });
 });

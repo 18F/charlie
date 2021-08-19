@@ -1,5 +1,4 @@
 const moment = require("moment-timezone");
-const scheduler = require("node-schedule");
 
 const {
   utils: {
@@ -9,7 +8,8 @@ const {
 } = require("../utils/test");
 
 describe("holiday reminder", () => {
-  const scheduleJob = jest.spyOn(scheduler, "scheduleJob");
+  const scheduleJob = jest.fn();
+  jest.doMock("node-schedule", () => ({ scheduleJob }));
 
   const load = async () =>
     new Promise((resolve) => {

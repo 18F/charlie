@@ -1,15 +1,8 @@
-const sinon = require("sinon");
-
 describe("utils / cache", () => {
   let cache;
-  let clock;
 
   beforeAll(() => {
-    // Jest has timer faking too, but it doesn't touch the Date object. The
-    // cache utility relies on timestamps from the Date object to determine when
-    // things should expire, so we really need them both to be mocked. Sinon
-    // does that, so we'll keep using it for now.
-    clock = sinon.useFakeTimers();
+    jest.useFakeTimers();
   });
 
   beforeEach(() => {
@@ -17,11 +10,12 @@ describe("utils / cache", () => {
     // an empty cache. Also, the module needs to be loaded after the timers have
     // been faked.
     jest.resetModules();
+    jest.setSystemTime(0);
     cache = require("./cache").cache; // eslint-disable-line global-require
   });
 
   afterAll(() => {
-    clock.restore();
+    jest.useRealTimers();
   });
 
   // Make this the first time-based test, otherwise we get into quirky issues
@@ -45,7 +39,7 @@ describe("utils / cache", () => {
     expect(callback).not.toHaveBeenCalled();
 
     // Zoom to the future!
-    await clock.tickAsync(TWENTY_MINUTES);
+    await jest.advanceTimersByTime(TWENTY_MINUTES);
 
     await cache("key", 300, callback);
     expect(callback).toHaveBeenCalled();
@@ -67,7 +61,7 @@ describe("utils / cache", () => {
 
     // Tick forward. We need to go one tick past the lifetime in case the
     // comparison is strictly less than instead of less than or equal.
-    clock.tick(lifetimeInMinutes * 60 * 1000 + 1);
+    jest.advanceTimersByTime(lifetimeInMinutes * 60 * 1000 + 1);
 
     // Now we should get a new call to the callback.
     const result3 = await cache("test key", lifetimeInMinutes, callback);
