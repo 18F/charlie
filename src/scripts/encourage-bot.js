@@ -35,7 +35,7 @@ const getChannelUsers = async (channel) => {
   // We don't want bot users (no offense, Charlie), and we only need users'
   // Slack IDs and configured timezones.
   return users
-    .filter(({ is_bot: bot }) => !bot)
+    .filter(({ deleted, is_bot: bot }) => !deleted && !bot)
     .map(({ id, tz }) => ({ id, tz }));
 };
 
