@@ -109,23 +109,30 @@ const scheduleAnotherReminder = async (app, channel, time) => {
       .tz(tzCompare, latest)
       .diff(moment.tz(tzCompare, earliest), "hours");
 
-    // Tell someone else. Wait at least 2 hours, but not more than 48 hours, and
-    // just totally randomize the minutes because that's fun.
-    const hoursFromNow = Math.floor(Math.random() * 48 + 2);
-    const minutesFromNow = Math.floor(Math.random() * 60);
+    // Set the next hour when the encouragement will happen. This works from the
+    // following basic algorithm:
+    //   (rand * range) + minimum
+    // The range is the number of hours that are acceptable, which is 8 hours
+    // for a standard workday PLUS the number of hours difference between
+    // eastern and westernmost timezones. The minimum is 9am ET.
+    //
+    // E.g., for EST and PST:
+    //  (rand * (8 + 3)) + 9
+    //  (rand * 11) + 9
+    //
+    // gurantees that all hours will be between 9am ET and 8pm ET (5pm PT),
+    // which should account for the entire spectrum of working hours for
+    // everyone in the channel. Also set the minutes at some random point for
+    // funsies.
+    next.hour(Math.floor(Math.random() * (8 + tzSpan) + 9));
+    next.minute(Math.floor(Math.random() * 60));
 
-    next.add(hoursFromNow, "hours");
-    next.add(minutesFromNow, "minutes");
+    const minDays = next.isBefore(moment()) ? 1 : 0;
 
-    // If the new time is outside of everyone's working hours, advance forward
-    // until we get inside working hours. Randomize the hours so we're not always
-    // doing an announcement in the 9 o'clock hour on the east coast. Randomize
-    // by the number of hours between the earliest and latest timezones, so there
-    // is a chance of including everyone.
-    while (next.hour() < 9 || moment.tz(next, latest).hour() >= 17) {
-      const hours = Math.floor(Math.random() * tzSpan);
-      next.add(hours > 0 ? hours : 1, "hours");
-    }
+    // Add between 0 and 2 days. If the selected time from above is actually in
+    // the past, add between 1 and 3 days instead.
+    next.add(Math.round(Math.random() * 2 + minDays), "days");
+
     // Make sure we didn't land on a holiday. If we did, hop forward one day at a
     // time until we're out of the holiday. Strictly speaking, we could just hop
     // forward once since we don't have any consecutive holidays, but this script
