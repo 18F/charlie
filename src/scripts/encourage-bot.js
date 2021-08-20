@@ -6,6 +6,7 @@
 // in the #random channel.
 
 const holidays = require("@18f/us-federal-holidays");
+const { directMention } = require("@slack/bolt");
 const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
 const {
@@ -40,7 +41,7 @@ const getChannelUsers = async (channel) => {
 
 const pickOne = (array) => array[Math.floor(Math.random() * array.length)];
 
-const tellSomeoneTheyAreAwesome = async (channel) => {
+const tellSomeoneTheyAreAwesome = async (channel, context = {}) => {
   const users = await getChannelUsers(channel);
 
   // Trim down the list of users to just those whose current time is between
@@ -62,6 +63,7 @@ const tellSomeoneTheyAreAwesome = async (channel) => {
       username: "You're Awesome",
       icon_emoji: ":you:",
       text: `<@${awesomePerson.id}> ${pickOne(messages)}`,
+      ...context,
     });
   }
 };
@@ -166,6 +168,14 @@ const scheduleAnotherReminder = async (app, channel, time) => {
 module.exports = async (app) => {
   const time = app.brain.get(BRAIN_KEY);
 
-  const channel = await getChannelID(CHANNEL);
-  await scheduleAnotherReminder(app, channel, time);
+  const defaultChannel = await getChannelID(CHANNEL);
+  await scheduleAnotherReminder(app, defaultChannel, time);
+
+  app.message(
+    directMention(),
+    /^<@[^>]+> encourage/i,
+    async ({ event: { channel, thread_ts: thread } }) => {
+      await tellSomeoneTheyAreAwesome(channel, { thread_ts: thread });
+    }
+  );
 };

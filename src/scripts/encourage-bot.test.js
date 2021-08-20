@@ -34,6 +34,40 @@ describe("Encouragement bot", () => {
     jest.useRealTimers();
   });
 
+  describe("supports manual random encouragements", () => {
+    it("registers a listener for manual random encouragements", async () => {
+      await bot(app);
+
+      expect(app.message).toHaveBeenCalledWith(
+        expect.any(Function),
+        /^<@[^>]+> encourage/i,
+        expect.any(Function)
+      );
+    });
+
+    it("encourages people", async () => {
+      await bot(app);
+      const encourager = app.getHandler();
+      await encourager({
+        event: { channel: "bob's channel", thread_ts: "thread id" },
+      });
+
+      expect(postMessage).toHaveBeenCalledWith({
+        channel: "bob's channel",
+        icon_emoji: ":you:",
+        text: expect.stringMatching(/.*/),
+        thread_ts: "thread id",
+        username: "You're Awesome",
+      });
+
+      const { text } = postMessage.mock.calls[0][0];
+      const [, userId] = text.match(/^<@([^>]+)> (.+)$/);
+
+      // Ensure it was sent to one of the users in the channel.
+      expect(["one", "two", "three", "four"].includes(userId)).toBe(true);
+    });
+  });
+
   describe("schedules an encouragement when starting...", () => {
     describe("when the brain contains a previously-scheduled encouragement", () => {
       it("uses the time if it is in the future", async () => {
