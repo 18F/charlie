@@ -3,12 +3,12 @@
 A Slack app bot used within 18F for fun and work.
 
 - [What all it can do](#what-all-it-can-do)
-	- [Interactive bots](#interactive-bots)
-	- [Non-interactive bots](#non-interactive-bots)
+  - [Interactive bots](#interactive-bots)
+  - [Non-interactive bots](#non-interactive-bots)
 - [Development](#development)
-	- [Important note](#important-note)
-	- [Docker](#docker)
-	- [Local development](#local-development)
+  - [Important note](#important-note)
+  - [Docker](#docker)
+  - [Local development](#local-development)
 - [Deploying](#deploying)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
@@ -54,11 +54,6 @@ screen.
 What's that? Someone did something awesome and you want everyone to know about
 it? Charlie's got you covered. Just say `love @user for the thing` and Charlie
 will share the love in the `#love` channel for everyone to see. Share the love!
-
-##### March 2020 bot
-
-Ask `@charlie what day is it?`, and Charlie will let you know what day it is in
-the Evermarch 2020 reckoning. It's... it's been a very long March.
 
 ##### OPM's DC offices status
 
