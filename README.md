@@ -3,12 +3,12 @@
 A Slack app bot used within 18F for fun and work.
 
 - [What all it can do](#what-all-it-can-do)
-	- [Interactive bots](#interactive-bots)
-	- [Non-interactive bots](#non-interactive-bots)
+  - [Interactive bots](#interactive-bots)
+  - [Non-interactive bots](#non-interactive-bots)
 - [Development](#development)
-	- [Important note](#important-note)
-	- [Docker](#docker)
-	- [Local development](#local-development)
+  - [Important note](#important-note)
+  - [Docker](#docker)
+  - [Local development](#local-development)
 - [Deploying](#deploying)
 - [Configuration](#configuration)
 - [Contributing](#contributing)
@@ -24,11 +24,54 @@ Schedule virtual coffees with random teammates! Not sure who you should talk to?
 Charlie can help! Say `coffee me` to get put into the virual coffee queue. As
 soon as someone else signs up, Charlie will connect you.
 
+##### Dad jokes
+
+Charlie can fetch a joke from
+[Fatherhood.gov](https://www.fatherhood.gov/for-dads/dad-jokes) to brighten up
+your day. Just say `@Charlie dad joke` to increase your daily joy.
+
+##### Encourage bot
+
+You can ask Charlie to share some words of encouragement with a random teammate
+by saying `@Charlie encourage`. It will pick someone in the current channel
+whose local time is between 9am and 5pm so as hopefully not bother someone after
+hours! Charlie will also drop random encouragements in the
+[#random](https://app.slack.com/client/T025AQGAN/C025AQGBJ) channel every
+few days.
+
+##### Employee resource group invite requests
+
+To see a list of TTS employee resource and affinity groups that accept automated
+invitation requests, just ask Charlie! Say `@Charlie ergs` and the bot will send
+you a direct message listing the groups along with a button for each one.
+Clicking the button will send a message to the group letting them know you'd
+like an invitation!
+
+Some employee resource and affinity groups are not available by automated
+invitation request. To see the complete list of ERGs and contact information,
+you can send yourself a direct message that just says `ergs` and Slackbot will
+respond with that information!
+
 ##### Facts
 
 Charlie knows **_so many_** facts. Dog facts, cat facts, giraffe facts, dolphin
 facts. There are just so many facts. You can just say `dog fact` (or
 `giraffe fact`, etc.)to get Charlie to share its knowledge with you.
+
+| Key word          | What it does                                      |
+| ----------------- | ------------------------------------------------- |
+| `alan fact`       | Shares a fact about people named Alan             |
+| `alumni dog fact` | Shares a fact about a dog belonging to a TTS alum |
+| `ask ally`        | Shares a fact about accessible web development    |
+| `cat fact`        | Shares a fact about a TTS person's cat            |
+| `dog fact`        | Shares a fact about a TTS person's dog            |
+| `dolphin fact`    | Shares a fact about dolphins                      |
+| `ed simulator`    | Shares a quote from 18F alumni Ed Mullen          |
+| `giraffe fact`    | Shares a fact of dubious truth about giraffes     |
+| `minnesota facts` | Shares a fact about the state of Minnesota        |
+| `randy fact`      | Shares a fact about 18F staff member Randy        |
+| `screambot`       | Joyfully screams along with you                   |
+| `wisconsin facts` | Shares a fact about the state of Wisconsin        |
 
 ##### Fancy font
 
@@ -41,6 +84,14 @@ of your message. So fancy!
 Itching for a day off and want to know when the next holiday is? Charlie knows
 all the (standard, recurring) holidays! Just say
 `@charlie when is the next holiday` and Charlie will let you know.
+
+##### Handbook search
+
+Wondering if the [TTS Handbook](https://handbook.tts.gsa.gov) has useful
+information for a particular topic but don't want to open your browser? Charlie
+can help! Just say `@handbook terms` and Charlie will search the Handbook for
+`terms` for you (replace `terms` with whatever you want). If it finds anything,
+it'll post links in a threaded response to your request.
 
 ##### HugMe
 
@@ -58,7 +109,7 @@ will share the love in the `#love` channel for everyone to see. Share the love!
 ##### March 2020 bot
 
 Ask `@charlie what day is it?`, and Charlie will let you know what day it is in
-the Evermarch 2020 reckoning. It's... it's been a very long March.
+the Evermarch 2020 reckoning. It's... it's been a very long March. Or it'll let you know
 
 ##### OPM's DC offices status
 
@@ -73,6 +124,13 @@ Not sure what a procurement term means? Charlie might be able to help! Say
 `@charlie define <term>` and it will attempt to look the term up in the
 [18F Procurement Glossary](https://github.com/18f/procurement-glossary)
 and report what it finds.
+
+##### Pug bot
+
+Do you like pugs? Do you want pictures of pugs? Charlie can help! Just say
+`@Charlie pug me` to get a picture of a cute pug, or `@Charlie pug bomb [count]`
+to get get a bunch of pug pictures! (You can leave the count out; Charlie will
+send 3 pictures if you don't ask for a specific number.)
 
 ##### Tock line
 
@@ -97,8 +155,9 @@ timezone. Charlie tries really hard.
 ##### Holiday reminders
 
 On the business day before a federal holiday, Charlie will post a reminder in
-#general-talk. Take the day off, don't do work for the government, and observe
-it in the way that is most suitable for you!
+[#general-talk](https://app.slack.com/client/T025AQGAN/C04KL9ZN2). Take the day
+off, don't do work for the government, and observe it in the way that is most
+suitable for you!
 
 ##### Inclusion bot
 
