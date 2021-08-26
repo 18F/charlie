@@ -6,7 +6,7 @@ const {
 const baseUrl =
   "https://search.usa.gov/search/?utf8=no&affiliate=tts-handbook&format=json&query=";
 
-const identity = { icon_emoji: ":tts:", username: "TTS Handbot" };
+const identity = { icon_emoji: ":tts:", username: "TTS Handbook" };
 
 const getBlocksFromResults = (results) =>
   results.reduce((blocks, result) => {
@@ -29,7 +29,7 @@ const getBlocksFromResults = (results) =>
   }, []);
 
 module.exports = (app) => {
-  app.message(/^@?handbo(ok|t) (.+)$/i, async (msg) => {
+  app.message(/^@?handbook (.+)$/i, async (msg) => {
     const {
       context: {
         matches: [, , search],
@@ -72,8 +72,7 @@ module.exports = (app) => {
     } catch (e) {
       postEphemeralResponse(msg, {
         ...identity,
-        text:
-          "Something went wrong trying to search the Handbook. Please try later!",
+        text: "Something went wrong trying to search the Handbook. Please try later!",
       });
     }
   });
