@@ -118,7 +118,7 @@ const scheduleAnotherReminder = async (app, channel, time) => {
     while (holidays.isAHoliday(next.toDate())) {
       next.add(1, "day");
     }
-    q;
+
     // The new time could also have been on the weekend, or we could have been
     // advanced to the weekend by a Friday holiday, so make sure we bustle out of
     // those, too.
