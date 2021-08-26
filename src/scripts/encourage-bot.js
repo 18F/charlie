@@ -105,9 +105,38 @@ const scheduleAnotherReminder = async (app, channel, time) => {
     const latest = timezones.pop();
 
     next = moment.tz(earliest);
+
+    // Add 7-28 days. We don't want the bot to fire so often that it becomes a
+    // nuissance or anticipated. We want it to feel a little like a happy
+    // surprise every time it happens.
+    next.add(Math.round(Math.random() * 21 + 7), "days");
+
+    // Make sure we didn't land on a holiday. If we did, hop forward one day at a
+    // time until we're out of the holiday. Strictly speaking, we could just hop
+    // forward once since we don't have any consecutive holidays, but this script
+    // is optimistic for a future where consecutive holidays are possible.
+    while (holidays.isAHoliday(next.toDate())) {
+      next.add(1, "day");
+    }
+    q;
+    // The new time could also have been on the weekend, or we could have been
+    // advanced to the weekend by a Friday holiday, so make sure we bustle out of
+    // those, too.
+    while (next.day() === 0 || next.day() === 6) {
+      next.add(1, "day");
+    }
+    // Check for holidays again. If, for example, we initially landed on a
+    // Saturday and there's a Monday holiday, we need to catch that.
+    while (holidays.isAHoliday(next.toDate())) {
+      next.add(1, "day");
+    }
+
+    // Use the scheduled date for this comparison, to make sure we account for
+    // daylight savings time, etc., on the scheduled date. Set the hour to noon
+    // in both timezones so if DST is happening, it will have already happened.
     const tzSpan = moment
-      .tz(tzCompare, latest)
-      .diff(moment.tz(tzCompare, earliest), "hours");
+      .tz(next.format("YYYY-MM-DDT12:00:00"), latest)
+      .diff(moment.tz(next.format("YYYY-MM-DDT12:00:00"), earliest), "hours");
 
     // Set the next hour when the encouragement will happen. This works from the
     // following basic algorithm:
@@ -122,35 +151,11 @@ const scheduleAnotherReminder = async (app, channel, time) => {
     //
     // gurantees that all hours will be between 9am ET and 8pm ET (5pm PT),
     // which should account for the entire spectrum of working hours for
-    // everyone in the channel. Also set the minutes at some random point for
-    // funsies.
+    // everyone in the channel (except using the actual easternmost and
+    // westermost timezones of users in the channel). Also set the minutes at
+    // some random point for funsies.
     next.hour(Math.floor(Math.random() * (8 + tzSpan) + 9));
     next.minute(Math.floor(Math.random() * 60));
-
-    const minDays = next.isBefore(moment()) ? 1 : 0;
-
-    // Add between 0 and 2 days. If the selected time from above is actually in
-    // the past, add between 1 and 3 days instead.
-    next.add(Math.round(Math.random() * 2 + minDays), "days");
-
-    // Make sure we didn't land on a holiday. If we did, hop forward one day at a
-    // time until we're out of the holiday. Strictly speaking, we could just hop
-    // forward once since we don't have any consecutive holidays, but this script
-    // is optimistic for a future where consecutive holidays are possible.
-    while (holidays.isAHoliday(next.toDate())) {
-      next.add(1, "day");
-    }
-    // The new time could also have been on the weekend, or we could have been
-    // advanced to the weekend by a Friday holiday, so make sure we bustle out of
-    // those, too.
-    while (next.day() === 0 || next.day() === 6) {
-      next.add(1, "day");
-    }
-    // Check for holidays again. If, for example, we initially landed on a
-    // Saturday and there's a Monday holiday, we need to catch that.
-    while (holidays.isAHoliday(next.toDate())) {
-      next.add(1, "day");
-    }
   }
 
   app.logger.info(
