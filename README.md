@@ -106,11 +106,6 @@ What's that? Someone did something awesome and you want everyone to know about
 it? Charlie's got you covered. Just say `love @user for the thing` and Charlie
 will share the love in the `#love` channel for everyone to see. Share the love!
 
-##### March 2020 bot
-
-Ask `@charlie what day is it?`, and Charlie will let you know what day it is in
-the Evermarch 2020 reckoning. It's... it's been a very long March. Or it'll let you know
-
 ##### OPM's DC offices status
 
 Working in DC and want to know if the office is closed due to snow or, perhaps,
