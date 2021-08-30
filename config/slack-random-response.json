@@ -70,5 +70,11 @@
     "defaultEmoji": ":a11y-ally:",
     "trigger": "ask ally",
     "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/a11y-facts.json"
+  },
+  {
+    "botName": "Lovin.gov Bot",
+    "defaultEmoji": ":lovin-gov:",
+    "trigger": "need me some lovin.gov",
+    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/lovin-gov.json"
   }
 ]
