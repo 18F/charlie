@@ -5,9 +5,9 @@ const {
     slack: { postEphemeralResponse },
   },
 } = require("../utils/test");
-const handbot = require("./handbot");
+const handbook = require("./handbook");
 
-describe("TTS Handbook search (Handbot)", () => {
+describe("TTS Handbook search", () => {
   const app = getApp();
 
   beforeEach(() => {
@@ -15,9 +15,9 @@ describe("TTS Handbook search (Handbot)", () => {
   });
 
   it("subscribes to the right message", () => {
-    handbot(app);
+    handbook(app);
     expect(app.message).toHaveBeenCalledWith(
-      /^@?handbo(ok|t) (.+)$/i,
+      /^@?handbook (.+)$/i,
       expect.any(Function)
     );
   });
@@ -31,7 +31,7 @@ describe("TTS Handbook search (Handbot)", () => {
 
     let handler;
     beforeEach(() => {
-      handbot(app);
+      handbook(app);
       handler = app.getHandler();
 
       message.context.matches[2] = "search string";
@@ -43,9 +43,8 @@ describe("TTS Handbook search (Handbot)", () => {
 
       expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
         icon_emoji: ":tts:",
-        username: "TTS Handbot",
-        text:
-          "Something went wrong trying to search the Handbook. Please try later!",
+        username: "TTS Handbook",
+        text: "Something went wrong trying to search the Handbook. Please try later!",
       });
     });
 
@@ -70,7 +69,7 @@ describe("TTS Handbook search (Handbot)", () => {
 
           expect(message.say).toHaveBeenCalledWith({
             icon_emoji: ":tts:",
-            username: "TTS Handbot",
+            username: "TTS Handbook",
             text: `I couldn't find any results for "search string"`,
             thread_ts: 150,
           });
@@ -92,7 +91,7 @@ describe("TTS Handbook search (Handbot)", () => {
 
           expect(message.say).toHaveBeenCalledWith({
             icon_emoji: ":tts:",
-            username: "TTS Handbot",
+            username: "TTS Handbook",
             thread_ts: 150,
             blocks: [
               {
@@ -154,7 +153,7 @@ describe("TTS Handbook search (Handbot)", () => {
 
           expect(message.say).toHaveBeenCalledWith({
             icon_emoji: ":tts:",
-            username: "TTS Handbot",
+            username: "TTS Handbook",
             text: `I couldn't find any results for "search string"`,
             thread_ts: 300,
           });
@@ -176,7 +175,7 @@ describe("TTS Handbook search (Handbot)", () => {
 
           expect(message.say).toHaveBeenCalledWith({
             icon_emoji: ":tts:",
-            username: "TTS Handbot",
+            username: "TTS Handbook",
             thread_ts: 300,
             blocks: [
               {
