@@ -123,7 +123,7 @@ describe("dad jokes (are the best worst)", () => {
         await handler(message);
 
         expect(message.say).toHaveBeenCalledWith({
-          icon_emoji: ":dog-joke:",
+          icon_emoji: ":dog-joke-setup:",
           text: "joke setup here",
           username: "Jed Bartlett",
         });
