@@ -138,7 +138,7 @@ describe("dad jokes (are the best worst)", () => {
           icon_emoji: ":dog-joke:",
           text: "the funny part",
           thread_ts: "thread id",
-          username: "Jed Bartlett",
+          username: "Jed \u200bBartlett",
         });
       });
     });
