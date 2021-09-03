@@ -39,7 +39,7 @@ module.exports = (app) => {
             icon_emoji: ":dog-joke:",
             text: joke.punchline,
             thread_ts: thread,
-            username: "Jed Bartlett",
+            username: "Jed \u200bBartlett",
           });
         }, 5000);
       }
