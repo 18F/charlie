@@ -90,24 +90,29 @@ module.exports = async (app) => {
       attachments: [
         {
           color: "#2eb886",
-          text: message,
           fallback: message,
-        },
-        {
-          color: "#ffbe2e",
           blocks: [
+            { type: "section", text: { type: "mrkdwn", text: message } },
             {
               type: "section",
               text: { type: "mrkdwn", text: pretexts.join("\n") },
               accessory: {
                 type: "button",
-                text: { type: "plain_text", text: "What's this?" },
+                text: { type: "plain_text", text: "Why this suggestion?" },
                 value: specificMatch.map(({ text: t }) => t).join("|"),
                 action_id: "inclusion_modal",
               },
             },
+            {
+              type: "context",
+              elements: [
+                {
+                  type: "mrkdwn",
+                  text: "You can view the <https://docs.google.com/document/d/1iQT7Gy0iQa7sopBP0vB3CZ56GhyYrDNUzLdoWOowSHs/edit|full list of words and phrases> this bot watches for.",
+                },
+              ],
+            },
           ],
-          fallback: "fallback",
         },
       ],
       icon_emoji: ":tts:",
