@@ -28,7 +28,7 @@ module.exports = (app) => {
       const joke = jokes[Math.floor(Math.random() * jokes.length)];
       if (joke) {
         say({
-          icon_emoji: ":dog-joke:",
+          icon_emoji: ":dog-joke-setup:",
           text: joke.setup,
           thread_ts: thread,
           username: "Jed Bartlett",
