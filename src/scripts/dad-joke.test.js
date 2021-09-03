@@ -37,7 +37,7 @@ describe("dad jokes (are the best worst)", () => {
       handler = app.getHandler();
     });
 
-    const message = { say: jest.fn() };
+    const message = { message: { thread_ts: "thread id" }, say: jest.fn() };
 
     it("fetches jokes from a cache", async () => {
       cache.mockResolvedValue([]);
@@ -125,6 +125,7 @@ describe("dad jokes (are the best worst)", () => {
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":dog-joke-setup:",
           text: "joke setup here",
+          thread_ts: "thread id",
           username: "Jed Bartlett",
         });
 
@@ -136,6 +137,7 @@ describe("dad jokes (are the best worst)", () => {
         expect(message.say).toHaveBeenCalledWith({
           icon_emoji: ":dog-joke:",
           text: "the funny part",
+          thread_ts: "thread id",
           username: "Jed Bartlett",
         });
       });

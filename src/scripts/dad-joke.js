@@ -3,40 +3,46 @@ const axios = require("axios");
 const { cache } = require("../utils");
 
 module.exports = (app) => {
-  app.message(directMention(), /dad joke/i, async ({ say }) => {
-    const jokes = await cache("dad jokes", 60, async () => {
-      try {
-        const { data } = await axios.get(
-          "https://fatherhood.gov/jsonapi/node/dad_jokes"
-        );
+  app.message(
+    directMention(),
+    /dad joke/i,
+    async ({ message: { thread_ts: thread }, say }) => {
+      const jokes = await cache("dad jokes", 60, async () => {
+        try {
+          const { data } = await axios.get(
+            "https://fatherhood.gov/jsonapi/node/dad_jokes"
+          );
 
-        if (data && data.data) {
-          return data.data.map((joke) => ({
-            setup: joke.attributes.field_joke_opener,
-            punchline: joke.attributes.field_joke_response,
-          }));
+          if (data && data.data) {
+            return data.data.map((joke) => ({
+              setup: joke.attributes.field_joke_opener,
+              punchline: joke.attributes.field_joke_response,
+            }));
+          }
+          return [];
+        } catch (e) {
+          return [];
         }
-        return [];
-      } catch (e) {
-        return [];
-      }
-    });
-
-    const joke = jokes[Math.floor(Math.random() * jokes.length)];
-    if (joke) {
-      say({
-        icon_emoji: ":dog-joke-setup:",
-        text: joke.setup,
-        username: "Jed Bartlett",
       });
 
-      setTimeout(() => {
+      const joke = jokes[Math.floor(Math.random() * jokes.length)];
+      if (joke) {
         say({
-          icon_emoji: ":dog-joke:",
-          text: joke.punchline,
+          icon_emoji: ":dog-joke-setup:",
+          text: joke.setup,
+          thread_ts: thread,
           username: "Jed Bartlett",
         });
-      }, 5000);
+
+        setTimeout(() => {
+          say({
+            icon_emoji: ":dog-joke:",
+            text: joke.punchline,
+            thread_ts: thread,
+            username: "Jed Bartlett",
+          });
+        }, 5000);
+      }
     }
-  });
+  );
 };
