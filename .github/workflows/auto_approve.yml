@@ -1,0 +1,13 @@
+name: auto-approve dependabot PRs
+
+on: 
+  pull_request_target:
+
+jobs:
+  run:
+    name: auto-approve dependabot PRs
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - run: gh pr review --approve
+      - run: gh pr merge --auto
