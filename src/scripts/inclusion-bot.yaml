@@ -472,6 +472,7 @@ triggers:
 
   - matches:
       - postmortem
+      - post mortem
     alternatives:
       - project reflection 
       - project or incident review
