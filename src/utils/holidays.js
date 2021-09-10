@@ -5,7 +5,7 @@ const emojis = new Map([
   ["Memorial Day", ":poppy-flowers:"],
   ["Juneteenth", ":juneteenth-star:"],
   ["Independence Day", ":fireworks:"],
-  ["Labor Day", ":flex::skin-tone-2:"],
+  ["Labor Day", ":wecandoit:"],
   ["Columbus Day", ":ohio:"],
   ["Veterans Day", ":salute-you:"],
   ["Thanksgiving Day", ":turkey:"],
