@@ -13,7 +13,7 @@
     "@18f/us-federal-holidays": "^2.0.1",
     "@slack/bolt": "^3.5.0",
     "aws-sdk": "^2.963.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "cfenv": "^1.2.3",
     "dotenv": "^10.0.0",
     "js-yaml": "^4.1.0",
