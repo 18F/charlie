@@ -8,6 +8,8 @@ jobs:
     name: auto-approve dependabot PRs
     runs-on: ubuntu-latest
     if: ${{ github.actor == 'dependabot[bot]' }}
+    env:
+      - GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - run: gh pr review --approve
       - run: gh pr merge --auto
