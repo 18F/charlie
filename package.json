@@ -10,7 +10,7 @@
     "test-coverage": "jest 'src/.+/?.+\\.test\\.js' --coverage"
   },
   "dependencies": {
-    "@18f/us-federal-holidays": "^2.0.1",
+    "@18f/us-federal-holidays": "^2.1.0",
     "@slack/bolt": "^3.5.0",
     "aws-sdk": "^2.963.0",
     "axios": "^0.21.2",

@@ -27,7 +27,7 @@ describe("gets the next holiday", () => {
 
     expect(nextHoliday).toEqual({
       name: "Independence Day",
-      dateString: "2012-7-4",
+      dateString: "2012-07-04",
     });
   });
 
@@ -50,7 +50,7 @@ describe("gets the next holiday", () => {
 
     expect(nextHoliday).toEqual({
       name: "Memorial Day",
-      dateString: "2012-5-28",
+      dateString: "2012-05-28",
     });
   });
 });
