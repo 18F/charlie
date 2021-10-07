@@ -12,32 +12,30 @@
 //    qexp QUEAAD
 
 const { directMention } = require("@slack/bolt");
-var parser = require("csv-parse");
-var fs = require("fs");
-const {
-  slack: { addEmojiReaction },
-} = require("../utils");
+const parser = require("csv-parse");
+const fs = require("fs");
 
-function q_expander(expand_this, csvData) {
-  var acronym = expand_this.toUpperCase();
-  var full_response = [acronym];
+function qExpander(expandThis, csvData) {
+  const acronym = expandThis.toUpperCase();
+  const fullResponse = [acronym];
+  let substr = 0;
   // work backwards from full acronym back on char at a time
-  for (var substr = acronym.length; substr >= 1; substr--) {
-    let this_one = acronym.slice(0, substr);
+  for (substr = acronym.length; substr >= 1; substr -= 1) {
+    const thisOne = acronym.slice(0, substr);
     // default is "dunno"
     let response = "???";
-    if (this_one in csvData) {
-      response = csvData[this_one];
+    if (thisOne in csvData) {
+      response = csvData[thisOne];
     }
-    full_response.push(
-      "|".repeat(substr - 1) + "└──" + `${this_one}: ${response}`
-    );
+    const bars = "|".repeat(substr - 1);
+    fullResponse.push(`${bars}└──${thisOne}: ${response}`);
   }
 
   // emit the response
-  console.log(full_response.join("\n"));
+  return fullResponse.join("\n");
 }
 
+/*
 var csvData = {};
 fs.createReadStream("src/scripts/q-expand.csv")
   .pipe(parser({ delimiter: "," }))
@@ -46,16 +44,35 @@ fs.createReadStream("src/scripts/q-expand.csv")
   })
   .on("end", function () {
     // XXX first arg needs to be variable sent in from bot
-    q_expander("queacc", csvData);
+    qExpander("queacc", csvData);
   });
+*/
 
-/*
 module.exports = (app) => {
   app.message(
     directMention(),
-    /qex[pand] {1,6}[a-z]/i,
-    async ({ mssage: {thread_ts: thread}, say }) => {
+    /qex\s+([a-z]{1,6})/i,
+    async ({ context, event: { thread_ts: thread }, say }) => {
+      const acronymSearch = context.matches[1];
 
+      const csvData = {};
+      let resp = "";
+
+      fs.createReadStream("src/scripts/q-expand.csv")
+        .pipe(parser({ delimiter: "," }))
+        .on("data", (csvrow) => {
+          csvData[csvrow[0]] = csvrow[1];
+        })
+        .on("end", () => {
+          resp = qExpander(acronymSearch, csvData);
+        });
+
+      const response = {
+        icon_emoji: ":mindblown:",
+        thread_ts: thread,
+        text: `\`\`\`${resp}\`\`\``,
+      };
+      say(response);
     }
+  );
 };
-*/
