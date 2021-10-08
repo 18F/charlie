@@ -11,9 +11,20 @@
 //    example:
 //    qexp QUEAAD
 
-const { directMention } = require("@slack/bolt");
 const parser = require("csv-parse");
 const fs = require("fs");
+
+function getCsvData() {
+  const csvData = {};
+  fs.createReadStream("src/scripts/q-expand.csv")
+    .pipe(parser({ delimiter: "," }))
+    .on("data", (csvrow) => {
+      csvData[csvrow[0]] = csvrow[1];
+    })
+    .on("end", () => {
+      return csvData;
+    });
+}
 
 function qExpander(expandThis, csvData) {
   const acronym = expandThis.toUpperCase();
@@ -31,41 +42,18 @@ function qExpander(expandThis, csvData) {
     fullResponse.push(`${bars}└──${thisOne}: ${response}`);
   }
 
-  // emit the response
+  // return the response block
   return fullResponse.join("\n");
 }
 
-/*
-var csvData = {};
-fs.createReadStream("src/scripts/q-expand.csv")
-  .pipe(parser({ delimiter: "," }))
-  .on("data", function (csvrow) {
-    csvData[csvrow[0]] = csvrow[1];
-  })
-  .on("end", function () {
-    // XXX first arg needs to be variable sent in from bot
-    qExpander("queacc", csvData);
-  });
-*/
-
 module.exports = (app) => {
   app.message(
-    directMention(),
-    /qex\s+([a-z]{1,6})/i,
+    /^qex\s+([a-z]{1,6})$/i,
     async ({ context, event: { thread_ts: thread }, say }) => {
       const acronymSearch = context.matches[1];
 
-      const csvData = {};
-      let resp = "";
-
-      fs.createReadStream("src/scripts/q-expand.csv")
-        .pipe(parser({ delimiter: "," }))
-        .on("data", (csvrow) => {
-          csvData[csvrow[0]] = csvrow[1];
-        })
-        .on("end", () => {
-          resp = qExpander(acronymSearch, csvData);
-        });
+      const csvData = getCsvData();
+      const resp = qExpander(acronymSearch, csvData);
 
       const response = {
         icon_emoji: ":mindblown:",
@@ -76,3 +64,4 @@ module.exports = (app) => {
     }
   );
 };
+module.exports.add = getCsvData();
