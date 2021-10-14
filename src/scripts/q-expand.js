@@ -32,9 +32,8 @@ function getCsvData() {
 function qExpander(expandThis, csvData) {
   const initialism = expandThis.toUpperCase();
   const fullResponse = [initialism];
-  let substr = 0;
   // work backwards from full initialism back on char at a time
-  for (substr = initialism.length; substr >= 1; substr -= 1) {
+  for (let substr = initialism.length; substr >= 1; substr -= 1) {
     const thisOne = initialism.slice(0, substr);
     // default is "dunno"
     let response = "???";
