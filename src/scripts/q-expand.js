@@ -14,7 +14,6 @@
 
 const parser = require("csv-parse");
 const fs = require("fs");
-const { context, say } = require("@slack/bolt");
 
 function getCsvData() {
   const csvData = {};
