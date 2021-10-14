@@ -17,7 +17,7 @@ const fs = require("fs");
 
 function getCsvData() {
   const csvData = {};
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     fs.createReadStream("config/q-expand.csv")
       .pipe(parser({ delimiter: "," }))
       .on("data", (csvrow) => {
