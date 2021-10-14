@@ -58,10 +58,10 @@ function qExpander(expandThis, csvData) {
 }
 
 module.exports = (app) => {
+  const csvData = getCsvData();
   app.message(/^qexp?\s+([a-z0-9]{1,6})$/i, async ({ context, say }) => {
     const initialismSearch = context.matches[1];
-    const csvData = await getCsvData();
-    const resp = qExpander(initialismSearch, csvData);
+    const resp = qExpander(initialismSearch, await csvData);
     const response = {
       icon_emoji: ":tts:",
       username: "Q-Expander",
