@@ -1,38 +1,42 @@
 // Description:
-// Ask for a Q* TTS acronym to be fully expanded to its full glory
+// Ask for a Q* TTS initialism to be fully expanded to its full glory
 //
 //  Dependencies:
 //    "csv-parse": "4.16.3"
 //
 //
 // Commands:
-//    qex[pand] ACRONYM
+//    qex[p] INITIALISM
 //
-//    example:
+//    examples:
 //    qexp QUEAAD
+//    qex qq2
 
 const parser = require("csv-parse");
 const fs = require("fs");
+const { context, say } = require("@slack/bolt");
 
 function getCsvData() {
   const csvData = {};
-  fs.createReadStream("src/scripts/q-expand.csv")
-    .pipe(parser({ delimiter: "," }))
-    .on("data", (csvrow) => {
-      csvData[csvrow[0]] = csvrow[1];
-    })
-    .on("end", () => {
-      return csvData;
-    });
+  return new Promise((resolve, reject) => {
+    fs.createReadStream("config/q-expand.csv")
+      .pipe(parser({ delimiter: "," }))
+      .on("data", (csvrow) => {
+        csvData[csvrow[0]] = csvrow[1];
+      })
+      .on("end", () => {
+        resolve(csvData);
+      });
+  });
 }
 
 function qExpander(expandThis, csvData) {
-  const acronym = expandThis.toUpperCase();
-  const fullResponse = [acronym];
+  const initialism = expandThis.toUpperCase();
+  const fullResponse = [initialism];
   let substr = 0;
-  // work backwards from full acronym back on char at a time
-  for (substr = acronym.length; substr >= 1; substr -= 1) {
-    const thisOne = acronym.slice(0, substr);
+  // work backwards from full initialism back on char at a time
+  for (substr = initialism.length; substr >= 1; substr -= 1) {
+    const thisOne = initialism.slice(0, substr);
     // default is "dunno"
     let response = "???";
     if (thisOne in csvData) {
@@ -47,21 +51,16 @@ function qExpander(expandThis, csvData) {
 }
 
 module.exports = (app) => {
-  app.message(
-    /^qex\s+([a-z]{1,6})$/i,
-    async ({ context, event: { thread_ts: thread }, say }) => {
-      const acronymSearch = context.matches[1];
-
-      const csvData = getCsvData();
-      const resp = qExpander(acronymSearch, csvData);
-
-      const response = {
-        icon_emoji: ":mindblown:",
-        thread_ts: thread,
-        text: `\`\`\`${resp}\`\`\``,
-      };
-      say(response);
-    }
-  );
+  app.message(/^qexp?\s+([a-z0-9]{1,6})$/i, async ({ context, say }) => {
+    const initialismSearch = context.matches[1];
+    const csvData = await getCsvData();
+    const resp = qExpander(initialismSearch, csvData);
+    const response = {
+      icon_emoji: ":tts:",
+      username: "Q-Expander",
+      text: `\`\`\`${resp}\`\`\``,
+    };
+    say(response);
+  });
 };
-module.exports.add = getCsvData();
+module.exports.getCsvData = getCsvData;
