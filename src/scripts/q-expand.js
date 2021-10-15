@@ -59,15 +59,19 @@ function qExpander(expandThis, csvData) {
 
 module.exports = (app) => {
   const csvData = getCsvData();
-  app.message(/^qexp?\s+([a-z0-9]{1,6})$/i, async ({ context, say }) => {
-    const initialismSearch = context.matches[1];
-    const resp = qExpander(initialismSearch, await csvData);
-    const response = {
-      icon_emoji: ":tts:",
-      username: "Q-Expander",
-      text: `\`\`\`${resp}\`\`\``,
-    };
-    say(response);
-  });
+  app.message(
+    /^qexp?\s+([a-z0-9]{1,6})$/i,
+    async ({ message: { thread_ts: thread }, context, say }) => {
+      const initialismSearch = context.matches[1];
+      const resp = qExpander(initialismSearch, await csvData);
+      const response = {
+        icon_emoji: ":tts:",
+        username: "Q-Expander",
+        text: `\`\`\`${resp}\`\`\``,
+        thread_ts: thread,
+      };
+      say(response);
+    }
+  );
 };
 module.exports.getCsvData = getCsvData;

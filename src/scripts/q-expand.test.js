@@ -22,7 +22,7 @@ describe("q-expand", () => {
     const handler = app.getHandler();
 
     const message = {
-      event: {
+      message: {
         thread_ts: "thread id",
       },
       context: {
@@ -36,6 +36,7 @@ describe("q-expand", () => {
     expect(message.say).toHaveBeenCalledWith({
       icon_emoji: ":tts:",
       username: "Q-Expander",
+      thread_ts: "thread id",
       text:
         "```QUEAAD\n" +
         "|||||└──QUEAAD: Chumanjalaal Cohort\n" +
@@ -51,7 +52,7 @@ describe("q-expand", () => {
     const handler = app.getHandler();
 
     const message = {
-      event: {
+      message: {
         thread_ts: "thread id",
       },
       context: {
@@ -64,6 +65,7 @@ describe("q-expand", () => {
 
     expect(message.say).toHaveBeenCalledWith({
       icon_emoji: ":tts:",
+      thread_ts: "thread id",
       username: "Q-Expander",
       text:
         "```FOOBAR\n" +
