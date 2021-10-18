@@ -44,7 +44,7 @@ describe("q-expand", () => {
         "|||└──QUEA: 18F Chapters\n" +
         "||└──QUE: 18F\n" +
         "|└──QU: Office of Clients & Markets\n" +
-        "└──Q: TTS```",
+        "└──Q: FAS (TTS)```",
     });
   });
   it("responds as expected with unknown acronyms", async () => {
@@ -82,7 +82,7 @@ describe("q-expand", () => {
 describe("q-expand csv data", () => {
   it("properly pulled into object", async () => {
     const csvData = await script.getCsvData();
-    expect(csvData.Q).toBe("TTS");
+    expect(csvData.Q).toBe("FAS (TTS)");
     expect(csvData.QUBE).toBe("Client Services");
     expect(csvData.QUEAF).toBe("Account Management");
     expect(csvData.QUEAAA).toBe("Space Goats Cohort");
