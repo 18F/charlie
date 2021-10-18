@@ -22,7 +22,7 @@ describe("q-expand", () => {
     const handler = app.getHandler();
 
     const message = {
-      event: {
+      message: {
         thread_ts: "thread id",
       },
       context: {
@@ -36,6 +36,7 @@ describe("q-expand", () => {
     expect(message.say).toHaveBeenCalledWith({
       icon_emoji: ":tts:",
       username: "Q-Expander",
+      thread_ts: "thread id",
       text:
         "```QUEAAD\n" +
         "|||||└──QUEAAD: Chumanjalaal Cohort\n" +
@@ -43,7 +44,7 @@ describe("q-expand", () => {
         "|||└──QUEA: 18F Chapters\n" +
         "||└──QUE: 18F\n" +
         "|└──QU: Office of Clients & Markets\n" +
-        "└──Q: TTS```",
+        "└──Q: FAS (TTS)```",
     });
   });
   it("responds as expected with unknown acronyms", async () => {
@@ -51,7 +52,7 @@ describe("q-expand", () => {
     const handler = app.getHandler();
 
     const message = {
-      event: {
+      message: {
         thread_ts: "thread id",
       },
       context: {
@@ -64,6 +65,7 @@ describe("q-expand", () => {
 
     expect(message.say).toHaveBeenCalledWith({
       icon_emoji: ":tts:",
+      thread_ts: "thread id",
       username: "Q-Expander",
       text:
         "```FOOBAR\n" +
@@ -80,7 +82,7 @@ describe("q-expand", () => {
 describe("q-expand csv data", () => {
   it("properly pulled into object", async () => {
     const csvData = await script.getCsvData();
-    expect(csvData.Q).toBe("TTS");
+    expect(csvData.Q).toBe("FAS (TTS)");
     expect(csvData.QUBE).toBe("Client Services");
     expect(csvData.QUEAF).toBe("Account Management");
     expect(csvData.QUEAAA).toBe("Space Goats Cohort");
