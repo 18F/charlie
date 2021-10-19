@@ -39,14 +39,26 @@ function getCsvData() {
 }
 
 function qExpander(expandThis, csvData) {
-  const initialism = expandThis.toUpperCase();
+  let initialism = expandThis.toUpperCase();
   const fullResponse = [initialism];
+  // flag Contractor notation endings
+  const isContractor = initialism.endsWith("-C");
+
+  // change -C to c.
+  // lowercase c to disambiguate from other C endings not
+  // related to contractor
+  if (isContractor) {
+    initialism = initialism.replace("-C", "c");
+  }
   // work backwards from full initialism back on char at a time
   for (let substr = initialism.length; substr >= 1; substr -= 1) {
-    const thisOne = initialism.slice(0, substr);
+    let thisOne = initialism.slice(0, substr);
     // default is "dunno"
     let response = "???";
-    if (thisOne in csvData) {
+    if (thisOne.endsWith("c")) {
+      thisOne = `${initialism.slice(0, substr - 1)}-C`;
+      response = "Contractor";
+    } else if (thisOne in csvData) {
       response = csvData[thisOne];
     }
     const bars = "|".repeat(substr - 1);
@@ -60,7 +72,7 @@ function qExpander(expandThis, csvData) {
 module.exports = (app) => {
   const csvData = getCsvData();
   app.message(
-    /^qexp?\s+([a-z0-9]{1,6})$/i,
+    /^qexp?\s+([a-z0-9-]{1,8})$/i,
     async ({ message: { thread_ts: thread }, context, say }) => {
       const initialismSearch = context.matches[1];
       const resp = qExpander(initialismSearch, await csvData);
