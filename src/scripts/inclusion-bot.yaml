@@ -378,6 +378,9 @@ triggers:
 
   - matches:
       - ninja
+    ignore:
+      - ninja turtle
+      - ninja turtles
     alternatives:
       - expert
       - whiz
