@@ -6,14 +6,26 @@ const brainKey = "coffeemate_queue";
 
 const baseResponse = {
   icon_emoji: ":coffee:",
-  text:
-    "You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:",
+  text: "You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:",
   username: "Coffeemate",
 };
 
 module.exports = (app) => {
   app.message(/coffee me( \S+$)?/i, async (message) => {
-    const [, scopeMatch] = message.context.matches;
+    const {
+      context: {
+        matches: [, scopeMatch],
+      },
+      event: { user },
+    } = message;
+
+    // Ignore Slackbot. It's not supposed to trigger this bot anyway but it
+    // seems like it has done so before, and then it gets stuck in the queue and
+    // the only way to fix it is to manually clear out the database.
+    if (user === "USLACKBOT") {
+      return;
+    }
+
     const scope = (() => {
       const out = scopeMatch ? scopeMatch.trim().toLowerCase() : "";
       return out === "please" ? "" : out;
@@ -23,9 +35,6 @@ module.exports = (app) => {
     const queue = app.brain.get(key) || [];
 
     await addEmojiReaction(message, "coffee");
-    const {
-      event: { user },
-    } = message;
 
     // First, is the current user in already in the queue?
     // If so, just let them know
@@ -52,18 +61,26 @@ module.exports = (app) => {
         } coffee! You’ll be introduced to the next person who wants to meet up.`,
       });
     } else {
-      // pair them up
-      await postEphemeralResponse(message, {
-        ...baseResponse,
-        text: `You’ve been matched up for coffee with <@${queue[0]}>! `,
-      });
+      try {
+        // pair them up
+        await postEphemeralResponse(message, {
+          ...baseResponse,
+          text: `You’ve been matched up for coffee with <@${queue[0]}>! `,
+        });
 
-      // Now start a 1:1 DM chat between the people in queue.
-      await sendDirectMessage([...queue], baseResponse);
-
-      // then empty the queue again
-      queue.length = 0;
-      app.brain.set(key, queue);
+        // Now start a 1:1 DM chat between the people in queue.
+        await sendDirectMessage([...queue], baseResponse);
+      } catch (e) {
+        // We don't really have a good way of capturing errors. The log is noisy
+        // so just writing there isn't necessarily helpful, but we'll go ahead
+        // and do it.
+        app.logger.error(e);
+      } finally {
+        // And always empty the queue, no matter what; otherwise, users could
+        // get stuck and we'd have to go manually edit the database to fix it.
+        queue.length = 0;
+        app.brain.set(key, queue);
+      }
     }
   });
 };
