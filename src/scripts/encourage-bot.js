@@ -24,7 +24,6 @@ const messages = [
   "You are not here by accident. You deserve to be here.",
   "You make this a better place than it otherwise would have been.",
   "Your perspectives are valuable and valued.",
-  "You're braver than you believe, and stronger than you seem, and smarter than you think.", // A. A. Milne
 ];
 
 const getChannelUsers = async (channel) => {
