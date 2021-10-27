@@ -15,7 +15,12 @@ module.exports = {
       action,
       brain: new Map(),
       logger: {
+        debug: jest.fn(),
+        error: jest.fn(),
+        getLevel: jest.fn(),
         info: jest.fn(),
+        setLevel: jest.fn(),
+        setName: jest.fn(),
         warn: jest.fn(),
       },
       message,

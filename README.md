@@ -238,6 +238,22 @@ Charlie is deployed in [Cloud.gov](https://cloud.gov/).
 Charlie is set up with continuous deployment, just merge your code to main and
 it will get deployed with CircleCI.
 
+To access Charlie's development or production databases in cloud.gov, use the
+[cf-service-connect](https://github.com/cloud-gov/cf-service-connect) plugin for
+cf-cli:
+
+```bash
+cf connect-to-service charlie charlie-brain
+```
+
+If you don't want to use the Postgres CLI, you can disable the automatic client
+and `connect-to-service` will print out connection information you can use in
+the database client of your choice:
+
+```bash
+cf connect-to-service -no-client charlie charlie-brain
+```
+
 ## Configuration
 
 - [OAuth scopes and events](oauth.md) are required for integration with Slack

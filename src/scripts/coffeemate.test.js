@@ -23,6 +23,17 @@ describe("coffeemate", () => {
     );
   });
 
+  it("doesn't do anything with messages from slackbot", async () => {
+    coffeemate(app);
+    const handler = app.getHandler();
+
+    await handler({ context: { matches: [] }, event: { user: "USLACKBOT" } });
+
+    expect(addEmojiReaction).not.toHaveBeenCalled();
+    expect(postEphemeralResponse).not.toHaveBeenCalled();
+    expect(sendDirectMessage).not.toHaveBeenCalled();
+  });
+
   describe("with an the coffee queue is initially empty", () => {
     let handler;
 
@@ -49,8 +60,7 @@ describe("coffeemate", () => {
       expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
       expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
         icon_emoji: ":coffee:",
-        text:
-          "You’re in line for coffee! You’ll be introduced to the next person who wants to meet up.",
+        text: "You’re in line for coffee! You’ll be introduced to the next person who wants to meet up.",
         username: "Coffeemate",
       });
     });
@@ -61,8 +71,7 @@ describe("coffeemate", () => {
       expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
       expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
         icon_emoji: ":coffee:",
-        text:
-          "You’re already in the queue. As soon as we find someone else to meet with, we’ll introduce you!",
+        text: "You’re already in the queue. As soon as we find someone else to meet with, we’ll introduce you!",
         username: "Coffeemate",
       });
     });
@@ -74,8 +83,7 @@ describe("coffeemate", () => {
       expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
       expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
         icon_emoji: ":coffee:",
-        text:
-          "You’re in line for test scope coffee! You’ll be introduced to the next person who wants to meet up.",
+        text: "You’re in line for test scope coffee! You’ll be introduced to the next person who wants to meet up.",
         username: "Coffeemate",
       });
     });
@@ -87,8 +95,7 @@ describe("coffeemate", () => {
       expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
       expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
         icon_emoji: ":coffee:",
-        text:
-          "You’re already in the test scope queue. As soon as we find someone else to meet with, we’ll introduce you!",
+        text: "You’re already in the test scope queue. As soon as we find someone else to meet with, we’ll introduce you!",
         username: "Coffeemate",
       });
     });
@@ -100,31 +107,58 @@ describe("coffeemate", () => {
       expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
       expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
         icon_emoji: ":coffee:",
-        text:
-          "You’re already in the queue. As soon as we find someone else to meet with, we’ll introduce you!",
+        text: "You’re already in the queue. As soon as we find someone else to meet with, we’ll introduce you!",
         username: "Coffeemate",
       });
     });
 
-    it("sends an ephemeral message, opens a DM, and resets the queue when a different user asks for coffee", async () => {
-      message.event.user = "user id 2";
-      await handler(message);
-
-      expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
-      expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
-        icon_emoji: ":coffee:",
-        text: `You’ve been matched up for coffee with <@user id 1>! `,
-        username: "Coffeemate",
+    describe("sends an ephemeral message, opens a DM, and resets the queue when a different user asks for coffee", () => {
+      beforeEach(() => {
+        app.brain.set("coffeemate_queue", ["user id 1"]);
       });
-      expect(sendDirectMessage).toHaveBeenCalledWith(
-        ["user id 1", "user id 2"],
-        {
+
+      it("when everything works as expected", async () => {
+        message.event.user = "user id 2";
+        await handler(message);
+
+        expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
+        expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
           icon_emoji: ":coffee:",
-          text:
-            "You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:",
+          text: `You’ve been matched up for coffee with <@user id 1>! `,
           username: "Coffeemate",
-        }
-      );
+        });
+        expect(sendDirectMessage).toHaveBeenCalledWith(
+          ["user id 1", "user id 2"],
+          {
+            icon_emoji: ":coffee:",
+            text: "You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:",
+            username: "Coffeemate",
+          }
+        );
+        expect(app.brain.get("coffeemate_queue")).toEqual([]);
+      });
+
+      it("still clears the queue if anything throws an exception", async () => {
+        message.event.user = "user id 2";
+        sendDirectMessage.mockRejectedValue(new Error("manufactured error"));
+        await handler(message);
+
+        expect(addEmojiReaction).toHaveBeenCalledWith(message, "coffee");
+        expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
+          icon_emoji: ":coffee:",
+          text: `You’ve been matched up for coffee with <@user id 1>! `,
+          username: "Coffeemate",
+        });
+        expect(sendDirectMessage).toHaveBeenCalledWith(
+          ["user id 1", "user id 2"],
+          {
+            icon_emoji: ":coffee:",
+            text: "You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:",
+            username: "Coffeemate",
+          }
+        );
+        expect(app.brain.get("coffeemate_queue")).toEqual([]);
+      });
     });
   });
 });
