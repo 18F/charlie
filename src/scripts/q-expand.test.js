@@ -12,7 +12,7 @@ describe("q-expand", () => {
   it("called with regex", () => {
     script(app);
     expect(app.message).toHaveBeenCalledWith(
-      /^qexp?\s+([a-z0-9]{1,6})$/i,
+      /^qexp?\s+([a-z0-9-]{1,8})$/i,
       expect.any(Function)
     );
   });
@@ -44,6 +44,62 @@ describe("q-expand", () => {
         "|||└──QUEA: 18F Chapters\n" +
         "||└──QUE: 18F\n" +
         "|└──QU: Office of Clients & Markets\n" +
+        "└──Q: FAS (TTS)```",
+    });
+  });
+
+  it("responds as desired for C endings (NOT Contractor)", async () => {
+    script(app);
+    const handler = app.getHandler();
+
+    const message = {
+      message: {
+        thread_ts: "thread id",
+      },
+      context: {
+        matches: ["qex QQC", "QQC"],
+      },
+      say: jest.fn(),
+    };
+
+    await handler(message);
+
+    expect(message.say).toHaveBeenCalledWith({
+      icon_emoji: ":tts:",
+      username: "Q-Expander",
+      thread_ts: "thread id",
+      text:
+        "```QQC\n" +
+        "||└──QQC: Secure Cloud\n" +
+        "|└──QQ: Office of Solutions\n" +
+        "└──Q: FAS (TTS)```",
+    });
+  });
+  it("responds as desired for -C endings (Contractor)", async () => {
+    script(app);
+    const handler = app.getHandler();
+
+    const message = {
+      message: {
+        thread_ts: "thread id",
+      },
+      context: {
+        matches: ["qex QQC-C", "QQC-C"],
+      },
+      say: jest.fn(),
+    };
+
+    await handler(message);
+
+    expect(message.say).toHaveBeenCalledWith({
+      icon_emoji: ":tts:",
+      username: "Q-Expander",
+      thread_ts: "thread id",
+      text:
+        "```QQC-C\n" +
+        "|||└──QQC-C: Contractor\n" +
+        "||└──QQC: Secure Cloud\n" +
+        "|└──QQ: Office of Solutions\n" +
         "└──Q: FAS (TTS)```",
     });
   });
