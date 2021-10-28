@@ -88,6 +88,23 @@ describe("the glossary", () => {
 
         message.context.matches[2] = "queried term";
       });
+
+      it("when the returned definition does not include a long form", async () => {
+        cache.mockResolvedValue({
+          term1: {},
+          "queried term": {
+            description: "a description of it",
+          },
+        });
+
+        await handler(message);
+
+        expect(message.say).toHaveBeenCalledWith({
+          icon_emoji: ":books:",
+          thread_ts: "thread timestamp",
+          text: "The term *queried term* means a description of it",
+        });
+      });
     });
 
     it("fetches and parses YAML", async () => {

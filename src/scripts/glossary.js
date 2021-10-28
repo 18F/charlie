@@ -55,7 +55,12 @@ module.exports = (app) => {
       };
 
       if (term) {
-        response.text = `The term *${abbreviations[term].longform} (${term})* means ${abbreviations[term].description}`;
+        const { description, longform } = abbreviations[term];
+        if (longform) {
+          response.text = `The term *${longform} (${term})* means ${description}`;
+        } else {
+          response.text = `The term *${term}* means ${description}`;
+        }
       }
 
       say(response);
