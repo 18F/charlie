@@ -89,29 +89,30 @@ module.exports = async (app) => {
     postEphemeralResponse(msg, {
       attachments: [
         {
-          color: "#ffbe2e",
-          blocks: pretexts.map((text, i) => {
-            const block = {
+          color: "#2eb886",
+          fallback: message,
+          blocks: [
+            { type: "section", text: { type: "mrkdwn", text: message } },
+            {
               type: "section",
-              text: { type: "mrkdwn", text },
-            };
-
-            if (i === 0) {
-              block.accessory = {
+              text: { type: "mrkdwn", text: pretexts.join("\n") },
+              accessory: {
                 type: "button",
-                text: { type: "plain_text", text: "What's this?" },
+                text: { type: "plain_text", text: "Why this suggestion?" },
                 value: specificMatch.map(({ text: t }) => t).join("|"),
                 action_id: "inclusion_modal",
-              };
-            }
-            return block;
-          }),
-          fallback: "fallback",
-        },
-        {
-          color: "#2eb886",
-          text: message,
-          fallback: message,
+              },
+            },
+            {
+              type: "context",
+              elements: [
+                {
+                  type: "mrkdwn",
+                  text: "You can view the <https://docs.google.com/document/d/1iQT7Gy0iQa7sopBP0vB3CZ56GhyYrDNUzLdoWOowSHs/edit|full list of words and phrases> this bot watches for.",
+                },
+              ],
+            },
+          ],
         },
       ],
       icon_emoji: ":tts:",
