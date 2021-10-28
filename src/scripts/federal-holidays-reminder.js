@@ -31,11 +31,11 @@ const postReminder = async (holiday) => {
 
   await postMessage({
     channel: CHANNEL,
-    text: `@here Remember that *${holiday.date.format(
+    text: `<!here|here> Remember that *${holiday.date.format(
       "dddd"
-    )}* is a federal holiday in observance of *${holiday.name}*${
-      emoji ? ` ${emoji}` : ""
-    }!`,
+    )}* is a federal holiday in observance of *${
+      holiday.alsoObservedAs ?? holiday.name
+    }*${emoji ? ` ${emoji}` : ""}!`,
   });
 };
 

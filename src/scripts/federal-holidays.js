@@ -19,9 +19,11 @@ module.exports = (app) => {
       const emoji = emojis.get(holiday.name);
 
       say(
-        `The next federal holiday is ${holiday.name} ${emoji || ""}${
-          emoji ? " " : ""
-        }in ${daysUntil} days on ${nextOne.utc().format("dddd, MMMM Do")}`
+        `The next federal holiday is ${
+          holiday.alsoObservedAs ?? holiday.name
+        } ${emoji || ""}${emoji ? " " : ""}in ${daysUntil} days on ${nextOne
+          .utc()
+          .format("dddd, MMMM Do")}`
       );
     }
   );

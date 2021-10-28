@@ -3,78 +3,84 @@
     "botName": "Alumni Dag Bot",
     "defaultEmoji": ":dag:",
     "trigger": "alumni d(o|a)g facts?",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/dags-alumni.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dags-alumni.json"
   },
   {
     "botName": "Dag Bot",
     "defaultEmoji": ":dog:",
     "trigger": "(?<!alumni )d(o|a)g facts?",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/dags.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dags.json"
   },
   {
     "botName": "Cat Bot",
     "defaultEmoji": ":smile_cat:",
     "trigger": "cat fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/cats.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/cats.json"
   },
   {
     "botName": "Giraffe Bot",
     "defaultEmoji": ":giraffe:",
     "trigger": "giraffe fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/giraffes.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/giraffes.json"
   },
   {
     "botName": "Alan Bot",
     "defaultEmoji": ":alda:",
     "trigger": "alan fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/alan.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/alan.json"
   },
   {
     "botName": "Dolphin Bot",
     "defaultEmoji": ":dolphin:",
     "trigger": "dolphin fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/dolphins.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dolphins.json"
   },
   {
     "botName": "Ed Simulator",
     "defaultEmoji": ":edmullen:",
     "trigger": "ed simulator",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/ed.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/ed.json"
   },
   {
     "botName": "Minnesota Facts",
     "defaultEmoji": ":minn:",
     "trigger": "minnesota facts",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/Minnesota.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/Minnesota.json"
   },
   {
     "botName": "Wisconsin Facts",
     "defaultEmoji": ":wisconsin-wi:",
     "trigger": "wisconsin facts",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/Wisconsin.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/Wisconsin.json"
   },
   {
     "botName": "screambot",
     "defaultEmoji": ":kevin-home-alone-scream:",
     "trigger": "screambot",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/scream.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/scream.json"
   },
   {
     "botName": "Randy Facts",
     "defaultEmoji": ":tech-randy:",
     "trigger": "randy fact",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/randy.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/randy.json"
   },
   {
     "botName": "Ally and the A11y Friends",
     "defaultEmoji": ":a11y-ally:",
     "trigger": "ask ally",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/a11y-facts.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/a11y-facts.json"
   },
   {
     "botName": "Lovin.gov Bot",
     "defaultEmoji": ":lovin-gov:",
     "trigger": "need me some (<http://lovin.gov\\|)?lovin.gov",
-    "responseUrl": "https://raw.githubusercontent.com/18F/18f-bot-facts/main/lovin-gov.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/lovin-gov.json"
+  },
+  {
+    "botName": "USPS Facts",
+    "defaultEmoji": ":usps:",
+    "trigger": "(usps|mail) facts?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/usps.json"
   }
 ]

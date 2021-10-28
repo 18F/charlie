@@ -33,22 +33,43 @@ describe("federal holidays bot", () => {
     );
   });
 
-  it("responds to a request for the next federal holiday", () => {
-    bot(app);
-    const handler = app.getHandler();
-    const say = jest.fn();
+  describe("responds to a request for the next federal holiday", () => {
+    it("uses the official holiday name if there is not an alternate name", () => {
+      bot(app);
+      const handler = app.getHandler();
+      const say = jest.fn();
 
-    getNextHoliday.mockReturnValue({
-      date: moment.tz("1970-01-02T00:00:00", "UTC"),
-      name: "Test Holiday day",
+      getNextHoliday.mockReturnValue({
+        date: moment.tz("1970-01-02T00:00:00", "UTC"),
+        name: "Test Holiday day",
+      });
+
+      handler({ say });
+
+      expect(say.mock.calls.length).toBe(1);
+      expect(say).toHaveBeenCalledWith(
+        "The next federal holiday is Test Holiday day in 1 days on Friday, January 2nd"
+      );
     });
 
-    handler({ say });
+    it("uses an alternate name, if provided", () => {
+      bot(app);
+      const handler = app.getHandler();
+      const say = jest.fn();
 
-    expect(say.mock.calls.length).toBe(1);
-    expect(say).toHaveBeenCalledWith(
-      "The next federal holiday is Test Holiday day in 1 days on Friday, January 2nd"
-    );
+      getNextHoliday.mockReturnValue({
+        date: moment.tz("1970-01-02T00:00:00", "UTC"),
+        name: "Test Holiday day",
+        alsoObservedAs: "Other holiday day day day",
+      });
+
+      handler({ say });
+
+      expect(say.mock.calls.length).toBe(1);
+      expect(say).toHaveBeenCalledWith(
+        "The next federal holiday is Other holiday day day day in 1 days on Friday, January 2nd"
+      );
+    });
   });
 
   it("includes an emoji for well-known holidays", () => {

@@ -379,6 +379,9 @@ triggers:
 
   - matches:
       - ninja
+    ignore:
+      - ninja turtle
+      - ninja turtles
     alternatives:
       - expert
       - whiz
@@ -473,6 +476,7 @@ triggers:
 
   - matches:
       - postmortem
+      - post mortem
     alternatives:
       - project reflection 
       - project or incident review
