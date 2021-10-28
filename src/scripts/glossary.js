@@ -12,6 +12,7 @@
 
 const { directMention } = require("@slack/bolt");
 const axios = require("axios");
+const he = require("he");
 const yaml = require("js-yaml");
 const { cache } = require("../utils");
 
@@ -34,7 +35,7 @@ module.exports = (app) => {
       // Grab this match from the context immediately. The context can change
       // when we give up the execution thread with an async call below, so we
       // need to grab it before we do that.
-      const searchTerm = context.matches[2].trim();
+      const searchTerm = he.decode(context.matches[2].trim());
 
       const abbreviations = await cache("glossary fetch", 60, async () => {
         const { data } = await axios.get(

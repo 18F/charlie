@@ -45,27 +45,48 @@ describe("the glossary", () => {
       expect(message.say).toHaveBeenCalledWith({
         icon_emoji: ":books:",
         thread_ts: "thread timestamp",
-        text:
-          "I don't know what *queried term* means. You can add it to <https://github.com/18F/procurement-glossary|the glossary>.",
+        text: "I don't know what *queried term* means. You can add it to <https://github.com/18F/procurement-glossary|the glossary>.",
       });
     });
 
-    it("handles the case where a term is found", async () => {
-      cache.mockResolvedValue({
-        term1: {},
-        "queried term": {
-          longform: "The Queried Term",
-          description: "a description of it",
-        },
+    describe("handles the case where a term is found", () => {
+      it("using a bunch of normal characters", async () => {
+        cache.mockResolvedValue({
+          term1: {},
+          "queried term": {
+            longform: "The Queried Term",
+            description: "a description of it",
+          },
+        });
+
+        await handler(message);
+
+        expect(message.say).toHaveBeenCalledWith({
+          icon_emoji: ":books:",
+          thread_ts: "thread timestamp",
+          text: "The term *The Queried Term (queried term)* means a description of it",
+        });
       });
 
-      await handler(message);
+      it("when using characters that have been encoded as HTML entities", async () => {
+        cache.mockResolvedValue({
+          term1: {},
+          "queried & term": {
+            longform: "The Queried Term",
+            description: "a description of it",
+          },
+        });
+        message.context.matches[2] = "queried &amp; term";
 
-      expect(message.say).toHaveBeenCalledWith({
-        icon_emoji: ":books:",
-        thread_ts: "thread timestamp",
-        text:
-          "The term *The Queried Term (queried term)* means a description of it",
+        await handler(message);
+
+        expect(message.say).toHaveBeenCalledWith({
+          icon_emoji: ":books:",
+          thread_ts: "thread timestamp",
+          text: "The term *The Queried Term (queried & term)* means a description of it",
+        });
+
+        message.context.matches[2] = "queried term";
       });
     });
 
