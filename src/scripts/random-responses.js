@@ -10,23 +10,42 @@ const loadConfigs = async () =>
  * @param {*} config The configuration to fetch responses for.
  * @returns {Promise<Array>} Resolves an array of responses
  */
-const getResponses = async (config) => {
+const getResponses = async (config, searchTerm = false) => {
+  let responses = [];
+
   // If the config has a list of responses, use it
   // and bail out.
   if (config.responseList) {
-    return config.responseList;
+    responses = config.responseList;
   }
 
   if (config.responseUrl) {
     // If we've hit this URL within the past five minutes, return the cached
     // result rather than taking the network hit again so quickly
-    return cache(`random response from ${config.responseUrl}`, 5, async () => {
-      const { data } = await axios.get(config.responseUrl);
-      return data;
-    });
+    responses = await cache(
+      `random response from ${config.responseUrl}`,
+      5,
+      async () => {
+        const { data } = await axios.get(config.responseUrl);
+        return data;
+      }
+    );
   }
 
-  return [];
+  if (searchTerm) {
+    const regex = new RegExp(searchTerm, "i");
+    const filtered = responses.filter((r) => {
+      if (typeof r === "object") {
+        return regex.test(`${r.name} ${r.emoji} ${r.text}`);
+      }
+      return regex.test(r);
+    });
+    if (filtered.length > 0) {
+      responses = filtered;
+    }
+  }
+
+  return responses;
 };
 
 /**
@@ -38,44 +57,46 @@ const getResponses = async (config) => {
  * @param {*} params.config All other params properties are rolled into this
  * @returns {Function} A Slack/bolt message handler
  */
-const responseFrom = ({
-  botName = null,
-  defaultEmoji = null,
-  ...config
-} = {}) => async ({ event: { thread_ts: thread }, say }) => {
-  const message = { thread_ts: thread };
-  if (defaultEmoji) {
-    message.icon_emoji = defaultEmoji;
-  }
-  if (botName) {
-    message.username = botName;
-  }
+const responseFrom =
+  ({ botName = null, defaultEmoji = null, ...config } = {}) =>
+  async ({ event: { thread_ts: thread }, message: { text }, say }) => {
+    const [, searchTerm] = text.match(
+      new RegExp(`(\\S+) ${config.trigger}`, "i")
+    ) ?? [false, false];
 
-  const responses = await getResponses(config);
-  const response = responses[Math.floor(Math.random() * responses.length)];
-
-  if (typeof response === "object") {
-    message.text = response.text;
-    if (response.name) {
-      message.username = response.name + (botName ? ` (${botName})` : "");
+    const message = { thread_ts: thread };
+    if (defaultEmoji) {
+      message.icon_emoji = defaultEmoji;
     }
-    if (response.emoji) {
-      message.icon_emoji = response.emoji;
+    if (botName) {
+      message.username = botName;
     }
-  } else {
-    message.text = response;
 
-    // If the message begins with ":<value>:", use the "<value>" as an emoji
-    // for the bot's avatar.
-    const match = response.match(/^(:[^:]+:)(.*)$/);
-    if (match) {
-      message.icon_emoji = match[1];
-      message.text = match[2].trim();
+    const responses = await getResponses(config, searchTerm);
+    const response = responses[Math.floor(Math.random() * responses.length)];
+
+    if (typeof response === "object") {
+      message.text = response.text;
+      if (response.name) {
+        message.username = response.name + (botName ? ` (${botName})` : "");
+      }
+      if (response.emoji) {
+        message.icon_emoji = response.emoji;
+      }
+    } else {
+      message.text = response;
+
+      // If the message begins with ":<value>:", use the "<value>" as an emoji
+      // for the bot's avatar.
+      const match = response.match(/^(:[^:]+:)(.*)$/);
+      if (match) {
+        message.icon_emoji = match[1];
+        message.text = match[2].trim();
+      }
     }
-  }
 
-  say(message);
-};
+    say(message);
+  };
 
 /**
  * Attach listener(s) for a given config
@@ -87,10 +108,10 @@ const responseFrom = ({
 const attachTrigger = (app, { trigger, ...config }) => {
   if (Array.isArray(trigger)) {
     trigger.forEach((t) =>
-      app.message(new RegExp(t, "i"), responseFrom(config))
+      app.message(new RegExp(t, "i"), responseFrom({ ...config, trigger }))
     );
   } else {
-    app.message(new RegExp(trigger, "i"), responseFrom(config));
+    app.message(new RegExp(trigger, "i"), responseFrom({ ...config, trigger }));
   }
 };
 
