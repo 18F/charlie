@@ -382,6 +382,8 @@ triggers:
     ignore:
       - ninja turtle
       - ninja turtles
+      - ninja-turtle
+      - ninja-turtles
     alternatives:
       - expert
       - whiz
