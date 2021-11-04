@@ -10,7 +10,7 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
-    container: node:14
+    container: node:16
     steps:
       - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
       - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
@@ -26,7 +26,7 @@ jobs:
     needs: [build]
     name: lint
     runs-on: ubuntu-latest
-    container: node:14
+    container: node:16
     steps:
       - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
       - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
@@ -40,7 +40,7 @@ jobs:
     needs: [build]
     name: unit tests
     runs-on: ubuntu-latest
-    container: node:14
+    container: node:16
     steps:
       - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
       - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
