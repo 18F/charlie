@@ -21,6 +21,7 @@ describe("random responder", () => {
 
     const message = {
       event: { thread_ts: "thread timestamp" },
+      message: { text: "" },
       say: jest.fn(),
     };
 
@@ -169,6 +170,30 @@ describe("random responder", () => {
     it("returns an empty list if the configuration doesn't have a list or URL", async () => {
       const responses = await script.getResponses({});
       expect(responses).toEqual([]);
+    });
+
+    it("filters messages if provided a search term", async () => {
+      const responses = await script.getResponses(
+        {
+          responseList: [
+            "message one",
+            "message two",
+            "one message",
+            { name: "one message", emoji: "four", text: "four" },
+            { name: "five message", emoji: "one", text: "five" },
+            { name: "message six", emoji: "six", text: "one" },
+            { name: "message seven", emoji: "seven", text: "seven" },
+          ],
+        },
+        "one"
+      );
+      expect(responses).toEqual([
+        "message one",
+        "one message",
+        { name: "one message", emoji: "four", text: "four" },
+        { name: "five message", emoji: "one", text: "five" },
+        { name: "message six", emoji: "six", text: "one" },
+      ]);
     });
   });
 
