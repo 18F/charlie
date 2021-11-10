@@ -12,6 +12,12 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dags.json"
   },
   {
+    "botName": "Dag Intro",
+    "defaultEmoji": ":dog:",
+    "trigger": "d(o|a)g intros?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dag-intros.json"
+  },
+  {
     "botName": "Cat Bot",
     "defaultEmoji": ":smile_cat:",
     "trigger": "cat fact",
