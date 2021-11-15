@@ -156,6 +156,16 @@ triggers:
       to mock a character. We want to avoid stigmatizing disabilities.
 
   - matches:
+      - ermahgerd
+    alternatives:
+      - oh my gosh
+      - I'm excited!
+    why: >
+      ":TERM:" originated in a meme mocking an excited person with a speech
+      impediment. We want to show our enthusiasm and excitement in an inclusive
+      way so nobody feels left out.
+
+  - matches:
       - moron
       - imbecile
       - daft
