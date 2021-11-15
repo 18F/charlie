@@ -24,6 +24,12 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/cats.json"
   },
   {
+    "botName": "Cat Intro",
+    "defaultEmoji": ":smile_cat:",
+    "trigger": "cat intros?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/cat-intros.json"
+  },
+  {
     "botName": "Giraffe Bot",
     "defaultEmoji": ":giraffe:",
     "trigger": "giraffe fact",
