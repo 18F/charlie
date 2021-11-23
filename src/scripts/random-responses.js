@@ -1,5 +1,6 @@
 const axios = require("axios");
 const fs = require("fs");
+const plural = require("plural");
 const { cache } = require("../utils");
 
 const loadConfigs = async () =>
@@ -33,13 +34,28 @@ const getResponses = async (config, searchTerm = false) => {
   }
 
   if (searchTerm) {
-    const regex = new RegExp(searchTerm, "i");
-    const filtered = responses.filter((r) => {
+    const regex = new RegExp(
+      `\\b(${searchTerm}|${plural(searchTerm)})\\b`,
+      "i"
+    );
+    let filtered = responses.filter((r) => {
       if (typeof r === "object") {
         return regex.test(`${r.name} ${r.emoji} ${r.text}`);
       }
       return regex.test(r);
     });
+    if (filtered.length === 0) {
+      const embeddedRegex = new RegExp(
+        `(${searchTerm}|${plural(searchTerm)})`,
+        "i"
+      );
+      filtered = responses.filter((r) => {
+        if (typeof r === "object") {
+          return embeddedRegex.test(`${r.name} ${r.emoji} ${r.text}`);
+        }
+        return embeddedRegex.test(r);
+      });
+    }
     if (filtered.length > 0) {
       responses = filtered;
     }

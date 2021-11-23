@@ -172,28 +172,63 @@ describe("random responder", () => {
       expect(responses).toEqual([]);
     });
 
-    it("filters messages if provided a search term", async () => {
-      const responses = await script.getResponses(
-        {
-          responseList: [
-            "message one",
-            "message two",
-            "one message",
-            { name: "one message", emoji: "four", text: "four" },
-            { name: "five message", emoji: "one", text: "five" },
-            { name: "message six", emoji: "six", text: "one" },
-            { name: "message seven", emoji: "seven", text: "seven" },
-          ],
-        },
-        "one"
-      );
-      expect(responses).toEqual([
-        "message one",
-        "one message",
-        { name: "one message", emoji: "four", text: "four" },
-        { name: "five message", emoji: "one", text: "five" },
-        { name: "message six", emoji: "six", text: "one" },
-      ]);
+    describe("filters messages if provided a search term", () => {
+      it("includes messages where the search term is exactly present", async () => {
+        const responses = await script.getResponses(
+          {
+            responseList: [
+              "message one",
+              "message two",
+              "one message",
+              { name: "one message", emoji: "four", text: "four" },
+              { name: "five message", emoji: "one", text: "five" },
+              { name: "message six", emoji: "six", text: "one" },
+              { name: "message seven", emoji: "seven", text: "seven" },
+            ],
+          },
+          "one"
+        );
+        expect(responses).toEqual([
+          "message one",
+          "one message",
+          { name: "one message", emoji: "four", text: "four" },
+          { name: "five message", emoji: "one", text: "five" },
+          { name: "message six", emoji: "six", text: "one" },
+        ]);
+      });
+
+      it("also happily includes plural versions of search terms", async () => {
+        const responses = await script.getResponses(
+          { responseList: ["this is a hat", "these are hats"] },
+          "hat"
+        );
+        expect(responses).toEqual(["this is a hat", "these are hats"]);
+      });
+
+      it("excludes messages where the search term is only embedded in another word", async () => {
+        const responses = await script.getResponses(
+          { responseList: ["this is a hat", "that is not"] },
+          "hat"
+        );
+        expect(responses).toEqual(["this is a hat"]);
+      });
+
+      it("falls back to including embedded words if non-embedded words come up empty", async () => {
+        const responses = await script.getResponses(
+          {
+            responseList: [
+              "this is a cap",
+              "that is not",
+              { name: "chapeau", emoji: "tophat", text: "fancy" },
+            ],
+          },
+          "hat"
+        );
+        expect(responses).toEqual([
+          "that is not",
+          { name: "chapeau", emoji: "tophat", text: "fancy" },
+        ]);
+      });
     });
   });
 
