@@ -78,9 +78,9 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/randy.json"
   },
   {
-    "botName": "Ally and the A11y Friends",
+    "botName": "Ally the A11ybot",
     "defaultEmoji": ":a11y-ally:",
-    "trigger": "ask ally",
+    "trigger": "ask a(11|ll)y",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/a11y-facts.json"
   },
   {
