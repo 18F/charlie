@@ -22,7 +22,8 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.32",
     "node-schedule": "^2.0.0",
-    "pg": "^8.7.1"
+    "pg": "^8.7.1",
+    "plural": "^1.1.0"
   },
   "engines": {
     "node": "^16.10.0"
