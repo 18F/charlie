@@ -55,6 +55,52 @@ Steps to get wired up to `GSA TTS Testing` Slack:
 
 - Ask for assistance in the [#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) channel.
 - Contact an admin of `GSA TTS Testing` Slack about getting added as a user.
+- Also get added to the `gsa-18f-hubot` group in cloud.gov if you aren't already. If you're new to this, [get signed up and familiar with the cloud.gov here](https://cloud.gov/sign-up/).
+
+After the above is taken care of, use `cf` to login to `cloud.gov` and connect to the `gsa-18f-hubot` org and select the space as `dev`.
+
+Interaction should look something like this:
+
+```
+➜ cf login -a api.fr.cloud.gov  --sso
+API endpoint: api.fr.cloud.gov
+
+Temporary Authentication Code ( Get one at https://login.fr.cloud.gov/passcode ):
+Authenticating...
+OK
+
+
+Select an org:
+1. gsa-18f-hubot
+2. sandbox-gsa
+
+Org (enter to skip): 1
+Targeted org gsa-18f-hubot.
+
+Select a space:
+1. dev
+2. prod
+3. staging
+
+Space (enter to skip): 1
+Targeted space dev.
+
+API endpoint:   https://api.fr.cloud.gov
+API version:    3.107.0
+user:           <username>@gsa.gov
+org:            gsa-18f-hubot
+space:          dev
+```
+
+At any point you can make sure you are connected to the right org and space with:
+
+    cf target -o gsa-18f-hubot -s dev
+
+Finally, to deploy your development branch to `GSA TTS Testing` Slack, execute this command:
+
+    cf push --vars-file ./dev.yml
+
+Note: it takes a few minutes for the code to fully build and deploy. The console should give updates of its progress and exit to a prompt when finished.
 
 #### Getting the New Bot Deployed to Production
 
