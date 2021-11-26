@@ -1,6 +1,6 @@
 ## Development
 
-Charlie is a Slack App, and for structural and policy reasons described below, it can't be fully qualified in a local development environment.
+Charlie is a Slack App, and for structural and policy reasons described below, it can't be fully qualified and exercised in a local development environment.
 
 Because Slack apps work by responding to web hooks rather than setting up a persistent websocket connection, the machine where Charlie runs cannot respond to Slack events unless it is accessible on the public internet over HTTPS. **GSA policy forbids our computers from doing this**. As a result, it is necessary to run the app in cloud.gov to test it.
 
@@ -8,7 +8,7 @@ To facilitate this requirement, there is a `GSA TTS Testing` Slack instance avai
 
 ### Anatomy of developing and deplolying a New Charlie Bot
 
-For a new bot called `awesomobot`:
+For a new bot called `awesomobot`, this is the general flow:
 
 ![awesomobot](awesomobot.png "awesomobot")
 
