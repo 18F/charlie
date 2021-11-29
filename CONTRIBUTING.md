@@ -65,7 +65,7 @@ Steps to get wired up to `GSA TTS Testing` Slack:
 
 - Ask for assistance in the [#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) channel.
 - Contact an admin of `GSA TTS Testing` Slack about getting added as a user.
-- Also get added to the `gsa-18f-hubot` group in cloud.gov if you aren't already. If you're new to this, [get signed up and familiar with the cloud.gov here](https://cloud.gov/sign-up/).
+- Also get added to the `gsa-18f-hubot` org in cloud.gov if you aren't already. If you're new to this, [get signed up and familiar with the cloud.gov here](https://cloud.gov/sign-up/).
 
 After the above is taken care of, use `cf` to login to `cloud.gov` and connect to the `gsa-18f-hubot` org and select the space as `dev`.
 
