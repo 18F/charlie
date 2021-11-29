@@ -201,7 +201,7 @@ when the Travel team will be back in the office!
 
 ## Development
 
-See [Development Docs](DEV.md).
+See [CONTRIBUTING Docs](CONTRIBUTING.md).
 
 ## Public domain
 
