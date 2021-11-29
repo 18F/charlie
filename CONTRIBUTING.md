@@ -120,7 +120,7 @@ After `awesomobot` has been linted, unit tested, live tested on `GSA TTS Testing
 - File a Pull Request for `awesomo->main`
   -- PR should be from your development
   -- Include an explanatory paragraph in the PR as to what's in the request.
-- Request a reviewer. If you don't know who should review the code, ask in the [#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) channel
+- Get your PR reviewed. By default @18F/charlie-maintainers will be assigned, and you can, ask in the [#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) channel for anyone else to review
 - After PR has passed review, merge the changes to `main` (sometimes the reviewer does this)
   -- CI/CD is setup so the deployment to `TTS` Slack is automatic
 - Confirm in production Slack that the bot is functional and works as designed.
