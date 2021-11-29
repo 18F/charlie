@@ -14,7 +14,7 @@ Charlie is a Slack App, and for structural and policy reasons described below, i
 
 Because Slack apps work by responding to web hooks rather than setting up a persistent websocket connection, the machine where Charlie runs cannot respond to Slack events unless it is accessible on the public internet over HTTPS. **GSA policy forbids our computers from doing this**. As a result, it is necessary to run the app in cloud.gov to test it.
 
-To facilitate this requirement, there is a `GSA TTS Testing` Slack instance available to test in-development changes to Charlie before deploying to production. The Slack instance `GSA TTS Testing` is deployed in cloud.gov and this github repository is fully wired up with CI/CD to automatically deploy to it (for branches other than `main`).
+To facilitate this requirement, there is a `GSA TTS Testing` Slack instance available to test changes to Charlie before deploying to production. `GSA TTS Testing` Slack is configured to send events to a static URL running in `cloud.gov` space. Code can be developed locally and then pushed to cloud.gov (which in turn automatically redeploys the app). Within a few minutes, the changes will spin up and can be tested on `GSA TTS Testing` Slack. There is no need for any direct manipulation of Slack configuration.
 
 ### Anatomy of developing and deplolying a New Charlie Bot
 
@@ -25,6 +25,7 @@ For a new bot called `awesomobot`, this is the general flow:
 - Write the core bot functionality in a file name `src/scripts/awesomobot.js`
 - Write an accompanying `src/scripts/awesomobot.test.js` file is required that contains relevant unit tests.
 - Docker can and should be used for local linting and unit testing.
+- Changes need to be pushed/deployed to cloud.gov with a `cf` command
 - `GSA TTS Testing` Slack can and should be used for live testing of `awesomobot`.
 - Iterate as needed
 - When feature complete and tested, file a Pull Request and get someone to review ([#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) in Slack is a good place to start that discussion).
@@ -106,7 +107,7 @@ At any point you can make sure you are connected to the right org and space with
 
     cf target -o gsa-18f-hubot -s dev
 
-Finally, to deploy your development branch to `GSA TTS Testing` Slack, execute this command:
+Finally, to deploy your development branch on cloud.gov, which makes it available to test on `GSA TTS Testing` Slack, execute this command:
 
     cf push --vars-file ./dev.yml
 
@@ -118,11 +119,11 @@ After `awesomobot` has been linted, unit tested, live tested on `GSA TTS Testing
 
 - Push your `awesomo` branch to github.com/18F/Charlie
 - File a Pull Request for `awesomo->main`
-   - PR should be from your development
-   - Include an explanatory paragraph in the PR as to what's in the request.
+  - PR should be from your development
+  - Include an explanatory paragraph in the PR as to what's in the request.
 - Get your PR reviewed. By default @18F/charlie-maintainers will be assigned, and you can, ask in the [#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) channel for anyone else to review
 - After PR has passed review, merge the changes to `main` (sometimes the reviewer does this)
-   - CI/CD is setup so the deployment to `TTS` Slack is automatic
+  - CI/CD is setup so the deployment to `TTS` Slack is automatic
 - Confirm in production Slack that the bot is functional and works as designed.
 
 ## Public domain
