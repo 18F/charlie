@@ -127,6 +127,25 @@ Do you like pugs? Do you want pictures of pugs? Charlie can help! Just say
 to get get a bunch of pug pictures! (You can leave the count out; Charlie will
 send 3 pictures if you don't ask for a specific number.)
 
+##### Q-Expander bot
+
+Ever wonder what the Q\* initialisms are after everyone's names? Each letter describes where a person fits in the organization. Say `qex [q-initialism]` and get a detailed tree response back.
+
+For example:
+`qex queaad`
+
+Response:
+
+```
+QUEAAD
+|||||└──QUEAAD: Chumanjalaal Cohort
+||||└──QUEAA: Engineering
+|||└──QUEA: 18F Chapters
+||└──QUE: 18F
+|└──QU: Office of Clients & Markets
+└──Q: FAS (TTS)
+```
+
 ##### Tock line
 
 What Tock line do I bill this project to? Ugh, who can remember? Charlie can!
@@ -182,89 +201,7 @@ when the Travel team will be back in the office!
 
 ## Development
 
-Because Charlie is a Slack App (rather than a legacy bot integration), if you
-want to test against Slack itself you'll need to either have access to a Slack
-instance where you can create a new app or get a token and signing secret for
-an existing app instance. Drop by
-[#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) in Slack to get more
-details about creating a new app or using an existing one. If you create a new
-one, see below about configuring OAuth scopes and Slack events.
-
-### Important note
-
-Because Slack apps work by responding to web hooks rather than setting up a
-persistent websocket connection, the machine where Charlie runs cannot respond
-to Slack events unless it is accessible on the public internet over HTTPS. GSA
-policy says our computers must not do this, so you will need to run the app in
-cloud.gov to test it.
-
-### Docker
-
-The easiest way to test Charlie locally is using Docker. First, create a `.env`
-file (see the `.env-sample` for reference) that sets, at minimum, the
-`SLACK_TOKEN` and `SLACK_SIGNING_SECRET` variables. (See the configuration
-section on environment variables below for a list of all the variables you can
-set.)
-
-Start it up:
-
-```bash
-docker-compose up
-```
-
-This will get all of Charlie's dependencies
-installed, set up a PostgreSQL container, hook up Charlie and postgres, and
-start Charlie. In this configuration, Charlie is run using
-[nodemon](https://npm.im/nodemon), so it will automatically restart if you make
-any code changes.
-
-Run linter and tests:
-
-```bash
-docker exec -it charlie_charlie_1 npm run lint
-docker exec -it charlie_charlie_1 npm test
-```
-
-### Local development
-
-If you don't want to use Docker, you can run `npm install` from the root
-directory, set your `SLACK_TOKEN` and `SLACK_SIGNING_SECRET` environment
-variables, and then run `npm start-dev` to enable nodemon, or `npm start` to
-disable it. This is a minimum execution; to enable more features, you may need
-to set associated environment variables.
-
-## Deploying
-
-Charlie is deployed in [Cloud.gov](https://cloud.gov/).
-
-Charlie is set up with continuous deployment, just merge your code to main and
-it will get deployed with CircleCI.
-
-To access Charlie's development or production databases in cloud.gov, use the
-[cf-service-connect](https://github.com/cloud-gov/cf-service-connect) plugin for
-cf-cli:
-
-```bash
-cf connect-to-service charlie charlie-brain
-```
-
-If you don't want to use the Postgres CLI, you can disable the automatic client
-and `connect-to-service` will print out connection information you can use in
-the database client of your choice:
-
-```bash
-cf connect-to-service -no-client charlie charlie-brain
-```
-
-## Configuration
-
-- [OAuth scopes and events](oauth.md) are required for integration with Slack
-- [Environment variables](env.md) are required to connect and change bot behaviors
-
-## Contributing
-
-Please read the [contribution guidelines](CONTRIBUTING.md) before submitting a
-pull request.
+See [CONTRIBUTING Docs](CONTRIBUTING.md).
 
 ## Public domain
 
