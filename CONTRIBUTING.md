@@ -122,7 +122,7 @@ After `awesomobot` has been linted, unit tested, live tested on `GSA TTS Testing
    - Include an explanatory paragraph in the PR as to what's in the request.
 - Get your PR reviewed. By default @18F/charlie-maintainers will be assigned, and you can, ask in the [#bots](https://app.slack.com/client/T025AQGAN/C02FPFGBG) channel for anyone else to review
 - After PR has passed review, merge the changes to `main` (sometimes the reviewer does this)
-  -- CI/CD is setup so the deployment to `TTS` Slack is automatic
+   - CI/CD is setup so the deployment to `TTS` Slack is automatic
 - Confirm in production Slack that the bot is functional and works as designed.
 
 ## Public domain
