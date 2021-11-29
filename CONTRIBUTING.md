@@ -45,8 +45,8 @@ This will get all of Charlie's dependencies installed, set up a PostgreSQL conta
 Run linter and tests:
 
 ```bash
-docker exec -it charlie_charlie_1 npm run lint
-docker exec -it charlie_charlie_1 npm test
+docker-compose exec charlie npm run lint
+docker-compose exec charlie npm test
 ```
 
 _tip_: the above will test all unit tests across Charlie. To shorten iteration cycles, you can _temporarily_ change a regex from the top-level file `package.json` (don't commit this change) to _only_ test your code.
