@@ -18,7 +18,7 @@ describe("coffeemate", () => {
     coffeemate(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      /coffee me( \S+$)?/i,
+      /coffee me(\s+|$)/i,
       expect.any(Function)
     );
   });
