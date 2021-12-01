@@ -11,7 +11,7 @@ const baseResponse = {
 };
 
 module.exports = (app) => {
-  app.message(/coffee me( \S+$)?/i, async (message) => {
+  app.message(/coffee me(\s+|$)/i, async (message) => {
     const {
       context: {
         matches: [, scopeMatch],
