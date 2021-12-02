@@ -23,10 +23,18 @@ describe("Encouragement bot", () => {
 
     getChannelID.mockResolvedValue("channel-id");
     getSlackUsersInConversation.mockResolvedValue([
-      { id: "one", tz: "America/Chicago" },
-      { id: "two", tz: "America/Los_Angeles" },
-      { id: "three", tz: "America/New_York" },
-      { id: "four", tz: "America/Denver" },
+      { id: "one", profile: { status_text: "" }, tz: "America/Chicago" },
+      { id: "two", profile: { status_text: "" }, tz: "America/Los_Angeles" },
+      {
+        id: "three",
+        profile: { status_text: "I am ooo until eventually" },
+        tz: "America/New_York",
+      },
+      {
+        id: "four",
+        profile: { status_text: "on vacation" },
+        tz: "America/Denver",
+      },
     ]);
   });
 
@@ -150,23 +158,40 @@ describe("Encouragement bot", () => {
     });
   });
 
-  it("encourages people", async () => {
-    await bot(app);
-    const encourager = scheduleJob.mock.calls[0][1];
-    await encourager();
-
-    expect(scheduleJob).toHaveBeenCalled();
-    expect(postMessage).toHaveBeenCalledWith({
-      channel: "channel-id",
-      icon_emoji: ":you:",
-      text: expect.stringMatching(/.*/),
-      username: "You're Awesome",
+  describe("encourages people", () => {
+    beforeAll(() => {
+      jest.useFakeTimers();
+    });
+    beforeEach(() => {
+      jest.setSystemTime(0);
+    });
+    afterAll(() => {
+      jest.useRealTimers();
     });
 
-    const { text } = postMessage.mock.calls[0][0];
-    const [, userId] = text.match(/^<@([^>]+)> (.+)$/);
+    it("who are not OOO", async () => {
+      // Mock the current time to be within working hours for all test users
+      jest.setSystemTime(new Date("1970-01-01T20:00:00Z"));
 
-    // Ensure it was sent to one of the users in the channel.
-    expect(["one", "two", "three", "four"].includes(userId)).toBe(true);
+      await bot(app);
+      const encourager = scheduleJob.mock.calls[0][1];
+      await encourager();
+
+      expect(scheduleJob).toHaveBeenCalled();
+      expect(postMessage).toHaveBeenCalledWith({
+        channel: "channel-id",
+        icon_emoji: ":you:",
+        text: expect.stringMatching(/.*/),
+        username: "You're Awesome",
+      });
+
+      const { text } = postMessage.mock.calls[0][0];
+      const [, userId] = text.match(/^<@([^>]+)> (.+)$/);
+
+      // Ensure it was sent to one of the users in the channel. Make sure it
+      // wasn't one of the users with an OOO or vacation status.
+      expect(["one", "two"].includes(userId)).toBe(true);
+      expect(["three", "four"].includes(userId)).toBe(false);
+    });
   });
 });
