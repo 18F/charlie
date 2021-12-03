@@ -24,6 +24,11 @@ const messages = [
   "You are not here by accident. You deserve to be here.",
   "You make this a better place than it otherwise would have been.",
   "Your perspectives are valuable and valued.",
+  "Your colleagues trust your judgement.",
+  "We need your perspective. Thank you for being here to give it.",
+  "You do fantastic work, and you're a great person.",
+  "Your teammates love having you around.",
+  "Your work is valued and you are appreciated.",
 ];
 
 const getChannelUsers = async (channel) => {
@@ -35,7 +40,11 @@ const getChannelUsers = async (channel) => {
   // Slack IDs and configured timezones.
   return users
     .filter(({ deleted, is_bot: bot }) => !deleted && !bot)
-    .map(({ id, tz }) => ({ id, tz }));
+    .map(({ id, profile: { status_text: status }, tz }) => ({
+      id,
+      status,
+      tz,
+    }));
 };
 
 const pickOne = (array) => array[Math.floor(Math.random() * array.length)];
@@ -45,9 +54,14 @@ const tellSomeoneTheyAreAwesome = async (channel, context = {}) => {
 
   // Trim down the list of users to just those whose current time is between
   // 9am and 5pm locally.
-  const workingHourUsers = users.filter(({ tz }) => {
+  const workingHourUsers = users.filter(({ status, tz }) => {
     const userCurrentHour = moment.tz(tz).hour();
-    return userCurrentHour > 9 && userCurrentHour < 17;
+    if (userCurrentHour > 9 && userCurrentHour < 17) {
+      if (!/ooo/i.test(status) && !/vacation/i.test(status)) {
+        return true;
+      }
+    }
+    return false;
   });
 
   // This *shouldnt'* happen because we scoped the scheduled time according to
