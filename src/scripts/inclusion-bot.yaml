@@ -316,6 +316,15 @@ triggers:
       ":TERM:" phrase originated as mocking Chinese immigrants’ English.
 
   - matches:
+      - no problemo
+    alternatives:
+      - no hay problema
+      - no problem
+    why: >
+      "No problemo" is mock Spanish and arose as a way of devaluing Spanish in
+      favor of an "English-only" United States.
+
+  - matches:
       - sherpa
     alternatives:
       - guide
