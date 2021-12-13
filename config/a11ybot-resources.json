@@ -2,178 +2,229 @@
   {
     "name": "Accessibility Guild SMEs",
     "url": "https://docs.google.com/spreadsheets/d/14HF8w9FGL7HL9VK6WE_D5bhGrgOLc9GTC-8iTFboguk/edit#gid=0",
-    "category": "Policy & Management"
+    "category": "Policy & Management",
+    "keywords": "policy, management, people, sme, smes"
   },
   {
     "name": "How do I request a captioner for upcoming events?",
     "url": "https://handbook.tts.gsa.gov/deaf-hoh/#relay-conference-captioning-rcc",
-    "category": "Policy & Management"
+    "category": "Policy & Management",
+    "keywords": "captioning, captions, fedrelay, meeting accessibility, deaf, hoh, deaf-hoh"
   },
   {
     "name": "FedRelay Request form (Sprint)",
     "url": "https://www.sprintrelay.com/federal/",
-    "category": "Policy & Management"
+    "category": "Policy & Management",
+    "keywords": "captioning, request captioning, fedrelay, deaf, hoh, deaf-hoh"
   },
   {
     "name": "How do I make PDFs Accessible?",
     "url": "https://www.section508.gov/create/pdfs/authoring-guides/",
-    "category": "UX & Design"
+    "category": "UX & Design",
+    "keywords": "ux, design, pdf, resource, resources"
   },
   {
     "name": "USWDS > How to use > Accessibility",
     "url": "https://designsystem.digital.gov/documentation/accessibility/",
-    "category": "Dev & Ops"
+    "category": "Dev & Ops",
+    "keywords": "dev, engineering, build, ops, ci, uswds"
   },
   {
     "name": "508 Listserv",
     "url": "https://digital.gov/communities/it-accessibility-section-508/",
-    "category": "Content"
+    "category": "Content",
+    "keywords": "content, 508, listserv"
   },
   {
     "name": "Content Guidelines on Ability and Disability",
     "url": "https://content-guide.18f.gov/our-style/inclusive-language/#ability-and-disability",
-    "category": "Content"
+    "category": "Content",
+    "keywords": "content, language, resource, resources"
   },
   {
     "name": "Disability Language Style Guide",
     "url": "https://ncdj.org/style-guide/",
-    "category": "Content"
+    "category": "Content",
+    "keywords": "style guide, language"
   },
   {
     "name": "VPAT for Acquisitions",
     "url": "https://www.itic.org/policy/accessibility/vpat",
-    "category": "Acquisition"
+    "category": "Acquisition",
+    "keywords": "acq, acquisition, purchasing"
   },
   {
     "name": "Exporting Mural Workshops into Accessible Artifacts",
     "url": "https://docs.google.com/presentation/u/0/d/1K4oNzWGzEkKl37HJZ7LxAgKP48sWedt7LMnmXznXem8/edit",
-    "category": "Content"
+    "category": "Content",
+    "keywords": "mural, artifacts"
   },
   {
     "name": "Perspectives videos - building empathy",
     "url": "https://www.w3.org/WAI/perspective-videos/",
-    "category": "Training & Events"
+    "category": "Training & Events",
+    "keywords": "training, events, upcoming, videos, w3c, perspectives, people"
   },
   {
     "name": "Cards for Humanity - inclusive design",
     "url": "https://cardsforhumanity.idean.com/",
-    "category": "UX & Design"
+    "category": "UX & Design",
+    "keywords": "design, inclusive design"
   },
   {
     "name": "18F Color Palette for Documents",
     "url": "https://brand.18f.gov/color-palette/",
-    "category": "UX & Design"
+    "category": "UX & Design",
+    "keywords": "18F, guide, 18F guide, color, branding, palette, contrast, resource, resources"
   },
   {
     "name": "I need help! How can I submit a Microrequest?",
     "url": "https://github.com/18F/staffing",
-    "category": "Policy & Management"
+    "category": "Policy & Management",
+    "keywords": "audit, audits, review, compliance"
   },
   {
     "name": "We did an audit of our site. Now what?",
     "url": "https://docs.google.com/document/u/0/d/1AwLrYHr0fcirum1EhwzZrzxvgsr3zOlbY7e-JlxfZDQ/edit",
-    "category": "Testing"
+    "category": "Testing",
+    "keywords": "test, automation, audit, review, compliance"
   },
   {
     "name": "How to make accessible UI controls",
     "url": "https://developer.mozilla.org/en-US/docs/Learn/Accessibility/HTML#ui_controls",
-    "category": "Dev & Ops"
+    "category": "Dev & Ops",
+    "keywords": "widgets, controls, aria, wai-aria"
   },
   {
     "name": "Everyone can run a manual test Training",
     "url": "https://drive.google.com/drive/folders/0B1Wf-KSFneMUQ0NzQ2tBUVplYjg?resourcekey=0-Tn7b7EOVTjIKgJczlq_zYg",
-    "category": "Training & Events"
+    "category": "Training & Events",
+    "keywords": "training, manual testing, super magic happy fun time accessibility learning"
   },
   {
     "name": "18F Accessibility Guide",
     "url": "https://accessibility.18f.gov/",
-    "category": "Policy & Management"
+    "category": "Policy & Management",
+    "keywords": "18F, guide, 18F guide, checklist, resource, resources, howto"
   },
   {
     "name": "Accessibilty For Teams",
     "url": "https://accessibility.digital.gov/",
-    "category": "Training & Events"
+    "category": "Training & Events",
+    "keywords": "agile, roles, role, guide, checklist, resource, resources, howto"
   },
   {
     "name": "Plain Language",
     "url": "https://www.plainlanguage.gov/",
-    "category": "Content"
+    "category": "Content",
+    "keywords": "guide, content, language, plain, plain language, howto, resource, resources"
   },
   {
     "name": "Web Content Accessibility Guidelines 2.0",
     "url": "https://www.w3.org/TR/WCAG20/",
-    "category": "Policy & Management"
+    "category": "Policy & Management",
+    "keywords": "wcag, wcag20, 508, w3c, law, policy, criteria, success criteria, principles, guidelines"
   },
   {
     "name": "Web Content Accessibility Guidelines 2.1",
     "url": "https://www.w3.org/TR/WCAG21/",
-    "category": "Policy & Management"
+    "category": "Policy & Management",
+    "keywords": "wcag, wcag21, 508+, w3c, policy, criteria, success criteria, principles, guidelines"
   },
   {
-    "name": "Section508.gov,http://section508.gov/",
-    "category": "Policy & Management"
+    "name": "Section508.gov",
+    "url": "http://section508.gov/",
+    "category": "Policy & Management",
+    "keywords": "508, law, policy, howto, resource, resources"
   },
   {
     "name": "WAI-ARIA Authoring Practices 1.2",
     "url": "https://www.w3.org/TR/wai-aria-practices-1.2/",
-    "category": "Dev & Ops"
+    "category": "Dev & Ops",
+    "keywords": "aria, wai-aria, w3c, widgets, controls, resource, resources, code, example, sample, examples, samples"
   },
   {
     "name": "W3C's Web Accessibility Tutorials",
     "url": "https://www.w3.org/WAI/tutorials/",
-    "category": "UX & Design"
+    "category": "UX & Design",
+    "keywords": "tutorial, w3c, sample, example, samples, examples, code"
   },
   {
-    "name": "W3C's Digital Accessibility Foundations"
-  },
-  {
-    "name": "Free Online Course",
+    "name": "W3C's Digital Accessibility Foundations\r\nFree Online Course",
     "url": "https://www.w3.org/WAI/fundamentals/foundations-course/",
-    "category": "Training & Events"
+    "category": "Training & Events",
+    "keywords": "training, w3c"
   },
   {
     "name": "Udacity/Google Web Accessibility Free Online Course",
     "url": "https://www.udacity.com/course/web-accessibility--ud891",
-    "category": "Training & Events"
+    "category": "Training & Events",
+    "keywords": "training"
   },
   {
     "name": "The A11y Project ",
     "url": "https://www.a11yproject.com/",
-    "category": "UX & Design"
+    "category": "UX & Design",
+    "keywords": "resource, resources"
   },
   {
     "name": "TPGi's Colour Contrast Analyser app for Mac and Windows",
     "url": "https://www.tpgi.com/color-contrast-checker/",
-    "category": "UX & Design"
+    "category": "UX & Design",
+    "keywords": "tool, color, colour, contrast, testing"
   },
   {
     "name": "Accessibility Insights tool for Android, Web, and Windows",
     "url": "https://accessibilityinsights.io/",
-    "category": "Testing"
+    "category": "Testing",
+    "keywords": "tool, automated, auto, manual, guided, testing, audits"
   },
   {
     "name": "Deque's aXe tool",
     "url": "https://www.deque.com/axe/",
-    "category": "Testing"
+    "category": "Testing",
+    "keywords": "tool, automated, auto, testing"
   },
   {
     "name": "Deque Lab's axe-core repository",
     "url": "https://github.com/dequelabs/axe-core",
-    "category": "Dev & Ops"
+    "category": "Dev & Ops",
+    "keywords": "tool, automated, auto, testing"
   },
   {
     "name": "Pa11y open source tool with CLI and CI options",
     "url": "https://pa11y.org/",
-    "category": "Dev & Ops"
+    "category": "Dev & Ops",
+    "keywords": "tool, automated, auto, testing"
   },
   {
     "name": "Microsoft's Inclusive Design",
     "url": "https://www.microsoft.com/design/inclusive/",
-    "category": "UX & Design"
+    "category": "UX & Design",
+    "keywords": "resource, inclusive design, inclusive, design"
   },
   {
     "name": "Institute for Human Centered Design",
     "url": "https://humancentereddesign.org/inclusive-design/",
-    "category": "UX & Design"
+    "category": "UX & Design",
+    "keywords": "resource, inclusive design, inclusive, design"
+  },
+  {
+    "name": "Section 504",
+    "url": "https://www.dol.gov/agencies/oasam/centers-offices/civil-rights-center/statutes/section-504-rehabilitation-act-of-1973",
+    "category": "Accommodations",
+    "keywords": "accommodations, employee, law, policy"
+  },
+  {
+    "name": "Equipment to accommodate disability",
+    "url": "https://handbook.tts.gsa.gov/getting-started/equipment/#equipment-to-accommodate-disability",
+    "category": "Accommodations",
+    "keywords": "accomodations, employee, law, policy, assistive technology"
+  },
+  {
+    "name": "Deaf Employment Summit Webinar Series",
+    "url": "https://www.rit.edu/ntid/nce/des",
+    "category": "Training & Events",
+    "keywords": "events, deaf, employee, hoh, deaf-hoh, meeting accessibility"
   }
 ]
