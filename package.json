@@ -13,10 +13,10 @@
     "@18f/us-federal-holidays": "^2.1.1",
     "@slack/bolt": "^3.5.0",
     "aws-sdk": "^2.963.0",
-    "axios": "^0.24.0",
+    "axios": "^0.25.0",
     "cfenv": "^1.2.3",
-    "csv-parse": "^4.16.3",
-    "dotenv": "^10.0.0",
+    "csv-parse": "^5.0.4",
+    "dotenv": "^14.3.2",
     "he": "^1.2.0",
     "js-yaml": "^4.1.0",
     "moment": "^2.27.0",
@@ -29,10 +29,10 @@
     "node": "^16.10.0"
   },
   "devDependencies": {
-    "eslint": "^8.1.0",
-    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint": "^8.7.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-import": "^2.25.4",
     "jest": "^27.0.6",
     "prettier": "^2.3.2"
   },
