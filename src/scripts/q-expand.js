@@ -11,7 +11,7 @@
 // XXX somewhere there's another google doc about TTS Client Services (18f, etc.), but can't find the link now
 //
 //  Dependencies:
-//    "csv-parse": "4.16.3"
+//    "csv-parse": "5.0.4"
 //
 //
 // Commands:
@@ -21,14 +21,15 @@
 //    qexp QUEAAD
 //    qex qq2
 
-const parser = require("csv-parse");
+const { parse } = require("csv-parse");
+
 const fs = require("fs");
 
 function getCsvData() {
   const csvData = {};
   return new Promise((resolve) => {
     fs.createReadStream("config/q-expand.csv")
-      .pipe(parser({ delimiter: "," }))
+      .pipe(parse({ delimiter: "," }))
       .on("data", (csvrow) => {
         csvData[csvrow[0]] = csvrow[1];
       })

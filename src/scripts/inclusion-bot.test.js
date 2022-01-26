@@ -92,10 +92,7 @@ triggers:
     bot(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      new RegExp(
-        /\b(match 1)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)|(match 2a|match 2b)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)\b/,
-        "i"
-      ),
+      /\b(match 1)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)|(match 2a|match 2b)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)\b/i,
       expect.any(Function)
     );
   });
