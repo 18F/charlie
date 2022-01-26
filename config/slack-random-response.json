@@ -60,6 +60,12 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/Minnesota.json"
   },
   {
+    "botName": "President Facts",
+    "defaultEmoji": ":potus-seal:",
+    "trigger": "president(ial|s)? facts?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/presidents.json"
+  },
+  {
     "botName": "Wisconsin Facts",
     "defaultEmoji": ":wisconsin-wi:",
     "trigger": "wisconsin facts",
