@@ -47,7 +47,7 @@ const defineTerm = (key, entry) => {
   if (entry.description) {
     return `*${key}*: ${entry.description}`;
   }
-  return `The term *${key}* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?title=Definition for ${key}|please add it>!`;
+  return `The term *${key}* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+${key}|please add it>!`;
 }
 
 /**
@@ -116,7 +116,7 @@ module.exports = (app) => {
       if (maybeEntry) {
         response.text = buildResponseText(searchTerm, maybeEntry, glossary);
       } else {
-        response.text = `I couldn't find *${searchTerm}*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?title=New%20entry|add it to the glossary>?`
+        response.text = `I couldn't find *${searchTerm}*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+${searchTerm}|add it to the glossary>?`
       }
 
       say(response);

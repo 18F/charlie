@@ -88,7 +88,7 @@ describe("glossary", () => {
       it("displays the 'no match' response", async () => {
         await handler(message);
         expect(message.say).toHaveBeenCalledWith(
-          expectedResponse("I couldn't find *a term with no match*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?title=New%20entry|add it to the glossary>?")
+          expectedResponse("I couldn't find *a term with no match*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+a term with no match|add it to the glossary>?")
         );
       });
     })
@@ -101,7 +101,7 @@ describe("glossary", () => {
           it("displays the 'no definition' message", async () => {
             await handler(message);
             expect(message.say).toHaveBeenCalledWith(
-              expectedResponse("The term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?title=Definition for Period of Performance|please add it>!")
+              expectedResponse("The term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!")
             );
           });
         });
@@ -136,7 +136,7 @@ describe("glossary", () => {
           it("displays the 'no match' response", async () => {
             await handler(message);
             expect(message.say).toHaveBeenCalledWith(
-              expectedResponse("I couldn't find *LOL*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?title=New%20entry|add it to the glossary>?")
+              expectedResponse("I couldn't find *LOL*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+LOL|add it to the glossary>?")
             );
           });
         });
@@ -159,7 +159,7 @@ describe("glossary", () => {
                 expectedResponse(
                     "**POP** means:"
                   + "\n*Procurement Operating Procedure*: The procedure for procuring a procurement"
-                  + "\nThe term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?title=Definition for Period of Performance|please add it>!"
+                  + "\nThe term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!"
                 )
               );
             });
