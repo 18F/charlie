@@ -75,7 +75,7 @@ const buildResponseText = (searchTerm, canonicalKey, glossary) => {
   const entry = glossary[canonicalKey];
   switch (entry.type) {
     case "acronym":
-      return `**${canonicalKey}** means:\n${collectDefinitions(entry, glossary)}`
+      return `_${canonicalKey}_ means:\n${collectDefinitions(entry, glossary)}`
     case "term":
       return defineTerm(canonicalKey, entry);
     default:

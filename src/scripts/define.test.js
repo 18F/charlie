@@ -147,7 +147,7 @@ describe("glossary", () => {
             it("displays the acronym and the term", async () => {
               await handler(message);
               expect(message.say).toHaveBeenCalledWith(
-                expectedResponse("**T&M** means:\n*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials.")
+                expectedResponse("_T&M_ means:\n*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials.")
               );
             });
           });
@@ -157,7 +157,7 @@ describe("glossary", () => {
               await handler(message);
               expect(message.say).toHaveBeenCalledWith(
                 expectedResponse(
-                    "**POP** means:"
+                    "_POP_ means:"
                   + "\n*Procurement Operating Procedure*: The procedure for procuring a procurement"
                   + "\nThe term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!"
                 )
