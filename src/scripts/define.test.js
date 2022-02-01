@@ -178,16 +178,16 @@ describe("glossary", () => {
 
       axios.get.mockResolvedValue({
         data: `
-abbreviations:
-  term 1: alice
+entries:
+  term 1: ATO
   term 2:
-    bob: debra
+    key: value
 `,
       });
 
       const result = await fetcher();
 
-      expect(result).toEqual({ "term 1": "alice", "term 2": { bob: "debra" } });
+      expect(result).toEqual({ "term 1": "ATO", "term 2": { key: "value" } });
     });
   });
 });

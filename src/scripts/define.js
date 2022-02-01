@@ -17,6 +17,13 @@ const he = require("he");
 const yaml = require("js-yaml");
 const { cache } = require("../utils");
 
+/**
+ * Find a string in a list of strings, ignoring case.
+ * @param list [Array<String>] List of strings (the haystack)
+ * @param searchTerm [String] The term to find (the needle)
+ * @return [String | null] The canonical key for the found term
+ */
+
 const findCaseInsensitively = (list, searchTerm) => {
   const lowerSearch = searchTerm.toLowerCase();
   for (let i = 0; i < list.length; i += 1) {
@@ -28,6 +35,14 @@ const findCaseInsensitively = (list, searchTerm) => {
   return null;
 };
 
+/**
+ * Return the definition for a term
+ *
+ * @param key [String] The canonical key for the entry
+ * @param entry [Object] The entry that may or may not have a definition. Should have `type: "term"`.
+ * @return [String] The definition or, if no definition, the default message.
+ * @todo Raise an error if entry doesn't have `type: "term"`
+ */
 const defineTerm = (key, entry) => {
   if (entry.description) {
     return `*${key}*: ${entry.description}`;
@@ -35,12 +50,27 @@ const defineTerm = (key, entry) => {
   return `The term *${key}* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?title=Definition for ${key}|please add it>!`;
 }
 
-const lookupAndDefineTerm = (key, glossary) => defineTerm(key, glossary[key]);
-
+/**
+ * Given one or more terms, collect definitions.
+ * Used to gather definitions of terms for an acronym.
+ *
+ * @param entry [Object | Array<Object>] The term or terms that will be defined.
+ * @param glossary [Object] The entire glossary
+ * @return [String] List of definitions (newline-separated)
+ */
 const collectDefinitions = (entry, glossary) => [entry.term].flat().
-    map(termKey => lookupAndDefineTerm(termKey, glossary)).
+    map(termKey => defineTerm(termKey, glossary[termKey])).
     join("\n");
 
+/**
+ * The Slackbot response to be sent back to the user, based on whether
+ * the entry is an acronym or term.
+ *
+ * @param searchTerm [String] The original term the user searched for
+ * @param canonicalKey [String] The key from the glossary representing the term.
+ * @param glossary [Object] The entire glossary
+ * @return [String] Definition(s) for the given entry
+ */
 const buildResponseText = (searchTerm, canonicalKey, glossary) => {
   const entry = glossary[canonicalKey];
   switch (entry.type) {
@@ -63,6 +93,7 @@ module.exports = (app) => {
       // need to grab it before we do that.
       const searchTerm = he.decode(context.matches[2].trim());
 
+      // Cache the glossary for 1 minute
       const glossary = await cache("glossary get", 60, async () => {
         const { data } = await axios.get(
           "https://raw.githubusercontent.com/18F/the-glossary/main/glossary.yml"
@@ -71,15 +102,17 @@ module.exports = (app) => {
         return yaml.load(data, { json: true }).entries;
       });
 
-      const terms = Object.keys(glossary);
-      const maybeEntry = findCaseInsensitively(terms, searchTerm);
-
+      // Set up the Slack response
       const response = {
         icon_emoji: ":book:",
         thread_ts: thread,
         text: "",
       };
 
+      const terms = Object.keys(glossary);
+      const maybeEntry = findCaseInsensitively(terms, searchTerm);
+
+      // If the term was found, return a response. Otherwise, send the 'not found' message.
       if (maybeEntry) {
         response.text = buildResponseText(searchTerm, maybeEntry, glossary);
       } else {
