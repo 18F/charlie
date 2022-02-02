@@ -141,6 +141,6 @@ describe("q-expand csv data", () => {
     expect(csvData.Q).toBe("FAS (TTS)");
     expect(csvData.QUBE).toBe("Client Services");
     expect(csvData.QUEAF).toBe("Account Management");
-    expect(csvData.QUEAAA).toBe("Space Goats Cohort");
+    expect(csvData.QUEAAC).toBe("Bellatrix Cohort");
   });
 });
