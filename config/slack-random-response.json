@@ -100,5 +100,11 @@
     "defaultEmoji": ":usps:",
     "trigger": "(usps|mail) facts?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/usps.json"
+  },
+  {
+    "botName": "Capybara Facts",
+    "defaultEmoji": ":capybara:",
+    "trigger": "capybara facts?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/capybaras.json"
   }
 ]
