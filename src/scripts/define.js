@@ -17,18 +17,23 @@ const he = require("he");
 const yaml = require("js-yaml");
 const { cache } = require("../utils");
 
+
+/**
+ * Turn a string into a search slug, removing all non-word characters (including spaces and punctuation).
+ */
+const slugify = (term) => term.replaceAll(/\W/ig, '').toLowerCase();
+
 /**
  * Find a string in a list of strings, ignoring case.
  * @param list [Array<String>] List of strings (the haystack)
  * @param searchTerm [String] The term to find (the needle)
  * @return [String | null] The canonical key for the found term
  */
-
 const findCaseInsensitively = (list, searchTerm) => {
-  const lowerSearch = searchTerm.toLowerCase();
+  const lowerSearch = slugify(searchTerm);
   for (let i = 0; i < list.length; i += 1) {
     const term = list[i];
-    if (term.toLowerCase() === lowerSearch) {
+    if (slugify(term) === lowerSearch) {
       return term;
     }
   }

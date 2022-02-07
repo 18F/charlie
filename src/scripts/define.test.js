@@ -14,6 +14,10 @@ const glossaryData = {
       "type": "term",
       "description": "ADR includes dispute resolution processes and techniques that fall outside of the government judicial process."
   },
+  "Back end developer": {
+      "type": "term",
+      "description": "The people who write the code for the parts of a web site you don't see, working in programming languages like Ruby, Python, or NodeJS. They work on pieces of the application that, for example:\n- Generate shopping recommendations\n- Gather all of the information for search to work\n- Trigger emails being sent"
+  },
   "POP": {
       "type": "acronym",
       "term": [
@@ -92,6 +96,36 @@ describe("glossary", () => {
         );
       });
     })
+
+    describe("fuzzy-matching entries", () => {
+      const backendResponse = "*Back end developer*: The people who write the code for the parts of a web site you don't see, working in programming languages like Ruby, Python, or NodeJS. They work on pieces of the application that, for example:\n- Generate shopping recommendations\n- Gather all of the information for search to work\n- Trigger emails being sent"
+
+      describe("with an exact match", () => {
+        const message = buildSearchMessage("back end developer");
+        it("returns the correct definitions", async () => {
+          await handler(message);
+          expect(message.say).toHaveBeenCalledWith(expectedResponse(backendResponse));
+        });
+      });
+
+      describe("with a dash", () => {
+        const message = buildSearchMessage("back-end developer")
+
+        it("returns the correct definitions", async () => {
+          await handler(message);
+          expect(message.say).toHaveBeenCalledWith(expectedResponse(backendResponse));
+        });
+      });
+
+      describe("with no space", () => {
+        const message = buildSearchMessage("backend developer")
+
+        it("returns the correct definitions", async () => {
+          await handler(message);
+          expect(message.say).toHaveBeenCalledWith(expectedResponse(backendResponse));
+        });
+      });
+    });
 
     describe("finding an entry", () => {
       describe("of type 'term'", () => {
