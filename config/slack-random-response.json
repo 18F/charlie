@@ -86,7 +86,7 @@
   {
     "botName": "Ally the A11ybot",
     "defaultEmoji": ":a11y-ally:",
-    "trigger": "ask a(11|ll)y",
+    "trigger": "ask a(11|ll)y fact",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/a11y-facts.json"
   },
   {
