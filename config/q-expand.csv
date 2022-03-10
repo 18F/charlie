@@ -223,13 +223,13 @@ QP1F,Digital Innovation Division
 QQ,Office of Solutions
 QQ1,Cloud.gov
 QQ2,Login.gov
-QQ2A,Branch A
-QQ2B,Branch B
-QQ2C,Branch C
-QQ2D,Branch D
-QQ2E,Branch E
-QQ2F,Branch F
-QQ2G,Branch G
+QQ2A,Operations
+QQ2B,Engineering
+QQ2C,User Experience (Security Experience)
+QQ2D,Product
+QQ2E,Platform
+QQ2F,Security
+QQ2G,Partnerships
 QQ3,IT Portfolio
 QQA,Data & Analytics
 QQB,Public Experience
