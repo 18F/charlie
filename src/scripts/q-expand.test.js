@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 const { getApp } = require("../utils/test");
 const script = require("./q-expand");
 
@@ -142,5 +144,15 @@ describe("q-expand csv data", () => {
     expect(csvData.QUBE).toBe("Client Services");
     expect(csvData.QUEAF).toBe("Account Management");
     expect(csvData.QUEAAC).toBe("Bellatrix Cohort");
+  });
+
+  it("is formatted correctly", () => {
+    const csv = fs
+      .readFileSync("config/q-expand.csv", { encoding: "utf-8" })
+      .trim()
+      .split("\n");
+    const lines = csv.map((line) => line.split(","));
+    const invalid = lines.filter((parts) => parts.length !== 2);
+    expect(invalid.length).toBe(0);
   });
 });
