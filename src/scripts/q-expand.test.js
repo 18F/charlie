@@ -5,10 +5,31 @@ const script = require("./q-expand");
 
 describe("q-expand", () => {
   const app = getApp();
+  let getCsvData;
+
+  beforeAll(() => {
+    getCsvData = script.getCsvData;
+    script.getCsvData = jest.fn();
+  });
+
+  afterAll(() => {
+    script.getCsvData = getCsvData;
+  });
 
   beforeEach(() => {
     app.brain.clear();
     jest.resetAllMocks();
+
+    script.getCsvData.mockResolvedValue({
+      Q: "Top level",
+      QQ: "One depth",
+      QQC: "Not a contractor",
+      QU: "One nest",
+      QUE: "A second",
+      QUEA: "Another level!",
+      QUEAA: "Keep going down",
+      QUEAAD: "Whee, way down!",
+    });
   });
 
   it("called with regex", () => {
@@ -41,12 +62,12 @@ describe("q-expand", () => {
       thread_ts: "thread id",
       text:
         "```QUEAAD\n" +
-        "|||||└──QUEAAD: Chumanjalaal Cohort\n" +
-        "||||└──QUEAA: Engineering\n" +
-        "|||└──QUEA: 18F Chapters\n" +
-        "||└──QUE: 18F\n" +
-        "|└──QU: Office of Clients & Markets\n" +
-        "└──Q: FAS (TTS)```",
+        "|||||└──QUEAAD: Whee, way down!\n" +
+        "||||└──QUEAA: Keep going down\n" +
+        "|||└──QUEA: Another level!\n" +
+        "||└──QUE: A second\n" +
+        "|└──QU: One nest\n" +
+        "└──Q: Top level```",
     });
   });
 
@@ -72,9 +93,9 @@ describe("q-expand", () => {
       thread_ts: "thread id",
       text:
         "```QQC\n" +
-        "||└──QQC: Secure Cloud\n" +
-        "|└──QQ: Office of Solutions\n" +
-        "└──Q: FAS (TTS)```",
+        "||└──QQC: Not a contractor\n" +
+        "|└──QQ: One depth\n" +
+        "└──Q: Top level```",
     });
   });
   it("responds as desired for -C endings (Contractor)", async () => {
@@ -100,9 +121,9 @@ describe("q-expand", () => {
       text:
         "```QQC-C\n" +
         "|||└──QQC-C: Contractor\n" +
-        "||└──QQC: Secure Cloud\n" +
-        "|└──QQ: Office of Solutions\n" +
-        "└──Q: FAS (TTS)```",
+        "||└──QQC: Not a contractor\n" +
+        "|└──QQ: One depth\n" +
+        "└──Q: Top level```",
     });
   });
   it("responds as expected with unknown acronyms", async () => {

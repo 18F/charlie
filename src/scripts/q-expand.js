@@ -71,7 +71,7 @@ function qExpander(expandThis, csvData) {
 }
 
 module.exports = (app) => {
-  const csvData = getCsvData();
+  const csvData = module.exports.getCsvData();
   app.message(
     /^qexp?\s+([a-z0-9-]{1,8})$/i,
     async ({ message: { thread_ts: thread }, context, say }) => {
