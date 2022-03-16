@@ -28,6 +28,9 @@ describe("q-expand", () => {
       QUE: "A second",
       QUEA: "Another level!",
       QUEAA: "Keep going down",
+      QUEAAB: "So far down!",
+      QUEAAA: "Deep down now!",
+      QUEAAC: "Center of the Earth!",
       QUEAAD: "Whee, way down!",
     });
   });
@@ -98,6 +101,7 @@ describe("q-expand", () => {
         "└──Q: Top level```",
     });
   });
+
   it("responds as desired for -C endings (Contractor)", async () => {
     script(app);
     const handler = app.getHandler();
@@ -126,6 +130,38 @@ describe("q-expand", () => {
         "└──Q: Top level```",
     });
   });
+
+  it("expands wildcards at the end of a requested acronyms", async () => {
+    script(app);
+    const handler = app.getHandler();
+
+    const message = {
+      message: {
+        thread_ts: "thread id",
+      },
+      context: {
+        matches: ["qex QUEA*", "QUEA*"],
+      },
+      say: jest.fn(),
+    };
+
+    await handler(message);
+
+    expect(message.say).toHaveBeenCalledWith({
+      icon_emoji: ":tts:",
+      username: "Q-Expander",
+      thread_ts: "thread id",
+      text:
+        "```QUEAAD\n" +
+        "┌───┬────QUEAAD: Whee, way down!\n" +
+        "│|||└──*QUEAA: Keep going down*\n" +
+        "││|└──QUEA: Another level!\n" +
+        "││└──QUE: A second\n" +
+        "│└──QU: One nest\n" +
+        "└──Q: Top level```",
+    });
+  });
+
   it("responds as expected with unknown acronyms", async () => {
     script(app);
     const handler = app.getHandler();

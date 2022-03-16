@@ -45,6 +45,29 @@ function qExpander(expandThis, csvData) {
   // flag Contractor notation endings
   const isContractor = initialism.endsWith("-C");
 
+  const isWildcard = initialism.endsWith("*");
+  if (isWildcard) {
+    const tree = new Map();
+
+    const base = initialism.replace(/\*$/, "");
+    const children = Object.keys(csvData)
+      .filter((k) => k.startsWith(base) && k !== base)
+      .sort();
+    console.log("".padEnd(20, "="));
+    for (const child of children) {
+      for (let substr = child.length - 1; substr >= 1; substr -= 1) {
+        const parent = child.slice(0, substr);
+        if (!tree.has(parent)) {
+          tree.set(parent, new Set());
+        }
+        tree.get(parent).add(child.slice(0, substr + 1));
+      }
+    }
+    console.log(tree);
+    console.log(base[0]);
+    console.log("".padEnd(20, "="));
+  }
+
   // change -C to c.
   // lowercase c to disambiguate from other C endings not
   // related to contractor
