@@ -39,104 +39,69 @@ function getCsvData() {
   });
 }
 
-function qExpander(expandThis, csvData) {
-  let initialism = expandThis.toUpperCase();
-  const fullResponse = [initialism];
-  // flag Contractor notation endings
-  const isContractor = initialism.endsWith("-C");
+function getCodeLine(code, csvData) {
+  return [
+    "|".repeat(code.length - 1),
+    "└──",
+    // If this is a contractor code, replace the lowercase c with -C again
+    code.endsWith("c") ? `${code.slice(0, code.length - 1)}-C` : code,
+    ": ",
+    code.endsWith("c") ? "Contractor" : csvData[code] ?? "???",
+  ].join("");
+}
 
-  const isWildcard = initialism.endsWith("*");
-  if (isWildcard) {
+function qExpander(expandThis, csvData) {
+  // change -C to c, if it exists
+  // lowercase c to disambiguate from other C endings not related to contractor
+  const initialism = expandThis
+    .toUpperCase()
+    .replace(/-C$/, "c")
+    .replace(/\*$/, "");
+
+  const fullResponse = [expandThis.toUpperCase()];
+
+  if (expandThis.endsWith("*") && csvData[initialism]) {
     const tree = new Map();
 
-    const base = initialism.replace(/\*$/, "");
     const children = Object.keys(csvData)
-      .filter((k) => k.startsWith(base) && k !== base)
+      .filter((k) => k.startsWith(initialism) && k !== initialism)
       .sort();
 
     for (const child of children) {
-      if (!tree.has(child)) {
-        tree.set(child, { parent: null, children: new Set() });
-      }
-
       for (let substr = child.length - 1; substr >= 1; substr -= 1) {
         const parent = child.slice(0, substr);
         if (!tree.has(parent)) {
-          tree.set(parent, { parent: null, children: new Set() });
+          tree.set(parent, new Set());
         }
 
-        tree.get(child.slice(0, substr + 1)).parent = parent;
-        tree.get(parent).children.add(child.slice(0, substr + 1));
+        tree.get(parent).add(child.slice(0, substr + 1));
       }
     }
 
-    const lines = [initialism];
-
-    const walkChildren = (code) => {
-      for (const child of tree.get(code).children) {
-        walkChildren(child);
-
-        lines.push(
-          [
-            "|".repeat(child.length - 1),
-            "└──",
-            child,
-            ": ",
-            csvData[child],
-          ].join("")
-        );
+    const addChildrenToResponse = (code) => {
+      for (const child of tree.get(code) ?? []) {
+        addChildrenToResponse(child);
+        fullResponse.push(getCodeLine(child, csvData));
       }
     };
-    walkChildren(base);
+    addChildrenToResponse(initialism);
 
-    lines.push(
-      [
-        "|".repeat(base.length - 1),
-        "└──*",
-        base,
-        ": ",
-        csvData[base],
-        "*",
-      ].join("")
+    // For the root requested initialism, distinguish it from the rest by
+    // putting asterisks around it. Unfortunately that won't bold it, but it's
+    // something, at least?
+    fullResponse.push(
+      getCodeLine(initialism, csvData).replace(/└──(.*)$/, "└──*$1*")
     );
 
-    let parent = tree.get(base).parent;
-    while (parent) {
-      lines.push(
-        [
-          "|".repeat(parent.length - 1),
-          "└──",
-          parent,
-          ": ",
-          csvData[parent],
-        ].join("")
-      );
-
-      parent = tree.get(parent).parent;
+    for (let substr = initialism.length - 1; substr > 0; substr -= 1) {
+      fullResponse.push(getCodeLine(initialism.slice(0, substr), csvData));
     }
-
-    return lines.join("\n");
-  }
-
-  // change -C to c.
-  // lowercase c to disambiguate from other C endings not
-  // related to contractor
-  if (isContractor) {
-    initialism = initialism.replace("-C", "c");
-  }
-  // work backwards from full initialism back on char at a time
-  for (let substr = initialism.length; substr >= 1; substr -= 1) {
-    let thisOne = initialism.slice(0, substr);
-    // default is "dunno"
-    let response = "???";
-    if (thisOne.endsWith("c")) {
-      thisOne = `${initialism.slice(0, substr - 1)}-C`;
-      response = "Contractor";
-    } else if (thisOne in csvData) {
-      response = csvData[thisOne];
+  } else {
+    // work backwards from full initialism back on char at a time
+    for (let substr = initialism.length; substr >= 1; substr -= 1) {
+      const thisOne = initialism.slice(0, substr);
+      fullResponse.push(getCodeLine(thisOne, csvData));
     }
-    const bars = "|".repeat(substr - 1);
-    fullResponse.push(`${bars}└──${thisOne}: ${response}`);
   }
 
   // return the response block

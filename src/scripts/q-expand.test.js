@@ -171,6 +171,36 @@ describe("q-expand", () => {
     });
   });
 
+  it("expands wildcards for unknown acronyms, as best it can", async () => {
+    script(app);
+    const handler = app.getHandler();
+
+    const message = {
+      message: {
+        thread_ts: "thread id",
+      },
+      context: {
+        matches: ["qex QUEZZ*", "QUEZZ*"],
+      },
+      say: jest.fn(),
+    };
+
+    await handler(message);
+
+    expect(message.say).toHaveBeenCalledWith({
+      icon_emoji: ":tts:",
+      username: "Q-Expander",
+      thread_ts: "thread id",
+      text: `
+\`\`\`QUEZZ*
+||||└──QUEZZ: ???
+|||└──QUEZ: ???
+||└──QUE: A second
+|└──QU: One nest
+└──Q: Top level\`\`\``.trim(),
+    });
+  });
+
   it("responds as expected with unknown acronyms", async () => {
     script(app);
     const handler = app.getHandler();
