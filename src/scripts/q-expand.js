@@ -53,19 +53,69 @@ function qExpander(expandThis, csvData) {
     const children = Object.keys(csvData)
       .filter((k) => k.startsWith(base) && k !== base)
       .sort();
-    console.log("".padEnd(20, "="));
+
     for (const child of children) {
+      if (!tree.has(child)) {
+        tree.set(child, { parent: null, children: new Set() });
+      }
+
       for (let substr = child.length - 1; substr >= 1; substr -= 1) {
         const parent = child.slice(0, substr);
         if (!tree.has(parent)) {
-          tree.set(parent, new Set());
+          tree.set(parent, { parent: null, children: new Set() });
         }
-        tree.get(parent).add(child.slice(0, substr + 1));
+
+        tree.get(child.slice(0, substr + 1)).parent = parent;
+        tree.get(parent).children.add(child.slice(0, substr + 1));
       }
     }
-    console.log(tree);
-    console.log(base[0]);
-    console.log("".padEnd(20, "="));
+
+    const lines = [initialism];
+
+    const walkChildren = (code) => {
+      for (const child of tree.get(code).children) {
+        walkChildren(child);
+
+        lines.push(
+          [
+            "|".repeat(child.length - 1),
+            "└──",
+            child,
+            ": ",
+            csvData[child],
+          ].join("")
+        );
+      }
+    };
+    walkChildren(base);
+
+    lines.push(
+      [
+        "|".repeat(base.length - 1),
+        "└──*",
+        base,
+        ": ",
+        csvData[base],
+        "*",
+      ].join("")
+    );
+
+    let parent = tree.get(base).parent;
+    while (parent) {
+      lines.push(
+        [
+          "|".repeat(parent.length - 1),
+          "└──",
+          parent,
+          ": ",
+          csvData[parent],
+        ].join("")
+      );
+
+      parent = tree.get(parent).parent;
+    }
+
+    return lines.join("\n");
   }
 
   // change -C to c.
@@ -96,7 +146,7 @@ function qExpander(expandThis, csvData) {
 module.exports = (app) => {
   const csvData = module.exports.getCsvData();
   app.message(
-    /^qexp?\s+([a-z0-9-]{1,8})$/i,
+    /^qexp?\s+([a-z0-9-]{1,8}\*?)$/i,
     async ({ message: { thread_ts: thread }, context, say }) => {
       const initialismSearch = context.matches[1];
       const resp = qExpander(initialismSearch, await csvData);

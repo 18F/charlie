@@ -32,13 +32,16 @@ describe("q-expand", () => {
       QUEAAA: "Deep down now!",
       QUEAAC: "Center of the Earth!",
       QUEAAD: "Whee, way down!",
+      QUEAB: "Secret level",
+      QUEABA: "Secret sublevel 1",
+      QUEABB: "Secret sublevel 2",
     });
   });
 
   it("called with regex", () => {
     script(app);
     expect(app.message).toHaveBeenCalledWith(
-      /^qexp?\s+([a-z0-9-]{1,8})$/i,
+      /^qexp?\s+([a-z0-9-]{1,8}\*?)$/i,
       expect.any(Function)
     );
   });
@@ -151,14 +154,20 @@ describe("q-expand", () => {
       icon_emoji: ":tts:",
       username: "Q-Expander",
       thread_ts: "thread id",
-      text:
-        "```QUEAAD\n" +
-        "┌───┬────QUEAAD: Whee, way down!\n" +
-        "│|||└──*QUEAA: Keep going down*\n" +
-        "││|└──QUEA: Another level!\n" +
-        "││└──QUE: A second\n" +
-        "│└──QU: One nest\n" +
-        "└──Q: Top level```",
+      text: `
+\`\`\`QUEA*
+|||||└──QUEAAA: Deep down now!
+|||||└──QUEAAB: So far down!
+|||||└──QUEAAC: Center of the Earth!
+|||||└──QUEAAD: Whee, way down!
+||||└──QUEAA: Keep going down
+|||||└──QUEABA: Secret sublevel 1
+|||||└──QUEABB: Secret sublevel 2
+||||└──QUEAB: Secret level
+|||└──*QUEA: Another level!*
+||└──QUE: A second
+|└──QU: One nest
+└──Q: Top level\`\`\``.trim(),
     });
   });
 
