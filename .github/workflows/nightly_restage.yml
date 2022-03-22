@@ -17,6 +17,7 @@ jobs:
           CF_ORG: ${{ secrets.CF_ORG }}
           CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
           CF_SPACE: ${{ secrets.CF_SPACE }}
+          CF_SPACE_DEV: ${{ secrets.CF_SPACE_DEV }}
           CF_USERNAME: ${{ secrets.CF_USERNAME }}
 
         # Log into prod, restage Charlie, then switch to dev and stop that
