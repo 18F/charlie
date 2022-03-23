@@ -1,6 +1,6 @@
-module.exports = (app) => {
-  app.message(/ask a(11|ll)y+$/i, async ({ say }) => {
-    say({
+const fs = require("fs");
+
+const menu = {
       "blocks": [
         {
           "type": "section",
@@ -38,6 +38,42 @@ module.exports = (app) => {
           }
         }
       ]
-    });
+    }
+  
+const data = JSON.parse(fs.readFileSync("config/a11ybot-resources.json"));
+
+function createMenuElement(element) {
+  const elementName = {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": element
+    },
+  };
+
+  const elementDescription = {
+    "type": "section",
+    "text": {
+      "type": "mrkdwn",
+      "text": `_Returns accessibility resources about_ ${  element}`
+    }
+  };
+  return [elementName, elementDescription];
+};
+
+function createFullMenu() {
+  let newMenu = menu.blocks
+  // eslint-disable-next-line no-return-assign
+  data.forEach( element => newMenu = newMenu.concat(createMenuElement(element.category)) );
+  console.log(newMenu)
+  debugger;
+  //console.log(createMenuElement(data[0]["category"]))
+  return newMenu;
+};
+
+module.exports = (app) => {
+  app.message(/ask a(11|ll)y+$/i, async ({ say }) => {
+    //categories.forEach( category => menu["blocks"].concat(categories) )
+    say({blocks: createFullMenu()});
   });
 };

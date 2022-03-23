@@ -23,6 +23,7 @@ For a new bot called `awesomobot`, this is the general flow:
 ![awesomobot](awesomobot.png "awesomobot")
 
 - Write the core bot functionality in a file name `src/scripts/awesomobot.js`
+  - Charlie uses a JavaScript tool called Bolt for scripting. You can find examples and documentation of useful functions [here] (https://slack.dev/bolt-js/tutorial/getting-started).
 - Write an accompanying `src/scripts/awesomobot.test.js` file is required that contains relevant unit tests.
 - Docker can and should be used for local linting and unit testing.
 - Changes need to be pushed/deployed to cloud.gov with a `cf` command

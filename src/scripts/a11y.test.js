@@ -11,17 +11,18 @@ describe("ask a11y", () => {
 
   it("registers the message handlers", () => {
     a11y(app);
+    debugger;
     expect(app.message).toHaveBeenCalledWith(
       /ask a(11|ll)y+$/i,
       expect.any(Function)
     );
   });
 
-  it("returns content", () => {
+  it("returns a static menu", () => {
     a11y(app);
     const handler = app.getHandler(0);
     const say = jest.fn();
-
+    debugger;
     handler({ say });
     
     expect(say).toHaveBeenCalledWith({
