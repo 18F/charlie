@@ -7,10 +7,6 @@ const cache = (() => {
   // Otherwise caches of months-old Tock data could end up sticking around
   // forever and ever, amen.
   setInterval(() => {
-    // The for..of iterator on a Map has well-established, proper behavior, so
-    // this eslint error is irrelevant here. It does rely on Symbols, but Node
-    // has those.
-    /* eslint-disable no-restricted-syntax */
     const expiry = Date.now();
     for (const [key, { timestamp }] of privateCache) {
       if (timestamp + CACHE_MAX_LIFE <= expiry) {

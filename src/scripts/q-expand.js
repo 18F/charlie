@@ -39,31 +39,69 @@ function getCsvData() {
   });
 }
 
-function qExpander(expandThis, csvData) {
-  let initialism = expandThis.toUpperCase();
-  const fullResponse = [initialism];
-  // flag Contractor notation endings
-  const isContractor = initialism.endsWith("-C");
+function getCodeLine(code, csvData) {
+  return [
+    "|".repeat(code.length - 1),
+    "└──",
+    // If this is a contractor code, replace the lowercase c with -C again
+    code.endsWith("c") ? `${code.slice(0, code.length - 1)}-C` : code,
+    ": ",
+    code.endsWith("c") ? "Contractor" : csvData[code] ?? "???",
+  ].join("");
+}
 
-  // change -C to c.
-  // lowercase c to disambiguate from other C endings not
-  // related to contractor
-  if (isContractor) {
-    initialism = initialism.replace("-C", "c");
-  }
-  // work backwards from full initialism back on char at a time
-  for (let substr = initialism.length; substr >= 1; substr -= 1) {
-    let thisOne = initialism.slice(0, substr);
-    // default is "dunno"
-    let response = "???";
-    if (thisOne.endsWith("c")) {
-      thisOne = `${initialism.slice(0, substr - 1)}-C`;
-      response = "Contractor";
-    } else if (thisOne in csvData) {
-      response = csvData[thisOne];
+function qExpander(expandThis, csvData) {
+  // change -C to c, if it exists
+  // lowercase c to disambiguate from other C endings not related to contractor
+  const initialism = expandThis
+    .toUpperCase()
+    .replace(/-C$/, "c")
+    .replace(/\*$/, "");
+
+  const fullResponse = [expandThis.toUpperCase()];
+
+  if (expandThis.endsWith("*") && csvData[initialism]) {
+    const tree = new Map();
+
+    const children = Object.keys(csvData)
+      .filter((k) => k.startsWith(initialism) && k !== initialism)
+      .sort();
+
+    for (const child of children) {
+      for (let substr = child.length - 1; substr >= 1; substr -= 1) {
+        const parent = child.slice(0, substr);
+        if (!tree.has(parent)) {
+          tree.set(parent, new Set());
+        }
+
+        tree.get(parent).add(child.slice(0, substr + 1));
+      }
     }
-    const bars = "|".repeat(substr - 1);
-    fullResponse.push(`${bars}└──${thisOne}: ${response}`);
+
+    const addChildrenToResponse = (code) => {
+      for (const child of tree.get(code) ?? []) {
+        addChildrenToResponse(child);
+        fullResponse.push(getCodeLine(child, csvData));
+      }
+    };
+    addChildrenToResponse(initialism);
+
+    // For the root requested initialism, distinguish it from the rest by
+    // putting asterisks around it. Unfortunately that won't bold it, but it's
+    // something, at least?
+    fullResponse.push(
+      getCodeLine(initialism, csvData).replace(/└──(.*)$/, "└──*$1*")
+    );
+
+    for (let substr = initialism.length - 1; substr > 0; substr -= 1) {
+      fullResponse.push(getCodeLine(initialism.slice(0, substr), csvData));
+    }
+  } else {
+    // work backwards from full initialism back on char at a time
+    for (let substr = initialism.length; substr >= 1; substr -= 1) {
+      const thisOne = initialism.slice(0, substr);
+      fullResponse.push(getCodeLine(thisOne, csvData));
+    }
   }
 
   // return the response block
@@ -71,9 +109,9 @@ function qExpander(expandThis, csvData) {
 }
 
 module.exports = (app) => {
-  const csvData = getCsvData();
+  const csvData = module.exports.getCsvData();
   app.message(
-    /^qexp?\s+([a-z0-9-]{1,8})$/i,
+    /^qexp?\s+([a-z0-9-]{1,8}\*?)$/i,
     async ({ message: { thread_ts: thread }, context, say }) => {
       const initialismSearch = context.matches[1];
       const resp = qExpander(initialismSearch, await csvData);
