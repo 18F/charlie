@@ -175,11 +175,13 @@ suitable for you!
 
 ##### Inclusion bot
 
-Charlie passively listens for language with racist, ableist, sexist, or other
-exclusionary histories. When it hears such words or phrases, it quietly lets the
-speaker know and offers some suggestions. What a great bot, helping nudge us all
-to thoughtful, inclusive language! We also maintain
-[a history](https://github.com/18F/charlie/blob/main/CHANGELOG.inclusion_bot.md)
+Charlie passively listens for [language with racist, ableist, sexist, or other
+exclusionary histories](https://github.com/18F/charlie/blob/main/InclusionBot.md)
+(content warning: the linked document includes words and phrases that the bot
+listens for, and these words and phrases may be offensive). When it hears such
+words or phrases, it quietly lets the speaker know and offers some suggestions.
+What a great bot, helping nudge us all to thoughtful, inclusive language! We also
+maintain [a history](https://github.com/18F/charlie/blob/main/CHANGELOG.inclusion_bot.md)
 of the evolution of Inclusion Bot.
 
 ##### Optimistic / Angry Tock
