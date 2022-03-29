@@ -157,6 +157,7 @@ triggers:
 
   - matches:
       - ermahgerd
+      - ermagerd
     alternatives:
       - oh my gosh
       - I'm excited!
