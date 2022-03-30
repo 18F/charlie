@@ -62,6 +62,44 @@ message: >
   TTS. Some of your message could be unintentionally non-inclusive. Here are
   some alternatives that might work better:
 
+resources:
+  ableist-language:
+    name: Avoiding Ableist language
+    url: http://web.augsburg.edu/english/writinglab/Avoiding_Ableist_Language.pdf
+
+  racist-language-black-and-white:
+    name: "Terminology: It's not black and white"
+    url: https://www.ncsc.gov.uk/blog-post/terminology-its-not-black-and-white
+  racist-language-business:
+    name: The Problematic Origins of Common Business Jargon
+    url: https://www.fastcompany.com/90239290/six-business-phrases-that-have-racist-origins
+  racist-language-gypsy:
+    name: Why Being 'Gypped' Hurts the Roma
+    url: https://www.npr.org/sections/codeswitch/2013/12/30/242429836/why-being-gypped-hurts-the-roma-more-than-it-hurts-you
+  racist-language-history:
+    name: "Responding to Inequalities: Common words or phrases with racist history"
+    url: https://www.tmj4.com/news/local-news/responding-to-inequalities-common-words-or-phrases-with-racist-history
+  racist-language-indigenous:
+    name: Use these culturally offensive phrases and questions at your own risk
+    url: https://www.ictinc.ca/blog/culturally-offensive-phrases-you-should-use-at
+  racist-language-sherpa:
+    name: It's time to rethink how we use the word "Sherpa"
+    url: https://thiswonderfulword.com/2014/05/01/sherpa/
+  racist-language-slavery:
+    name: GitHub to replace "master" with alternative term to avoid slavery references
+    url: https://www.zdnet.com/article/github-to-replace-master-with-alternative-term-to-avoid-slavery-references/
+  racist-language-words:
+    name: The Power of Words
+    url: https://www.klipfolio.com/blog/power-of-words
+  
+  sexist-language-history:
+    name: These Common Words Have Offensive Histories
+    url: https://www.dictionary.com/e/s/offensive-words-hiding-plain-sight/#hysterical
+
+  substance-abuse:
+    name: Street Health Canada
+    url: https://twitter.com/ihrdmay/status/1161535994153373696
+
 triggers:
   - matches:
       - blind to
@@ -74,9 +112,11 @@ triggers:
       - not paying attention to
     why: >
       ":TERM:" refers to inattention or ignorance. Blind, Deaf, and other
-      visually or hearing-impaired people are not inattentive or ignorant.
+      visually- or hearing-impaired people are not inattentive or ignorant.
       Phrases like this create a negative connotation with blindness and
       deafness.
+    group: ableist
+    more: ableist-language
       
   - matches:
       - blind leading the blind
@@ -89,6 +129,8 @@ triggers:
       ":TERM:" refers to ignorance. Blind and other visually impaired people
       are not ignorant. Using phrases like this create a negative connotation
       with blindness.
+    group: ableist
+    more: ableist-language
 
   - matches:
       - crazy
@@ -110,6 +152,8 @@ triggers:
     why: >
       ":TERM:" arose as a derogatory reference to people with mental
       illnesses. We want to avoid stigmatizing mental illness.
+    group: ableist
+    more: ableist-language
 
   - matches:
       - psycho
@@ -133,6 +177,8 @@ triggers:
     why: >
       ":TERM:" arose as a derogatory reference to people with mental
       illnesses. We want to avoid stigmatizing mental illness.
+    group: ableist
+    more: ableist-language
 
   - matches:
       - spaz
@@ -145,6 +191,8 @@ triggers:
       ":TERM:" arose as a derogatory reference to people with motor control
       impairments due to illness or substance use.  We want to avoid
       stigmatizing mental illness and addiction.
+    group: ableist
+    more: ableist-language
 
   - matches:
       - derp
@@ -154,6 +202,8 @@ triggers:
       ":TERM:" term arose as a derogatory reference to people with
       intellectual disabilities. It was popularized on the TV show South Park
       to mock a character. We want to avoid stigmatizing disabilities.
+    group: ableist
+    more: ableist-language
 
   - matches:
       - ermahgerd
@@ -165,6 +215,7 @@ triggers:
       ":TERM:" originated in a meme mocking an excited person with a speech
       impediment. We want to show our enthusiasm and excitement in an inclusive
       way so nobody feels left out.
+    group: ableist
 
   - matches:
       - moron
@@ -188,6 +239,8 @@ triggers:
     why: >
       ":TERM:" arose as a derogatory reference to people with intellectual
       disabilities. We want to avoid stigmatizing disabilities.
+    group: ableist
+    more: ableist-language
 
   - matches:
       - lame
@@ -202,6 +255,8 @@ triggers:
     why: >
       ":TERM:" arose as a derogatory reference to people with disabilities.
       We want to avoid stigmatizing intellectual disabilities.
+    group: ableist
+    more: ableist-language
 
   - matches:
       - junkie
@@ -213,6 +268,8 @@ triggers:
       ":TERM:" refers to someone who has a substance abuse disorder.
       Addiction is a disease, not a choice or moral failing. We want to avoid
       stigmatizing illness and addiction.
+    group: ableist
+    more: substance-abuse
 
   - matches:
       - like crack
@@ -223,6 +280,8 @@ triggers:
       choice or moral failing. We want to avoid stigmatizing addiction. Crack
       cocaine usage has also been racialized, resulting in discriminatory
       policies that target Black people.
+    group: ableist
+    more: substance-abuse
 
   - matches:
       - guys
@@ -236,13 +295,15 @@ triggers:
         # /(?<!boba )(?<!five )(?<!5 )(?<!halal )guy(s|z)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)/i,
     alternatives:
       - y'all
+      - folks
     why: >
-      "*:TERM:*" is commonly used to refer to groups of people, but it is a
+      ":TERM:" is commonly used to refer to groups of people, but it is a
       gendered pronoun. It can make people who do not identify as "guys" feel
       excluded, even if that's not the intent. Regardless of cultural background
       or innocent intent, we recommend alternative language that makes it clear
       everyone is included in the conversation! Consider a word like "*y'all*"
       or "*folks*" instead!
+    group: sexist
 
   - matches:
       - ghetto
@@ -255,6 +316,8 @@ triggers:
       ":TERM:" is used to describe neighborhoods that the speaker considers
       undesirable. This term has a deeply racist history against Jewish and
       Black communities.
+    group: racist
+    more: racist-language-history
 
   - matches:
       - uppity
@@ -267,6 +330,8 @@ triggers:
     why: >
       ":TERM:" is usually used to silence Black people and imply that they do
       not have a right to be assertive.
+    group: racist
+    more: racist-language-history
 
   - matches:
       - peanut gallery
@@ -277,6 +342,8 @@ triggers:
       ":TERM:" refers to people who are seen as rowdy or disruptive,
       indicating that their viewpoints should be ignored. This term arose from
       theater performance seating, and has racist and classist origins.
+    group: racist
+    more: racist-language-history
 
   - matches:
       - gypsy
@@ -287,6 +354,8 @@ triggers:
     why: >
       The term "gypsy" has historically been used as a racial slur against the
       Romani people.
+    group: racist
+    more: racist-language-gypsy
 
   - matches:
       - gyp
@@ -301,6 +370,8 @@ triggers:
       ":TERM:" is an abbreviated form of “gypsy” (a term that has historically
       been used as a racist slur for Romani people), and is based on a racist
       stereotype that Romani people are dishonest or thieves.
+    group: racist
+    more: racist-language-gypsy
 
   - matches:
       - no can do
@@ -308,6 +379,8 @@ triggers:
       - sorry, I can't
     why: >
       ":TERM:" phrase originated as mocking Chinese immigrants’ English.
+    group: racist
+    more: racist-language-business
 
   - matches:
       - long time no see
@@ -315,6 +388,8 @@ triggers:
       - it's been a while
     why: >
       ":TERM:" phrase originated as mocking Chinese immigrants’ English.
+    group: racist
+    more: racist-language-business
 
   - matches:
       - no problemo
@@ -324,6 +399,7 @@ triggers:
     why: >
       "No problemo" is mock Spanish and arose as a way of devaluing Spanish in
       favor of an "English-only" United States.
+    group: racist
 
   - matches:
       - sherpa
@@ -334,6 +410,8 @@ triggers:
     why: >
       The Sherpa are a Tibetan ethnic group, but the word is often used to refer
       to mountain guides. Sherpa are a people, not a job.
+    group: racist
+    more: racist-language-sherpa
 
   - matches:
       - pow-wow
@@ -347,6 +425,8 @@ triggers:
     why: >
       Powwows are a sacred component of some Indigneous spiritual traditions. We
       want to show respect towards all religious traditions.
+    group: racist
+    more: racist-language-indigenous
 
   - matches:
       - circle the wagons
@@ -355,6 +435,8 @@ triggers:
     why: >
       ":TERM:" arose from colonization, and interactions between Native
       Americans and settlers. We want to avoid this association.
+    group: racist
+    more: racist-language-indigenous
 
   - matches:
       - hold down the fort
@@ -365,6 +447,8 @@ triggers:
       ":TERM:" arose as a military phrase and is also viewed as a metaphor
       for colonization and violence against Native Americans. We want to avoid
       this association.
+    group: racist
+    more: racist-language-indigenous
 
   - matches:
       - spirit animal
@@ -377,6 +461,8 @@ triggers:
     why: >
       Spirit animals are a sacred component of some Indigneous spiritual
       traditions. We want to show respect towards all religious traditions.
+    group: racist
+    more: racist-language-indigenous
 
   - matches:
       - totem pole
@@ -385,6 +471,8 @@ triggers:
     why: >
       Totem poles are a sacred component of some Indigneous spiritual
       traditions. We want to show respect towards all religious traditions.
+    group: racist
+    more: racist-language-indigenous
 
   - matches:
       - guru
@@ -396,6 +484,8 @@ triggers:
       A guru is a sacred role in some Indian spiritual traditions and is not
       merely an expert or guide. We want to show respect towards all religious
       traditions.
+    group: racist
+    more: racist-language-words
 
   - matches:
       - ninja
@@ -410,6 +500,8 @@ triggers:
     why: >
       A ninja was a covert mercenary in feudal Japan. We want to show respect
       towards cultural traditions.
+    group: racist
+    more: racist-language-words
 
   - matches:
       - blacklist
@@ -424,6 +516,8 @@ triggers:
     why: >
       ":TERM:" implies an association between being Black and being bad. We
       want to avoid this association.
+    group: racist
+    more: racist-language-black-and-white
 
   - matches:
       - whitelist
@@ -437,6 +531,8 @@ triggers:
     why: >
       ":TERM:" implies that being white is the only way of being good. We
       want to avoid this association.
+    group: racist
+    more: racist-language-black-and-white
 
   - matches:
       - dark pattern
@@ -447,6 +543,8 @@ triggers:
     why: >
       ":TERM:" implies an association between darkness and Blackness and
       being bad. We want to avoid this association.
+    group: racist
+    more: racist-language-black-and-white
 
   - matches:
       - master/slave
@@ -459,6 +557,8 @@ triggers:
     why: >
       ":TERM:" is rooted in the enslavement of human beings. We want to avoid
       slavery references. 
+    group: racist
+    more: racist-language-slavery
 
   - matches:
       - open the kimono
@@ -468,6 +568,8 @@ triggers:
     why: >
       ":TERM:" arises from the sexualization of Asian women. We want to avoid
       sexist, racist, and sexual references.
+    group: racist
+    more: racist-language-business
 
   - matches:
       - grandfathered
@@ -476,7 +578,9 @@ triggers:
       - included retroactively
     why: >
       ":TERM:" arose from voter restrictions that prevented Black people from
-      voting. We want to avoid slavery and racist oppression references. 
+      voting. We want to avoid slavery and racist oppression references.
+    group: racist
+    more: racist-language-business
 
   - matches:
       - hysterical
@@ -485,7 +589,9 @@ triggers:
       - very funny
     why: >
       Hysteria was a historical medical term used to dismiss and demean women.
-      We want to avoid sexist references. 
+      We want to avoid sexist references.
+    group: sexist
+    more: sexist-language-history
 
   - matches:
       - hysterically
@@ -494,11 +600,14 @@ triggers:
       - wildly
     why: >
       Hysteria was a historical medical term used to dismiss and demean women.
-      We want to avoid sexist references. 
+      We want to avoid sexist references.
+    group: sexist
+    more: sexist-language-history
 
   - matches:
       - postmortem
       - post mortem
+      - post-mortem
     alternatives:
       - project reflection 
       - project or incident review
@@ -507,6 +616,7 @@ triggers:
     why: >
       ":TERM:" can trigger emotions related to death that employees may not
       want to process at work.
+    group: trauma-triggering
 
   - matches:
       - drop-dead date
@@ -515,3 +625,4 @@ triggers:
     why: >
       ":TERM:" can trigger emotions related to death that employees may not
       want to process at work
+    group: trauma-triggering

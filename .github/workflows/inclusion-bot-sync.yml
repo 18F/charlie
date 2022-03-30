@@ -1,0 +1,49 @@
+name: inclusion bot updates
+
+on:
+  pull_request:
+    paths:
+      - src/scripts/inclusion-bot.yaml
+
+jobs:
+  synchronize:
+    name: Synchronize Inclusion Bot word lists
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
+        with:
+          # Use the branch commit instead of the PR merge commit
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
+        with:
+          node-version: 16
+      - run: npm ci
+
+      - run: node sync-inclusion-bot-words.js
+
+      # Check if anything has changed. This will exit with 0 if there is nothing
+      # in the diff, or non-zero if anything has changed.
+      - run: git diff --exit-code
+
+      # If anything changed, commit it.
+      - if: failure()
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "${{ github.event.pull_request.user.login }}"
+          git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/18F/charlie
+          git commit -am "synchronize word lists"
+          git push
+      
+      - uses: actions/github-script@9ac08808f993958e9de277fe43a64532a609130e
+        if: failure()
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `The Inclusion Bot word lists have been synchronized. @${context.actor}, please pull the last commit before pushing any more changes.`
+            });

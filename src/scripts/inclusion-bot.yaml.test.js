@@ -31,6 +31,31 @@ describe("Inclusion bot config file", () => {
       return { message: () => {}, pass: true };
     },
 
+    isValidResource: (resource, index) => {
+      if (typeof resource !== "object") {
+        return {
+          message: () =>
+            `resource ${index} is a ${typeof resource}, but should be an object`,
+          pass: false,
+        };
+      }
+
+      if (typeof resource.name !== "string") {
+        return {
+          message: () => `resource ${index} name must be a string`,
+          pass: false,
+        };
+      }
+      if (typeof resource.url !== "string") {
+        return {
+          message: () => `resource ${index} url must be a string`,
+          pass: false,
+        };
+      }
+
+      return { message: () => {}, pass: true };
+    },
+
     isValidTrigger: (trigger, index) => {
       if (typeof trigger !== "object") {
         return {
@@ -84,7 +109,14 @@ describe("Inclusion bot config file", () => {
         };
       }
 
-      const validKeys = ["matches", "alternatives", "ignore", "why"];
+      const validKeys = [
+        "matches",
+        "alternatives",
+        "ignore",
+        "why",
+        "group",
+        "more",
+      ];
       const invalidKeys = keys.filter((key) => !validKeys.includes(key));
 
       if (invalidKeys.length > 0) {
@@ -111,10 +143,19 @@ describe("Inclusion bot config file", () => {
   const yml = yaml.load(ymlStr, { json: true });
 
   it("starts with a top-level triggers property", () => {
-    expect(Object.keys(yml).length).toEqual(3);
+    expect(Object.keys(yml).length).toEqual(4);
     expect(typeof yml.link).toEqual("string");
     expect(typeof yml.message).toEqual("string");
     expect(Array.isArray(yml.triggers)).toEqual(true);
+    expect(typeof yml.resources).toEqual("object");
+  });
+
+  it("each resource has a name and URL", () => {
+    const resources = Object.values(yml.resources);
+
+    resources.forEach((resource, i) => {
+      expect(resource).isValidResource(i);
+    });
   });
 
   it("each item is an object, and each property of each object is a string", () => {
