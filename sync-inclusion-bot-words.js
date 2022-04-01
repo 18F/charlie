@@ -1,109 +1,124 @@
 const fs = require("fs/promises");
 const jsYaml = require("js-yaml");
 
-(async () => {
-  // Load the current config yaml and prase it into Javascript
-  const currentYaml = await fs.readFile("src/scripts/inclusion-bot.yaml", {
-    encoding: "utf-8",
-  });
-  const json = jsYaml.load(currentYaml, { json: true });
-
-  // Also find the frontmatter comments so we can preserve it. It's all of the
-  // lines from the start up until the first non-comment line.
-  const firstNonComment = currentYaml
+// The frontmatter here is all of the comments at the beginning of the file.
+// Once there's a non-comment line, the frontmatter ends.
+const getYamlFrontmatter = (yaml) => {
+  const firstNonComment = yaml
     .split("\n")
     .findIndex((line) => !line.startsWith("#"));
-  const frontmatter = currentYaml
-    .split("\n")
-    .slice(0, firstNonComment)
-    .join("\n");
+  const frontmatter = yaml.split("\n").slice(0, firstNonComment).join("\n");
+
+  return frontmatter;
+};
+
+// The parsing works by finding lines that start with a vertical pipe, a
+// space, and anything other than a dash. The vertical pipe represents the
+// start of a markdown table row, which we want, and the dash indicates
+// that what we're seeing is actually the divider between the table header
+// and the table body.
+const getMarkdownTableRows = (md) =>
+  md.match(/\| [^-].+\|/gi).map((v) => v.split("|"));
+
+// Rows are split along the vertical pipes, which gives us an empty string
+// before the pipe, so given the whole row, we'll just ignore the first item.
+const markdownRowToTrigger = ([, matches, alternatives, why]) => ({
+  // Trigger matches are separated by commas, so we'll split them along
+  // commas and trim any remaining whitespace
+  matches: matches.split(",").map((v) => v.trim().toLowerCase()),
+
+  // Suggested alternatives are separated by line breaks, because they can
+  // include punctuation, including commas. Similarly split and trim.
+  alternatives: alternatives.split("<br>").map((v) => v.trim()),
+
+  // The "why" text can contain some extra reading, after a pair of line
+  // breaks, but the bot shouldn't show that because it's too much content
+  // to display. So we strip that out. The "why" also uses "this term" in
+  // most places to refer to the triggering phrase, but the bot is capable
+  // of showing the user exactly what word triggered its response. So we
+  // replace "this term" with the ":TERM:" token (in quotes, so it will be
+  // quoted when the user sees it) to let the bot do that.
+  why: why
+    .trim()
+    .replace(/<br>.*/, "")
+    .replace(/this term/i, '":TERM:"'),
+});
+
+const getTriggerIgnoreMap = (currentConfig) => {
+  const triggerWithIgnore = (newTrigger) => {
+    // Find a trigger in the existing config that has at least one of the same
+    // matches as the new trigger. There may not be one, but if...
+    const existing = currentConfig.triggers.find(
+      ({ matches: currentMatches }) =>
+        currentMatches.some((v) => newTrigger.matches.includes(v))
+    );
+
+    // If there is an existing config that matches AND it has an ignore property
+    // return a new trigger that includes the ignore property. (We do it this
+    // way instead of using an object spread so we get the properties in the
+    // order we want for readability when it gets written to yaml.)
+    if (existing?.ignore) {
+      return {
+        matches: newTrigger.matches,
+        alternatives: newTrigger.alternatives,
+        ignore: existing.ignore,
+        why: newTrigger.why,
+      };
+    }
+
+    // Otherwise just return what we got.
+    return newTrigger;
+  };
+  return triggerWithIgnore;
+};
+
+const main = async () => {
+  // Load the current config yaml and prase it into Javascript
+  const currentYamlStr = await fs.readFile("src/scripts/inclusion-bot.yaml", {
+    encoding: "utf-8",
+  });
+  const currentConfig = jsYaml.load(currentYamlStr, { json: true });
+
+  // Also find the frontmatter comments so we can preserve it.
+  const frontmatter = getYamlFrontmatter(currentYamlStr);
+
+  const triggerWithIgnore = getTriggerIgnoreMap(currentConfig);
 
   // Read and parse the markdown.
   const mdf = await fs.readFile("InclusionBot.md", { encoding: "utf-8" });
   const md = {
     // Preserve the link and message properties from the current config...
-    link: json.link,
-    message: json.message,
+    link: currentConfig.link,
+    message: currentConfig.message,
 
     // ...but rebuild the triggers from the markdown.
-    triggers: mdf
-      // The parsing works by finding lines that start with a vertical pipe, a
-      // space, and anything other than a dash. The vertical pipe represents the
-      // start of a markdown table row, which we want, and the dash indicates
-      // that what we're seeing is actually the divider between the table header
-      // and the table body.
-      //
-      // Once we've pulled out a row, we split it along the vertical pipes,
-      // which gives us 5 pieces: the empty string before the pipe, the list of
-      // trigger words/phrases, the list of potential replacements, an
-      // explanation of why the trigger is here, and the empty string after the
-      // ending pipe (if there is one; it's valid for there to only be 4 pieces
-      // after splitting). We only want the middle three, so we splice them out.
-      .match(/\| [^-].+\|/gi)
-      .map((v) => v.split("|"))
-      .map((v) => v.slice(1, 4))
+    triggers: getMarkdownTableRows(mdf)
+      // Turn each row into a trigger object.
+      .map(markdownRowToTrigger)
 
-      // Next we turn those three pieces into a single object representing the
-      // whole trigger instance.
-      .map(([matches, alternatives, why]) => ({
-        // Trigger matches are separated by commas, so we'll split them along
-        // commas and trim any remaining whitespace
-        matches: matches.split(",").map((v) => v.trim().toLowerCase()),
+      // Add an ignore property if there's a corresponding trigger in the
+      // existing config that has an ignore property. This is how we make sure
+      // we don't lose those when the new config is built.
+      .map(triggerWithIgnore)
 
-        // Suggested alternatives are separated by line breaks, because they can
-        // include punctuation, including commas. Similarly split and trim.
-        alternatives: alternatives.split("<br>").map((v) => v.trim()),
-
-        // The markdown file doesn't include any ignore information, but there
-        // might be some in the existing config yaml. In order to maintain
-        // property ordering later, go ahead and put this property in now. We
-        // can just delete it later if we don't need it.
-        ignore: null,
-
-        // The "why" text can contain some extra reading, after a pair of line
-        // breaks, but the bot shouldn't show that because it's too much content
-        // to display. So we strip that out. The "why" also uses "this term" in
-        // most places to refer to the triggering phrase, but the bot is capable
-        // of showing the user exactly what word triggered its response. So we
-        // replace "this term" with the ":TERM:" token (in quotes, so it will be
-        // quoted when the user sees it) to let the bot do that.
-        why: why
-          .trim()
-          .replace(/<br>.*/, "")
-          .replace(/this term/i, '":TERM:"'),
-      }))
-      // And finally, we remove the "triggers" that include "instead of", which
-      // is actually just the table header. There might be a better way to do
-      // this, but... this worked well.
+      // And remove the "triggers" that include "instead of", which is actually
+      // the table header.
       .filter(({ matches }) => !/^instead of/i.test(matches.join(","))),
   };
 
-  // Now we can loop over the triggers from the markdown to see if there is a
-  // corresponding trigger in the existing config. If there is, we want to copy
-  // over the ignore property, if there is one.
-  for (const trigger of md.triggers) {
-    const m = new Set(trigger.matches);
-    const existing = json.triggers.find(({ matches }) =>
-      matches.some((v) => m.has(v))
-    );
-
-    if (existing?.ignore) {
-      trigger.ignore = existing.ignore;
-    } else {
-      delete trigger.ignore;
-    }
-  }
-
   // Parse the object back into a yaml string
-  const yaml = jsYaml
+  const configYaml = jsYaml
     .dump(md)
+    // Put in some newlines between things, so it looks nicer.
     .replace(/\n([a-z]+):/gi, "\n\n$1:")
     .replace(/ {2}- matches/gi, "\n  - matches");
 
   // And write that puppy to disk
   await fs.writeFile(
     "src/scripts/inclusion-bot.yaml",
-    [frontmatter, "", yaml].join("\n"),
+    [frontmatter, "", configYaml].join("\n"),
     { encoding: "utf-8" }
   );
-})();
+};
+
+main();

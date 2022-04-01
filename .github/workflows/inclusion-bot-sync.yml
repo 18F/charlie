@@ -27,11 +27,22 @@ jobs:
       - run: npx -y prettier -w InclusionBot.md
       - run: node sync-inclusion-bot-words.js
 
+      - if: failure()
+        uses: actions/github-script@9ac08808f993958e9de277fe43a64532a609130e
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚨 The Inclusion Bot word lists could not be synchronized. Please check the syntax of the markdown file.'
+            });
+
       # Check if anything has changed. This will exit with 0 if there is nothing
       # in the diff, or non-zero if anything has changed.
       - run: if git diff --exit-code --quiet; then echo "::set-output name=changes::no"; else echo "::set-output name=changes::yes"; fi
-        id: diff  
-
+        id: diff
+      
       # If anything changed, commit it.
       - if: steps.diff.outputs.changes == 'yes'
         uses: EndBug/add-and-commit@050a66787244b10a4874a2a5f682130263edc192
