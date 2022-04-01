@@ -36,12 +36,6 @@ message: >
 triggers:
 
   - matches:
-      - test
-    alternatives:
-      - TEsT
-    why: TEST TEST TEST
-
-  - matches:
       - blind to
       - blinded to
       - blinded by
