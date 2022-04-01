@@ -37,14 +37,6 @@ jobs:
         uses: EndBug/add-and-commit@050a66787244b10a4874a2a5f682130263edc192
         with:
           message: synchronize word lists
-        # env:
-        #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # run: |
-        #   git config user.name "$(git log -1 --pretty=format:'%an')"
-        #   git config user.email "$(git log -1 --pretty=format:'%ae')"
-        #   git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/18F/charlie
-        #   git commit -am "synchronize word lists"
-        #   git push
       
       - if: steps.diff.outputs.changes == 'yes'
         uses: actions/github-script@9ac08808f993958e9de277fe43a64532a609130e
@@ -56,5 +48,4 @@ jobs:
               repo: context.repo.repo,
               body: `The Inclusion Bot word lists have been synchronized. @${context.actor}, please pull the last commit before pushing any more changes.`
             });
-        continue-on-error: true
 
