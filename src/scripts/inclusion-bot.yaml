@@ -352,7 +352,7 @@ triggers:
       - expert
       - whiz
     ignore:
-      - ":ninja:"
+      - ':ninja:'
       - ninja turtle
       - ninja turtles
       - ninja-turtle
