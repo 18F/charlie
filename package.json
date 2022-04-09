@@ -19,7 +19,7 @@
     "dotenv": "^14.3.2",
     "he": "^1.2.0",
     "js-yaml": "^4.1.0",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.32",
     "node-schedule": "^2.0.0",
     "pg": "^8.7.1",
