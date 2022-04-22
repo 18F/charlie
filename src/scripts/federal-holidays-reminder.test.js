@@ -11,49 +11,37 @@ describe("holiday reminder", () => {
   const scheduleJob = jest.fn();
   jest.doMock("node-schedule", () => ({ scheduleJob }));
 
-  const load = async () =>
-    new Promise((resolve) => {
-      jest.isolateModules(() => {
-        const module = require("./federal-holidays-reminder"); // eslint-disable-line global-require
-        resolve(module);
-      });
-    });
+  // Load this module *after* everything gets mocked. Otherwise the module will
+  // load the unmocked stuff and the tests won't work.
+  // eslint-disable-next-line global-require
+  const bot = require("./federal-holidays-reminder");
 
   beforeEach(() => {
-    delete process.env.HOLIDAY_REMINDER_CHANNEL;
-    delete process.env.HOLIDAY_REMINDER_TIME;
-    delete process.env.HOLIDAY_REMINDER_TIMEZONE;
-
     jest.resetAllMocks();
   });
 
   describe("schedules a reminder on startup", () => {
     describe("reminds on Friday for holidays on Monday", () => {
-      it("defaults to 15:00", async () => {
-        const bot = await load();
-
+      it("defaults to 15:00", () => {
         const nextHoliday = {
           date: moment.tz("2021-08-16T12:00:00", "America/New_York"),
         };
         getNextHoliday.mockReturnValue(nextHoliday);
 
-        bot();
+        bot({});
         expect(scheduleJob).toHaveBeenCalledWith(
           moment(nextHoliday.date).subtract(3, "days").hour(15).toDate(),
           expect.any(Function)
         );
       });
 
-      it("respects HOLIDAY_REMINDER_TIME", async () => {
-        process.env.HOLIDAY_REMINDER_TIME = "04:32";
-        const bot = await load();
-
+      it("respects HOLIDAY_REMINDER_TIME", () => {
         const nextHoliday = {
           date: moment.tz("2021-08-16T12:00:00", "America/New_York"),
         };
         getNextHoliday.mockReturnValue(nextHoliday);
 
-        bot();
+        bot({ HOLIDAY_REMINDER_TIME: "04:32" });
         expect(scheduleJob).toHaveBeenCalledWith(
           moment(nextHoliday.date)
             .subtract(3, "days")
@@ -66,9 +54,7 @@ describe("holiday reminder", () => {
     });
 
     describe("reminds on Wednesday for holidays on Thursday", () => {
-      it("defaults to 15:00", async () => {
-        const bot = await load();
-
+      it("defaults to 15:00", () => {
         const nextHoliday = { date: moment("2021-08-19T12:00:00Z") };
         getNextHoliday.mockReturnValue(nextHoliday);
 
@@ -79,14 +65,11 @@ describe("holiday reminder", () => {
         );
       });
 
-      it("respects HOLIDAY_REMINDER_TIME", async () => {
-        process.env.HOLIDAY_REMINDER_TIME = "04:32";
-        const bot = await load();
-
+      it("respects HOLIDAY_REMINDER_TIME", () => {
         const nextHoliday = { date: moment("2021-08-19T12:00:00Z") };
         getNextHoliday.mockReturnValue(nextHoliday);
 
-        bot();
+        bot({ HOLIDAY_REMINDER_TIME: "04:32" });
         expect(scheduleJob).toHaveBeenCalledWith(
           moment(nextHoliday.date)
             .subtract(1, "day")
@@ -102,22 +85,20 @@ describe("holiday reminder", () => {
   describe("posts a reminder", () => {
     const date = moment.tz("2021-08-19T12:00:00", "America/New_York");
 
-    const getReminderFn = async (holiday = "test holiday") => {
-      const bot = await load();
-
+    const getReminderFn = (holiday, config = {}) => {
       const nextHoliday = {
         date,
         name: holiday,
       };
       getNextHoliday.mockReturnValue(nextHoliday);
 
-      bot();
+      bot(config);
 
       return scheduleJob.mock.calls[0][1];
     };
 
     it("defaults to general channel", async () => {
-      const postReminder = await getReminderFn();
+      const postReminder = getReminderFn("test holiday");
       await postReminder();
 
       expect(postMessage).toHaveBeenCalledWith({
@@ -136,8 +117,9 @@ describe("holiday reminder", () => {
     });
 
     it("respects HOLIDAY_REMINDER_CHANNEL", async () => {
-      process.env.HOLIDAY_REMINDER_CHANNEL = "test channel";
-      const postReminder = await getReminderFn();
+      const postReminder = getReminderFn("test holiday", {
+        HOLIDAY_REMINDER_CHANNEL: "test channel",
+      });
       await postReminder();
 
       expect(postMessage).toHaveBeenCalledWith({
@@ -153,7 +135,7 @@ describe("holiday reminder", () => {
     });
 
     it("includes an emoji for holidays with known emoji", async () => {
-      const postReminder = await getReminderFn("Veterans Day");
+      const postReminder = getReminderFn("Veterans Day");
       await postReminder();
 
       expect(postMessage).toHaveBeenCalledWith({
@@ -169,7 +151,7 @@ describe("holiday reminder", () => {
     });
 
     it("waits a day and then schedules the next holiday", async () => {
-      const postReminder = await getReminderFn();
+      const postReminder = getReminderFn("test holiday");
       await postReminder();
 
       const nextSchedule = scheduleJob.mock.calls[1][1];

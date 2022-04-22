@@ -13,8 +13,8 @@ const set = async (key, value) => {
   );
 };
 
-const initialize = async () => {
-  client = new Client({ connectionString: process.env.DATABASE_URL });
+const initialize = async (config = process.env) => {
+  client = new Client({ connectionString: config.DATABASE_URL });
   await client.connect();
 
   await client.query(

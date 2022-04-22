@@ -10,20 +10,18 @@ const {
 } = require("../utils/test");
 
 describe("Optimistic Tock", () => {
-  const load = async () =>
-    new Promise((resolve) => {
-      jest.isolateModules(() => {
-        const module = require("./optimistic-tock"); // eslint-disable-line global-require
-        resolve(module);
-      });
-    });
-
   const scheduleJob = jest.fn();
   jest.doMock("node-schedule", () => ({ scheduleJob }));
+
+  // Load this module *after* everything gets mocked. Otherwise the module will
+  // load the unmocked stuff and the tests won't work.
+  // eslint-disable-next-line global-require
+  const bot = require("./optimistic-tock");
 
   const isOptedOut = jest.fn();
 
   const app = getApp();
+  const config = { TOCK_API: "url", TOCK_TOKEN: "token" };
 
   beforeAll(() => {
     jest.useFakeTimers();
@@ -34,9 +32,6 @@ describe("Optimistic Tock", () => {
     jest.resetAllMocks();
 
     optOut.mockReturnValue({ button: { button: "goes here" }, isOptedOut });
-
-    process.env.TOCK_API = "tock url";
-    process.env.TOCK_TOKEN = "tock token";
 
     get18FTockTruants.mockResolvedValue([
       {
@@ -96,29 +91,20 @@ describe("Optimistic Tock", () => {
   });
 
   describe("issues a warning and does not schedule a shouting match if un/mis-configured", () => {
-    it("if there is neither a Tock API URL or token", async () => {
-      process.env.TOCK_API = "";
-      process.env.TOCK_TOKEN = "";
-      const optimisticTock = await load();
-      optimisticTock(app);
+    it("if there is neither a Tock API URL or token", () => {
+      bot(app, {});
       expect(app.logger.warn).toHaveBeenCalled();
       expect(scheduleJob).not.toHaveBeenCalled();
     });
 
-    it("if there is a Tock API URL but no token", async () => {
-      process.env.TOCK_API = "set";
-      process.env.TOCK_TOKEN = "";
-      const optimisticTock = await load();
-      optimisticTock(app);
+    it("if there is a Tock API URL but no token", () => {
+      bot(app, { TOCK_API: "set" });
       expect(app.logger.warn).toHaveBeenCalled();
       expect(scheduleJob).not.toHaveBeenCalled();
     });
 
-    it("if there is a Tock token but no API URL", async () => {
-      process.env.TOCK_API = "";
-      process.env.TOCK_TOKEN = "set";
-      const optimisticTock = await load();
-      optimisticTock(app);
+    it("if there is a Tock token but no API URL", () => {
+      bot(app, { TOCK_TOKEN: "set" });
       expect(app.logger.warn).toHaveBeenCalled();
       expect(scheduleJob).not.toHaveBeenCalled();
     });
@@ -136,8 +122,7 @@ describe("Optimistic Tock", () => {
         moment.tz("1984-01-06T16:00:00", "America/Los_Angeles").toDate(),
       ];
 
-      const optimisticTock = await load();
-      await optimisticTock(app);
+      await bot(app, config);
 
       // There are 5 users. One is deleted. Of the remaining 4 users, there are
       // only three distinct timezones, so there should only be three scheduled
@@ -172,8 +157,7 @@ describe("Optimistic Tock", () => {
         moment.tz("1986-07-03T16:00:00", "America/Los_Angeles").toDate(),
       ];
 
-      const optimisticTock = await load();
-      await optimisticTock(app);
+      await bot(app, config);
 
       // There are 5 users. One is deleted. Of the remaining 4 users, there are
       // only three distinct timezones, so there should only be three scheduled
@@ -202,8 +186,7 @@ describe("Optimistic Tock", () => {
       const time = moment.tz("1985-09-02T09:45:00", "America/New_York");
       jest.setSystemTime(time.toDate());
 
-      const optimisticTock = await load();
-      await optimisticTock(app);
+      await bot(app, config);
 
       // The last thing that should get scheduled is the the re-schedule.
       const rescheduler = scheduleJob.mock.calls.pop()[1];
@@ -250,8 +233,7 @@ describe("Optimistic Tock", () => {
       const time = moment.tz("1984-01-01T12:00:00", "America/New_York");
       jest.setSystemTime(time.toDate());
 
-      const optimisticTock = await load();
-      await optimisticTock(app);
+      await bot(app, config);
 
       // Don't fiddle with the clock. That's node-schedule's job. Instead, grab
       // the first scheduled job and check that it behaves as expected.
