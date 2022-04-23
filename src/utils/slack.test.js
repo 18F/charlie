@@ -16,10 +16,10 @@ describe("utils / slack", () => {
     conversations: { list: jest.fn(), open: jest.fn() },
     users: { list: jest.fn() },
   };
+  const config = { SLACK_TOKEN: "slack token" };
 
   beforeAll(() => {
     setClient(defaultClient);
-    process.env.SLACK_TOKEN = "slack token";
   });
 
   beforeEach(() => {
@@ -58,7 +58,7 @@ describe("utils / slack", () => {
       response_metadata: {},
     });
 
-    const id = await getChannelID("c2");
+    const id = await getChannelID("c2", config);
 
     expect(defaultClient.conversations.list).toHaveBeenCalledWith({
       token: "slack token",
@@ -82,7 +82,7 @@ describe("utils / slack", () => {
 
     // Use an ID that wasn't in the previous test. This will bypass the internal
     // cache-map.
-    const id = await getChannelID("c4");
+    const id = await getChannelID("c4", config);
 
     expect(defaultClient.conversations.list).toHaveBeenCalledWith({
       token: "slack token",
@@ -108,7 +108,7 @@ describe("utils / slack", () => {
       response_metadata: {},
     });
 
-    const users = await getSlackUsers();
+    const users = await getSlackUsers(config);
 
     expect(defaultClient.users.list).toHaveBeenCalledWith({
       token: "slack token",
@@ -151,7 +151,7 @@ describe("utils / slack", () => {
   it("can post an ephemeral message", async () => {
     const msg = { this: "is", my: "message" };
 
-    await postEphemeralMessage(msg);
+    await postEphemeralMessage(msg, config);
 
     expect(defaultClient.chat.postEphemeral).toHaveBeenCalledWith({
       this: "is",
@@ -169,7 +169,7 @@ describe("utils / slack", () => {
       },
     };
 
-    await postEphemeralResponse(msg, { text: "bob" });
+    await postEphemeralResponse(msg, { text: "bob" }, config);
 
     expect(defaultClient.chat.postEphemeral).toHaveBeenCalledWith({
       channel: "channel id",
@@ -181,7 +181,7 @@ describe("utils / slack", () => {
   });
 
   it("can post a message", async () => {
-    await postMessage({ text: "moop moop" });
+    await postMessage({ text: "moop moop" }, config);
 
     expect(defaultClient.chat.postMessage).toHaveBeenCalledWith({
       text: "moop moop",
@@ -194,7 +194,7 @@ describe("utils / slack", () => {
       channel: { id: "direct message id" },
     });
 
-    await sendDirectMessage("user id", { text: "moop moop" });
+    await sendDirectMessage("user id", { text: "moop moop" }, config);
 
     expect(defaultClient.conversations.open).toHaveBeenCalledWith({
       token: "slack token",
@@ -212,7 +212,11 @@ describe("utils / slack", () => {
       channel: { id: "direct message id" },
     });
 
-    await sendDirectMessage(["user 1", "user 2"], { text: "moop moop" });
+    await sendDirectMessage(
+      ["user 1", "user 2"],
+      { text: "moop moop" },
+      config
+    );
 
     expect(defaultClient.conversations.open).toHaveBeenCalledWith({
       token: "slack token",

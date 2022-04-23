@@ -9,17 +9,24 @@ const {
 } = require("../utils/test");
 
 describe("Angry Tock", () => {
-  const load = async () =>
-    new Promise((resolve) => {
-      jest.isolateModules(() => {
-        const module = require("./angry-tock"); // eslint-disable-line global-require
-        resolve(module);
-      });
-    });
-
   const app = getApp();
   const scheduleJob = jest.fn();
   jest.doMock("node-schedule", () => ({ scheduleJob }));
+
+  // Load this module *after* everything gets mocked. Otherwise the module will
+  // load the unmocked stuff and the tests won't work.
+  // eslint-disable-next-line global-require
+  const angryTock = require("./angry-tock");
+
+  const config = {
+    TOCK_API: "tock url",
+    TOCK_TOKEN: "tock token",
+    ANGRY_TOCK_REPORT_TO: "#channel,@user",
+    ANGRY_TOCK_TIMEZONE: "Asia/Tokyo",
+    ANGRY_TOCK_FIRST_TIME: "10:00",
+    ANGRY_TOCK_SECOND_TIME: "14:45",
+    HAPPY_TOCK_REPORT_TO: "#happy",
+  };
 
   beforeAll(() => {
     jest.useFakeTimers();
@@ -28,14 +35,6 @@ describe("Angry Tock", () => {
   beforeEach(() => {
     jest.setSystemTime(0);
     jest.resetAllMocks();
-
-    process.env.TOCK_API = "tock url";
-    process.env.TOCK_TOKEN = "tock token";
-    process.env.ANGRY_TOCK_REPORT_TO = "#channel,@user";
-    process.env.ANGRY_TOCK_TIMEZONE = "Asia/Tokyo";
-    process.env.ANGRY_TOCK_FIRST_TIME = "10:00";
-    process.env.ANGRY_TOCK_SECOND_TIME = "14:45";
-    process.env.HAPPY_TOCK_REPORT_TO = "#happy";
 
     get18FTockTruants.mockResolvedValue([
       {
@@ -92,28 +91,19 @@ describe("Angry Tock", () => {
 
   describe("issues a warning and does not schedule a shouting match if un/mis-configured", () => {
     it("if there is neither a Tock API URL or token", async () => {
-      process.env.TOCK_API = "";
-      process.env.TOCK_TOKEN = "";
-      const angryTock = await load();
-      angryTock(app);
+      angryTock(app, { ...config, TOCK_API: "", TOCK_TOKEN: "" });
       expect(app.logger.warn).toHaveBeenCalled();
       expect(scheduleJob).not.toHaveBeenCalled();
     });
 
     it("if there is a Tock API URL but no token", async () => {
-      process.env.TOCK_API = "set";
-      process.env.TOCK_TOKEN = "";
-      const angryTock = await load();
-      angryTock(app);
+      angryTock(app, { ...config, TOCK_API: "set", TOCK_TOKEN: "" });
       expect(app.logger.warn).toHaveBeenCalled();
       expect(scheduleJob).not.toHaveBeenCalled();
     });
 
     it("if there is a Tock token but no API URL", async () => {
-      process.env.TOCK_API = "";
-      process.env.TOCK_TOKEN = "set";
-      const angryTock = await load();
-      angryTock(app);
+      angryTock(app, { ...config, TOCK_API: "", TOCK_TOKEN: "set" });
       expect(app.logger.warn).toHaveBeenCalled();
       expect(scheduleJob).not.toHaveBeenCalled();
     });
@@ -127,12 +117,11 @@ describe("Angry Tock", () => {
           // breaking Babe Ruth's record.
           const time = moment.tz(
             "1974-04-08 00:00:00",
-            process.env.ANGRY_TOCK_TIMEZONE
+            config.ANGRY_TOCK_TIMEZONE
           );
           jest.setSystemTime(time.toDate());
 
-          const angryTock = await load();
-          angryTock(app);
+          angryTock(app, config);
 
           time.hour(10);
           expect(scheduleJob).toHaveBeenCalledWith(
@@ -148,12 +137,11 @@ describe("Angry Tock", () => {
             // Monday, May 20, 1991: Michael Jordan named NBA MVP.
             const time = moment.tz(
               "1991-05-20 11:00:00",
-              process.env.ANGRY_TOCK_TIMEZONE
+              config.ANGRY_TOCK_TIMEZONE
             );
             jest.setSystemTime(time.toDate());
 
-            const angryTock = await load();
-            angryTock(app);
+            angryTock(app, config);
 
             time.hour(14);
             time.minute(45);
@@ -172,18 +160,17 @@ describe("Angry Tock", () => {
             // DC-area federal employees. So... just a note for the future!
             const initial = moment.tz(
               "1997-01-27 20:00:00",
-              process.env.ANGRY_TOCK_TIMEZONE
+              config.ANGRY_TOCK_TIMEZONE
             );
             jest.setSystemTime(initial.toDate());
 
-            const angryTock = await load();
-            angryTock(app);
+            angryTock(app, config);
 
             // Monday, February 3, 1997 - Cornell University faculty, staff, and
             // students gathered for a public memorial for Carl Sagan.
             const scheduled = moment.tz(
               "1997-02-03 10:00:00",
-              process.env.ANGRY_TOCK_TIMEZONE
+              config.ANGRY_TOCK_TIMEZONE
             );
             expect(scheduleJob).toHaveBeenCalledWith(
               scheduled.toDate(),
@@ -201,18 +188,17 @@ describe("Angry Tock", () => {
         // Space Station.
         const initial = moment.tz(
           "2019-10-18 09:00:00",
-          process.env.ANGRY_TOCK_TIMEZONE
+          config.ANGRY_TOCK_TIMEZONE
         );
         jest.setSystemTime(initial.toDate());
 
-        const angryTock = await load();
-        angryTock(app);
+        angryTock(app, config);
 
         // Monday, October 21, 2019 - World's oldest natural pearl, dated at 8,000
         // years old, is found new Abu Dhabi.
         const scheduled = moment.tz(
           "2019-10-21 10:00:00",
-          process.env.ANGRY_TOCK_TIMEZONE
+          config.ANGRY_TOCK_TIMEZONE
         );
         expect(scheduleJob).toHaveBeenCalledWith(
           scheduled.toDate(),
@@ -227,12 +213,11 @@ describe("Angry Tock", () => {
     // of New Orleans, is inaugurated.
     const initial = moment.tz(
       "1978-05-01 09:00:00",
-      process.env.ANGRY_TOCK_TIMEZONE
+      config.ANGRY_TOCK_TIMEZONE
     );
     jest.setSystemTime(initial.toDate());
 
-    const angryTock = await load();
-    angryTock(app);
+    angryTock(app, config);
 
     // This should have scheduled a calm "shout." Grab the handler off the
     // scheduler and run it, but first advance the time so that the "angry"
