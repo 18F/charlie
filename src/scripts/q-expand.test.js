@@ -239,7 +239,7 @@ describe("q-expand csv data", () => {
     expect(csvData.Q).toBe("FAS (TTS)");
     expect(csvData.QUBE).toBe("Client Services");
     expect(csvData.QUEAF).toBe("Account Management");
-    expect(csvData.QUEAAC).toBe("Bellatrix Cohort");
+    expect(csvData.QUEAAC).toBe("The Cohort Formerly Known as Bellatrix");
   });
 
   it("is formatted correctly", () => {
