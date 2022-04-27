@@ -30,15 +30,6 @@ Charlie can fetch a joke from
 [Fatherhood.gov](https://www.fatherhood.gov/for-dads/dad-jokes) to brighten up
 your day. Just say `@Charlie dad joke` to increase your daily joy.
 
-##### Encourage bot
-
-You can ask Charlie to share some words of encouragement with a random teammate
-by saying `@Charlie encourage`. It will pick someone in the current channel
-whose local time is between 9am and 5pm so as hopefully not bother someone after
-hours! Charlie will also drop random encouragements in the
-[#random](https://app.slack.com/client/T025AQGAN/C025AQGBJ) channel every
-few days.
-
 ##### Employee resource group invite requests
 
 To see a list of TTS employee resource and affinity groups that accept automated
