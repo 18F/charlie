@@ -7,10 +7,10 @@ const {
   tock: { get18FTockTruants, get18FTockSlackUsers },
 } = require("../utils");
 
-const TOCK_API_URL = process.env.TOCK_API;
-const TOCK_TOKEN = process.env.TOCK_TOKEN;
+module.exports = async (app, config = process.env) => {
+  const TOCK_API_URL = config.TOCK_API;
+  const TOCK_TOKEN = config.TOCK_TOKEN;
 
-module.exports = async (app) => {
   if (!TOCK_API_URL || !TOCK_TOKEN) {
     app.logger.warn(
       "OptimisticTock disabled: Tock API URL or access token is not set"

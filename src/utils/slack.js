@@ -18,7 +18,7 @@ const addEmojiReaction = async (msg, reaction) => {
 const getChannelID = (() => {
   const channelIDs = new Map();
 
-  return async (channelName) => {
+  return async (channelName, { SLACK_TOKEN } = process.env) => {
     if (!channelIDs.get(channelName)) {
       const all = [];
       let cursor;
@@ -35,7 +35,7 @@ const getChannelID = (() => {
           response_metadata: { next_cursor: nextCursor },
         } = await defaultClient.conversations.list({
           cursor,
-          token: process.env.SLACK_TOKEN,
+          token: SLACK_TOKEN,
         });
 
         cursor = nextCursor;
@@ -56,7 +56,7 @@ const getChannelID = (() => {
  * @async
  * @returns {Promise<Array<Object>>} A list of Slack users.
  */
-const getSlackUsers = async () =>
+const getSlackUsers = async ({ SLACK_TOKEN } = process.env) =>
   cache("get slack users", 1440, async () => {
     const all = [];
     let cursor;
@@ -72,7 +72,7 @@ const getSlackUsers = async () =>
         response_metadata: { next_cursor: nextCursor },
       } = await defaultClient.users.list({
         cursor,
-        token: process.env.SLACK_TOKEN,
+        token: SLACK_TOKEN,
       });
 
       cursor = nextCursor;
@@ -98,43 +98,53 @@ const getSlackUsersInConversation = async ({
     return allUsers.filter(({ id }) => channelUsers.includes(id));
   });
 
-const postEphemeralMessage = async (message) => {
+const postEphemeralMessage = async (message, { SLACK_TOKEN } = process.env) => {
   await defaultClient.chat.postEphemeral({
     ...message,
-    token: process.env.SLACK_TOKEN,
+    token: SLACK_TOKEN,
   });
 };
 
-const postEphemeralResponse = async (toMsg, message) => {
+const postEphemeralResponse = async (toMsg, message, config = process.env) => {
   const {
     event: { channel, thread_ts: thread, user },
   } = toMsg;
-  await postEphemeralMessage({
-    ...message,
-    user,
-    channel,
-    thread_ts: thread,
-  });
+  await postEphemeralMessage(
+    {
+      ...message,
+      user,
+      channel,
+      thread_ts: thread,
+    },
+    config
+  );
 };
 
-const postMessage = async (message) =>
+const postMessage = async (message, { SLACK_TOKEN } = process.env) =>
   defaultClient.chat.postMessage({
     ...message,
-    token: process.env.SLACK_TOKEN,
+    token: SLACK_TOKEN,
   });
 
-const sendDirectMessage = async (to, message) => {
+const sendDirectMessage = async (
+  to,
+  message,
+  { SLACK_TOKEN } = process.env
+) => {
   const {
     channel: { id },
   } = await defaultClient.conversations.open({
-    token: process.env.SLACK_TOKEN,
+    token: SLACK_TOKEN,
     users: Array.isArray(to) ? to.join(",") : to,
   });
 
-  postMessage({
-    ...message,
-    channel: id,
-  });
+  postMessage(
+    {
+      ...message,
+      channel: id,
+    },
+    { SLACK_TOKEN }
+  );
 };
 
 module.exports = {
