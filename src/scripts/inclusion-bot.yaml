@@ -79,6 +79,26 @@ triggers:
     ignore:
       - grape nuts
       - nuts and bolts
+      # https://blog.ediblearrangements.com/different-types-of-nuts/
+      - baru nuts
+      - beech nuts
+      - brazil nuts
+      - bunya nuts
+      - cedar nuts
+      - gingko nuts
+      - hickory nuts
+      - karuka nuts
+      - kola nuts
+      - lotus nuts
+      - macademia nuts
+      - oak nuts
+      - paradise nuts
+      - pili nuts
+      - pine nuts
+      - red bopple nuts
+      - saba nuts
+      - soy nuts
+      - tiger nuts
     why: >-
       ":TERM:" arose as a derogatory reference to people with mental illnesses.
       We want to avoid stigmatizing mental illness.
