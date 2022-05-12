@@ -6,10 +6,17 @@ const optOutOptions = [];
 
 const optOut = (key, name, description) => {
   const optOuts = brain.get(BRAIN_KEY) || {};
+
+  // If the brain hasn't seen this key before, initialize it and save it. There
+  // is no good reason all the other things that use opt-outs should have to
+  // think about whether or not these are initialized. They are!
   if (!optOuts[key]) {
     optOuts[key] = [];
     brain.set(BRAIN_KEY, optOuts);
   }
+
+  // Keep a list of all the options we've registered so they can be queried by
+  // other scripts, such as the handy options view on Charlie's home page
   optOutOptions.push({ key, name, description });
 
   return {
