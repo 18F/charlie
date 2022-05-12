@@ -18,7 +18,11 @@ module.exports = async (app, config = process.env) => {
     return;
   }
 
-  const optout = optOut("optimistic_tock");
+  const optout = optOut(
+    "optimistic_tock",
+    "Optimistic Tock",
+    "Receive a message near the end of the last work day of the week reminding you to Tock, if you are Tockable and have not yet submitted your time."
+  );
 
   const reminder = (tz) => async () => {
     const message = {

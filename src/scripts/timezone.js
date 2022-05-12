@@ -29,10 +29,15 @@ const TIMEZONES = {
   pst: "America/Los_Angeles",
 };
 
-const matcher = /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
+const matcher =
+  /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
 
 module.exports = (app) => {
-  const optout = optOut("handy_tau_bot");
+  const optout = optOut(
+    "handy_tau_bot",
+    "Baby Tock (Handy Tau Bot)",
+    "When someone posts a message containing a time, see that time translated into your local time below it."
+  );
 
   app.message(matcher, async (msg) => {
     const { channel, text, thread_ts: thread, user } = msg.event;
