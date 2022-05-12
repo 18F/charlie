@@ -35,6 +35,11 @@ module.exports = async (app) => {
     }) => {
       await ack();
 
+      // While reading this code, here's an important tip that will make it less
+      // confusing: the brain stores who is OPTED OUT, but the value we receive
+      // in this action lists items to be OPTED INTO. So there's some reversing
+      // that has to happen to map those together.
+
       const optIn = options.map(({ value }) => value);
       let dirty = false;
 
@@ -64,6 +69,8 @@ module.exports = async (app) => {
 
     const emoji = emojis.get(holiday.name);
 
+    // An item is enabled if it is NOT opted out of. The brain stores opt-out
+    // information, not opt-in.
     const optedOut = app.brain.get(OPT_OUT_BRAIN_KEY) || {};
     for (const o of optOutOptions) {
       o.enabled = !optedOut[o.key]?.includes(event.user);
@@ -141,5 +148,3 @@ module.exports = async (app) => {
     client.views.publish(view);
   });
 };
-
-// https://charlie-dev.app.cloud.gov
