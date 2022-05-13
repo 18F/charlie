@@ -76,6 +76,13 @@ Itching for a day off and want to know when the next holiday is? Charlie knows
 all the (standard, recurring) holidays! Just say
 `@charlie when is the next holiday` and Charlie will let you know.
 
+##### Three-paycheck months
+
+Do you look forward to 3-paycheck months to treat yourself to something nice?
+Maybe blue crabs? You deserve nice things, and Charlie can help! Just say
+`@charlie when's the next 3-paycheck month?` (or something similar; Charlie is
+not too picky) and it'll let you know the next one up!
+
 ##### Handbook search
 
 Wondering if the [TTS Handbook](https://handbook.tts.gsa.gov) has useful
