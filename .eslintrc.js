@@ -30,7 +30,7 @@ module.exports = {
     es6: true,
     node: true,
   },
-  parserOptions: { ecmaVersion: 2020 },
+  parserOptions: { ecmaVersion: 2021 },
   overrides: [
     {
       files: ["src/**/*.test.js", "src/utils/test.js"],
