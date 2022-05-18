@@ -1,8 +1,11 @@
 const moment = require("moment");
 
 const {
-  optOut: { BRAIN_KEY },
-} = require("../utils");
+  utils: {
+    homepage: { getDidYouKnow, getInteractive },
+    optOut: { BRAIN_KEY },
+  },
+} = require("../utils/test");
 
 const {
   getApp,
@@ -153,6 +156,9 @@ describe("Charlie's home app", () => {
       await home;
       const event = app.getEventHandler();
 
+      getDidYouKnow.mockReturnValue(["first", "second"]);
+      getInteractive.mockReturnValue(["aaa", "bbb"]);
+
       const date = moment("1998-01-09");
 
       // Set the current time to one day before the holiday
@@ -181,6 +187,9 @@ describe("Charlie's home app", () => {
 
       event(message);
 
+      expect(getDidYouKnow).toHaveBeenCalledWith("user 1");
+      expect(getInteractive).toHaveBeenCalledWith("user 1");
+
       expect(publish).toHaveBeenCalledWith({
         user_id: "user 1",
         view: {
@@ -190,13 +199,16 @@ describe("Charlie's home app", () => {
               type: "header",
               text: { type: "plain_text", text: expect.any(String) },
             },
+            "first",
+            "second",
+            { type: "divider" },
             {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: "It's *1 days* until the next federal holiday, which is *Wayne Gretzky Day* on Friday, January 9th.",
-              },
+              type: "header",
+              text: { type: "plain_text", text: expect.any(String) },
             },
+            "aaa",
+            "bbb",
+            { type: "divider" },
             {
               type: "header",
               text: {
@@ -293,6 +305,9 @@ describe("Charlie's home app", () => {
       await home;
       const event = app.getEventHandler();
 
+      getDidYouKnow.mockReturnValue(["third", "fifth"]);
+      getInteractive.mockReturnValue(["ccc", "ddd"]);
+
       const date = moment("1998-01-09");
 
       // Set the current time to one day before the holiday
@@ -321,6 +336,9 @@ describe("Charlie's home app", () => {
 
       event(message);
 
+      expect(getDidYouKnow).toHaveBeenCalledWith("user 1");
+      expect(getInteractive).toHaveBeenCalledWith("user 1");
+
       expect(publish).toHaveBeenCalledWith({
         user_id: "user 1",
         view: {
@@ -330,13 +348,16 @@ describe("Charlie's home app", () => {
               type: "header",
               text: { type: "plain_text", text: expect.any(String) },
             },
+            "third",
+            "fifth",
+            { type: "divider" },
             {
-              type: "section",
-              text: {
-                type: "mrkdwn",
-                text: "It's *1 days* until the next federal holiday, which is *Wayne Gretzky Day* on Friday, January 9th.",
-              },
+              type: "header",
+              text: { type: "plain_text", text: expect.any(String) },
             },
+            "ccc",
+            "ddd",
+            { type: "divider" },
             {
               type: "header",
               text: {

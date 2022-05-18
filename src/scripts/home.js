@@ -1,7 +1,5 @@
-const moment = require("moment");
 const {
-  dates: { getNextHoliday },
-  holidays: { emojis },
+  homepage: { getDidYouKnow, getInteractive, registerRefresh },
   optOut: { BRAIN_KEY: OPT_OUT_BRAIN_KEY, options: optOutOptions },
 } = require("../utils");
 
@@ -13,6 +11,90 @@ const sleep = async (ms) =>
   });
 
 module.exports = async (app) => {
+  const publishView = async (userId, client) => {
+    // An item is enabled if it is NOT opted out of. The brain stores opt-out
+    // information, not opt-in.
+    const optedOut = app.brain.get(OPT_OUT_BRAIN_KEY) || {};
+    for (const o of optOutOptions) {
+      o.enabled = !optedOut[o.key]?.includes(userId);
+    }
+
+    const makeOptionFromOptout = (optout) => ({
+      text: { type: "plain_text", text: optout.name },
+      description: { type: "plain_text", text: optout.description },
+      value: optout.key,
+    });
+
+    // https://charlie-dev.app.cloud.gov
+
+    const view = {
+      user_id: userId,
+      view: {
+        type: "home",
+        blocks: [
+          {
+            type: "header",
+            text: {
+              type: "plain_text",
+              text: "Did you know?",
+            },
+          },
+          ...getDidYouKnow(userId).flat(),
+          { type: "divider" },
+          {
+            type: "header",
+            text: {
+              type: "plain_text",
+              text: "Interactions",
+            },
+          },
+          ...getInteractive(userId).flat(),
+          { type: "divider" },
+          {
+            type: "header",
+            text: {
+              type: "plain_text",
+              text: "Personalized Charlie options",
+            },
+          },
+          {
+            type: "actions",
+            elements: [
+              {
+                type: "checkboxes",
+                initial_options: optOutOptions
+                  .filter(({ enabled }) => enabled)
+                  .map(makeOptionFromOptout),
+                options: optOutOptions.map(makeOptionFromOptout),
+                action_id: "set_options",
+              },
+            ],
+          },
+        ],
+      },
+    };
+
+    // initial_options cannot be an empty array for REASONS. So if there is one,
+    // just delete it entirely. Also toss it out if it's not an array. Let's
+    // just go ahead and be safe.
+    for (const block of view.view.blocks || []) {
+      for (const element of block.elements || []) {
+        if (element.initial_options) {
+          if (
+            !Array.isArray(element.initial_options) ||
+            element.initial_options.length === 0
+          ) {
+            delete element.initial_options;
+          }
+        }
+      }
+    }
+
+    client.views.publish(view);
+  };
+
+  registerRefresh(publishView);
+
   // Wait a couple seconds for all the other scripts to run, so they can
   // register themselves with the opt-out handler. We'll use that to build up
   // the list of options for the home page. Ideally we'd be able to get some
@@ -60,91 +142,7 @@ module.exports = async (app) => {
     }
   );
 
-  app.event("app_home_opened", async ({ event, client }) => {
-    const holiday = getNextHoliday();
-    const nextOne = moment(holiday.date);
-    const daysUntil = Math.ceil(
-      moment.duration(nextOne.utc().format("x") - Date.now()).asDays()
-    );
-
-    const emoji = emojis.get(holiday.name);
-
-    // An item is enabled if it is NOT opted out of. The brain stores opt-out
-    // information, not opt-in.
-    const optedOut = app.brain.get(OPT_OUT_BRAIN_KEY) || {};
-    for (const o of optOutOptions) {
-      o.enabled = !optedOut[o.key]?.includes(event.user);
-    }
-
-    const makeOptionFromOptout = (optout) => ({
-      text: { type: "plain_text", text: optout.name },
-      description: { type: "plain_text", text: optout.description },
-      value: optout.key,
-    });
-
-    const view = {
-      user_id: event.user,
-      view: {
-        type: "home",
-        blocks: [
-          {
-            type: "header",
-            text: {
-              type: "plain_text",
-              text: "Did you know?",
-            },
-          },
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: `It's *${daysUntil} days* until the next federal holiday, which is *${
-                holiday.alsoObservedAs ?? holiday.name
-              }* ${emoji ? `${emoji} ` : ""}on ${nextOne
-                .utc()
-                .format("dddd, MMMM Do")}.`,
-            },
-          },
-          {
-            type: "header",
-            text: {
-              type: "plain_text",
-              text: "Personalized Charlie options",
-            },
-          },
-          {
-            type: "actions",
-            elements: [
-              {
-                type: "checkboxes",
-                initial_options: optOutOptions
-                  .filter(({ enabled }) => enabled)
-                  .map(makeOptionFromOptout),
-                options: optOutOptions.map(makeOptionFromOptout),
-                action_id: "set_options",
-              },
-            ],
-          },
-        ],
-      },
-    };
-
-    // initial_options cannot be an empty array for REASONS. So if there is one,
-    // just delete it entirely. Also toss it out if it's not an array. Let's
-    // just go ahead and be safe.
-    for (const block of view.view.blocks || []) {
-      for (const element of block.elements || []) {
-        if (element.initial_options) {
-          if (
-            !Array.isArray(element.initial_options) ||
-            element.initial_options.length === 0
-          ) {
-            delete element.initial_options;
-          }
-        }
-      }
-    }
-
-    client.views.publish(view);
-  });
+  app.event("app_home_opened", ({ event, client }) =>
+    publishView(event.user, client)
+  );
 };

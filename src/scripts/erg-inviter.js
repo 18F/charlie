@@ -3,10 +3,12 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const {
+  homepage: { registerInteractive },
   slack: { postMessage, sendDirectMessage },
 } = require("../utils");
 
-const actionId = "erg_invite_request";
+const requestionInvitationActionId = "erg_invite_request";
+const showGroupsModalActionId = "show_erg_modal";
 
 const getERGs = () => {
   // Read in the list of ERGs from the Yaml file
@@ -19,8 +21,52 @@ const getERGs = () => {
 module.exports = async (app) => {
   const ergs = module.exports.getERGs();
 
+  const getButtons = () =>
+    Object.entries(ergs).map(([name, { channel, description }]) => ({
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: `• *${name}*: ${description}`,
+      },
+      accessory: {
+        type: "button",
+        text: { type: "plain_text", text: `Request invitation to ${name}` },
+        value: channel,
+        action_id: requestionInvitationActionId,
+      },
+    }));
+
+  registerInteractive(() => ({
+    type: "section",
+    text: {
+      type: "mrkdwn",
+      text: ":inclusion-bot: Request an invitation to TTS employee affinity group Slack channels:.",
+    },
+    accessory: {
+      type: "button",
+      text: { type: "plain_text", text: "See a list of groups" },
+      action_id: showGroupsModalActionId,
+    },
+  }));
+
   app.action(
-    actionId,
+    showGroupsModalActionId,
+    async ({ ack, body: { trigger_id: trigger }, client }) => {
+      await ack();
+
+      client.views.open({
+        trigger_id: trigger,
+        view: {
+          type: "modal",
+          title: { type: "plain_text", text: "TTS affinity groups" },
+          blocks: [...getButtons()],
+        },
+      });
+    }
+  );
+
+  app.action(
+    requestionInvitationActionId,
     async ({
       action: { value: channel },
       ack,
@@ -58,20 +104,12 @@ module.exports = async (app) => {
             text: "Here are the available employee afinity group channels.",
           },
         },
-        ...Object.entries(ergs).map(([name, { channel, description }]) => ({
-          type: "section",
-          text: { type: "mrkdwn", text: `• *${name}*: ${description}` },
-          accessory: {
-            type: "button",
-            text: { type: "plain_text", text: "Request invitation" },
-            value: `${channel}`,
-            action_id: actionId,
-          },
-        })),
+        ...getButtons(),
       ],
     });
   });
 };
 
-module.exports.actionId = actionId;
+module.exports.requestionInvitationActionId = requestionInvitationActionId;
+module.exports.showGroupsModalActionId = showGroupsModalActionId;
 module.exports.getERGs = getERGs;

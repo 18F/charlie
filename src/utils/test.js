@@ -1,6 +1,6 @@
 const axios = require("axios");
 const brain = require("../brain");
-const { cache, dates, optOut, slack, tock } = require("./index");
+const { cache, dates, homepage, optOut, slack, tock } = require("./index");
 
 // Mock axios and the utility functions, to make it easier for tests to use.
 jest.mock("axios");
@@ -35,6 +35,14 @@ module.exports = {
        *    handlers are registered. Defaults to 0, the first handler.
        */
       getActionHandler: (index = 0) => {
+        if (typeof index === "string") {
+          return action.mock.calls
+            .filter(([actionName]) => actionName === index)
+            .pop()
+            .slice(-1)
+            .pop();
+        }
+
         if (action.mock.calls.length > index) {
           return action.mock.calls[index].slice(-1).pop();
         }
@@ -73,6 +81,7 @@ module.exports = {
   utils: {
     cache,
     dates,
+    homepage,
     optOut,
     slack,
     tock,
