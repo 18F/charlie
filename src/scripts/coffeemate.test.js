@@ -1,6 +1,7 @@
 const {
   getApp,
   utils: {
+    homepage,
     slack: { addEmojiReaction, postEphemeralResponse, sendDirectMessage },
   },
 } = require("../utils/test");
@@ -34,7 +35,7 @@ describe("coffeemate", () => {
     expect(sendDirectMessage).not.toHaveBeenCalled();
   });
 
-  describe("with an the coffee queue is initially empty", () => {
+  describe("when the coffee queue is initially empty", () => {
     let handler;
 
     const message = {
@@ -114,7 +115,7 @@ describe("coffeemate", () => {
 
     describe("sends an ephemeral message, opens a DM, and resets the queue when a different user asks for coffee", () => {
       beforeEach(() => {
-        app.brain.set("coffeemate_queue", ["user id 1"]);
+        app.brain.set(coffeemate.BRAIN_KEY, ["user id 1"]);
       });
 
       it("when everything works as expected", async () => {
@@ -135,7 +136,7 @@ describe("coffeemate", () => {
             username: "Coffeemate",
           }
         );
-        expect(app.brain.get("coffeemate_queue")).toEqual([]);
+        expect(app.brain.get(coffeemate.BRAIN_KEY)).toEqual([]);
       });
 
       it("still clears the queue if anything throws an exception", async () => {
@@ -157,7 +158,161 @@ describe("coffeemate", () => {
             username: "Coffeemate",
           }
         );
-        expect(app.brain.get("coffeemate_queue")).toEqual([]);
+        expect(app.brain.get(coffeemate.BRAIN_KEY)).toEqual([]);
+      });
+    });
+  });
+
+  describe("handles queue actions", () => {
+    const message = {
+      ack: jest.fn(),
+      body: { user: { id: "user id" } },
+      client: {},
+    };
+
+    beforeEach(() => {
+      coffeemate(app);
+      app.brain.clear();
+    });
+
+    it("subscribes to an action for being added to the coffee queue", () => {
+      coffeemate(app);
+
+      expect(app.action).toHaveBeenCalledWith(
+        coffeemate.COFFEE_ACTION_ID,
+        expect.any(Function)
+      );
+    });
+
+    it("subscribes to an action for being removed from the coffee queue", () => {
+      coffeemate(app);
+
+      expect(app.action).toHaveBeenCalledWith(
+        coffeemate.UNCOFFEE_ACTION_ID,
+        expect.any(Function)
+      );
+    });
+
+    describe("the coffee action", () => {
+      it("adds the user if they are not already in the queue", async () => {
+        const handler = app.getActionHandler(coffeemate.COFFEE_ACTION_ID);
+
+        await handler(message);
+
+        expect(app.brain.get(coffeemate.BRAIN_KEY)).toEqual(["user id"]);
+        expect(message.ack).toHaveBeenCalled();
+        expect(homepage.refresh).toHaveBeenCalledWith(
+          message.body.user.id,
+          message.client
+        );
+      });
+
+      it("does not add the user again if they are already in the queue", async () => {
+        app.brain.set(coffeemate.BRAIN_KEY, ["user id"]);
+        const handler = app.getActionHandler(coffeemate.COFFEE_ACTION_ID);
+
+        await handler(message);
+
+        expect(app.brain.get(coffeemate.BRAIN_KEY)).toEqual(["user id"]);
+        expect(message.ack).toHaveBeenCalled();
+        expect(homepage.refresh).toHaveBeenCalledWith(
+          message.body.user.id,
+          message.client
+        );
+      });
+    });
+
+    describe("the un-coffee action", () => {
+      it("removes the user if they are in the queue", async () => {
+        app.brain.set(coffeemate.BRAIN_KEY, ["user id"]);
+        const handler = app.getActionHandler(coffeemate.UNCOFFEE_ACTION_ID);
+
+        await handler(message);
+
+        expect(app.brain.get(coffeemate.BRAIN_KEY)).toEqual([]);
+        expect(message.ack).toHaveBeenCalled();
+        expect(homepage.refresh).toHaveBeenCalledWith(
+          message.body.user.id,
+          message.client
+        );
+      });
+
+      it("doesn't break if the user is not in the queue", async () => {
+        app.brain.set(coffeemate.BRAIN_KEY, ["user 2"]);
+        const handler = app.getActionHandler(coffeemate.UNCOFFEE_ACTION_ID);
+
+        await handler(message);
+
+        expect(app.brain.get(coffeemate.BRAIN_KEY)).toEqual(["user 2"]);
+        expect(message.ack).toHaveBeenCalled();
+
+        // Special case! If the user was not in the queue, there's no reason to
+        // update the homepage.
+        expect(homepage.refresh).not.toHaveBeenCalledWith(
+          message.body.user.id,
+          message.client
+        );
+      });
+    });
+  });
+
+  describe("sets up a homepage interaction", () => {
+    it("registers a homepage interaction", () => {
+      coffeemate(app);
+
+      expect(homepage.registerInteractive).toHaveBeenCalledWith(
+        expect.any(Function)
+      );
+    });
+
+    describe("sends back a UI for the homepage", () => {
+      let getInteractive;
+      beforeEach(() => {
+        app.brain.clear();
+        coffeemate(app);
+
+        getInteractive = homepage.registerInteractive.mock.calls[0][0];
+      });
+
+      it("when the user is not in the coffee queue", () => {
+        const ui = getInteractive("user id");
+
+        expect(ui).toEqual({
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: ":coffee: Sign up for a virtual coffee",
+          },
+          accessory: {
+            type: "button",
+            text: {
+              type: "plain_text",
+              text: "Coffee Me!",
+            },
+            action_id: coffeemate.COFFEE_ACTION_ID,
+          },
+        });
+      });
+
+      it("when the user is already in the coffee queue", () => {
+        app.brain.set(coffeemate.BRAIN_KEY, ["user id"]);
+        const ui = getInteractive("user id");
+
+        expect(ui).toEqual({
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: ":coffee: You’re in the coffee queue! As soon as we find someone else to meet with, we’ll introduce you.",
+          },
+          accessory: {
+            type: "button",
+            text: {
+              type: "plain_text",
+              text: "Leave queue",
+            },
+            action_id: coffeemate.UNCOFFEE_ACTION_ID,
+          },
+        });
       });
     });
   });
