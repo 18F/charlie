@@ -59,7 +59,7 @@ module.exports = async (app) => {
         view: {
           type: "modal",
           title: { type: "plain_text", text: "TTS affinity groups" },
-          blocks: [...getButtons()],
+          blocks: getButtons(),
         },
       });
     }
