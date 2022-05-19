@@ -7,7 +7,7 @@ const {
   slack: { postMessage, sendDirectMessage },
 } = require("../utils");
 
-const requestionInvitationActionId = "erg_invite_request";
+const requestERGInvitationActionId = "erg_invite_request";
 const showGroupsModalActionId = "show_erg_modal";
 
 const getERGs = () => {
@@ -32,7 +32,7 @@ module.exports = async (app) => {
         type: "button",
         text: { type: "plain_text", text: `Request invitation to ${name}` },
         value: channel,
-        action_id: requestionInvitationActionId,
+        action_id: requestERGInvitationActionId,
       },
     }));
 
@@ -66,7 +66,7 @@ module.exports = async (app) => {
   );
 
   app.action(
-    requestionInvitationActionId,
+    requestERGInvitationActionId,
     async ({
       action: { value: channel },
       ack,
@@ -110,6 +110,6 @@ module.exports = async (app) => {
   });
 };
 
-module.exports.requestionInvitationActionId = requestionInvitationActionId;
-module.exports.showGroupsModalActionId = showGroupsModalActionId;
+module.exports.REQUEST_ERG_INVITATION_ACTION_ID = requestERGInvitationActionId;
+module.exports.SHOW_ERG_MODAL_ACTION_ID = showGroupsModalActionId;
 module.exports.getERGs = getERGs;

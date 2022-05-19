@@ -37,14 +37,16 @@ describe("ERG inviter", () => {
       bot(app);
 
       expect(app.action).toHaveBeenCalledWith(
-        bot.requestionInvitationActionId,
+        bot.REQUEST_ERG_INVITATION_ACTION_ID,
         expect.any(Function)
       );
     });
 
     it("sends a message to the appropriate channel when a user requests an invitation", async () => {
       bot(app);
-      const handler = app.getActionHandler(bot.requestionInvitationActionId);
+      const handler = app.getActionHandler(
+        bot.REQUEST_ERG_INVITATION_ACTION_ID
+      );
       const ack = jest.fn().mockResolvedValue();
 
       await handler({
@@ -110,7 +112,7 @@ describe("ERG inviter", () => {
               type: "button",
               text: { type: "plain_text", text: "Request invitation to one" },
               value: "one1",
-              action_id: bot.requestionInvitationActionId,
+              action_id: bot.REQUEST_ERG_INVITATION_ACTION_ID,
             },
           },
           {
@@ -120,7 +122,7 @@ describe("ERG inviter", () => {
               type: "button",
               text: { type: "plain_text", text: "Request invitation to two" },
               value: "two2",
-              action_id: bot.requestionInvitationActionId,
+              action_id: bot.REQUEST_ERG_INVITATION_ACTION_ID,
             },
           },
           {
@@ -130,7 +132,7 @@ describe("ERG inviter", () => {
               type: "button",
               text: { type: "plain_text", text: "Request invitation to three" },
               value: "three3",
-              action_id: bot.requestionInvitationActionId,
+              action_id: bot.REQUEST_ERG_INVITATION_ACTION_ID,
             },
           },
         ],
@@ -163,7 +165,7 @@ describe("ERG inviter", () => {
         accessory: {
           type: "button",
           text: { type: "plain_text", text: "See a list of groups" },
-          action_id: bot.showGroupsModalActionId,
+          action_id: bot.SHOW_ERG_MODAL_ACTION_ID,
         },
       });
     });
@@ -181,14 +183,14 @@ describe("ERG inviter", () => {
     it("registers the action", () => {
       bot(app);
       expect(app.action).toHaveBeenCalledWith(
-        bot.showGroupsModalActionId,
+        bot.SHOW_ERG_MODAL_ACTION_ID,
         expect.any(Function)
       );
     });
 
     it("shows a modal when the action is fired", async () => {
       bot(app);
-      const action = app.getActionHandler(bot.showGroupsModalActionId);
+      const action = app.getActionHandler(bot.SHOW_ERG_MODAL_ACTION_ID);
 
       const message = {
         ack: jest.fn(),
@@ -215,7 +217,7 @@ describe("ERG inviter", () => {
                 type: "button",
                 text: { type: "plain_text", text: "Request invitation to one" },
                 value: "one1",
-                action_id: bot.requestionInvitationActionId,
+                action_id: bot.REQUEST_ERG_INVITATION_ACTION_ID,
               },
             },
             {
@@ -225,7 +227,7 @@ describe("ERG inviter", () => {
                 type: "button",
                 text: { type: "plain_text", text: "Request invitation to two" },
                 value: "two2",
-                action_id: bot.requestionInvitationActionId,
+                action_id: bot.REQUEST_ERG_INVITATION_ACTION_ID,
               },
             },
             {
@@ -238,7 +240,7 @@ describe("ERG inviter", () => {
                   text: "Request invitation to three",
                 },
                 value: "three3",
-                action_id: bot.requestionInvitationActionId,
+                action_id: bot.REQUEST_ERG_INVITATION_ACTION_ID,
               },
             },
           ],
