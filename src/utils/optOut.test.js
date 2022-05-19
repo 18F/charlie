@@ -42,4 +42,16 @@ describe("opt-out utility", () => {
     brain.get.mockReturnValue({ test: ["different user id"] });
     expect(optOut.isOptedOut("user id")).toEqual(false);
   });
+
+  it("keeps track of all the things that have opted out", () => {
+    optOutModule("other-thing", "Other Thing Name", "description");
+    expect(optOutModule.options).toEqual([
+      { key: "test", name: undefined, description: undefined },
+      {
+        key: "other-thing",
+        name: "Other Thing Name",
+        description: "description",
+      },
+    ]);
+  });
 });
