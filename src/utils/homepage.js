@@ -5,11 +5,11 @@ let refresh = async () => {};
 
 module.exports = {
   getDidYouKnow(userId) {
-    return didYouKnow.map((cb) => cb(userId));
+    return didYouKnow.flatMap((cb) => cb(userId));
   },
 
   getInteractive(userId) {
-    return interactive.map((cb) => cb(userId));
+    return interactive.flatMap((cb) => cb(userId));
   },
 
   refresh: (userId, client) => refresh(userId, client),

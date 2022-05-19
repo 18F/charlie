@@ -39,7 +39,7 @@ module.exports = async (app) => {
               text: "Did you know?",
             },
           },
-          ...getDidYouKnow(userId).flat(),
+          ...getDidYouKnow(userId),
           { type: "divider" },
           {
             type: "header",
@@ -48,7 +48,7 @@ module.exports = async (app) => {
               text: "Interactions",
             },
           },
-          ...getInteractive(userId).flat(),
+          ...getInteractive(userId),
           { type: "divider" },
           {
             type: "header",

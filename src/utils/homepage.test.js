@@ -25,7 +25,7 @@ describe("homepage utility", () => {
       homepage.registerDidYouKnow(fn2);
       homepage.registerDidYouKnow(fn3);
 
-      expect(homepage.getDidYouKnow("user id")).toEqual(["one", 2, ["three"]]);
+      expect(homepage.getDidYouKnow("user id")).toEqual(["one", 2, "three"]);
       expect(fn1).toHaveBeenCalledWith("user id");
       expect(fn2).toHaveBeenCalledWith("user id");
       expect(fn3).toHaveBeenCalledWith("user id");
@@ -50,7 +50,7 @@ describe("homepage utility", () => {
       homepage.registerInteractive(fn2);
       homepage.registerInteractive(fn3);
 
-      expect(homepage.getInteractive("user id")).toEqual(["one", 2, ["three"]]);
+      expect(homepage.getInteractive("user id")).toEqual(["one", 2, "three"]);
       expect(fn1).toHaveBeenCalledWith("user id");
       expect(fn2).toHaveBeenCalledWith("user id");
       expect(fn3).toHaveBeenCalledWith("user id");
