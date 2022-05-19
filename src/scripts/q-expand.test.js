@@ -236,10 +236,12 @@ describe("q-expand", () => {
 describe("q-expand csv data", () => {
   it("properly pulled into object", async () => {
     const csvData = await script.getCsvData();
-    expect(csvData.Q).toBe("FAS (TTS)");
-    expect(csvData.QUBE).toBe("Client Services");
-    expect(csvData.QUEAF).toBe("Account Management");
-    expect(csvData.QUEAAC).toBe("Quacks Cohort 🦆🦆");
+    expect(typeof csvData).toBe("object");
+
+    // Also make sure that all of the keys have string values
+    for (const key of Object.keys(csvData)) {
+      expect(typeof csvData[key]).toBe("string");
+    }
   });
 
   it("is formatted correctly", () => {
