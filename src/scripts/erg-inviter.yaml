@@ -24,3 +24,19 @@ ergs:
       share about your disability/disabilities at the level of your comfort, but
       you don't have to disclose to join.
     channel: "#tts-pwd"
+
+  Neurodivergents:
+    description: >
+      A place for neurodivergent folks to share and discuss our lived
+      experiences in community. This channel also serves as a point of contact
+      for the newly-created Neurodivergent Employee Resource Group.
+    channel: "#neurodivergents"
+
+  Women:
+    description: >
+      A safe place for womxn to share their experiences and support one another.
+      Specifically, this group was created to focus on issues that womxn face in
+      the workplace. This ERG is a space for womxn to discuss strategies for
+      career development, address the challenges we encounter in the workplace,
+      and help one another in and around TTS.
+    channel: "#women"
