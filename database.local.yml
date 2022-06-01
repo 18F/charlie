@@ -1,0 +1,12 @@
+version: "3.2"
+### .env DATABASE_URL ###
+# postgres://charlie-bot:charlie-bot@0.0.0.0:5432/charlie
+services:
+  database:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=charlie
+      - POSTGRES_PASSWORD=charlie-bot
+      - POSTGRES_USER=charlie-bot
+    ports:
+      - 5432:5432
