@@ -79,7 +79,6 @@ triggers:
     ignore:
       - grape nuts
       - nuts and bolts
-      # https://blog.ediblearrangements.com/different-types-of-nuts/
       - baru nuts
       - beech nuts
       - brazil nuts
@@ -215,6 +214,22 @@ triggers:
       choice or moral failing. We want to avoid stigmatizing addiction. Crack
       cocaine usage has also been racialized, resulting in discriminatory
       policies that target Black people.
+
+  - matches:
+      - sanity check
+      - sanity-check
+    alternatives:
+      - quick check
+      - spot check
+      - initial check
+      - integrity check
+      - preliminary check
+      - gut check
+    why: >-
+      ":TERM:" unnecessarily refers to mental health, and implies that people
+      with mental illnesses are inferior. Ask yourself: _What am I actually
+      checking?_ [See _Ableist Language in Code: Sanity Check_ for
+      more.](https://gist.github.com/seanmhanson/fe370c2d8bd2b3228680e38899baf5cc)
 
   - matches:
       - ghetto
