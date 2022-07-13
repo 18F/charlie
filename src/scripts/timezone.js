@@ -2,7 +2,6 @@ const moment = require("moment-timezone");
 const {
   optOut,
   slack: { getSlackUsersInConversation, postEphemeralMessage },
-  stats: { incrementStats },
 } = require("../utils");
 
 const TIMEZONES = {
@@ -103,10 +102,6 @@ module.exports = (app) => {
     if (!m.isValid()) {
       return;
     }
-
-    // Don't increment stats until we're here, to make sure the bot is actually
-    // doing something.
-    incrementStats("Baby Tock");
 
     users.forEach(({ id, tz }) => {
       postEphemeralMessage({
