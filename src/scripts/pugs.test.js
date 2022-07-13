@@ -43,7 +43,7 @@ describe("pug bot", () => {
             type: "image",
             title: { type: "plain_text", text: "a pug!" },
             image_url: expect.stringMatching(
-              /https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)/
+              /^https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)$/
             ),
             alt_text: "a pug",
           },
@@ -69,7 +69,7 @@ describe("pug bot", () => {
               type: "image",
               title: { type: "plain_text", text: "a pug!" },
               image_url: expect.stringMatching(
-                /https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)/
+                /^https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)$/
               ),
               alt_text: "a pug",
             },
@@ -77,7 +77,7 @@ describe("pug bot", () => {
               type: "image",
               title: { type: "plain_text", text: "a pug!" },
               image_url: expect.stringMatching(
-                /https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)/
+                /^https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)$/
               ),
               alt_text: "a pug",
             },
@@ -94,7 +94,7 @@ describe("pug bot", () => {
               type: "image",
               title: { type: "plain_text", text: "a pug!" },
               image_url: expect.stringMatching(
-                /https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)/
+                /^https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)$/
               ),
               alt_text: "a pug",
             },
@@ -102,7 +102,7 @@ describe("pug bot", () => {
               type: "image",
               title: { type: "plain_text", text: "a pug!" },
               image_url: expect.stringMatching(
-                /https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)/
+                /^https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)$/
               ),
               alt_text: "a pug",
             },
@@ -110,7 +110,7 @@ describe("pug bot", () => {
               type: "image",
               title: { type: "plain_text", text: "a pug!" },
               image_url: expect.stringMatching(
-                /https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)/
+                /^https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)$/
               ),
               alt_text: "a pug",
             },
@@ -127,7 +127,7 @@ describe("pug bot", () => {
               type: "image",
               title: { type: "plain_text", text: "a pug!" },
               image_url: expect.stringMatching(
-                /https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)/
+                /^https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)$/
               ),
               alt_text: "a pug",
             },
@@ -135,7 +135,7 @@ describe("pug bot", () => {
               type: "image",
               title: { type: "plain_text", text: "a pug!" },
               image_url: expect.stringMatching(
-                /https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)/
+                /^https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)$/
               ),
               alt_text: "a pug",
             },
@@ -143,7 +143,7 @@ describe("pug bot", () => {
               type: "image",
               title: { type: "plain_text", text: "a pug!" },
               image_url: expect.stringMatching(
-                /https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)/
+                /^https:\/\/i\.imgur\.com\/.{7}\.(jpg|png)$/
               ),
               alt_text: "a pug",
             },
