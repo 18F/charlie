@@ -1,7 +1,10 @@
 const axios = require("axios");
 const fs = require("fs");
 const plural = require("plural");
-const { cache } = require("../utils");
+const {
+  cache,
+  stats: { incrementStats },
+} = require("../utils");
 
 const loadConfigs = async () =>
   JSON.parse(fs.readFileSync("config/slack-random-response.json"));
@@ -76,6 +79,10 @@ const getResponses = async (config, searchTerm = false) => {
 const responseFrom =
   ({ botName = null, defaultEmoji = null, ...config } = {}) =>
   async ({ event: { thread_ts: thread }, message: { text }, say }) => {
+    incrementStats(
+      `random response: ${botName ?? `unnamed bot [trigger: ${config.tragger}`}`
+    );
+
     const [, searchTerm] = text.match(
       new RegExp(`(\\S+) ${config.trigger}`, "i")
     ) ?? [false, false];
@@ -139,6 +146,7 @@ module.exports = async (app) => {
     });
 
     app.message(/fact of facts/i, async (res) => {
+      incrementStats("random response: fact of facts");
       // Pick a random fact config
       const factConfig = configs[Math.floor(Math.random() * configs.length)];
 

@@ -15,13 +15,15 @@ const { directMention } = require("@slack/bolt");
 const axios = require("axios");
 const he = require("he");
 const yaml = require("js-yaml");
-const { cache } = require("../utils");
-
+const {
+  cache,
+  stats: { incrementStats },
+} = require("../utils");
 
 /**
  * Turn a string into a search slug, removing all non-word characters (including spaces and punctuation).
  */
-const slugify = (term) => term.replaceAll(/\W/ig, '').toLowerCase();
+const slugify = (term) => term.replaceAll(/\W/gi, "").toLowerCase();
 
 /**
  * Find a string in a list of strings, ignoring case.
@@ -53,7 +55,7 @@ const defineTerm = (key, entry) => {
     return `*${key}*: ${entry.description}`;
   }
   return `The term *${key}* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+${key}|please add it>!`;
-}
+};
 
 /**
  * Given one or more terms, collect definitions.
@@ -63,9 +65,11 @@ const defineTerm = (key, entry) => {
  * @param glossary [Object] The entire glossary
  * @return [String] List of definitions (newline-separated)
  */
-const collectDefinitions = (entry, glossary) => [entry.term].flat().
-    map(termKey => defineTerm(termKey, glossary[termKey])).
-    join("\n");
+const collectDefinitions = (entry, glossary) =>
+  [entry.term]
+    .flat()
+    .map((termKey) => defineTerm(termKey, glossary[termKey]))
+    .join("\n");
 
 /**
  * The Slackbot response to be sent back to the user, based on whether
@@ -80,19 +84,21 @@ const buildResponseText = (searchTerm, canonicalKey, glossary) => {
   const entry = glossary[canonicalKey];
   switch (entry.type) {
     case "acronym":
-      return `_${canonicalKey}_ means:\n${collectDefinitions(entry, glossary)}`
+      return `_${canonicalKey}_ means:\n${collectDefinitions(entry, glossary)}`;
     case "term":
       return defineTerm(canonicalKey, entry);
     default:
       return "An unexpected error occurred.";
   }
-}
+};
 
 module.exports = (app) => {
   app.message(
     directMention(),
     /(define|glossary) (.+)/i,
     async ({ context, event: { thread_ts: thread }, say }) => {
+      incrementStats("define/glossary");
+
       // Grab this match from the context immediately. The context can change
       // when we give up the execution thread with an async call below, so we
       // need to grab it before we do that.
@@ -121,7 +127,7 @@ module.exports = (app) => {
       if (maybeEntry) {
         response.text = buildResponseText(searchTerm, maybeEntry, glossary);
       } else {
-        response.text = `I couldn't find *${searchTerm}*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+${searchTerm}|add it to the glossary>?`
+        response.text = `I couldn't find *${searchTerm}*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+${searchTerm}|add it to the glossary>?`;
       }
 
       say(response);

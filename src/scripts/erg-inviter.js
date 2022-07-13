@@ -5,6 +5,7 @@ const yaml = require("js-yaml");
 const {
   homepage: { registerInteractive },
   slack: { postMessage, sendDirectMessage },
+  stats: { incrementStats },
 } = require("../utils");
 
 const requestERGInvitationActionId = "erg_invite_request";
@@ -53,6 +54,7 @@ module.exports = async (app) => {
     showGroupsModalActionId,
     async ({ ack, body: { trigger_id: trigger }, client }) => {
       await ack();
+      incrementStats("list ERGs from home page");
 
       client.views.open({
         trigger_id: trigger,
@@ -75,6 +77,7 @@ module.exports = async (app) => {
       },
     }) => {
       await ack();
+      incrementStats("request ERG invitation");
 
       postMessage({
         channel,
@@ -92,6 +95,8 @@ module.exports = async (app) => {
   );
 
   app.message(directMention(), /ergs/i, ({ event: { user } }) => {
+    incrementStats("list ERGs from message");
+
     sendDirectMessage(user, {
       icon_emoji: ":tts:",
       text: "Here are the available employee afinity group channels.",

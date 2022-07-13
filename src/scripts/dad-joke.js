@@ -1,12 +1,17 @@
 const { directMention } = require("@slack/bolt");
 const axios = require("axios");
-const { cache } = require("../utils");
+const {
+  cache,
+  stats: { incrementStats },
+} = require("../utils");
 
 module.exports = (app) => {
   app.message(
     directMention(),
     /dad joke/i,
     async ({ message: { thread_ts: thread }, say }) => {
+      incrementStats("dad joke");
+
       const jokes = await cache("dad jokes", 60, async () => {
         try {
           const { data } = await axios.get(

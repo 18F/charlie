@@ -4,6 +4,7 @@ const {
   dates: { getNextHoliday },
   holidays: { emojis },
   homepage: { registerDidYouKnow },
+  stats: { incrementStats },
 } = require("../utils");
 
 const getHolidayText = () => {
@@ -36,6 +37,7 @@ module.exports = (app) => {
     /(when is( the)? )?next (federal )?holiday/i,
     ({ say }) => {
       say(getHolidayText());
+      incrementStats("next federal holiday request");
     }
   );
 };

@@ -1,6 +1,14 @@
 const axios = require("axios");
 const brain = require("../brain");
-const { cache, dates, homepage, optOut, slack, tock } = require("./index");
+const {
+  cache,
+  dates,
+  homepage,
+  optOut,
+  slack,
+  stats,
+  tock,
+} = require("./index");
 
 // Mock axios and the utility functions, to make it easier for tests to use.
 jest.mock("axios");
@@ -84,6 +92,7 @@ module.exports = {
     homepage,
     optOut,
     slack,
+    stats,
     tock,
   },
 };
