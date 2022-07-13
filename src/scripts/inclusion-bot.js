@@ -76,7 +76,7 @@ module.exports = async (app) => {
       return;
     }
 
-    addEmojiReaction(msg, "inclusion-bot");
+    addEmojiReaction(msg, "wave");
 
     // Pick a random alternative
     const pretexts = specificMatch.map(({ alternatives, text }) => {

@@ -156,7 +156,7 @@ triggers:
       msg.message.text = "hello this is the match 1 trigger";
       handler(msg);
 
-      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
+      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "wave");
 
       expectedMessage.attachments[0].blocks[1].text.text =
         expect.stringMatching(
@@ -180,7 +180,7 @@ triggers:
       expectedMessage.attachments[0].blocks[1].accessory.value =
         "match 1|match 2a";
 
-      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
+      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "wave");
 
       expectedMessage.attachments[0].blocks[1].text.text =
         expect.stringMatching(
@@ -199,7 +199,7 @@ triggers:
 
       expectedMessage.attachments[0].blocks[1].accessory.value = "match 2a";
 
-      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
+      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "wave");
 
       expectedMessage.attachments[0].blocks[1].text.text =
         expect.stringMatching(
@@ -225,7 +225,7 @@ triggers:
 
       expectedMessage.attachments[0].blocks[1].accessory.value = "match 2a";
 
-      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "inclusion-bot");
+      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "wave");
 
       expectedMessage.attachments[0].blocks[1].text.text =
         expect.stringMatching(
