@@ -17,6 +17,7 @@ const he = require("he");
 const yaml = require("js-yaml");
 const {
   cache,
+  helpMessage,
   stats: { incrementStats },
 } = require("../utils");
 
@@ -93,6 +94,13 @@ const buildResponseText = (searchTerm, canonicalKey, glossary) => {
 };
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Glossary",
+    "(define or glossary) <term>",
+    "Not sure what something means? The TTS glossary might have something to help you, and Charlie gives you a shortcut to access the glossary directly from Slack.",
+    true
+  );
+
   app.message(
     directMention(),
     /(define|glossary) (.+)/i,

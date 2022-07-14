@@ -2,6 +2,7 @@ const { directMention } = require("@slack/bolt");
 const moment = require("moment");
 const {
   stats: { incrementStats },
+  helpMessage,
 } = require("../utils");
 
 // We need a known pay date to work from.
@@ -47,6 +48,13 @@ const getNextThreePaycheckMonth = (from = Date.now()) => {
 };
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Three-paycheck month",
+    "three paycheck",
+    "Sometimes we get three paychecks in a single month. Some people splurge on crab legs on those months, and Charlie can help you plan by letting you know when the next three-paycheck month is.",
+    true
+  );
+
   app.message(
     directMention(),
     // Be very permissive in what we listen for.e

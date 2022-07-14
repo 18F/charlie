@@ -18,6 +18,7 @@ const { directMention } = require("@slack/bolt");
 const CFENV = require("cfenv");
 const AWS = require("aws-sdk");
 const {
+  helpMessage,
   slack: { getChannelID },
   stats: { incrementStats },
 } = require("../utils");
@@ -27,6 +28,19 @@ module.exports = (app) => {
   const s3Creds = appEnv.getServiceCreds("charlie-bucket");
 
   if (s3Creds !== null) {
+    helpMessage.registerInteractive(
+      "Hug Me",
+      "hug me",
+      "Need a little hug in your life? Friends from TTS past have left us a gift, and Charlie will deliver one whenever you need!",
+      true
+    );
+    helpMessage.registerInteractive(
+      "Hug Bomb",
+      "hug bomb [number]",
+      "Need even more hug? Charlie will happily deliver more! Defaults to three simultaneous hugs.",
+      true
+    );
+
     const creds = new AWS.Credentials(
       s3Creds.access_key_id,
       s3Creds.secret_access_key

@@ -4,9 +4,15 @@ const {
   dates: { getNextHoliday },
   holidays: { emojis },
   slack: { postMessage },
+  helpMessage,
 } = require("../utils");
 
 const scheduleReminder = (config = process.env) => {
+  helpMessage.registerNonInteractive(
+    "Holiday reminders",
+    "On the business day before a federal holiday, Charlie will post a reminder in #general-talk. Talk the day off, don't do work for the government, and observe it in the way that is most suitable to you!"
+  );
+
   const CHANNEL = config.HOLIDAY_REMINDER_CHANNEL || "general";
   const TIMEZONE = config.HOLIDAY_REMINDER_TIMEZONE || "America/New_York";
   const reportingTime = moment(

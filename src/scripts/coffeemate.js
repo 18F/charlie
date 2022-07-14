@@ -1,4 +1,5 @@
 const {
+  helpMessage,
   homepage,
   slack: { addEmojiReaction, postEphemeralResponse, sendDirectMessage },
   stats: { incrementStats },
@@ -16,6 +17,12 @@ const baseResponse = {
 };
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Coffeemate",
+    "coffee me",
+    "Coffeemate can help you schedule virtual coffees :coffee: with random teammates! The bot will add you to a queue of people looking for coffee and will match you with someone else in the queue. Have fun!"
+  );
+
   const addToCoffeeQueue = async (userId, message = false, scope = "") => {
     const key = `${brainKey}${scope}`;
     const queue = app.brain.get(key) || [];

@@ -13,6 +13,7 @@
 const { directMention } = require("@slack/bolt");
 const axios = require("axios");
 const {
+  helpMessage,
   stats: { incrementStats },
 } = require("../utils");
 
@@ -24,6 +25,12 @@ const icons = {
 };
 
 module.exports = (robot) => {
+  helpMessage.registerInteractive(
+    "OPM's DC office status",
+    "opm status",
+    "Working in DC and want to know if the office is closed due to snow or, perhaps, raven attack? Charlie is good friends with the bots over at OPM and will gladly fetch that information for you. No more having to open a web browser all by yourself!"
+  );
+
   robot.message(
     directMention(),
     /opm status/i,

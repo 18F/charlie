@@ -2,6 +2,7 @@ const holidays = require("@18f/us-federal-holidays");
 const moment = require("moment");
 const {
   stats: { incrementStats },
+  helpMessage,
 } = require("../utils");
 
 const closedDays = ["Saturday", "Sunday"];
@@ -47,6 +48,11 @@ const getHasRespondedToUserRecently = (userID) => {
 };
 
 module.exports = (robot) => {
+  helpMessage.registerNonInteractive(
+    "Travel team",
+    "Did you know that the TTS Travel team takes weekends and holidays too? It's true, they do! And Charlie knows it too. If you drop a question or comment in the travel channel on a closed day, Charlie will remind you that the office is closed and offer some helpful tips to get you through. It will also let you know when the Travel team will be back in the office!"
+  );
+
   robot.message(
     /.*/,
     async ({ client, event: { channel, thread_ts: thread, user }, say }) => {

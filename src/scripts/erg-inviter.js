@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const {
+  helpMessage,
   homepage: { registerInteractive },
   slack: { postMessage, sendDirectMessage },
   stats: { incrementStats },
@@ -20,6 +21,13 @@ const getERGs = () => {
 };
 
 module.exports = async (app) => {
+  helpMessage.registerInteractive(
+    "ERG Inviter",
+    "ergs",
+    "Charlie can send you a list of TTS employee resource and affinity groups that accept automated invitation requests. This command will send you a private message listing the ERGs and a button for each one to let the group know you'd like an invitation.",
+    true
+  );
+
   const ergs = module.exports.getERGs();
 
   const getButtons = () =>

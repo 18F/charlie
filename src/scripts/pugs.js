@@ -1,5 +1,6 @@
 const { directMention } = require("@slack/bolt");
 const {
+  helpMessage,
   stats: { incrementStats },
 } = require("../utils");
 
@@ -35,6 +36,19 @@ const makePugs = (count = 1) =>
   }));
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Pug Me",
+    "pug me",
+    "Do you like pugs? Do you want a picture of a pug? Charlie can satisfy your craving with a random picture of a cute pug!",
+    true
+  );
+  helpMessage.registerInteractive(
+    "Pug Bomb",
+    "pug bomb <number>",
+    "Do you love pugs so much that you want to see several of them? Charlie can deliver! Defaults to three cutes.",
+    true
+  );
+
   app.message(directMention(), /pug me/i, async ({ say }) => {
     incrementStats("pug bot: one");
     say({ blocks: makePugs() });

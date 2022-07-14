@@ -8,6 +8,7 @@
 const { directMention } = require("@slack/bolt");
 const {
   stats: { incrementStats },
+  helpMessage,
 } = require("../utils");
 
 const getTockLines = (app) => {
@@ -19,6 +20,19 @@ const getTockLines = (app) => {
 };
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Tock line (get)",
+    "tock line",
+    "Not sure what Tock line to bill this project to? Charlie might know! If someone has set a tock line for the channel, Charlie will gladly tell you what it is.",
+    true
+  );
+  helpMessage.registerInteractive(
+    "Tock line (set)",
+    "set tock line",
+    "Let Charlie help you keep track of the Tock line for a channel!",
+    true
+  );
+
   app.message(
     directMention(),
     /tock( line)?$/i,

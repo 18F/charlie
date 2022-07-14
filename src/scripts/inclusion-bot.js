@@ -4,6 +4,7 @@ const yaml = require("js-yaml");
 const {
   slack: { addEmojiReaction, postEphemeralResponse },
   stats: { incrementStats },
+  helpMessage,
 } = require("../utils");
 
 const capitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
@@ -35,6 +36,11 @@ const getTriggers = () => {
 };
 
 module.exports = async (app) => {
+  helpMessage.registerNonInteractive(
+    "Inclusion bot",
+    "Charlie passively listens for language with racist, ableist, sexist, or other exclusionary histories. When it hears such words or phrases, it quietly lets the speaker know and offers some suggestions. What a great bot, helping nudge us all to thoughtful, inclusive language!"
+  );
+
   // Use the module exported version here, so that it can be stubbed for testing
   const { link, message, triggers } = module.exports.getTriggers();
 
