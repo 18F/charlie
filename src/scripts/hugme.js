@@ -19,6 +19,7 @@ const CFENV = require("cfenv");
 const AWS = require("aws-sdk");
 const {
   slack: { getChannelID },
+  stats: { incrementStats },
 } = require("../utils");
 
 module.exports = (app) => {
@@ -78,6 +79,7 @@ module.exports = (app) => {
       });
 
     app.message(directMention(), /hug me/i, (msg) => {
+      incrementStats("hug bot - single hug");
       module.exports.hugBomb(1, msg);
     });
 
@@ -85,6 +87,7 @@ module.exports = (app) => {
       directMention(),
       /hug bomb( (\d+))?/i,
       ({ context: { matches }, ...msg }) => {
+        incrementStats("hug bot - multiple hugs");
         const count = +matches[2] || 3;
         module.exports.hugBomb(count, msg);
       }

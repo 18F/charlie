@@ -14,6 +14,7 @@
 
 const {
   slack: { getChannelID },
+  stats: { incrementStats },
 } = require("../utils");
 
 const LOVE_CHANNEL = "kudos";
@@ -27,6 +28,8 @@ module.exports = (app) => {
       event: { channel, ts: message, thread_ts: thread, user },
       say,
     }) => {
+      incrementStats("love/kudos bot");
+
       const lovees = matches[2].trim();
 
       const { permalink } = await client.chat.getPermalink({

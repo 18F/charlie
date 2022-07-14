@@ -22,8 +22,10 @@
 //    qex qq2
 
 const { parse } = require("csv-parse");
-
 const fs = require("fs");
+const {
+  stats: { incrementStats },
+} = require("../utils");
 
 function getCsvData() {
   const csvData = {};
@@ -113,6 +115,8 @@ module.exports = (app) => {
   app.message(
     /^qexp?\s+([a-z0-9-]{1,8}\*?)$/i,
     async ({ message: { thread_ts: thread }, context, say }) => {
+      incrementStats("qex expander");
+
       const initialismSearch = context.matches[1];
       const resp = qExpander(initialismSearch, await csvData);
       const response = {

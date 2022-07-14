@@ -3,6 +3,7 @@ const path = require("path");
 const yaml = require("js-yaml");
 const {
   slack: { addEmojiReaction, postEphemeralResponse },
+  stats: { incrementStats },
 } = require("../utils");
 
 const capitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
@@ -76,6 +77,7 @@ module.exports = async (app) => {
       return;
     }
 
+    incrementStats("inclusion bot");
     addEmojiReaction(msg, "wave");
 
     // Pick a random alternative

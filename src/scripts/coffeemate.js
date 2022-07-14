@@ -1,6 +1,7 @@
 const {
   homepage,
   slack: { addEmojiReaction, postEphemeralResponse, sendDirectMessage },
+  stats: { incrementStats },
 } = require("../utils");
 
 const brainKey = "coffeemate_queue";
@@ -140,6 +141,7 @@ module.exports = (app) => {
       client,
     }) => {
       await ack();
+      incrementStats("coffeemate homepage");
 
       await addToCoffeeQueue(userId);
 
@@ -155,6 +157,8 @@ module.exports = (app) => {
       },
       event: { user },
     } = message;
+
+    incrementStats("coffeemate message");
 
     // Ignore Slackbot. It's not supposed to trigger this bot anyway but it
     // seems like it has done so before, and then it gets stuck in the queue and

@@ -1,3 +1,7 @@
+const {
+  stats: { incrementStats },
+} = require("../utils");
+
 const fancy = {
   a: "𝓪",
   b: "𝓫",
@@ -56,6 +60,8 @@ const fancy = {
 
 module.exports = (app) => {
   app.message(/^fancy font (.*)$/i, ({ context, message, say }) => {
+    incrementStats("fancy font");
+
     const plain = context.matches[1];
     const out = plain
       .split("")

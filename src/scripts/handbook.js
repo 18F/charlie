@@ -1,6 +1,7 @@
 const axios = require("axios");
 const {
   slack: { postEphemeralResponse },
+  stats: { incrementStats },
 } = require("../utils");
 
 const baseUrl =
@@ -30,6 +31,8 @@ const getBlocksFromResults = (results) =>
 
 module.exports = (app) => {
   app.message(/^@?handbook (.+)$/i, async (msg) => {
+    incrementStats("handbook search");
+
     const {
       context: {
         matches: [, , search],

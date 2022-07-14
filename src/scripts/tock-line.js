@@ -6,6 +6,9 @@
 //    @bot tock line - Display the tock line associated with the current channel, if any
 
 const { directMention } = require("@slack/bolt");
+const {
+  stats: { incrementStats },
+} = require("../utils");
 
 const getTockLines = (app) => {
   let tockLines = app.brain.get("tockLines");
@@ -20,6 +23,8 @@ module.exports = (app) => {
     directMention(),
     /tock( line)?$/i,
     ({ event: { channel, text, thread_ts: thread }, say }) => {
+      incrementStats("tock line: get");
+
       const tockLines = getTockLines(app);
       if (tockLines[channel]) {
         say({
@@ -44,6 +49,8 @@ module.exports = (app) => {
     directMention(),
     /set tock( line)? (.*)$/i,
     ({ context: { matches }, event: { channel, thread_ts: thread }, say }) => {
+      incrementStats("tock line: set");
+
       const tockLines = getTockLines(app);
       tockLines[channel] = matches[2];
       app.brain.set("tockLines", tockLines);

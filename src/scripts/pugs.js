@@ -1,4 +1,7 @@
 const { directMention } = require("@slack/bolt");
+const {
+  stats: { incrementStats },
+} = require("../utils");
 
 const pugs = [
   "https://i.imgur.com/kXngLij.png",
@@ -33,10 +36,12 @@ const makePugs = (count = 1) =>
 
 module.exports = (app) => {
   app.message(directMention(), /pug me/i, async ({ say }) => {
+    incrementStats("pug bot: one");
     say({ blocks: makePugs() });
   });
 
   app.message(directMention(), /pug bomb ?(\d+)?/i, ({ context, say }) => {
+    incrementStats("pug bot: multiple");
     const count = +context.matches[1] || 3;
     say({ blocks: makePugs(count) });
   });

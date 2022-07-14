@@ -1,5 +1,8 @@
 const { directMention } = require("@slack/bolt");
 const moment = require("moment");
+const {
+  stats: { incrementStats },
+} = require("../utils");
 
 // We need a known pay date to work from.
 const REFERENCE_DATE = moment.utc("2022-01-07");
@@ -50,6 +53,7 @@ module.exports = (app) => {
     // https://regexper.com/#%2F.*%28three%7C3%29%5Cb.*pay%5B-%5Cs%5D%3F%28check%7Cday%29.*%2F
     /.*(three|3)\b.*pay[-\s]?(check|day).*/i,
     ({ message: { thread_ts: thread }, say }) => {
+      incrementStats("3 paycheck month");
       const next = getNextThreePaycheckMonth();
 
       say({

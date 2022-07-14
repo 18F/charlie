@@ -1,5 +1,8 @@
 const holidays = require("@18f/us-federal-holidays");
 const moment = require("moment");
+const {
+  stats: { incrementStats },
+} = require("../utils");
 
 const closedDays = ["Saturday", "Sunday"];
 
@@ -54,6 +57,8 @@ module.exports = (robot) => {
         travelIsClosed() &&
         !getHasRespondedToUserRecently(user)
       ) {
+        incrementStats("travel team weekend/holiday notice");
+
         pastResponses.push({ user, time: Date.now() });
         say({
           icon_emoji: ":tts:",

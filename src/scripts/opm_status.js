@@ -12,6 +12,9 @@
 
 const { directMention } = require("@slack/bolt");
 const axios = require("axios");
+const {
+  stats: { incrementStats },
+} = require("../utils");
 
 // :greenlight: :redlight: :yellowlight:
 const icons = {
@@ -25,6 +28,8 @@ module.exports = (robot) => {
     directMention(),
     /opm status/i,
     async ({ event: { thread_ts: thread }, say }) => {
+      incrementStats("OPM status");
+
       try {
         const { data, status } = await axios.get(
           "https://www.opm.gov/json/operatingstatus.json"
@@ -41,8 +46,7 @@ module.exports = (robot) => {
         });
       } catch (e) {
         say({
-          text:
-            "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
+          text: "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
           thread_ts: thread,
           unfurl_links: false,
           unfurl_media: false,

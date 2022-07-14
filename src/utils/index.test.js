@@ -9,6 +9,7 @@ describe("utils / index", () => {
       "homepage",
       "optOut",
       "slack",
+      "stats",
       "tock",
     ]);
   });
