@@ -13,6 +13,7 @@
 //    None
 
 const {
+  helpMessage,
   slack: { getChannelID },
   stats: { incrementStats },
 } = require("../utils");
@@ -20,6 +21,12 @@ const {
 const LOVE_CHANNEL = "kudos";
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Love/Kudos bot",
+    "(love or :heart:) <user>",
+    "Someone just did something awesome and you want everyone to know it? Charlie's got you covered. Show your love and Charlie will share your message into the #kudos channel for everyone to see. Share the love!"
+  );
+
   app.message(
     /^\s*(love|<3|:heart\w*:)\s+((<@[\w-]+>\s*)+)(.*)$/i,
     async ({

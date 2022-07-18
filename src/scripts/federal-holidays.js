@@ -2,6 +2,7 @@ const { directMention } = require("@slack/bolt");
 const moment = require("moment");
 const {
   dates: { getNextHoliday },
+  helpMessage,
   holidays: { emojis },
   homepage: { registerDidYouKnow },
   stats: { incrementStats },
@@ -24,6 +25,13 @@ const getHolidayText = () => {
 };
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Federal holidays",
+    "when is the next holiday",
+    "Itching for a day off and want to know when the next holiday is? Charlie knows all the (standard, recurring) federal holidays and will gladly tell you what's coming up next!",
+    true
+  );
+
   registerDidYouKnow(() => ({
     type: "section",
     text: {

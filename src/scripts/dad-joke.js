@@ -2,10 +2,18 @@ const { directMention } = require("@slack/bolt");
 const axios = require("axios");
 const {
   cache,
+  helpMessage,
   stats: { incrementStats },
 } = require("../utils");
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Dad Jokes",
+    "dad joke",
+    "Fetches a joke from Fatherhood.gov. Charlie will first set up the joke, then it'll provide the punchline!",
+    true
+  );
+
   app.message(
     directMention(),
     /dad joke/i,

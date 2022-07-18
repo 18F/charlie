@@ -4,6 +4,7 @@ const plural = require("plural");
 const {
   cache,
   stats: { incrementStats },
+  helpMessage,
 } = require("../utils");
 
 const loadConfigs = async () =>
@@ -141,9 +142,23 @@ const attachTrigger = (app, { trigger, ...config }) => {
 module.exports = async (app) => {
   const configs = await loadConfigs();
   if (Array.isArray(configs)) {
+    const triggers = [];
     configs.forEach(async (config) => {
+      triggers.push(
+        config.trigger
+          .replace(/\(\?<!.+?\)/, "")
+          .replace(/\(([^|]+)\|.+?\)/g, "$1")
+          .replace(/s\?$/, "")
+      );
       module.exports.attachTrigger(app, config);
     });
+    triggers.sort();
+
+    helpMessage.registerInteractive(
+      "Facts and random responses",
+      triggers.map((t) => `• ${t}`).join("\n"),
+      "Charlie knows *_so many_* facts. Dog facts, cat facts, giraffe facts, dolphin facts. There are just so many facts. Charlie will gladly share its knowledge of any of these!"
+    );
 
     app.message(/fact of facts/i, async (res) => {
       incrementStats("random response: fact of facts");

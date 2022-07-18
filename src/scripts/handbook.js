@@ -1,5 +1,6 @@
 const axios = require("axios");
 const {
+  helpMessage,
   slack: { postEphemeralResponse },
   stats: { incrementStats },
 } = require("../utils");
@@ -30,6 +31,12 @@ const getBlocksFromResults = (results) =>
   }, []);
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Handbook search",
+    "@handbook <terms>",
+    "Wondering if the TTS Handbook has useful information but don't want to open your browser? Charlie can search for you! If it finds anything, it'll post links in a threaded response."
+  );
+
   app.message(/^@?handbook (.+)$/i, async (msg) => {
     incrementStats("handbook search");
 

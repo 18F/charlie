@@ -1,5 +1,6 @@
 const { cache } = require("./cache");
 const dates = require("./dates");
+const helpMessage = require("./helpMessage");
 const holidays = require("./holidays");
 const homepage = require("./homepage");
 const optOut = require("./optOut");
@@ -10,6 +11,7 @@ const tock = require("./tock");
 module.exports = {
   cache,
   dates,
+  helpMessage,
   holidays,
   homepage,
   optOut,

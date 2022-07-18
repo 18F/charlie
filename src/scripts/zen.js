@@ -16,10 +16,18 @@
 const { directMention } = require("@slack/bolt");
 const axios = require("axios");
 const {
+  helpMessage,
   stats: { incrementStats },
 } = require("../utils");
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Zen Bot",
+    "zen",
+    "Fetches and displays a random product, techy, or code-focused message of zen. Read it, and breathe.",
+    true
+  );
+
   app.message(
     directMention(),
     /\bzen\b/i,

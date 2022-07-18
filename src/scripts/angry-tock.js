@@ -4,9 +4,15 @@ const scheduler = require("node-schedule");
 const {
   slack: { postMessage, sendDirectMessage },
   tock: { get18FTockSlackUsers, get18FTockTruants },
+  helpMessage,
 } = require("../utils");
 
 module.exports = (app, config = process.env) => {
+  helpMessage.registerNonInteractive(
+    "Angry Tock",
+    "On the first morning of the work week, Angry Tock will disappointedly remind Tock-able users who haven't Tocked yet. At the end of the day, it'll also let supervisors know about folks who are still truant."
+  );
+
   const TOCK_API_URL = config.TOCK_API;
   const TOCK_TOKEN = config.TOCK_TOKEN;
 

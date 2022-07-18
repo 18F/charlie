@@ -294,7 +294,13 @@ describe("random responder", () => {
     const app = getApp();
 
     beforeEach(() => {
-      fs.readFileSync.mockReturnValue(`["config 1", "config 2", "config 3"]`);
+      const configs = [
+        { name: "config 1", trigger: "" },
+        { name: "config 2", trigger: "" },
+        { name: "config 3", trigger: "" },
+      ];
+
+      fs.readFileSync.mockReturnValue(JSON.stringify(configs));
     });
 
     it("attaches a trigger for each configuration", async () => {
@@ -302,9 +308,18 @@ describe("random responder", () => {
 
       await script(app);
 
-      expect(attachTrigger).toHaveBeenCalledWith(app, "config 1");
-      expect(attachTrigger).toHaveBeenCalledWith(app, "config 2");
-      expect(attachTrigger).toHaveBeenCalledWith(app, "config 3");
+      expect(attachTrigger).toHaveBeenCalledWith(app, {
+        name: "config 1",
+        trigger: "",
+      });
+      expect(attachTrigger).toHaveBeenCalledWith(app, {
+        name: "config 2",
+        trigger: "",
+      });
+      expect(attachTrigger).toHaveBeenCalledWith(app, {
+        name: "config 3",
+        trigger: "",
+      });
 
       expect(app.message).toHaveBeenCalledWith(
         /fact of facts/i,
@@ -327,7 +342,10 @@ describe("random responder", () => {
       // Confirm that a response handler for a random configuration was created
       // and that it was called.
       expect(random).toHaveBeenCalled();
-      expect(responseFrom).toHaveBeenCalledWith("config 1");
+      expect(responseFrom).toHaveBeenCalledWith({
+        name: "config 1",
+        trigger: "",
+      });
       expect(handler).toHaveBeenCalledWith("message");
 
       random.mockRestore();

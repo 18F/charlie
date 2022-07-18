@@ -25,6 +25,7 @@ const { parse } = require("csv-parse");
 const fs = require("fs");
 const {
   stats: { incrementStats },
+  helpMessage,
 } = require("../utils");
 
 function getCsvData() {
@@ -111,6 +112,12 @@ function qExpander(expandThis, csvData) {
 }
 
 module.exports = (app) => {
+  helpMessage.registerInteractive(
+    "Q-Expander",
+    "qex [code]",
+    "Ever wonder what the Q* initialisms are after everyone's names? Each letter describes where a person fits in the organization. Charlie can show you what those codes mean in tree-form, so you can see the organizational hierarchy!"
+  );
+
   const csvData = module.exports.getCsvData();
   app.message(
     /^qexp?\s+([a-z0-9-]{1,8}\*?)$/i,

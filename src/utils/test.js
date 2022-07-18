@@ -3,6 +3,7 @@ const brain = require("../brain");
 const {
   cache,
   dates,
+  helpMessage,
   homepage,
   optOut,
   slack,
@@ -89,6 +90,7 @@ module.exports = {
   utils: {
     cache,
     dates,
+    helpMessage,
     homepage,
     optOut,
     slack,

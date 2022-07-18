@@ -2,6 +2,7 @@ const moment = require("moment-timezone");
 const {
   optOut,
   slack: { getSlackUsersInConversation, postEphemeralMessage },
+  helpMessage,
 } = require("../utils");
 
 const TIMEZONES = {
@@ -33,6 +34,11 @@ const matcher =
   /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
 
 module.exports = (app) => {
+  helpMessage.registerNonInteractive(
+    "Helpful tau bot/Baby Tock",
+    "If Charlie sees something it recognizes as a time posted into chat, it will send a message that only you can see, letting you know what that time is in your timezone. Charlie tries really hard."
+  );
+
   const optout = optOut(
     "handy_tau_bot",
     "Baby Tock (Handy Tau Bot)",

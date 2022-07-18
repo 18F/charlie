@@ -5,9 +5,15 @@ const {
   optOut,
   slack: { sendDirectMessage },
   tock: { get18FTockTruants, get18FTockSlackUsers },
+  helpMessage,
 } = require("../utils");
 
 module.exports = async (app, config = process.env) => {
+  helpMessage.registerNonInteractive(
+    "Optimistic Tock",
+    "Near the end of the last day of the workweek, Charlie will remind Tockable people who haven't submitted their Tock yet."
+  );
+
   const TOCK_API_URL = config.TOCK_API;
   const TOCK_TOKEN = config.TOCK_TOKEN;
 
