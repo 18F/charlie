@@ -1,0 +1,14 @@
+{
+    "[markdown]": {
+        "editor.unicodeHighlight.ambiguousCharacters": false,
+        "editor.unicodeHighlight.invisibleCharacters": false,
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 80,
+        "editor.quickSuggestions": false,
+        "togglequotes.chars": [
+            "\"",
+            "'",
+            "`"
+        ]
+    }
+}
