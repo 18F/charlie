@@ -201,7 +201,8 @@ when the Travel team will be back in the office!
 
 ## Development
 
-See [CONTRIBUTING Docs](CONTRIBUTING.md).
+See [the wiki](https://github.com/18F/charlie/wiki) for developer documentation
+and our [contributing docs](CONTRIBUTING.md) for contribution guidelines
 
 ## Public domain
 
