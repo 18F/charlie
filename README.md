@@ -151,6 +151,13 @@ In a channel, you can say `@charlie set tock <number>` and Charlie will remember
 the Tock line for that room. In the future, if you need to know what to bill to,
 say `@charlie tock` and it will let you know. Handy!
 
+##### US Code Bot
+
+The law sure is fun, and Charlie can help you look it up! If you drop a citation
+to the US Code, Charlie will attempt to look it up on the
+[Cornell LII](https://www.law.cornell.edu/uscode/text) website and post the text
+in a thread. Handy for you legal eagles!
+
 ##### Zen bot
 
 Say `@charlie zen` to get Charlie to fetch a product-, techy-, or code-focused
