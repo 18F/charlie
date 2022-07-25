@@ -199,6 +199,26 @@ top-level content
               message.message.text = "1 usc 2 (a)(1)(A)(i)(I)";
             });
 
+            describe("and there are other parentheticals in the message", () => {
+              it("only displays the actual subcitation and does not try to include the other bits", async () => {
+                message.message.text = `${message.message.text} and he (Fred) doesn't mind`;
+
+                await bot(message);
+
+                expect(say).toHaveBeenCalledWith({
+                  text: `
+*USC Section Name*
+:blank:*(a)*
+:blank::blank:*(1)*
+:blank::blank::blank:*(A) Subparagraph Name*
+:blank::blank::blank::blank:*(i)*
+:blank::blank::blank::blank::blank:*(I)* subclause content
+`.trim(),
+                  thread_ts: "ts",
+                });
+              });
+            });
+
             it("displays them all", async () => {
               await bot(message);
 
