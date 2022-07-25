@@ -81,11 +81,25 @@ module.exports = (app) => {
         // deeper references (paragraphs, subparagraphs, etc.), as long as they
         // are in parantheses after the section. We're only going to keep the
         // first match, which is the entire citation.
+        //
+        // This whole process is kind of convoluted, but it's because the
+        // subcitations need to be anchored to the main USC citation. So we NEED
+        // to find:
+        //   [chapter] USC [section] (maybe subcitations)
+        //
+        // If we don't anchor the subcitations to the main citation, we could
+        // accidentally match parentheticals elsewhere in the message and that
+        // could wonk up our parsing further down.
+        //
+        // For a look at how this regex works, check:
         // https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*u%5C.%3Fs%5C.%3Fc%5C.%3F%5Cs*%C2%A7%3F%5Cs*%28%5Cd%2B%29%28%5Cs*%5C%28%28%5Ba-z%5D%7Ci%2B%7C%5Cd%2B%29%5C%29%29*%2Fi
+        //
         /(\d+)\s*u\.?s\.?c\.?\s*§?\s*(\d+)(\s*\(([a-z]|i+|\d+)\))*/i
       ) ?? [""])[0]
-        // Now remove the [title] usc [section] part, because we've already
-        // parsed that part out.
+        // Reminder that this captures the entire citation, including any
+        // subcitations, if there are any. Again, we only keep the first element
+        // because that's the full match. Now remove the [title] usc [section]
+        // part, because we've already parsed that part out.
         .replace(trigger, "")
         // Our regex allows arbitrary whitespace between the citation components
         // but those make it harder to parse, so we'll just get rid of it all
