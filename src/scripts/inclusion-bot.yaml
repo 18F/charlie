@@ -177,6 +177,7 @@ triggers:
       - pointless
     ignore:
       - daft punk
+      - daft-punk
     why: >-
       ":TERM:" arose as a derogatory reference to people with intellectual
       disabilities. We want to avoid stigmatizing disabilities.
