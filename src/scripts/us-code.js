@@ -1,5 +1,6 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
+const fs = require("fs/promises");
 
 const {
   helpMessage: { registerInteractive },
@@ -65,11 +66,128 @@ module.exports = (app) => {
     false
   );
 
+  app.action(
+    "us code text",
+    async ({
+      ack,
+      action: { value: citation },
+      body: { trigger_id: triggerId },
+      client,
+    }) => {
+      await ack();
+      const pieces = citation.split(" ");
+      const url = `https://www.law.cornell.edu/uscode/text/${pieces[0]}/${pieces[1]}`;
+
+      const { data } = await axios.get(url);
+      const dom = cheerio.load(data);
+
+      const sectionDom = dom(".tab-pane.active div.section");
+
+      const section = {
+        // Sometimes the formatting on the page is wonky and there are multiple
+        // spaces when there should just be one. Anyway, this is the long title of
+        // the USC section.
+        name: dom("h1#page_title").text().trim().replace(/\s+/g, " "),
+
+        // Sometimes top-level sections have content of their own. If that's the
+        // case, record it. Otherwise, mark this false.
+        content:
+          dom("> .content, > .chapeau", sectionDom).text().trim() || false,
+
+        // If there are any subsections, parse those too.
+        children: [...dom("> .subsection, > .paragraph", sectionDom)].map((c) =>
+          parseSubcomponent(c, dom)
+        ),
+      };
+
+      const subcitations = pieces.slice(2);
+      const text = [`*${section.name}*`];
+
+      // If there are any subcitations, we should try to find and display those
+      // instead of displaying the entire section.
+      if (subcitations.length) {
+        const indent = [":blank:"];
+
+        let foundIntermediateSubcomponents = true;
+
+        // The last subcitation is the only one we want the text for. Everything
+        // before that will be treated differently, so we can pop it off.
+        const last = subcitations.pop();
+
+        let child = section;
+        for (const cite of subcitations) {
+          child = child.children.find(({ id }) => id === `(${cite})`);
+
+          // If the subcitation refers to a child that exists, push that sucker
+          // onto the text stack.
+          if (child) {
+            text.push(`${indent.join("")}*${child.name}*`);
+            indent.push(":blank:");
+          } else {
+            // Otherwise, toss on an error message and bail out.
+            text.push(`${indent.join("")}*(${cite}) not found*`);
+            foundIntermediateSubcomponents = false;
+            break;
+          }
+        }
+
+        // We only need to process the last subcitation if all the intermediate
+        // ones were found.
+        if (foundIntermediateSubcomponents) {
+          child = child?.children?.find(({ id }) => id === `(${last})`) ?? null;
+
+          // In this case, if the child exists, we'll do a full stringification
+          // of it instead of just grabbing the name.
+          if (child) {
+            text.push(stringifySubcomponent(child, indent.length));
+          } else {
+            text.push(`${indent.join("")}*(${last}) not found*`);
+          }
+        }
+      } else {
+        // If there aren't any subcitations, build up the text for the entire
+        // honkin' section.
+        if (section.content) {
+          text.push(section.content);
+        }
+        for (const subComponent of section.children) {
+          text.push(stringifySubcomponent(subComponent, 1));
+        }
+      }
+
+      client.views.open({
+        trigger_id: triggerId,
+        view: {
+          type: "modal",
+          title: {
+            type: "plain_text",
+            text: `${pieces[0]} U.S. Code § ${pieces[1]}`,
+          },
+          blocks: [
+            {
+              type: "section",
+              text: { type: "mrkdwn", text: text.join("\n") },
+            },
+            {
+              type: "context",
+              elements: [
+                {
+                  type: "mrkdwn",
+                  text: `Text sourced from <${url}|Cornell Legal Information Institute>`,
+                },
+              ],
+            },
+          ],
+        },
+      });
+    }
+  );
+
   app.message(
     trigger,
     async ({
       context: { matches },
-      event: { thread_ts: thread, ts },
+      event: { thread_ts: thread },
       message: { text: message },
       say,
     }) => {
@@ -116,90 +234,46 @@ module.exports = (app) => {
       // LII has a really easy URL structure. Bless them.
       const url = `https://www.law.cornell.edu/uscode/text/${titleNumber}/${sectionNumber}`;
 
-      const text = [];
+      const response = { blocks: [], text: "" };
+      if (thread) {
+        response.thread_ts = thread;
+      }
 
       try {
         const { data } = await axios.get(url);
         const dom = cheerio.load(data);
 
-        const section = {
-          // Sometimes the formatting on the page is wonky and there are multiple
-          // spaces when there should just be one. Anyway, this is the long title of
-          // the USC section.
-          name: dom("h1#page_title").text().trim().replace(/\s+/g, " "),
+        await fs.writeFile("usc.html", data, { encoding: "utf-8" });
 
-          // Sometimes top-level sections have content of their own. If that's the
-          // case, record it. Otherwise, mark this false.
-          content: dom("div.section > .content").text().trim() || false,
+        const pageTitle = dom("h1#page_title")
+          .text()
+          .trim()
+          .replace(/\s+/g, " ")
+          .split(" - ");
+        const citation = pageTitle[0];
+        const name = pageTitle.slice(1).join(" - ");
 
-          // If there are any subsections, parse those too.
-          children: [...dom("div.section > .subsection")].map((c) =>
-            parseSubcomponent(c, dom)
-          ),
-        };
-
-        text.push(`*${section.name}*`);
-
-        // If there are any subcitations, we should try to find and display those
-        // instead of displaying the entire section.
-        if (subcitations.length) {
-          const indent = [":blank:"];
-
-          let foundIntermediateSubcomponents = true;
-
-          // The last subcitation is the only one we want the text for. Everything
-          // before that will be treated differently, so we can pop it off.
-          const last = subcitations.pop();
-
-          let child = section;
-          for (const cite of subcitations) {
-            child = child.children.find(({ id }) => id === `(${cite})`);
-
-            // If the subcitation refers to a child that exists, push that sucker
-            // onto the text stack.
-            if (child) {
-              text.push(`${indent.join("")}*${child.name}*`);
-              indent.push(":blank:");
-            } else {
-              // Otherwise, toss on an error message and bail out.
-              text.push(`${indent.join("")}*(${cite}) not found*`);
-              foundIntermediateSubcomponents = false;
-              break;
-            }
-          }
-
-          // We only need to process the last subcitation if all the intermediate
-          // ones were found.
-          if (foundIntermediateSubcomponents) {
-            child =
-              child?.children?.find(({ id }) => id === `(${last})`) ?? null;
-
-            // In this case, if the child exists, we'll do a full stringification
-            // of it instead of just grabbing the name.
-            if (child) {
-              text.push(stringifySubcomponent(child, indent.length));
-            } else {
-              text.push(`${indent.join("")}*(${last}) not found*`);
-            }
-          }
-        } else {
-          // If there aren't any subcitations, build up the text for the entire
-          // honkin' section.
-          if (section.content) {
-            text.push(section.content);
-          }
-          for (const subComponent of section.children) {
-            text.push(stringifySubcomponent(subComponent, 1));
-          }
-        }
+        response.text = pageTitle.join(" - ");
+        response.blocks.push({
+          type: "section",
+          text: { type: "mrkdwn", text: `*${citation}* - ${name}` },
+          accessory: {
+            type: "button",
+            text: { type: "plain_text", text: "See text" },
+            value: `${titleNumber} ${sectionNumber} ${subcitations.join(
+              " "
+            )}`.trim(),
+            action_id: "us code text",
+          },
+        });
       } catch (e) {
         if (e.response && e.response.status === 404) {
-          text.push(`${titleNumber} U.S. Code § ${sectionNumber} not found`);
+          response.text = `${titleNumber} U.S. Code § ${sectionNumber} not found`;
         }
       }
 
-      if (text.length) {
-        say({ thread_ts: thread ?? ts, text: text.join("\n") });
+      if (response.text) {
+        say(response);
       }
     }
   );
