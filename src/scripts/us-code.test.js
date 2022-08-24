@@ -23,7 +23,7 @@ describe("U.S. Code bot", () => {
 
     const say = jest.fn();
     const message = {
-      context: { matches: [null, 1, 2] },
+      context: { matches: [null, 1, null, 2] },
       event: { ts: "ts" },
       message: { text: "" },
       say,
@@ -55,6 +55,7 @@ describe("U.S. Code bot", () => {
         expect(say).toHaveBeenCalledWith({
           blocks: [],
           text: `1 U.S. Code § 2 not found`,
+          thread_ts: "ts",
         });
       });
     });
@@ -113,12 +114,67 @@ describe("U.S. Code bot", () => {
               accessory: {
                 type: "button",
                 text: { type: "plain_text", text: "See text" },
-                value: "1 2", // this comes from the message, not the parsed HTML
+                value: "1 2", // this comes from the regex matches derived by Bolt from the message, not the parsed HTML
                 action_id: "us code text",
               },
             },
           ],
           text: "XX USC YYY - Section Name",
+          thread_ts: "ts",
+        });
+      });
+
+      describe("and there are parentheticals in the message", () => {
+        beforeEach(() => {
+          message.message.text = "1 usc 2 (a)(b)";
+        });
+
+        it("sets up the button to include subcitations", async () => {
+          await bot(message);
+
+          expect(say).toHaveBeenCalledWith({
+            blocks: [
+              {
+                type: "section",
+                text: { type: "mrkdwn", text: "*XX USC YYY* - Section Name" },
+                accessory: {
+                  type: "button",
+                  text: { type: "plain_text", text: "See text" },
+                  value: "1 2 a b", // this comes from the message, not the parsed HTML
+                  action_id: "us code text",
+                },
+              },
+            ],
+            text: "XX USC YYY - Section Name",
+            thread_ts: "ts",
+          });
+        });
+
+        describe("and some of them are not part of a citation", () => {
+          beforeEach(() => {
+            message.message.text = `${message.message.text} and he (Fred) doesn't mind`;
+          });
+
+          it("does not include the non-citation bits when setting up the button", async () => {
+            await bot(message);
+
+            expect(say).toHaveBeenCalledWith({
+              blocks: [
+                {
+                  type: "section",
+                  text: { type: "mrkdwn", text: "*XX USC YYY* - Section Name" },
+                  accessory: {
+                    type: "button",
+                    text: { type: "plain_text", text: "See text" },
+                    value: "1 2 a b", // this comes from the message, not the parsed HTML
+                    action_id: "us code text",
+                  },
+                },
+              ],
+              text: "XX USC YYY - Section Name",
+              thread_ts: "ts",
+            });
+          });
         });
       });
 
@@ -211,81 +267,63 @@ top-level content
 
         describe("and the user wants a more precise citation", () => {
           describe("and an intermediate part of the citation does not exist", () => {
-            request.action.value = "1 2 a 1 b i";
+            beforeEach(() => {
+              request.action.value = "1 2 a 1 b i";
+            });
 
             it("displays up to the last part it finds and says the missing part is not found", async () => {
-              await bot(message);
+              await requestModal(request);
 
-              expect(say).toHaveBeenCalledWith({
-                text: `
-*USC Section Name*
+              modal.view.blocks[0].text.text = `
+*XX USC YYY - Section Name*
 :blank:*(a)*
 :blank::blank:*(1)*
 :blank::blank::blank:*(b) not found*
-`.trim(),
-                thread_ts: "ts",
-              });
+`.trim();
+              expect(request.client.views.open).toHaveBeenCalledWith(modal);
             });
           });
 
           describe("and the intermediate part of the citation exists", () => {
             describe("but the last part does not", () => {
-              request.action.value = "1 2 a 1 a i 3";
+              beforeEach(() => {
+                request.action.value = "1 2 a 1 a i 3";
+              });
 
               it("displays up to the last part it finds and says the last part is not found", async () => {
-                await bot(message);
+                await requestModal(request);
 
-                expect(say).toHaveBeenCalledWith({
-                  text: `
-*USC Section Name*
+                modal.view.blocks[0].text.text = `
+*XX USC YYY - Section Name*
 :blank:*(a)*
 :blank::blank:*(1)*
 :blank::blank::blank:*(A) Subparagraph Name*
 :blank::blank::blank::blank:*(i)*
 :blank::blank::blank::blank::blank:*(3) not found*
-`.trim(),
-                  thread_ts: "ts",
-                });
+`.trim();
+
+                expect(request.client.views.open).toHaveBeenCalledWith(modal);
               });
             });
 
             describe("and the last part does too", () => {
-              request.action.value = "1 2 a 1 a i i";
-
-              describe("and there are other parentheticals in the message", () => {
-                it("only displays the actual subcitation and does not try to include the other bits", async () => {
-                  message.message.text = `${message.message.text} and he (Fred) doesn't mind`;
-
-                  await bot(message);
-
-                  expect(say).toHaveBeenCalledWith({
-                    text: `
-*USC Section Name*
-:blank:*(a)*
-:blank::blank:*(1)*
-:blank::blank::blank:*(A) Subparagraph Name*
-:blank::blank::blank::blank:*(i)*
-:blank::blank::blank::blank::blank:*(I)* subclause content
-`.trim(),
-                    thread_ts: "ts",
-                  });
-                });
+              beforeEach(() => {
+                request.action.value = "1 2 a 1 a i i";
               });
 
               it("displays them all", async () => {
-                await bot(message);
+                await requestModal(request);
 
-                expect(say).toHaveBeenCalledWith({
-                  text: `
-*USC Section Name*
+                modal.view.blocks[0].text.text = `
+*XX USC YYY - Section Name*
 :blank:*(a)*
 :blank::blank:*(1)*
 :blank::blank::blank:*(A) Subparagraph Name*
 :blank::blank::blank::blank:*(i)*
 :blank::blank::blank::blank::blank:*(I)* subclause content
-`.trim(),
-                  thread_ts: "ts",
-                });
+`.trim();
+
+                expect(request.client.views.open).toHaveBeenCalledWith(modal);
               });
             });
           });

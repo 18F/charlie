@@ -1,6 +1,5 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-const fs = require("fs/promises");
 
 const {
   helpMessage: { registerInteractive },
@@ -17,8 +16,8 @@ const {
 // This bot trigger only listens for title & section. We'll pull out any more
 // specific references later.
 //
-// https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*u%5C.%3Fs%5C.%3Fc%5C.%3F%5Cs*%C2%A7%3F%5Cs*%28%5Cd%2B%29%2Fi
-const trigger = /(\d+)\s*?u\.?s\.?c\.?\s*?§?\s*?(\d+)/i;
+// https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*%3Fu%5C.%3F%5Cs%3Fs%5C.%3F%5Cs%3Fc%28%5C.%7Code%29%3F%5Cs*%3F%C2%A7%3F%5Cs*%3F%28%5Cd%2B%29%2Fi
+const trigger = /(\d+)\s*?u\.?\s?s\.?\s?c(\.|ode)?\s*?§?\s*?(\d+)/i;
 
 const parseSubcomponent = (node, dom) => {
   const subsection = {
@@ -187,12 +186,12 @@ module.exports = (app) => {
     trigger,
     async ({
       context: { matches },
-      event: { thread_ts: thread },
+      event: { thread_ts: thread, ts },
       message: { text: message },
       say,
     }) => {
       const titleNumber = +matches[1];
-      const sectionNumber = +matches[2];
+      const sectionNumber = +matches[3];
 
       const subcitations = (message.match(
         // This matcher pulls out not just the title & section, but also any
@@ -210,9 +209,9 @@ module.exports = (app) => {
         // could wonk up our parsing further down.
         //
         // For a look at how this regex works, check:
-        // https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*u%5C.%3Fs%5C.%3Fc%5C.%3F%5Cs*%C2%A7%3F%5Cs*%28%5Cd%2B%29%28%5Cs*%5C%28%28%5Ba-z%5D%7Ci%2B%7C%5Cd%2B%29%5C%29%29*%2Fi
+        // https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*%3Fu%5C.%3F%5Cs%3Fs%5C.%3F%5Cs%3Fc%28%5C.%7Code%29%3F%5Cs*%3F%C2%A7%3F%5Cs*%3F%28%5Cd%2B%29%28%5Cs*%5C%28%28%5Ba-z%5D%7Ci%2B%7C%5Cd%2B%29%5C%29%29*%2Fi
         //
-        /(\d+)\s*u\.?s\.?c\.?\s*§?\s*(\d+)(\s*\(([a-z]|i+|\d+)\))*/i
+        /(\d+)\s*?u\.?\s?s\.?\s?c(\.|ode)?\s*?§?\s*?(\d+)(\s*\(([a-z]|i+|\d+)\))*/i
       ) ?? [""])[0]
         // Reminder that this captures the entire citation, including any
         // subcitations, if there are any. Again, we only keep the first element
@@ -234,16 +233,11 @@ module.exports = (app) => {
       // LII has a really easy URL structure. Bless them.
       const url = `https://www.law.cornell.edu/uscode/text/${titleNumber}/${sectionNumber}`;
 
-      const response = { blocks: [], text: "" };
-      if (thread) {
-        response.thread_ts = thread;
-      }
+      const response = { blocks: [], text: "", thread_ts: thread ?? ts };
 
       try {
         const { data } = await axios.get(url);
         const dom = cheerio.load(data);
-
-        await fs.writeFile("usc.html", data, { encoding: "utf-8" });
 
         const pageTitle = dom("h1#page_title")
           .text()
