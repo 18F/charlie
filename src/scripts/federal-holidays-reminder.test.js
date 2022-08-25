@@ -28,7 +28,7 @@ describe("holiday reminder", () => {
         };
         getNextHoliday.mockReturnValue(nextHoliday);
 
-        bot({});
+        bot(null, {});
         expect(scheduleJob).toHaveBeenCalledWith(
           moment(nextHoliday.date).subtract(3, "days").hour(15).toDate(),
           expect.any(Function)
@@ -41,7 +41,7 @@ describe("holiday reminder", () => {
         };
         getNextHoliday.mockReturnValue(nextHoliday);
 
-        bot({ HOLIDAY_REMINDER_TIME: "04:32" });
+        bot(null, { HOLIDAY_REMINDER_TIME: "04:32" });
         expect(scheduleJob).toHaveBeenCalledWith(
           moment(nextHoliday.date)
             .subtract(3, "days")
@@ -58,7 +58,7 @@ describe("holiday reminder", () => {
         const nextHoliday = { date: moment("2021-08-19T12:00:00Z") };
         getNextHoliday.mockReturnValue(nextHoliday);
 
-        bot();
+        bot(null);
         expect(scheduleJob).toHaveBeenCalledWith(
           moment(nextHoliday.date).subtract(1, "day").hour(15).toDate(),
           expect.any(Function)
@@ -69,7 +69,7 @@ describe("holiday reminder", () => {
         const nextHoliday = { date: moment("2021-08-19T12:00:00Z") };
         getNextHoliday.mockReturnValue(nextHoliday);
 
-        bot({ HOLIDAY_REMINDER_TIME: "04:32" });
+        bot(null, { HOLIDAY_REMINDER_TIME: "04:32" });
         expect(scheduleJob).toHaveBeenCalledWith(
           moment(nextHoliday.date)
             .subtract(1, "day")
@@ -92,7 +92,7 @@ describe("holiday reminder", () => {
       };
       getNextHoliday.mockReturnValue(nextHoliday);
 
-      bot(config);
+      bot(null, config);
 
       return scheduleJob.mock.calls[0][1];
     };
