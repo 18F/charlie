@@ -98,12 +98,6 @@ and Charlie will deliver it whenever you need. Just say `@charlie hug me` or
 `@charlie hug bomb <number>` to get a little happiness dropped right on your
 screen.
 
-##### Love/Kudos bot
-
-What's that? Someone did something awesome and you want everyone to know about
-it? Charlie's got you covered. Just say `love @user for the thing` and Charlie
-will share the love in the `#love` channel for everyone to see. Share the love!
-
 ##### OPM's DC offices status
 
 Working in DC and want to know if the office is closed due to snow or, perhaps,
