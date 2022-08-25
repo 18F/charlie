@@ -5,7 +5,7 @@
   "scripts": {
     "lint": "eslint '**/*.js'",
     "start": "node src/main.js",
-    "start-dev": "npx nodemon src/main.js",
+    "start-dev": "node src/main.js",
     "test": "jest 'src/.+/?.+\\.test\\.js'",
     "test-coverage": "jest 'src/.+/?.+\\.test\\.js' --coverage"
   },
