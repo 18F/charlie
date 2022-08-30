@@ -21,7 +21,7 @@
     "he": "^1.2.0",
     "js-yaml": "^4.1.0",
     "moment": "^2.29.2",
-    "moment-timezone": "^0.5.32",
+    "moment-timezone": "^0.5.35",
     "node-schedule": "^2.0.0",
     "pg": "^8.7.1",
     "plural": "^1.1.0"
