@@ -1,0 +1,12 @@
+name: pull request
+
+on: 
+  pull_request:
+
+jobs:
+  build:
+    uses: ./.github/workflows/reusable_build.yml
+  
+  test:
+    needs: [build]
+    uses: ./.github/workflows/reusable_test.yml
