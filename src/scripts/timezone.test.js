@@ -257,8 +257,6 @@ describe("Handy Tau-bot timezone conversions", () => {
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
         responseFor("user la", "10:42")
       );
-
     });
-
   });
 });

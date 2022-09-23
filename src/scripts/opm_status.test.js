@@ -32,8 +32,7 @@ describe("OPM status for DC-area offices", () => {
     await handler(message);
 
     expect(message.say).toHaveBeenCalledWith({
-      text:
-        "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
+      text: "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
       thread_ts: "thread id",
       unfurl_links: false,
       unfurl_media: false,
@@ -49,8 +48,7 @@ describe("OPM status for DC-area offices", () => {
     await handler(message);
 
     expect(message.say).toHaveBeenCalledWith({
-      text:
-        "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
+      text: "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
       thread_ts: "thread id",
       unfurl_links: false,
       unfurl_media: false,

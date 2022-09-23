@@ -6,42 +6,42 @@ const {
 const script = require("./define");
 
 const glossaryData = {
-  "ADR": {
-      "type": "acronym",
-      "term": "Alternative dispute resolution"
+  ADR: {
+    type: "acronym",
+    term: "Alternative dispute resolution",
   },
   "Alternative dispute resolution": {
-      "type": "term",
-      "description": "ADR includes dispute resolution processes and techniques that fall outside of the government judicial process."
+    type: "term",
+    description:
+      "ADR includes dispute resolution processes and techniques that fall outside of the government judicial process.",
   },
   "Back end developer": {
-      "type": "term",
-      "description": "The people who write the code for the parts of a web site you don't see, working in programming languages like Ruby, Python, or NodeJS. They work on pieces of the application that, for example:\n- Generate shopping recommendations\n- Gather all of the information for search to work\n- Trigger emails being sent"
+    type: "term",
+    description:
+      "The people who write the code for the parts of a web site you don't see, working in programming languages like Ruby, Python, or NodeJS. They work on pieces of the application that, for example:\n- Generate shopping recommendations\n- Gather all of the information for search to work\n- Trigger emails being sent",
   },
-  "POP": {
-      "type": "acronym",
-      "term": [
-          "Procurement Operating Procedure",
-          "Period of Performance"
-      ]
+  POP: {
+    type: "acronym",
+    term: ["Procurement Operating Procedure", "Period of Performance"],
   },
   "Procurement Operating Procedure": {
-      "type": "term",
-      "description": "The procedure for procuring a procurement"
+    type: "term",
+    description: "The procedure for procuring a procurement",
   },
   "Period of Performance": {
-      "type": "term",
-      "description": null
+    type: "term",
+    description: null,
   },
   "T&M": {
-      "type": "acronym",
-      "term": "Time & materials"
+    type: "acronym",
+    term: "Time & materials",
   },
   "Time & materials": {
-      "type": "term",
-      "description": "A contractual arrangement whereby payment is made on the basis of time and materials."
-  }
-}
+    type: "term",
+    description:
+      "A contractual arrangement whereby payment is made on the basis of time and materials.",
+  },
+};
 
 function buildSearchMessage(searchTerm) {
   return {
@@ -59,7 +59,7 @@ function expectedResponse(expectedText) {
     thread_ts: "thread timestamp",
     text: expectedText,
   };
-};
+}
 
 describe("glossary", () => {
   const app = getApp();
@@ -92,37 +92,46 @@ describe("glossary", () => {
       it("displays the 'no match' response", async () => {
         await handler(message);
         expect(message.say).toHaveBeenCalledWith(
-          expectedResponse("I couldn't find *a term with no match*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+a term with no match|add it to the glossary>?")
+          expectedResponse(
+            "I couldn't find *a term with no match*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+a term with no match|add it to the glossary>?"
+          )
         );
       });
-    })
+    });
 
     describe("fuzzy-matching entries", () => {
-      const backendResponse = "*Back end developer*: The people who write the code for the parts of a web site you don't see, working in programming languages like Ruby, Python, or NodeJS. They work on pieces of the application that, for example:\n- Generate shopping recommendations\n- Gather all of the information for search to work\n- Trigger emails being sent"
+      const backendResponse =
+        "*Back end developer*: The people who write the code for the parts of a web site you don't see, working in programming languages like Ruby, Python, or NodeJS. They work on pieces of the application that, for example:\n- Generate shopping recommendations\n- Gather all of the information for search to work\n- Trigger emails being sent";
 
       describe("with an exact match", () => {
         const message = buildSearchMessage("back end developer");
         it("returns the correct definitions", async () => {
           await handler(message);
-          expect(message.say).toHaveBeenCalledWith(expectedResponse(backendResponse));
+          expect(message.say).toHaveBeenCalledWith(
+            expectedResponse(backendResponse)
+          );
         });
       });
 
       describe("with a dash", () => {
-        const message = buildSearchMessage("back-end developer")
+        const message = buildSearchMessage("back-end developer");
 
         it("returns the correct definitions", async () => {
           await handler(message);
-          expect(message.say).toHaveBeenCalledWith(expectedResponse(backendResponse));
+          expect(message.say).toHaveBeenCalledWith(
+            expectedResponse(backendResponse)
+          );
         });
       });
 
       describe("with no space", () => {
-        const message = buildSearchMessage("backend developer")
+        const message = buildSearchMessage("backend developer");
 
         it("returns the correct definitions", async () => {
           await handler(message);
-          expect(message.say).toHaveBeenCalledWith(expectedResponse(backendResponse));
+          expect(message.say).toHaveBeenCalledWith(
+            expectedResponse(backendResponse)
+          );
         });
       });
     });
@@ -135,7 +144,9 @@ describe("glossary", () => {
           it("displays the 'no definition' message", async () => {
             await handler(message);
             expect(message.say).toHaveBeenCalledWith(
-              expectedResponse("The term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!")
+              expectedResponse(
+                "The term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!"
+              )
             );
           });
         });
@@ -146,7 +157,9 @@ describe("glossary", () => {
             await handler(message);
 
             expect(message.say).toHaveBeenCalledWith(
-              expectedResponse("*Alternative dispute resolution*: ADR includes dispute resolution processes and techniques that fall outside of the government judicial process.")
+              expectedResponse(
+                "*Alternative dispute resolution*: ADR includes dispute resolution processes and techniques that fall outside of the government judicial process."
+              )
             );
           });
         });
@@ -157,7 +170,9 @@ describe("glossary", () => {
           it("renders correctly", async () => {
             await handler(message);
             expect(message.say).toHaveBeenCalledWith(
-              expectedResponse("*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials.")
+              expectedResponse(
+                "*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials."
+              )
             );
           });
         });
@@ -170,7 +185,9 @@ describe("glossary", () => {
           it("displays the 'no match' response", async () => {
             await handler(message);
             expect(message.say).toHaveBeenCalledWith(
-              expectedResponse("I couldn't find *LOL*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+LOL|add it to the glossary>?")
+              expectedResponse(
+                "I couldn't find *LOL*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+LOL|add it to the glossary>?"
+              )
             );
           });
         });
@@ -181,7 +198,9 @@ describe("glossary", () => {
             it("displays the acronym and the term", async () => {
               await handler(message);
               expect(message.say).toHaveBeenCalledWith(
-                expectedResponse("_T&M_ means:\n*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials.")
+                expectedResponse(
+                  "_T&M_ means:\n*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials."
+                )
               );
             });
           });
@@ -191,16 +210,15 @@ describe("glossary", () => {
               await handler(message);
               expect(message.say).toHaveBeenCalledWith(
                 expectedResponse(
-                    "_POP_ means:"
-                  + "\n*Procurement Operating Procedure*: The procedure for procuring a procurement"
-                  + "\nThe term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!"
+                  "_POP_ means:" +
+                    "\n*Procurement Operating Procedure*: The procedure for procuring a procurement" +
+                    "\nThe term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!"
                 )
               );
             });
           });
         });
       });
-
     });
 
     it("fetches and parses YAML", async () => {
