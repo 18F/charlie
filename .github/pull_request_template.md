@@ -1,4 +1,7 @@
-# hi
+Describe what this pull request is doing. If there are associated issues,
+cite those here as well.
+
+---
 
 Checklist:
 
