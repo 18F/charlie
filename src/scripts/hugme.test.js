@@ -171,8 +171,7 @@ describe("the hug bot", () => {
           type: "section",
           text: {
             type: "mrkdwn",
-            text:
-              "_If you would like to be added, send a picture in <#channel id>_",
+            text: "_If you would like to be added, send a picture in <#channel id>_",
           },
         },
       ],

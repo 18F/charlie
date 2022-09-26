@@ -46,9 +46,7 @@ describe("the brain", () => {
     brain.set("new key", "new value");
 
     expect(brain.get("new key")).toEqual("new value");
-    expect(
-      query
-    ).toHaveBeenCalledWith(
+    expect(query).toHaveBeenCalledWith(
       "INSERT INTO brain (key, value) VALUES($1, $2) ON CONFLICT (key) DO UPDATE SET value=$2",
       ["new key", '"new value"']
     );
