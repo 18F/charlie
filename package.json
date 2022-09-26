@@ -3,6 +3,8 @@
   "version": "2.7.1",
   "private": true,
   "scripts": {
+    "format": "prettier -w '**/*.js'",
+    "format-test": "prettier --check '**/*.js'",
     "lint": "eslint '**/*.js'",
     "start": "node src/main.js",
     "start-dev": "node src/main.js",

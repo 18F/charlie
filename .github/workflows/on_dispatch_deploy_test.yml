@@ -1,0 +1,15 @@
+name: deploy to testing
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: ./.github/workflows/reusable_build.yml
+
+  deploy:
+    needs: [build]
+    uses: ./.github/workflows/reusable_deploy.yml
+    with:
+      environment: dev
+    secrets: inherit

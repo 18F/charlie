@@ -1,0 +1,38 @@
+name: deploy
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+
+jobs:
+  build:
+    uses: ./.github/workflows/build.yml
+
+  deploy:
+    name: ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    container: governmentpaas/cf-cli
+    steps:
+      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
+        with:
+          path: ./node_modules
+          key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
+        id: npmcache
+        with:
+          path: ./npm-cache
+          key: 18f-bot-${{ runner.os }}-npmcache-${{ hashFiles('package.json') }}-v1
+      - name: push to cloud.gov
+        env:
+          CF_API: ${{ secrets.CF_API }}
+          CF_ORG: ${{ secrets.CF_ORG }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+          CF_SPACE: ${{ inputs.environment }}
+          CF_USERNAME: ${{ secrets.CF_USERNAME }}
+        run: |
+          cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
+          cf push -f manifest.yml --vars-file ./${{ inputs.environment }}.yml
