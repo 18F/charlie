@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/reusable_build.yml
 
   deploy:
     name: ${{ inputs.environment }}
