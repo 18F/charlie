@@ -15,7 +15,7 @@ const getHolidayText = () => {
     moment.duration(nextOne.utc().format("x") - Date.now()).asDays()
   );
 
-  const emoji = emojis.get(holiday.name);
+  const emoji = emojis.get(holiday.alsoObservedAs ?? holiday.name);
 
   return `The next federal holiday is ${
     holiday.alsoObservedAs ?? holiday.name
@@ -27,7 +27,7 @@ const getHolidayText = () => {
 module.exports = (app) => {
   helpMessage.registerInteractive(
     "Federal holidays",
-    "when is the next holiday",
+    "next holiday",
     "Itching for a day off and want to know when the next holiday is? Charlie knows all the (standard, recurring) federal holidays and will gladly tell you what's coming up next!",
     true
   );
@@ -40,12 +40,8 @@ module.exports = (app) => {
     },
   }));
 
-  app.message(
-    directMention(),
-    /(when is( the)? )?next (federal )?holiday/i,
-    ({ say }) => {
-      say(getHolidayText());
-      incrementStats("next federal holiday request");
-    }
-  );
+  app.message(directMention(), /next (federal )?holiday/i, ({ say }) => {
+    say(getHolidayText());
+    incrementStats("next federal holiday request");
+  });
 };
