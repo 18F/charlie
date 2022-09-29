@@ -7,15 +7,16 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/reusable_build.yml
+ 
+  test:
+    needs: [build]
+    uses: ./.github/workflows/reusable_test.yml
 
   license:
     name: license compliance
+    runs-on: ubuntu-latest
     steps:
       - uses: GeekMasher/advanced-security-compliance@e36c63411f26025073e49cbf7cc9ab7b49781165
         with:
           argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
           policy-path: policies/default.yml
-  
-  test:
-    needs: [build]
-    uses: ./.github/workflows/reusable_test.yml
