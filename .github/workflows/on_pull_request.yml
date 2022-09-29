@@ -31,6 +31,6 @@ jobs:
         run: |
           npx license-compliance \
               --production \
-              --allow "MIT;BSD-2-Clause;BSD-3-Clause;ISC;CC0-1.0;Apache-2.0;Python-2.0"\
-              --exclude "ports"
+              --allow "MIT;BSD-2-Clause;BSD-3-Clause;ISC;CC0-1.0;Apache-2.0;Python-2.0" \
+              --exclude "ports" \
               --report detailed
