@@ -16,7 +16,8 @@ jobs:
     name: license compliance
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
       - uses: GeekMasher/advanced-security-compliance@e36c63411f26025073e49cbf7cc9ab7b49781165
         with:
           argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
-          policy-path: ./.github/policies/default.yml
+          policy-path: policies/default.yml
