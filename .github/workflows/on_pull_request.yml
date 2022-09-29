@@ -22,11 +22,6 @@ jobs:
         with:
           path: ./node_modules
           key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
-        id: npmcache
-        with:
-          path: ./npm-cache
-          key: 18f-bot-${{ runner.os }}-npmcache-${{ hashFiles('package.json') }}-v1
       - name: license compliance
         run: |
           npx license-compliance \
