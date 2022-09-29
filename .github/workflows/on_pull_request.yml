@@ -19,4 +19,4 @@ jobs:
       - uses: GeekMasher/advanced-security-compliance@e36c63411f26025073e49cbf7cc9ab7b49781165
         with:
           argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
-          policy-path: policies/default.yml
+          policy-path: .github/policies/default.yml
