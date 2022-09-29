@@ -14,10 +14,23 @@ jobs:
 
   license:
     name: license compliance
+    needs: [build]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
-      - uses: GeekMasher/advanced-security-compliance@e36c63411f26025073e49cbf7cc9ab7b49781165
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
         with:
-          argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
-          policy-path: policies/default.yml
+          path: ./node_modules
+          key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
+      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
+        id: npmcache
+        with:
+          path: ./npm-cache
+          key: 18f-bot-${{ runner.os }}-npmcache-${{ hashFiles('package.json') }}-v1
+      - name: license compliance
+        run: |
+          npx license-compliance \
+              --production \
+              --allow "MIT;BSD-2-Clause;BSD-3-Clause;ISC;CC0-1.0;Apache-2.0;Python-2.0"\
+              --exclude "ports"
+              --report detailed
