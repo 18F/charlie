@@ -20,3 +20,4 @@ jobs:
         with:
           argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
           policy-path: .github/policies/default.yml
+          policy-branch: ${{ github.head_ref || github.ref_name }}
