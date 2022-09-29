@@ -1,11 +1,20 @@
 name: pull request
 
-on: 
+on:
+  push:
   pull_request:
 
 jobs:
   build:
     uses: ./.github/workflows/reusable_build.yml
+
+  license:
+    name: license compliance
+    steps:
+      - uses: GeekMasher/advanced-security-compliance@e36c63411f26025073e49cbf7cc9ab7b49781165
+        with:
+          argvs: '--disable-dependabot --disable-secret-scanning --disable-code-scanning'
+          policy-path: policies/default.yml
   
   test:
     needs: [build]
