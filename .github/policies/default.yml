@@ -3,9 +3,9 @@ licensing:
   conditions:
     ids:
       - Apache-2.0
-      - BSD-2-Clause
-      - BSD-3-Clause
-      - CC0-1.0
-      - ISC
-      - MIT
+      # - BSD-2-Clause
+      # - BSD-3-Clause
+      # - CC0-1.0
+      # - ISC
+      # - MIT
       - Python-2.0
