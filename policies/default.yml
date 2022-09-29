@@ -1,6 +1,6 @@
 licensing:
-  level: error
-  notes:
+  level: notes
+  conditions:
     ids:
       - Apache-2.0
       # - BSD-2-Clause
