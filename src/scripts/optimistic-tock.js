@@ -3,7 +3,7 @@ const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
 const {
   optOut,
-  slack: { sendDirectMessage },
+  slack: { sendDirectMessage, slackUserIsOOO },
   tock: { get18FTockTruants, get18FTockSlackUsers },
   helpMessage,
 } = require("../utils");
@@ -61,7 +61,10 @@ module.exports = async (app, config = process.env) => {
 
     await Promise.all(
       truantTockSlackUsers.map(async ({ slack_id: slackID }) => {
-        await sendDirectMessage(slackID, message);
+        const isOOO = await slackUserIsOOO(slackID);
+        if (!isOOO) {
+          await sendDirectMessage(slackID, message);
+        }
       })
     );
   };
