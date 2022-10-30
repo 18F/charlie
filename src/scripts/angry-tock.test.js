@@ -3,7 +3,7 @@ const moment = require("moment-timezone");
 const {
   getApp,
   utils: {
-    slack: { postMessage, sendDirectMessage },
+    slack: { postMessage, sendDirectMessage, slackUserIsOOO },
     tock: { get18FTockSlackUsers, get18FTockTruants },
   },
 } = require("../utils/test");
@@ -58,6 +58,13 @@ describe("Angry Tock", () => {
         last_name: "Four",
         username: "employee4",
       },
+      {
+        id: "tock5",
+        email: "user@five",
+        first_name: "User",
+        last_name: "Five",
+        username: "employee5",
+      },
     ]);
 
     get18FTockSlackUsers.mockResolvedValue([
@@ -82,7 +89,23 @@ describe("Angry Tock", () => {
         slack_id: "slack3",
         user: "employee3",
       },
+      {
+        email: "user@five",
+        id: "tock5",
+        name: "User Five",
+        slack_id: "slack5",
+        user: "slack5",
+      },
     ]);
+
+    slackUserIsOOO.mockImplementation((id) => {
+      switch (id) {
+        case "slack5":
+          return true;
+        default:
+          return false;
+      }
+    });
   });
 
   afterAll(() => {
@@ -268,15 +291,25 @@ describe("Angry Tock", () => {
       text: ":angrytock: <https://tock.18f.gov|Tock your time>! You gotta!",
     });
 
+    // User 5 should be OOO, so make sure they weren't messaged
+    expect(sendDirectMessage).not.toHaveBeenCalledWith("slack5");
+
     expect(postMessage.mock.calls.length).toBe(2);
 
     const reportMessage = {
       attachments: [
         {
-          fallback:
-            "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
+          fallback: `
+• <@slack1> (notified on Slack)
+• <@slack2> (notified on Slack)
+• <@slack5> (not notified on Slack - maybe OOO)
+• employee4 (not notified)`.trim(),
           color: "#FF0000",
-          text: "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
+          text: `
+• <@slack1> (notified on Slack)
+• <@slack2> (notified on Slack)
+• <@slack5> (not notified on Slack - maybe OOO)
+• employee4 (not notified)`.trim(),
         },
       ],
       username: "Angry Tock",
