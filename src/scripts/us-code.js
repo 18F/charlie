@@ -16,8 +16,8 @@ const {
 // This bot trigger only listens for title & section. We'll pull out any more
 // specific references later.
 //
-// https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*u%5C.%3Fs%5C.%3Fc%5C.%3F%5Cs*%C2%A7%3F%5Cs*%28%5Cd%2B%29%2Fi
-const trigger = /(\d+)\s*?u\.?s\.?c\.?\s*?§?\s*?(\d+)/i;
+// https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*%3Fu%5C.%3F%5Cs%3Fs%5C.%3F%5Cs%3Fc%28%5C.%7Code%29%3F%5Cs*%3F%C2%A7%3F%5Cs*%3F%28%5Cd%2B%29%2Fi
+const trigger = /(\d+)\s*?u\.?\s?s\.?\s?c(\.|ode)?\s*?§?\s*?(\d+)/i;
 
 const parseSubcomponent = (node, dom) => {
   const subsection = {
@@ -65,6 +65,123 @@ module.exports = (app) => {
     false
   );
 
+  app.action(
+    "us code text",
+    async ({
+      ack,
+      action: { value: citation },
+      body: { trigger_id: triggerId },
+      client,
+    }) => {
+      await ack();
+      const pieces = citation.split(" ");
+      const url = `https://www.law.cornell.edu/uscode/text/${pieces[0]}/${pieces[1]}`;
+
+      const { data } = await axios.get(url);
+      const dom = cheerio.load(data);
+
+      const sectionDom = dom(".tab-pane.active div.section");
+
+      const section = {
+        // Sometimes the formatting on the page is wonky and there are multiple
+        // spaces when there should just be one. Anyway, this is the long title of
+        // the USC section.
+        name: dom("h1#page_title").text().trim().replace(/\s+/g, " "),
+
+        // Sometimes top-level sections have content of their own. If that's the
+        // case, record it. Otherwise, mark this false.
+        content:
+          dom("> .content, > .chapeau", sectionDom).text().trim() || false,
+
+        // If there are any subsections, parse those too.
+        children: [...dom("> .subsection, > .paragraph", sectionDom)].map((c) =>
+          parseSubcomponent(c, dom)
+        ),
+      };
+
+      const subcitations = pieces.slice(2);
+      const text = [`*${section.name}*`];
+
+      // If there are any subcitations, we should try to find and display those
+      // instead of displaying the entire section.
+      if (subcitations.length) {
+        const indent = [":blank:"];
+
+        let foundIntermediateSubcomponents = true;
+
+        // The last subcitation is the only one we want the text for. Everything
+        // before that will be treated differently, so we can pop it off.
+        const last = subcitations.pop();
+
+        let child = section;
+        for (const cite of subcitations) {
+          child = child.children.find(({ id }) => id === `(${cite})`);
+
+          // If the subcitation refers to a child that exists, push that sucker
+          // onto the text stack.
+          if (child) {
+            text.push(`${indent.join("")}*${child.name}*`);
+            indent.push(":blank:");
+          } else {
+            // Otherwise, toss on an error message and bail out.
+            text.push(`${indent.join("")}*(${cite}) not found*`);
+            foundIntermediateSubcomponents = false;
+            break;
+          }
+        }
+
+        // We only need to process the last subcitation if all the intermediate
+        // ones were found.
+        if (foundIntermediateSubcomponents) {
+          child = child?.children?.find(({ id }) => id === `(${last})`) ?? null;
+
+          // In this case, if the child exists, we'll do a full stringification
+          // of it instead of just grabbing the name.
+          if (child) {
+            text.push(stringifySubcomponent(child, indent.length));
+          } else {
+            text.push(`${indent.join("")}*(${last}) not found*`);
+          }
+        }
+      } else {
+        // If there aren't any subcitations, build up the text for the entire
+        // honkin' section.
+        if (section.content) {
+          text.push(section.content);
+        }
+        for (const subComponent of section.children) {
+          text.push(stringifySubcomponent(subComponent, 1));
+        }
+      }
+
+      client.views.open({
+        trigger_id: triggerId,
+        view: {
+          type: "modal",
+          title: {
+            type: "plain_text",
+            text: `${pieces[0]} U.S. Code § ${pieces[1]}`,
+          },
+          blocks: [
+            {
+              type: "section",
+              text: { type: "mrkdwn", text: text.join("\n") },
+            },
+            {
+              type: "context",
+              elements: [
+                {
+                  type: "mrkdwn",
+                  text: `Text sourced from <${url}|Cornell Legal Information Institute>`,
+                },
+              ],
+            },
+          ],
+        },
+      });
+    }
+  );
+
   app.message(
     trigger,
     async ({
@@ -74,7 +191,7 @@ module.exports = (app) => {
       say,
     }) => {
       const titleNumber = +matches[1];
-      const sectionNumber = +matches[2];
+      const sectionNumber = +matches[3];
 
       const subcitations = (message.match(
         // This matcher pulls out not just the title & section, but also any
@@ -92,9 +209,9 @@ module.exports = (app) => {
         // could wonk up our parsing further down.
         //
         // For a look at how this regex works, check:
-        // https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*u%5C.%3Fs%5C.%3Fc%5C.%3F%5Cs*%C2%A7%3F%5Cs*%28%5Cd%2B%29%28%5Cs*%5C%28%28%5Ba-z%5D%7Ci%2B%7C%5Cd%2B%29%5C%29%29*%2Fi
+        // https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*%3Fu%5C.%3F%5Cs%3Fs%5C.%3F%5Cs%3Fc%28%5C.%7Code%29%3F%5Cs*%3F%C2%A7%3F%5Cs*%3F%28%5Cd%2B%29%28%5Cs*%5C%28%28%5Ba-z%5D%7Ci%2B%7C%5Cd%2B%29%5C%29%29*%2Fi
         //
-        /(\d+)\s*u\.?s\.?c\.?\s*§?\s*(\d+)(\s*\(([a-z]|i+|\d+)\))*/i
+        /(\d+)\s*?u\.?\s?s\.?\s?c(\.|ode)?\s*?§?\s*?(\d+)(\s*\(([a-z]|i+|\d+)\))*/i
       ) ?? [""])[0]
         // Reminder that this captures the entire citation, including any
         // subcitations, if there are any. Again, we only keep the first element
@@ -116,90 +233,41 @@ module.exports = (app) => {
       // LII has a really easy URL structure. Bless them.
       const url = `https://www.law.cornell.edu/uscode/text/${titleNumber}/${sectionNumber}`;
 
-      const text = [];
+      const response = { blocks: [], text: "", thread_ts: thread ?? ts };
 
       try {
         const { data } = await axios.get(url);
         const dom = cheerio.load(data);
 
-        const section = {
-          // Sometimes the formatting on the page is wonky and there are multiple
-          // spaces when there should just be one. Anyway, this is the long title of
-          // the USC section.
-          name: dom("h1#page_title").text().trim().replace(/\s+/g, " "),
+        const pageTitle = dom("h1#page_title")
+          .text()
+          .trim()
+          .replace(/\s+/g, " ")
+          .split(" - ");
+        const citation = pageTitle[0];
+        const name = pageTitle.slice(1).join(" - ");
 
-          // Sometimes top-level sections have content of their own. If that's the
-          // case, record it. Otherwise, mark this false.
-          content: dom("div.section > .content").text().trim() || false,
-
-          // If there are any subsections, parse those too.
-          children: [...dom("div.section > .subsection")].map((c) =>
-            parseSubcomponent(c, dom)
-          ),
-        };
-
-        text.push(`*${section.name}*`);
-
-        // If there are any subcitations, we should try to find and display those
-        // instead of displaying the entire section.
-        if (subcitations.length) {
-          const indent = [":blank:"];
-
-          let foundIntermediateSubcomponents = true;
-
-          // The last subcitation is the only one we want the text for. Everything
-          // before that will be treated differently, so we can pop it off.
-          const last = subcitations.pop();
-
-          let child = section;
-          for (const cite of subcitations) {
-            child = child.children.find(({ id }) => id === `(${cite})`);
-
-            // If the subcitation refers to a child that exists, push that sucker
-            // onto the text stack.
-            if (child) {
-              text.push(`${indent.join("")}*${child.name}*`);
-              indent.push(":blank:");
-            } else {
-              // Otherwise, toss on an error message and bail out.
-              text.push(`${indent.join("")}*(${cite}) not found*`);
-              foundIntermediateSubcomponents = false;
-              break;
-            }
-          }
-
-          // We only need to process the last subcitation if all the intermediate
-          // ones were found.
-          if (foundIntermediateSubcomponents) {
-            child =
-              child?.children?.find(({ id }) => id === `(${last})`) ?? null;
-
-            // In this case, if the child exists, we'll do a full stringification
-            // of it instead of just grabbing the name.
-            if (child) {
-              text.push(stringifySubcomponent(child, indent.length));
-            } else {
-              text.push(`${indent.join("")}*(${last}) not found*`);
-            }
-          }
-        } else {
-          // If there aren't any subcitations, build up the text for the entire
-          // honkin' section.
-          if (section.content) {
-            text.push(section.content);
-          }
-          for (const subComponent of section.children) {
-            text.push(stringifySubcomponent(subComponent, 1));
-          }
-        }
+        response.text = pageTitle.join(" - ");
+        response.blocks.push({
+          type: "section",
+          text: { type: "mrkdwn", text: `*${citation}* - ${name}` },
+          accessory: {
+            type: "button",
+            text: { type: "plain_text", text: "See text" },
+            value: `${titleNumber} ${sectionNumber} ${subcitations.join(
+              " "
+            )}`.trim(),
+            action_id: "us code text",
+          },
+        });
       } catch (e) {
         if (e.response && e.response.status === 404) {
-          text.push(`${titleNumber} U.S. Code § ${sectionNumber} not found`);
+          response.text = `${titleNumber} U.S. Code § ${sectionNumber} not found`;
         }
       }
 
-      if (text.length) {
-        say({ thread_ts: thread ?? ts, text: text.join("\n") });
+      if (response.text) {
+        say(response);
       }
     }
   );

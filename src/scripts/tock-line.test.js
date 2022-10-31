@@ -44,8 +44,7 @@ describe("tock line", () => {
 
     expect(message.say).toHaveBeenCalledWith({
       icon_emoji: ":happytock:",
-      text:
-        "I don't know a tock line for this room. To set one, say `<@bot id> set tock line <line>`",
+      text: "I don't know a tock line for this room. To set one, say `<@bot id> set tock line <line>`",
       thread_ts: "thread id",
     });
   });

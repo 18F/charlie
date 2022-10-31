@@ -36,6 +36,12 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/giraffes.json"
   },
   {
+    "botName": "Hyrax Bot",
+    "defaultEmoji": ":hyrax:",
+    "trigger": "hyrax fact",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/hyraxes.json"
+  },
+  {
     "botName": "Alan Bot",
     "defaultEmoji": ":alda:",
     "trigger": "alan fact",

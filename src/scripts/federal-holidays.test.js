@@ -29,9 +29,22 @@ describe("federal holidays bot", () => {
 
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
-      /(when is( the)? )?next (federal )?holiday/i,
+      expect.any(RegExp),
       expect.any(Function)
     );
+  });
+
+  it("the registration regex matches appropriately", () => {
+    bot(app);
+    const regex = app.message.mock.calls[0][1];
+    [
+      "next holiday",
+      "next federal holiday",
+      "when is the next holiday",
+      "when's the next federal holiday",
+    ].forEach((trigger) => {
+      expect(regex.test(trigger)).toBe(true);
+    });
   });
 
   it("registers did-you-know content for Charlie's homepage", () => {
@@ -98,21 +111,42 @@ describe("federal holidays bot", () => {
     });
   });
 
-  it("includes an emoji for well-known holidays", () => {
-    bot(app);
-    const handler = app.getHandler();
-    const say = jest.fn();
+  describe("includes an emoji for well-known holidays", () => {
+    it("posts the emoji if the holiday has an emoji", () => {
+      bot(app);
+      const handler = app.getHandler();
+      const say = jest.fn();
 
-    getNextHoliday.mockReturnValue({
-      date: moment.tz("1970-01-02T00:00:00", "UTC"),
-      name: "Christmas Day",
+      getNextHoliday.mockReturnValue({
+        date: moment.tz("1970-01-02T00:00:00", "UTC"),
+        name: "Christmas Day",
+      });
+
+      handler({ say });
+
+      expect(say.mock.calls.length).toBe(1);
+      expect(say).toHaveBeenCalledWith(
+        "The next federal holiday is Christmas Day :christmas_tree: in 1 days on Friday, January 2nd"
+      );
     });
 
-    handler({ say });
+    it("does not include the emoji if the holiday does not have one", () => {
+      bot(app);
+      const handler = app.getHandler();
+      const say = jest.fn();
 
-    expect(say.mock.calls.length).toBe(1);
-    expect(say).toHaveBeenCalledWith(
-      "The next federal holiday is Christmas Day :christmas_tree: in 1 days on Friday, January 2nd"
-    );
+      getNextHoliday.mockReturnValue({
+        date: moment.tz("1970-01-02T00:00:00", "UTC"),
+        name: "Columbus Day",
+        alsoObservedAs: "Indigenous Peoples' Day",
+      });
+
+      handler({ say });
+
+      expect(say.mock.calls.length).toBe(1);
+      expect(say).toHaveBeenCalledWith(
+        "The next federal holiday is Indigenous Peoples' Day in 1 days on Friday, January 2nd"
+      );
+    });
   });
 });

@@ -7,17 +7,19 @@ const {
   helpMessage,
 } = require("../utils");
 
-const scheduleReminder = (config = process.env) => {
-  helpMessage.registerNonInteractive(
-    "Holiday reminders",
-    "On the business day before a federal holiday, Charlie will post a reminder in #general-talk. Talk the day off, don't do work for the government, and observe it in the way that is most suitable to you!"
-  );
-
+// The first argument is always the bot object. We don't actually need it for
+// this script, so capture and toss it out.
+const scheduleReminder = (_, config = process.env) => {
   const CHANNEL = config.HOLIDAY_REMINDER_CHANNEL || "general";
   const TIMEZONE = config.HOLIDAY_REMINDER_TIMEZONE || "America/New_York";
   const reportingTime = moment(
     config.HOLIDAY_REMINDER_TIME || "15:00",
     "HH:mm"
+  );
+
+  helpMessage.registerNonInteractive(
+    "Holiday reminders",
+    `On the business day before a federal holiday, Charlie will post a reminder in #${CHANNEL}. Take the day off, don't do work for the government, and observe it in the way that is most suitable to you!`
   );
 
   const previousWeekday = (date) => {

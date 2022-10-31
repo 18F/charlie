@@ -23,45 +23,45 @@ describe("ask a11y", () => {
     const say = jest.fn();
 
     handler({ say });
-    
+
     expect(say).toHaveBeenCalledWith({
-      "blocks": [
+      blocks: [
         {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "*Here are some things you can type in Slack that A11yBot can respond to*"
-          }
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "*Here are some things you can type in Slack that A11yBot can respond to*",
+          },
         },
         {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "*ask a11y fact*"
-          }
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "*ask a11y fact*",
+          },
         },
         {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "_This will return a random accessibility resource or fact_"
-          }
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "_This will return a random accessibility resource or fact_",
+          },
         },
         {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "*ask a11y*"
-          }
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "*ask a11y*",
+          },
         },
         {
-          "type": "section",
-          "text": {
-            "type": "mrkdwn",
-            "text": "_Returns a list of commands that a11y can respond to_"
-          }
-        }
-      ]
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: "_Returns a list of commands that a11y can respond to_",
+          },
+        },
+      ],
     });
   });
 });

@@ -1,4 +1,5 @@
 const fs = require("fs");
+const { parse } = require("csv-parse");
 
 const { getApp } = require("../utils/test");
 const script = require("./q-expand");
@@ -244,13 +245,19 @@ describe("q-expand csv data", () => {
     }
   });
 
-  it("is formatted correctly", () => {
-    const csv = fs
-      .readFileSync("config/q-expand.csv", { encoding: "utf-8" })
-      .trim()
-      .split("\n");
-    const lines = csv.map((line) => line.split(","));
-    const invalid = lines.filter((parts) => parts.length !== 2);
-    expect(invalid.length).toBe(0);
-  });
+  it("is formatted correctly", async () =>
+    new Promise((resolve) => {
+      const rows = [];
+
+      fs.createReadStream("config/q-expand.csv")
+        .pipe(parse({ delimiter: "," }))
+        .on("data", (row) => {
+          rows.push(row);
+        })
+        .on("end", () => {
+          const invalid = rows.filter((row) => row.length !== 2);
+          expect(invalid.length).toBe(0);
+          resolve();
+        });
+    }));
 });

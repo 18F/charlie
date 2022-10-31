@@ -1,20 +1,24 @@
+const slack = require("./slack");
+
 const {
   addEmojiReaction,
   getChannelID,
   getSlackUsers,
   getSlackUsersInConversation,
+  getSlackUserStatusText,
   postEphemeralMessage,
   postEphemeralResponse,
   postMessage,
   sendDirectMessage,
   setClient,
-} = require("./slack");
+  slackUserIsOOO,
+} = slack;
 
 describe("utils / slack", () => {
   const defaultClient = {
     chat: { postEphemeral: jest.fn(), postMessage: jest.fn() },
     conversations: { list: jest.fn(), open: jest.fn() },
-    users: { list: jest.fn() },
+    users: { list: jest.fn(), profile: { get: jest.fn() } },
   };
   const config = { SLACK_TOKEN: "slack token" };
 
@@ -148,6 +152,19 @@ describe("utils / slack", () => {
     ]);
   });
 
+  it("gets a Slack user's status text", async () => {
+    defaultClient.users.profile.get.mockResolvedValue({
+      profile: { status_text: "text" },
+    });
+
+    const status = await getSlackUserStatusText("slack id");
+
+    expect(defaultClient.users.profile.get).toHaveBeenCalledWith({
+      user: "slack id",
+    });
+    expect(status).toEqual("text");
+  });
+
   it("can post an ephemeral message", async () => {
     const msg = { this: "is", my: "message" };
 
@@ -226,6 +243,49 @@ describe("utils / slack", () => {
       channel: "direct message id",
       text: "moop moop",
       token: "slack token",
+    });
+  });
+
+  describe("tells you if a user is OOO", () => {
+    slack.getSlackUserStatusText = jest.fn();
+
+    it("says no if their status is empty", async () => {
+      slack.getSlackUserStatusText.mockResolvedValue("");
+      const isOOO = await slackUserIsOOO("bob");
+
+      expect(isOOO).toEqual(false);
+    });
+
+    describe("says yes if...", () => {
+      it("their status is OOO, but with mixed caps (case-insensitive check)", async () => {
+        slack.getSlackUserStatusText.mockResolvedValue("I am OoO for a while");
+        const isOOO = await slackUserIsOOO("bob");
+
+        expect(isOOO).toEqual(true);
+      });
+
+      it("their status is 'out of office'", async () => {
+        slack.getSlackUserStatusText.mockResolvedValue("out of office");
+        const isOOO = await slackUserIsOOO("bob");
+
+        expect(isOOO).toEqual(true);
+      });
+
+      it("their status is 'out of the office'", async () => {
+        slack.getSlackUserStatusText.mockResolvedValue(
+          "I will be out of the office until I am not"
+        );
+        const isOOO = await slackUserIsOOO("bob");
+
+        expect(isOOO).toEqual(true);
+      });
+
+      it("their status mentions vacation", async () => {
+        slack.getSlackUserStatusText.mockResolvedValue("On vacation, friends!");
+        const isOOO = await slackUserIsOOO("bob");
+
+        expect(isOOO).toEqual(true);
+      });
     });
   });
 });
