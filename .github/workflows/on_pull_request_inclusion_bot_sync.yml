@@ -21,7 +21,7 @@ jobs:
 
       - uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: 16
+          node-version: 18
       - run: npm ci
 
       - run: npx -y prettier -w InclusionBot.md
