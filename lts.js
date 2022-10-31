@@ -13,11 +13,15 @@ const getCurrentLTSVersion = async () => {
   // need to do some work on this collection.
   const nodeVersionMap = await fetch(LTS_SCHEDULE_URL).then((r) => r.json());
 
-  const pastAndPresetLTSVersions = Object.entries(nodeVersionMap)
+  const pastAndPresentLTSVersions = Object.entries(nodeVersionMap)
     // First get rid of Node.js versions that are not or will never be LTS, as
     // well as versions that will be LTS in the future. If they aren't LTS now,
     // we don't want the project to use them.
-    .filter(([, { lts }]) => !!lts && new Date(lts).getTime() < Date.now())
+    //
+    // new Date(undefined) returns an InvalidDate object whose .getTime() method
+    // returns NaN. As a result, any comparison will be false, so this will also
+    // filter out any versions that do not have an "lts" property.
+    .filter(([, { lts }]) => new Date(lts).getTime() < Date.now())
     // Next map each key/value pair into just the numeric version number because
     // that's all we need after filtering down to only current and past LTSes.
     // The versions are formatted as "vXX" where "XX" is the actual number, so
@@ -26,13 +30,13 @@ const getCurrentLTSVersion = async () => {
 
   // Return the largest major version that is a past-or-present LTS. That is the
   // current LTS.
-  return Math.max(...pastAndPresetLTSVersions);
+  return Math.max(...pastAndPresentLTSVersions);
 };
 
 const getPackageNodeVersion = async () => {
   const pkg = JSON.parse(await fs.readFile("./package.json"));
 
-  if (pkg.engines.node) {
+  if (pkg.engines?.node) {
     // The engine property should be in semver format, so the major version will
     // be before the first dot.
     const [engineMajor] = pkg.engines.node.split(".");
@@ -87,7 +91,7 @@ const getWorkflowLinesWithInvalidNodeVersion = async (currentLTSVersion) => {
     for (const [index, line] of lines.entries()) {
       // Node could be referenced via a workflow job or step container.
       const [, nodeContainerVersion] = line.match(
-        /container: node:(\d\S+)/
+        /^\s*container: node:(\d\S+)/
       ) ?? [null, false];
 
       if (nodeContainerVersion) {
@@ -171,39 +175,59 @@ const getWorkflowLinesWithInvalidNodeVersion = async (currentLTSVersion) => {
   return workflowFileWithInvalidNodeReferences;
 };
 
-(async () => {
-  const currentLTSVersion = await getCurrentLTSVersion();
-  const engineMajor = await getPackageNodeVersion();
-  const dockerMajor = await getDockerNodeVersion();
-  const invalidWorkflowNodes = await getWorkflowLinesWithInvalidNodeVersion(
-    currentLTSVersion
-  );
+const main = async () => {
+  const currentLTSVersion = await module.exports.getCurrentLTSVersion();
+  const engineMajor = await module.exports.getPackageNodeVersion();
+  const dockerMajor = await module.exports.getDockerNodeVersion();
+  const invalidWorkflowNodes =
+    await module.exports.getWorkflowLinesWithInvalidNodeVersion(
+      currentLTSVersion
+    );
+
+  const text = [];
 
   if (
     engineMajor === currentLTSVersion &&
     dockerMajor === currentLTSVersion &&
     invalidWorkflowNodes.length === 0
   ) {
-    process.exit(0);
+    return text;
   }
 
   if (engineMajor !== currentLTSVersion) {
-    console.log("package.json is out of date");
-    console.log(`  found Node ${engineMajor}; wanted ${currentLTSVersion}`);
+    text.push("package.json is out of date");
+    text.push(`  found Node ${engineMajor}; wanted ${currentLTSVersion}`);
   }
   if (dockerMajor !== currentLTSVersion) {
-    console.log("Dockerfile is out of date");
-    console.log(`  found Node ${dockerMajor}; wanted ${currentLTSVersion}`);
+    text.push("Dockerfile is out of date");
+    text.push(`  found Node ${dockerMajor}; wanted ${currentLTSVersion}`);
   }
 
   for (const [file, lines] of invalidWorkflowNodes) {
-    console.log(`Workflow file ${file} is out of date`);
+    text.push(`Workflow file ${file} is out of date`);
     for (const [line, version] of lines) {
-      console.log(
+      text.push(
         `  line ${line} uses Node ${version}; wanted ${currentLTSVersion}`
       );
     }
   }
 
-  process.exit(1);
-})();
+  return text;
+};
+
+module.exports = {
+  main,
+  getCurrentLTSVersion,
+  getPackageNodeVersion,
+  getDockerNodeVersion,
+  getWorkflowLinesWithInvalidNodeVersion,
+};
+
+if (!module.parent) {
+  module.exports.main().then((errors) => {
+    if (errors.length) {
+      console.log(errors.join("\n"));
+      process.exit(1);
+    }
+  });
+}
