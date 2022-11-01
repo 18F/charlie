@@ -300,13 +300,7 @@ module.exports = (app) => {
 
     // add salutation to the response
     if (headerText) {
-      blocks.push({
-        type: "section",
-        text: {
-          text: headerText,
-          type: "mrkdwn",
-        },
-      });
+      blocks.push(headerText);
     }
 
     // get the status of domains
@@ -320,28 +314,17 @@ module.exports = (app) => {
       const agency = domain[DATA_FIELDS.AGENCY];
       const city = domain[DATA_FIELDS.CITY];
       const state = domain[DATA_FIELDS.STATE];
-      blocks.push({
-        type: "section",
-        text: {
-          text:
-            `<https://${name}|${name}> (${status}), ` +
-            `presented by _${agency}_ in _${city}_, _${state}_`,
-          type: "mrkdwn",
-        },
-      });
+      blocks.push(
+        `<https://${name}|${name}> (${status}), ` +
+          `presented by _${agency}_ in _${city}_, _${state}_`
+      );
     }
 
     // let the user know if their search turned up more than 5 results
     if (numResults > 5 && searchTermExists) {
       const numOtherResults = numResults - 5;
       const others = numOtherResults > 1 ? "others" : "other";
-      blocks.push({
-        type: "section",
-        text: {
-          text: `. . . plus ${numOtherResults} ${others}.`,
-          type: "mrkdwn",
-        },
-      });
+      blocks.push(`. . . plus ${numOtherResults} ${others}.`);
     }
 
     // if there is anything to say, say it!
@@ -352,7 +335,7 @@ module.exports = (app) => {
         username: ".Gov",
         unfurl_links: false,
         unfurl_media: false,
-        blocks,
+        text: blocks.join("\n"),
       });
     }
   };
