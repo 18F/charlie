@@ -207,7 +207,7 @@ describe("dot-gov domains", () => {
           ...commonResponse,
         });
 
-        expect(message.say.mock.calls[0][0]["text"].split("\n")).toEqual([
+        expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
           "There are 9 `.gov` domains right now! Have you seen this one?",
           expect.stringMatching(
             /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
@@ -296,7 +296,7 @@ describe("dot-gov domains", () => {
           ...commonResponse,
         });
 
-        expect(message.say.mock.calls[0][0]["text"].split("\n")).toEqual([
+        expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
           'Here\'s what I could find for city domains related to "belle".',
           expect.stringMatching(/BELLEPLAINEIOWA.GOV/),
         ]);
@@ -314,10 +314,9 @@ describe("dot-gov domains", () => {
           ...commonResponse,
         });
 
-        const expected = new RegExp(
-          /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
-        );
-        expect(message.say.mock.calls[0][0]["text"].split("\n")).toEqual([
+        const expected =
+          /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/;
+        expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
           'Here\'s what I could find for domains related to "a".',
           expect.stringMatching(expected),
           expect.stringMatching(expected),

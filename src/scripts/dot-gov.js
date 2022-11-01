@@ -314,7 +314,7 @@ module.exports = (app) => {
       const agency = domain[DATA_FIELDS.AGENCY];
       const city = domain[DATA_FIELDS.CITY];
       const state = domain[DATA_FIELDS.STATE];
-      const statusString = (status === "OK") ? "" : ` (${status})`;
+      const statusString = status === "OK" ? "" : ` (${status})`;
       blocks.push(
         `<https://${name}|${name}>${statusString}, ` +
           `presented by _${agency}_ in _${city}_, _${state}_`
