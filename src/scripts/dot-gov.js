@@ -310,8 +310,8 @@ module.exports = (app) => {
     }
 
     // get the status of domains
-    const domainStatus = output.map((d) => checkDomainStatus(d));
-    await Promise.all(domainStatus);
+    const promises = output.map((d) => checkDomainStatus(d));
+    const domainStatus = await Promise.all(promises);
 
     // add each domain (max of 5) to the response
     for (const [index, domain] of output.entries()) {
