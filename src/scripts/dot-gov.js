@@ -45,18 +45,20 @@ const { cache, helpMessage } = require("../utils");
 
 /** A regex string for searching the 9 types of .gov domain entities in a variety of ways. */
 const domainTypesRegex = [
-  '(Gov(ernment)?)|',
-  '(City)|',
-  '(County)|',
-  '(Executive(\\sBranch)?)|',
-  '(Judicial(\\sBranch)?)|',
-  '(Legislative(\\sBranch)?)|',
-  '(Fed(eral)?)|',
-  '((Ind(ependent)?\\s)?Intra(state)?)|',
-  '(Inter(state)?)|',
-  '(State)|',
-  '(Trib(e|(al)))'
-].join('');
+  'Gov(ernment)?',
+  'City',
+  'County',
+  'Executive(\\sBranch)?',
+  'Judicial(\\sBranch)?',
+  'Legislative(\\sBranch)?',
+  'Fed(eral)?',
+  '(Ind(ependent)?\\s)?Intra(state)?',
+  'Inter(state)?',
+  'State',
+  'Trib(e|(al))'
+]
+  .map(domain => `(${domain})`) // add parentheses around each group
+  .join('|'); // join them with pipe separators
 
 /** A regex string for catching the user's trigger. */
 const gitGovRegex = new RegExp([
@@ -152,18 +154,14 @@ const narrowResultsByEntity = (entity, data) => {
  * Returns an array of randomly selected items.
  */
 const selectDomainsAtRandom = (domainsArr, numToSelect) => {
-  const output = [];
+  const output = new Set();
   if (domainsArr.length >= numToSelect) {
-    const indicies = [];
-    while (indicies.length < numToSelect) {
+    while (output.size < numToSelect) {
       const randInt = Math.floor(Math.random() * domainsArr.length);
-      if (!indicies.includes(randInt)) {
-        indicies.push(randInt);
-        output.push(domainsArr[randInt]);
-      }
+      output.add(domainsArr[randInt]);
     }
   }
-  return output;
+  return Array.from(output);
 }
 
 /**
@@ -252,18 +250,14 @@ module.exports = (app) => {
     // if a search term is given, see if we can find a match
     if (searchTermExists) {
       const filterByField = field => filterBy(field, searchTerm, filteredDomains);
-      filteredDomains = [
+      filteredDomains = Array.from(new Set([
         ...filterByField(DATA_FIELDS.NAME),
         ...filterByField(DATA_FIELDS.ORG),
         ...filterByField(DATA_FIELDS.AGENCY),
         ...filterByField(DATA_FIELDS.CITY),
         ...filterByField(DATA_FIELDS.STATE),
         ...filterByField(DATA_FIELDS.TYPE),
-      ];
-      const seen = filteredDomains.map(o => o[DATA_FIELDS.NAME]);
-      filteredDomains = filteredDomains.filter(
-        ({[DATA_FIELDS.NAME]: value}, index) => !seen.includes(value, index + 1)
-      )
+      ]));
     }
 
     const numResults = filteredDomains.length;
