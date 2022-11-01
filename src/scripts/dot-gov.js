@@ -23,14 +23,14 @@
  *    "csv-parse"
  *
  * Commands:
- *    (entity) get.gov (search term)
+ *    (entity) get .gov (search term)
  *
  *    examples:
  *        git.gov
- *        get.gov
- *        .gov
- *        tribal .gov
- *        city .gov Lanesboro
+ *        @Charlie get .gov
+ *        @Charlie .gov
+ *        @Charlie tribal .gov
+ *        @Charlie city .gov Lanesboro
  */
 
 const { directMention } = require("@slack/bolt");
@@ -64,7 +64,7 @@ const domainTypesRegex = [
 const gitGovRegex = new RegExp(
   [
     `((?<re_type>${domainTypesRegex})\\s)?`,
-    "((g[ei]t\\s?)?\\.gov)",
+    "((get\\s?)?\\.gov)",
     "(\\s(?<re_search>.+))?",
   ].join(""),
   "i"
@@ -314,8 +314,9 @@ module.exports = (app) => {
       const agency = domain[DATA_FIELDS.AGENCY];
       const city = domain[DATA_FIELDS.CITY];
       const state = domain[DATA_FIELDS.STATE];
+      const statusString = "" ? status === "OK" : ` (${status})`;
       blocks.push(
-        `<https://${name}|${name}> (${status}), ` +
+        `<https://${name}|${name}>${statusString}, ` +
           `presented by _${agency}_ in _${city}_, _${state}_`
       );
     }

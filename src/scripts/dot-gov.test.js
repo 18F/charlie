@@ -109,15 +109,10 @@ describe("dot-gov domains", () => {
 
   it("subscribes to domain requests in two ways", () => {
     script(app);
-    expect(app.message).toHaveBeenNthCalledWith(
-      1,
-      /git\.gov/i,
-      expect.any(Function)
-    );
-    expect(app.message).toHaveBeenNthCalledWith(
-      2,
+    expect(app.message).toHaveBeenCalledWith(/git\.gov/i, expect.any(Function));
+    expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
-      /((?<re_type>(Gov(ernment)?)|(City)|(County)|(Executive(\sBranch)?)|(Judicial(\sBranch)?)|(Legislative(\sBranch)?)|(Fed(eral)?)|((Ind(ependent)?\s)?Intra(state)?)|(Inter(state)?)|(State)|(Trib(e|(al))))\s)?((g[ei]t\s?)?\.gov)(\s(?<re_search>.+))?/i,
+      /((?<re_type>(Gov(ernment)?)|(City)|(County)|(Executive(\sBranch)?)|(Judicial(\sBranch)?)|(Legislative(\sBranch)?)|(Fed(eral)?)|((Ind(ependent)?\s)?Intra(state)?)|(Inter(state)?)|(State)|(Trib(e|(al))))\s)?((get\s?)?\.gov)(\s(?<re_search>.+))?/i,
       expect.any(Function)
     );
   });
@@ -208,26 +203,16 @@ describe("dot-gov domains", () => {
         await handler(message);
 
         expect(message.say).toHaveBeenCalledWith({
-          blocks: [
-            {
-              text: {
-                text: "There are 9 `.gov` domains right now! Have you seen this one?",
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-            {
-              text: {
-                text: expect.stringMatching(
-                  /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
-                ),
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-          ],
+          text: expect.any(String),
           ...commonResponse,
         });
+
+        expect(message.say.mock.calls[0][0]["text"].split("\n")).toEqual([
+          "There are 9 `.gov` domains right now! Have you seen this one?",
+          expect.stringMatching(
+            /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
+          ),
+        ]);
       });
     });
   });
@@ -294,15 +279,7 @@ describe("dot-gov domains", () => {
         };
         await handler(message);
         expect(message.say).toHaveBeenCalledWith({
-          blocks: [
-            {
-              text: {
-                text: 'I found nothing related to "confusion", sorry.',
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-          ],
+          text: 'I found nothing related to "confusion", sorry.',
           ...commonResponse,
         });
       });
@@ -315,24 +292,14 @@ describe("dot-gov domains", () => {
         await handler(message);
 
         expect(message.say).toHaveBeenCalledWith({
-          blocks: [
-            {
-              text: {
-                text: 'Here\'s what I could find for city domains related to "belle".',
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-            {
-              text: {
-                text: expect.stringMatching(/BELLEPLAINEIOWA.GOV/),
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-          ],
+          text: expect.any(String),
           ...commonResponse,
         });
+
+        expect(message.say.mock.calls[0][0]["text"].split("\n")).toEqual([
+          'Here\'s what I could find for city domains related to "belle".',
+          expect.stringMatching(/BELLEPLAINEIOWA.GOV/),
+        ]);
       });
 
       it("if there are many results", async () => {
@@ -343,69 +310,22 @@ describe("dot-gov domains", () => {
         await handler(message);
 
         expect(message.say).toHaveBeenCalledWith({
-          blocks: [
-            {
-              text: {
-                text: 'Here\'s what I could find for domains related to "a".',
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-            {
-              text: {
-                text: expect.stringMatching(
-                  /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
-                ),
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-            {
-              text: {
-                text: expect.stringMatching(
-                  /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
-                ),
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-            {
-              text: {
-                text: expect.stringMatching(
-                  /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
-                ),
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-            {
-              text: {
-                text: expect.stringMatching(
-                  /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
-                ),
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-            {
-              text: {
-                text: expect.stringMatching(
-                  /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
-                ),
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-            {
-              text: {
-                text: ". . . plus 4 others.",
-                type: "mrkdwn",
-              },
-              type: "section",
-            },
-          ],
+          text: expect.any(String),
           ...commonResponse,
         });
+
+        const expected = new RegExp(
+          /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
+        );
+        expect(message.say.mock.calls[0][0]["text"].split("\n")).toEqual([
+          'Here\'s what I could find for domains related to "a".',
+          expect.stringMatching(expected),
+          expect.stringMatching(expected),
+          expect.stringMatching(expected),
+          expect.stringMatching(expected),
+          expect.stringMatching(expected),
+          ". . . plus 4 others.",
+        ]);
       });
     });
   });
