@@ -40,3 +40,10 @@ ergs:
       career development, address the challenges we encounter in the workplace,
       and help one another in and around TTS.
     channel: "#women"
+  
+  Not Your Dude:
+    description: >
+      Private channel for cis women, trans women, trans men, non-binary people,
+      and those who are otherwise marginalized (i.e., non-hegemonic masculine
+      folks).
+    channel: "#womxn-private"
