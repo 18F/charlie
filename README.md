@@ -6,12 +6,6 @@ A Slack app bot used within 18F for fun and work.
   - [Interactive bots](#interactive-bots)
   - [Non-interactive bots](#non-interactive-bots)
 - [Development](#development)
-  - [Important note](#important-note)
-  - [Docker](#docker)
-  - [Local development](#local-development)
-- [Deploying](#deploying)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
 - [Public domain](#public-domain)
 
 ## What all it can do
