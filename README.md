@@ -41,7 +41,7 @@ respond with that information!
 
 Charlie knows **_so many_** facts. Dog facts, cat facts, giraffe facts, dolphin
 facts. There are just so many facts. You can just say `dog fact` (or
-`giraffe fact`, etc.)to get Charlie to share its knowledge with you.
+`giraffe fact`, etc.) to get Charlie to share its knowledge with you.
 
 | Key word          | What it does                                      |
 | ----------------- | ------------------------------------------------- |
@@ -110,7 +110,7 @@ and report what it finds.
 
 Do you like pugs? Do you want pictures of pugs? Charlie can help! Just say
 `@Charlie pug me` to get a picture of a cute pug, or `@Charlie pug bomb [count]`
-to get get a bunch of pug pictures! (You can leave the count out; Charlie will
+to get a bunch of pug pictures! (You can leave the count out; Charlie will
 send 3 pictures if you don't ask for a specific number.)
 
 ##### Q-Expander bot
