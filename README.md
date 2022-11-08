@@ -21,7 +21,7 @@ A Slack app bot used within 18F for fun and work.
 ##### Coffeemate
 
 Schedule virtual coffees with random teammates! Not sure who you should talk to?
-Charlie can help! Say `coffee me` to get put into the virual coffee queue. As
+Charlie can help! Say `coffee me` to get put into the virtual coffee queue. As
 soon as someone else signs up, Charlie will connect you.
 
 ##### Dad jokes
