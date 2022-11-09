@@ -7,6 +7,16 @@ const {
   helpMessage,
 } = require("../utils");
 
+const workLessMessages = [
+  "Only do 32 hours worth of work since there are only 32 hours to do them in!",
+  "This is your permission to cancel some meetings and only do 32 hours of work for the holiday week!",
+  "Don't try to fit 40 hours of work into the holiday week 32-hour week!",
+  "Observe it the way that is most appropriate to you, and claim that 8 hours for yourself.",
+  "Work at your normal pace for the week and only do 32 hours worth!",
+  "Time is not compressed; it's just gone! So you can also get rid of 8 hours worth of work.",
+  "32 high-quality work hours are preferable to 40 hours worth of exhausted work crammed into 32 hours!",
+];
+
 // The first argument is always the bot object. We don't actually need it for
 // this script, so capture and toss it out.
 const scheduleReminder = (_, config = process.env) => {
@@ -44,7 +54,9 @@ const scheduleReminder = (_, config = process.env) => {
         "dddd"
       )}* is a federal holiday in observance of *${
         holiday.alsoObservedAs ?? holiday.name
-      }*${emoji ? ` ${emoji}` : ""}!`,
+      }*${emoji ? ` ${emoji}` : ""}! ${
+        workLessMessages[Math.floor(Math.random() * workLessMessages.length)]
+      }`,
     });
   };
 
