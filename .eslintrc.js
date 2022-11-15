@@ -33,7 +33,7 @@ module.exports = {
   parserOptions: { ecmaVersion: 2021 },
   overrides: [
     {
-      files: ["src/**/*.test.js", "src/utils/test.js"],
+      files: ["src/**/*.test.js", "src/utils/test.js", "lts.test.js"],
       env: {
         jest: true,
       },

@@ -1,5 +1,5 @@
 const moment = require("moment-timezone");
-const { getNextHoliday } = require("./dates");
+const { getNextElectionDay, getNextHoliday } = require("./dates");
 
 describe("gets the next holiday", () => {
   beforeAll(() => {
@@ -51,6 +51,52 @@ describe("gets the next holiday", () => {
     expect(nextHoliday).toEqual({
       name: "Memorial Day",
       dateString: "2012-05-28",
+    });
+  });
+});
+
+describe("date utility library", () => {
+  beforeAll(() => {
+    jest.useFakeTimers();
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
+  describe("gets the next federal election day", () => {
+    describe("if election day for this year has already passed", () => {
+      it("because it is November but after election day", () => {
+        jest.setSystemTime(+moment.utc("2022-11-09", "YYYY-MM-DD").format("x"));
+
+        const electionDay = getNextElectionDay();
+
+        expect(electionDay.isSame(moment.utc("2024-11-05"))).toBe(true);
+      });
+
+      it("because it is now December", () => {
+        jest.setSystemTime(+moment.utc("2022-12-03", "YYYY-MM-DD").format("x"));
+
+        const electionDay = getNextElectionDay();
+
+        expect(electionDay.isSame(moment.utc("2024-11-05"))).toBe(true);
+      });
+    });
+
+    it("skips odd-numbered years", () => {
+      jest.setSystemTime(+moment.utc("2021-03-01", "YYYY-MM-DD").format("x"));
+
+      const electionDay = getNextElectionDay();
+
+      expect(electionDay.isSame(moment.utc("2022-11-08"))).toBe(true);
+    });
+
+    it("goes the second Tuesday of November if the first Tuesday is before the first Monday", () => {
+      jest.setSystemTime(+moment.utc("2022-10-01", "YYYY-MM-DD").format("x"));
+
+      const electionDay = getNextElectionDay();
+
+      expect(electionDay.isSame(moment.utc("2022-11-08"))).toBe(true);
     });
   });
 });
