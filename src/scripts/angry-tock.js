@@ -2,7 +2,7 @@ const holidays = require("@18f/us-federal-holidays");
 const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
 const {
-  slack: { postMessage, sendDirectMessage, slackUserIsOOO },
+  slack: { postMessage, sendDirectMessage },
   tock: { get18FTockSlackUsers, get18FTockTruants },
   helpMessage,
 } = require("../utils");
@@ -58,26 +58,12 @@ module.exports = (app, config = process.env) => {
 
     const tockSlackUsers = await get18FTockSlackUsers();
     const truants = await get18FTockTruants(m());
-
-    const truantTockEmails = new Set(truants.map(({ email }) => email));
-
-    const slackableTruants = tockSlackUsers.filter(({ email }) =>
-      truantTockEmails.has(email)
+    const slackableTruants = tockSlackUsers.filter((tockUser) =>
+      truants.some((truant) => truant.email === tockUser.email)
     );
 
-    const userIsOOO = new Map(
-      await Promise.all(
-        slackableTruants.map(async ({ slack_id: id }) => [
-          id,
-          await slackUserIsOOO(id),
-        ])
-      )
-    );
-
-    slackableTruants.forEach(async ({ slack_id: slackID }) => {
-      if (!userIsOOO.get(slackID)) {
-        sendDirectMessage(slackID, message);
-      }
+    slackableTruants.forEach(({ slack_id: slackID }) => {
+      sendDirectMessage(slackID, message);
     });
 
     if (!calm) {
@@ -90,18 +76,12 @@ module.exports = (app, config = process.env) => {
         );
 
         const report = [];
-        slackableTruants.forEach((u) => {
-          if (userIsOOO.get(u.slack_id)) {
-            report.push([
-              `• <@${u.slack_id}> (not notified on Slack - maybe OOO)`,
-            ]);
-          } else {
-            report.push([`• <@${u.slack_id}> (notified on Slack)`]);
-          }
-        });
-        nonSlackableTruants.forEach((u) => {
-          report.push([`• ${u.username} (not notified)`]);
-        });
+        slackableTruants.forEach((u) =>
+          report.push([`• <@${u.slack_id}> (notified on Slack)`])
+        );
+        nonSlackableTruants.forEach((u) =>
+          report.push([`• ${u.username} (not notified)`])
+        );
 
         const truantReport = {
           attachments: [
