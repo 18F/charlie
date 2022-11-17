@@ -22,8 +22,8 @@ describe("utils / cache", () => {
   // where the clock has ticked some and then stuff gets added to the cache
   // so that it doesn't expire on the next auto-clean. That is correct
   // behavior, but it's hard to account for. Having this test first moots it.
-  it("clears itself of things that are more than 20 minutes old", async () => {
-    const TWENTY_MINUTES = 20 * 60 * 1000;
+  it("clears itself of things that are more than 4 hours old", async () => {
+    const FOUR_HOURS = 4 * 60 * 60 * 1000;
 
     const callback = jest.fn().mockResolvedValue("");
 
@@ -39,7 +39,7 @@ describe("utils / cache", () => {
     expect(callback).not.toHaveBeenCalled();
 
     // Zoom to the future!
-    await jest.advanceTimersByTime(TWENTY_MINUTES);
+    await jest.advanceTimersByTime(FOUR_HOURS);
 
     await cache("key", 300, callback);
     expect(callback).toHaveBeenCalled();

@@ -1,11 +1,11 @@
-const CACHE_MAX_LIFE = 20 * 60 * 1000;
+const CACHE_MAX_LIFE = 4 * 60 * 60 * 1000; // 4 hours
 
 const cache = (() => {
   const privateCache = new Map();
 
-  // Clear out anything over 20 minutes old, regularly, to prevent memory leaks.
-  // Otherwise caches of months-old Tock data could end up sticking around
-  // forever and ever, amen.
+  // Clear out anything over a maximum lifetime, regularly, to prevent memory
+  // leaks. Otherwise caches of months-old Tock data could end up sticking
+  // around forever and ever, amen.
   setInterval(() => {
     const expiry = Date.now();
     for (const [key, { timestamp }] of privateCache) {
@@ -19,22 +19,22 @@ const cache = (() => {
   // loop, but this interval timer shouldn't keep the process alive.
 
   const cacheFunction = async (key, lifetimeInMinutes, callback) => {
-    if (privateCache.has(key)) {
-      const { timestamp, value } = privateCache.get(key);
+    const lifetimeInMS = lifetimeInMinutes * 60 * 1000;
 
-      // The cached value is older than the allowed lifetime, so fetch it anew.
-      if (timestamp + lifetimeInMinutes * 60 * 1000 < Date.now()) {
-        const newValue = await callback();
+    // If the key isn't in the cache, default to a timestamp of -Infinity so we
+    // will always use the callback.
+    const { timestamp, value } = privateCache.get(key) ?? {
+      timestamp: -Infinity,
+    };
 
-        privateCache.set(key, { timestamp: Date.now(), value: newValue });
-        return newValue;
-      }
+    // The cached value is older than the allowed lifetime, so fetch it anew.
+    if (timestamp + lifetimeInMS < Date.now()) {
+      const newValue = await callback();
 
-      return value;
+      privateCache.set(key, { timestamp: Date.now(), value: newValue });
+      return newValue;
     }
 
-    const value = await callback();
-    privateCache.set(key, { timestamp: Date.now(), value });
     return value;
   };
 
