@@ -98,14 +98,6 @@ const getSlackUsersInConversation = async ({
     return allUsers.filter(({ id }) => channelUsers.includes(id));
   });
 
-const getSlackUserStatusText = async (userId) =>
-  cache(`get status for user ${userId}`, 10, async () => {
-    const {
-      profile: { status_text: status },
-    } = await defaultClient.users.profile.get({ user: userId });
-    return status;
-  });
-
 const postEphemeralMessage = async (message, { SLACK_TOKEN } = process.env) => {
   await defaultClient.chat.postEphemeral({
     ...message,
@@ -155,21 +147,14 @@ const sendDirectMessage = async (
   );
 };
 
-const slackUserIsOOO = async (userId) => {
-  const statusText = await module.exports.getSlackUserStatusText(userId);
-  return /\b(ooo|out of( the)? office|vacation)\b/i.test(statusText);
-};
-
 module.exports = {
   addEmojiReaction,
   getChannelID,
   getSlackUsers,
   getSlackUsersInConversation,
-  getSlackUserStatusText,
   postEphemeralMessage,
   postEphemeralResponse,
   postMessage,
   sendDirectMessage,
   setClient,
-  slackUserIsOOO,
 };
