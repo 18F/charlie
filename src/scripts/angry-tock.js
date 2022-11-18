@@ -2,7 +2,7 @@ const holidays = require("@18f/us-federal-holidays");
 const moment = require("moment-timezone");
 const scheduler = require("node-schedule");
 const {
-  slack: { postMessage, sendDirectMessage },
+  slack: { sendDirectMessage },
   tock: { get18FTockSlackUsers, get18FTockTruants },
   helpMessage,
 } = require("../utils");
@@ -24,13 +24,6 @@ module.exports = (app, config = process.env) => {
   const ANGRY_TOCK_SECOND_ALERT = moment(
     config.ANGRY_TOCK_SECOND_TIME || "16:00",
     "HH:mm"
-  );
-
-  const ANGRY_TOCK_REPORT_TO = (
-    config.ANGRY_TOCK_REPORT_TO || "#18f-supes"
-  ).split(",");
-  const HAPPY_TOCK_REPORT_TO = (config.HAPPY_TOCK_REPORT_TO || "#18f").split(
-    ","
   );
 
   /**
@@ -65,52 +58,6 @@ module.exports = (app, config = process.env) => {
     slackableTruants.forEach(({ slack_id: slackID }) => {
       sendDirectMessage(slackID, message);
     });
-
-    if (!calm) {
-      if (truants.length > 0) {
-        const nonSlackableTruants = truants.filter(
-          (truant) =>
-            !slackableTruants.some(
-              (slackableTruant) => slackableTruant.email === truant.email
-            )
-        );
-
-        const report = [];
-        slackableTruants.forEach((u) =>
-          report.push([`• <@${u.slack_id}> (notified on Slack)`])
-        );
-        nonSlackableTruants.forEach((u) =>
-          report.push([`• ${u.username} (not notified)`])
-        );
-
-        const truantReport = {
-          attachments: [
-            {
-              fallback: report.join("\n"),
-              color: "#FF0000",
-              text: report.join("\n"),
-            },
-          ],
-          username: "Angry Tock",
-          icon_emoji: ":angrytock:",
-          text: "*The following users are currently truant on Tock:*",
-        };
-        ANGRY_TOCK_REPORT_TO.forEach((channel) => {
-          postMessage({ ...truantReport, channel });
-        });
-      } else {
-        [...ANGRY_TOCK_REPORT_TO, ...HAPPY_TOCK_REPORT_TO].forEach(
-          (channel) => {
-            postMessage({
-              username: "Happy Tock",
-              icon_emoji: ":happy-tock:",
-              text: "No Tock truants!",
-              channel,
-            });
-          }
-        );
-      }
-    }
   };
 
   /**
