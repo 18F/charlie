@@ -3,7 +3,8 @@ const moment = require("moment-timezone");
 const {
   getApp,
   utils: {
-    slack: { postMessage, sendDirectMessage },
+    dates: { getCurrentWorkWeek },
+    slack: { sendDirectMessage },
     tock: { get18FTockSlackUsers, get18FTockTruants },
   },
 } = require("../utils/test");
@@ -121,6 +122,8 @@ describe("Angry Tock", () => {
           );
           jest.setSystemTime(time.toDate());
 
+          getCurrentWorkWeek.mockReturnValue([time.toDate()]);
+
           angryTock(app, config);
 
           time.hour(10);
@@ -140,6 +143,8 @@ describe("Angry Tock", () => {
               config.ANGRY_TOCK_TIMEZONE
             );
             jest.setSystemTime(time.toDate());
+
+            getCurrentWorkWeek.mockReturnValue([time.toDate()]);
 
             angryTock(app, config);
 
@@ -163,6 +168,8 @@ describe("Angry Tock", () => {
               config.ANGRY_TOCK_TIMEZONE
             );
             jest.setSystemTime(initial.toDate());
+
+            getCurrentWorkWeek.mockReturnValue([initial.toDate()]);
 
             angryTock(app, config);
 
@@ -192,6 +199,8 @@ describe("Angry Tock", () => {
         );
         jest.setSystemTime(initial.toDate());
 
+        getCurrentWorkWeek.mockReturnValue([initial.clone().day(1).toDate()]);
+
         angryTock(app, config);
 
         // Monday, October 21, 2019 - World's oldest natural pearl, dated at 8,000
@@ -216,6 +225,8 @@ describe("Angry Tock", () => {
       config.ANGRY_TOCK_TIMEZONE
     );
     jest.setSystemTime(initial.toDate());
+
+    getCurrentWorkWeek.mockReturnValue([initial.toDate()]);
 
     angryTock(app, config);
 
