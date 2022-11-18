@@ -85,7 +85,7 @@ module.exports = (app, config = process.env) => {
       // Once we've run the report, wait a minute and then schedule the next
       setTimeout(() => {
         scheduleNextReport();
-      }, 60 * 1000);
+      }, 60 * 1000).unref();
     });
   };
 

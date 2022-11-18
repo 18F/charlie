@@ -21,6 +21,7 @@ describe("Tock truancy reporter for ops", () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
+    postMessage.mockResolvedValue(null);
   });
 
   describe("initialization", () => {
@@ -254,6 +255,7 @@ describe("Tock truancy reporter for ops", () => {
     let reportFn;
 
     beforeAll(() => {
+      getCurrentWorkWeek.mockReturnValue([new Date()]);
       script(app, { TOCK_API: "api", TOCK_TOKEN: "token" });
       reportFn = scheduleJob.mock.calls[0][1];
     });
