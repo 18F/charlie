@@ -1,0 +1,23 @@
+name: tock ops report changes
+
+on:
+  pull_request:
+    paths:
+      - src/scripts/tock-truant-ops-report.js
+      - src/scripts/tock-truant-ops-report.test.js
+
+jobs:
+  comment:
+    name: leave a comment
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/github-script@9ac08808f993958e9de277fe43a64532a609130e
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "It looks like you're updating the Tock truancy report. Please ensure that the 18F director of operations is aware of these changes because the Tock truancy report is used by the ops team and needs to function."
+            });
