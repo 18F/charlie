@@ -3,7 +3,8 @@ const moment = require("moment-timezone");
 const {
   getApp,
   utils: {
-    slack: { postMessage, sendDirectMessage },
+    dates: { getCurrentWorkWeek },
+    slack: { sendDirectMessage },
     tock: { get18FTockSlackUsers, get18FTockTruants },
   },
 } = require("../utils/test");
@@ -121,6 +122,8 @@ describe("Angry Tock", () => {
           );
           jest.setSystemTime(time.toDate());
 
+          getCurrentWorkWeek.mockReturnValue([time.toDate()]);
+
           angryTock(app, config);
 
           time.hour(10);
@@ -140,6 +143,8 @@ describe("Angry Tock", () => {
               config.ANGRY_TOCK_TIMEZONE
             );
             jest.setSystemTime(time.toDate());
+
+            getCurrentWorkWeek.mockReturnValue([time.toDate()]);
 
             angryTock(app, config);
 
@@ -163,6 +168,8 @@ describe("Angry Tock", () => {
               config.ANGRY_TOCK_TIMEZONE
             );
             jest.setSystemTime(initial.toDate());
+
+            getCurrentWorkWeek.mockReturnValue([initial.toDate()]);
 
             angryTock(app, config);
 
@@ -192,6 +199,8 @@ describe("Angry Tock", () => {
         );
         jest.setSystemTime(initial.toDate());
 
+        getCurrentWorkWeek.mockReturnValue([initial.clone().day(1).toDate()]);
+
         angryTock(app, config);
 
         // Monday, October 21, 2019 - World's oldest natural pearl, dated at 8,000
@@ -217,6 +226,8 @@ describe("Angry Tock", () => {
     );
     jest.setSystemTime(initial.toDate());
 
+    getCurrentWorkWeek.mockReturnValue([initial.toDate()]);
+
     angryTock(app, config);
 
     // This should have scheduled a calm "shout." Grab the handler off the
@@ -227,7 +238,6 @@ describe("Angry Tock", () => {
     const calmShout = scheduleJob.mock.calls[0][1];
     await calmShout();
 
-    expect(postMessage.mock.calls.length).toBe(0);
     expect(sendDirectMessage.mock.calls.length).toBe(2);
 
     expect(sendDirectMessage).toHaveBeenCalledWith("slack1", {
@@ -244,7 +254,6 @@ describe("Angry Tock", () => {
 
     // Reset stub history so we can be more sure about the next step.
     scheduleJob.mockClear();
-    postMessage.mockClear();
     sendDirectMessage.mockClear();
 
     // After the calm "shout", there's a short delay and then an "angry" shout
@@ -268,59 +277,13 @@ describe("Angry Tock", () => {
       text: ":angrytock: <https://tock.18f.gov|Tock your time>! You gotta!",
     });
 
-    expect(postMessage.mock.calls.length).toBe(2);
-
-    const reportMessage = {
-      attachments: [
-        {
-          fallback:
-            "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
-          color: "#FF0000",
-          text: "• <@slack1> (notified on Slack)\n• <@slack2> (notified on Slack)\n• employee4 (not notified)",
-        },
-      ],
-      username: "Angry Tock",
-      icon_emoji: ":angrytock:",
-      text: "*The following users are currently truant on Tock:*",
-    };
-
-    expect(postMessage).toHaveBeenCalledWith({
-      ...reportMessage,
-      channel: "#channel",
-    });
-    expect(postMessage).toHaveBeenCalledWith({
-      ...reportMessage,
-      channel: "@user",
-    });
-
     // Clear everything out again, and make sure that the "angry" shout turns
     // very happy if there aren't any truants.
-    postMessage.mockClear();
     sendDirectMessage.mockClear();
 
     get18FTockTruants.mockResolvedValue([]);
     await angryShout();
 
-    const happyMessage = {
-      username: "Happy Tock",
-      icon_emoji: ":happy-tock:",
-      text: "No Tock truants!",
-    };
-
-    expect(postMessage.mock.calls.length).toBe(3);
     expect(sendDirectMessage.mock.calls.length).toBe(0);
-
-    expect(postMessage).toHaveBeenCalledWith({
-      ...happyMessage,
-      channel: "#channel",
-    });
-    expect(postMessage).toHaveBeenCalledWith({
-      ...happyMessage,
-      channel: "@user",
-    });
-    expect(postMessage).toHaveBeenCalledWith({
-      ...happyMessage,
-      channel: "#happy",
-    });
   });
 });

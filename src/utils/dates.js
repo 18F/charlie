@@ -70,4 +70,28 @@ const getNextElectionDay = () => {
   return election;
 };
 
-module.exports = { getNextHoliday, getNextElectionDay };
+const getCurrentWorkWeek = () => {
+  // Start with Monday of the current week, and then walk forward if there are
+  // holidays to contend with. Zoom forward to ~midnight.
+  const start = moment
+    .utc() /* .hour(23).minute(59).second(59) */
+    .day(1);
+  while (holidays.isAHoliday(start.toDate(), { utc: true })) {
+    start.add(1, "day");
+  }
+
+  // Now add all of the rest of the working days this week. Loop until we hit
+  // Saturday, and skip any days that are holidays.
+  const days = [start];
+  let next = start.clone().add(1, "day");
+  do {
+    if (!holidays.isAHoliday(next.toDate(), { utc: true })) {
+      days.push(next);
+    }
+    next = next.clone().add(1, "day");
+  } while (next.day() < 6);
+
+  return days.map((date) => date.toDate());
+};
+
+module.exports = { getCurrentWorkWeek, getNextHoliday, getNextElectionDay };
