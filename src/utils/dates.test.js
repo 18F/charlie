@@ -103,20 +103,15 @@ describe("date utility library", () => {
         +moment.tz("2022-11-17", "America/New_York").format("x")
       );
 
-      const expected = [
-        moment.tz("2022-11-14", "America/New_York"),
-        moment.tz("2022-11-15", "America/New_York"),
-        moment.tz("2022-11-16", "America/New_York"),
-        moment.tz("2022-11-17", "America/New_York"),
-        moment.tz("2022-11-18", "America/New_York"),
-      ];
-
       const dates = getCurrentWorkWeek();
 
-      expect(dates.length).toBe(expected.length);
-      for (let i = 0; i < expected.length; i += 1) {
-        expect(expected[i].isSame(dates[i], "day")).toBe(true);
-      }
+      expect(dates).toEqual([
+        "2022-11-14",
+        "2022-11-15",
+        "2022-11-16",
+        "2022-11-17",
+        "2022-11-18",
+      ]);
     });
 
     it("correctly handles a week with a Monday holiday", () => {
@@ -125,19 +120,14 @@ describe("date utility library", () => {
         +moment.tz("2022-12-26", "America/New_York").format("x")
       );
 
-      const expected = [
-        moment.tz("2022-12-27", "America/New_York"),
-        moment.tz("2022-12-28", "America/New_York"),
-        moment.tz("2022-12-29", "America/New_York"),
-        moment.tz("2022-12-30", "America/New_York"),
-      ];
-
       const dates = getCurrentWorkWeek();
 
-      expect(dates.length).toBe(expected.length);
-      for (let i = 0; i < expected.length; i += 1) {
-        expect(expected[i].isSame(dates[i], "day")).toBe(true);
-      }
+      expect(dates).toEqual([
+        "2022-12-27",
+        "2022-12-28",
+        "2022-12-29",
+        "2022-12-30",
+      ]);
     });
 
     it("correctly handles a week with a Friday holiday", () => {
@@ -146,19 +136,14 @@ describe("date utility library", () => {
         +moment.tz("2022-11-08", "America/New_York").format("x")
       );
 
-      const expected = [
-        moment.tz("2022-11-07", "America/New_York"),
-        moment.tz("2022-11-08", "America/New_York"),
-        moment.tz("2022-11-09", "America/New_York"),
-        moment.tz("2022-11-10", "America/New_York"),
-      ];
-
       const dates = getCurrentWorkWeek();
 
-      expect(dates.length).toBe(expected.length);
-      for (let i = 0; i < expected.length; i += 1) {
-        expect(expected[i].isSame(dates[i], "day")).toBe(true);
-      }
+      expect(dates).toEqual([
+        "2022-11-07",
+        "2022-11-08",
+        "2022-11-09",
+        "2022-11-10",
+      ]);
     });
 
     it("correctly handles a week with a midweek holiday", () => {
@@ -167,19 +152,14 @@ describe("date utility library", () => {
         +moment.tz("2022-11-24", "America/New_York").format("x")
       );
 
-      const expected = [
-        moment.tz("2022-11-21", "America/New_York"),
-        moment.tz("2022-11-22", "America/New_York"),
-        moment.tz("2022-11-23", "America/New_York"),
-        moment.tz("2022-11-25", "America/New_York"),
-      ];
-
       const dates = getCurrentWorkWeek();
 
-      expect(dates.length).toBe(expected.length);
-      for (let i = 0; i < expected.length; i += 1) {
-        expect(expected[i].isSame(dates[i], "day")).toBe(true);
-      }
+      expect(dates).toEqual([
+        "2022-11-21",
+        "2022-11-22",
+        "2022-11-23",
+        "2022-11-25",
+      ]);
     });
   });
 });

@@ -72,10 +72,8 @@ const getNextElectionDay = () => {
 
 const getCurrentWorkWeek = () => {
   // Start with Monday of the current week, and then walk forward if there are
-  // holidays to contend with. Zoom forward to ~midnight.
-  const start = moment
-    .utc() /* .hour(23).minute(59).second(59) */
-    .day(1);
+  // holidays to contend with.
+  const start = moment.utc().day(1);
   while (holidays.isAHoliday(start.toDate(), { utc: true })) {
     start.add(1, "day");
   }
@@ -91,7 +89,8 @@ const getCurrentWorkWeek = () => {
     next = next.clone().add(1, "day");
   } while (next.day() < 6);
 
-  return days.map((date) => date.toDate());
+  // Return just the date string. Eliminate the time portion.
+  return days.map((date) => date.format("YYYY-MM-DD"));
 };
 
 module.exports = { getCurrentWorkWeek, getNextHoliday, getNextElectionDay };
