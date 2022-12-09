@@ -4,7 +4,7 @@ const {
   getApp,
   utils: {
     optOut,
-    slack: { sendDirectMessage, slackUserIsOOO },
+    slack: { sendDirectMessage },
     tock: { get18FTockSlackUsers, get18FTockTruants },
   },
 } = require("../utils/test");
@@ -48,20 +48,6 @@ describe("Optimistic Tock", () => {
         last_name: "Two",
         username: "employee2",
       },
-      {
-        id: "tock4",
-        email: "user@four",
-        first_name: "User",
-        last_name: "Four",
-        username: "employee4",
-      },
-      {
-        id: "tock5",
-        email: "user@five",
-        first_name: "User",
-        last_name: "Five",
-        username: "employee5",
-      },
     ]);
 
     get18FTockSlackUsers.mockResolvedValue([
@@ -97,25 +83,7 @@ describe("Optimistic Tock", () => {
         user: "employee5",
         tz: "America/New_York",
       },
-      {
-        id: "tock6",
-        email: "user@six",
-        first_name: "User",
-        last_name: "Six",
-        slack_id: "slack 6",
-        username: "employee6",
-        tz: "America/New_York",
-      },
     ]);
-
-    slackUserIsOOO.mockImplementation((id) => {
-      switch (id) {
-        case "slack 5":
-          return true;
-        default:
-          return false;
-      }
-    });
   });
 
   afterAll(() => {

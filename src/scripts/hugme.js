@@ -107,6 +107,6 @@ module.exports = (app) => {
       }
     );
   } else {
-    console.log("Unable to find service creds for 'charlie-bucket'.");
+    app.logger.warn("Unable to find service creds for 'charlie-bucket'.");
   }
 };

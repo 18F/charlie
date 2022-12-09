@@ -19,9 +19,9 @@ jobs:
           # job will trigger a rebuild, so the thing can be merged
           token: ${{ secrets.INCLUSION_BOT_GIT_TOKEN }}
 
-      - uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
+      - uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
         with:
-          node-version: 16
+          node-version: 18
       - run: npm ci
 
       - run: npx -y prettier -w InclusionBot.md

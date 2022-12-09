@@ -24,7 +24,7 @@ jobs:
     name: publish release
     needs: [deploy]
     runs-on: ubuntu-latest
-    container: node:16
+    container: node:18
     permissions:
       contents: write
     steps:

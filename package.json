@@ -8,8 +8,8 @@
     "lint": "eslint '**/*.js'",
     "start": "node src/main.js",
     "start-dev": "node src/main.js",
-    "test": "jest 'src/.+/?.+\\.test\\.js'",
-    "test-coverage": "jest 'src/.+/?.+\\.test\\.js' --coverage"
+    "test": "jest '.+/?.+\\.test\\.js'",
+    "test-coverage": "jest '.+/?.+\\.test\\.js' --coverage"
   },
   "dependencies": {
     "@18f/us-federal-holidays": "^2.1.1",
@@ -29,7 +29,7 @@
     "plural": "^1.1.0"
   },
   "engines": {
-    "node": "^16.10.0"
+    "node": "^18.10.0"
   },
   "devDependencies": {
     "eslint": "^8.7.0",
