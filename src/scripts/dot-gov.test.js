@@ -352,7 +352,7 @@ describe("dot-gov domains", () => {
         await handler(message);
 
         expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
-          'There are 1 `.gov` executive domains right now! Have you seen this one?',
+          "There are 1 `.gov` executive domains right now! Have you seen this one?",
           expect.stringMatching(/RURAL.GOV/),
         ]);
       });
@@ -364,7 +364,7 @@ describe("dot-gov domains", () => {
         await handler(message);
 
         expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
-          'There are 1 `.gov` executive branch domains right now! Have you seen this one?',
+          "There are 1 `.gov` executive branch domains right now! Have you seen this one?",
           expect.stringMatching(/RURAL.GOV/),
         ]);
       });
