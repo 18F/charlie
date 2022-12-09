@@ -7,10 +7,11 @@
  * In the get .gov version, Charlie must be addressed directly. This
  * version allows filtering by domain type and searching.
  *
- * The format is @Charlie [entity] <trigger> [search term].
+ * The format is @Charlie [type of government] <trigger> [search term].
  *
- * If an entity is specified, Charlie limits the search to domains
- * of that entity type.
+ * If an type of government is specified, Charlie limits the search
+ * to domains of that government type. See `domainTypesRegex` for
+ * a list of the available options.
  *
  * In the case that a search term is given, Charlie responds
  * with up to five randomly chosen matches or with a message
@@ -219,7 +220,7 @@ module.exports = (app) => {
   helpMessage.registerInteractive(
     ".Gov",
     "Curious if a (city, state, tribal, judicial...) domain exists (for X)? Charlie can help you find out!",
-    "(entity) .gov (search term)",
+    "(type of government) .gov (search term)",
     true
   );
 

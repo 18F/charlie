@@ -214,6 +214,19 @@ describe("dot-gov domains", () => {
           ),
         ]);
       });
+
+      it("even if checking the status of the domain fails", async () => {
+        axios.head.mockImplementation(() => Promise.reject(new Error()));
+        cache.mockResolvedValue(mockCache);
+        await handler(message);
+
+        expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
+          "There are 9 `.gov` domains right now! Have you seen this one?",
+          expect.stringMatching(
+            /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
+          ),
+        ]);
+      });
     });
   });
 
@@ -324,6 +337,35 @@ describe("dot-gov domains", () => {
           expect.stringMatching(expected),
           expect.stringMatching(expected),
           ". . . plus 4 others.",
+        ]);
+      });
+    });
+    describe("filters correctly by entity", () => {
+      beforeEach(() => {
+        axios.head.mockImplementation(() => Promise.resolve("Ok"));
+      });
+      it("if entity is executive", async () => {
+        cache.mockResolvedValue(mockCache);
+        message.context = {
+          matches: { groups: { re_type: "executive" } },
+        };
+        await handler(message);
+
+        expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
+          'There are 1 `.gov` executive domains right now! Have you seen this one?',
+          expect.stringMatching(/RURAL.GOV/),
+        ]);
+      });
+      it("if entity is executive branch", async () => {
+        cache.mockResolvedValue(mockCache);
+        message.context = {
+          matches: { groups: { re_type: "executive branch" } },
+        };
+        await handler(message);
+
+        expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
+          'There are 1 `.gov` executive branch domains right now! Have you seen this one?',
+          expect.stringMatching(/RURAL.GOV/),
         ]);
       });
     });
