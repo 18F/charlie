@@ -6,6 +6,12 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dags-alumni.json"
   },
   {
+    "botName": "Bird Bot",
+    "defaultEmoji": ":yelling-bird:",
+    "trigger": "bird facts?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/birds.json"
+  },
+  {
     "botName": "Dag Bot",
     "defaultEmoji": ":dog:",
     "trigger": "(?<!alumni )d(o|a)g facts?",
@@ -28,6 +34,11 @@
     "defaultEmoji": ":smile_cat:",
     "trigger": "cat intros?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/cat-intros.json"
+  },
+  {
+    "botName": "Pet Bot",
+    "trigger": "pet facts?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/pets.json"
   },
   {
     "botName": "Giraffe Bot",
