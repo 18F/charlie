@@ -25,7 +25,7 @@ describe("utils / tock", () => {
       id: "slack 1",
       is_bot: false,
       is_restricted: false,
-      profile: { email: "email 1" },
+      profile: { email: "EmAiL 1" },
       real_name: "user 1",
       tz: "timezone 1",
     },
@@ -164,7 +164,9 @@ describe("utils / tock", () => {
 
     expect(users).toEqual([
       {
-        email: "email 1",
+        // Canonical email address is taken from Slack. The Slack mock data has
+        // this email address in mixed caps, so that's what we expect to see.
+        email: "EmAiL 1",
         name: "user 1",
         slack_id: "slack 1",
         tock_id: 1,

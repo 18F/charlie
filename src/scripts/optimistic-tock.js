@@ -56,7 +56,11 @@ module.exports = async (app, config = process.env) => {
 
     const truantTockSlackUsers = tockSlackUsers
       .filter((tockUser) => tockUser.tz === tz)
-      .filter((tockUser) => truants.some((t) => t.email === tockUser.email))
+      .filter((tockUser) =>
+        truants.some(
+          (t) => t.email.toLowerCase() === tockUser.email.toLowerCase()
+        )
+      )
       .filter((tockUser) => !optout.isOptedOut(tockUser.slack_id));
 
     await Promise.all(
