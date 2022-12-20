@@ -63,7 +63,7 @@ describe("Angry Tock", () => {
 
     get18FTockSlackUsers.mockResolvedValue([
       {
-        email: "user@one",
+        email: "UsEr@one",
         id: "tock1",
         name: "User 1",
         slack_id: "slack1",

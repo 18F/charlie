@@ -46,7 +46,9 @@ module.exports = (app, config = process.env) => {
     const tockSlackUsers = await get18FTockSlackUsers();
     const truants = await get18FTockTruants(moment.tz(ANGRY_TOCK_TIMEZONE));
     const slackableTruants = tockSlackUsers.filter((tockUser) =>
-      truants.some((truant) => truant.email === tockUser.email)
+      truants.some(
+        (truant) => truant.email.toLowerCase() === tockUser.email.toLowerCase()
+      )
     );
 
     slackableTruants.forEach(({ slack_id: slackID }) => {

@@ -100,11 +100,17 @@ const get18FTockSlackUsers = async () => {
 
   const tockSlackUsers = tockUsers
     .filter((tock) =>
-      slackUsers.some((slackUser) => slackUser.email === tock.email)
+      slackUsers.some(
+        (slackUser) =>
+          slackUser.email.toLowerCase() === tock.email.toLowerCase()
+      )
     )
     .map((tock) => ({
       ...tock,
-      ...slackUsers.find((slackUser) => slackUser.email === tock.email),
+      ...slackUsers.find(
+        (slackUser) =>
+          slackUser.email.toLowerCase() === tock.email.toLowerCase()
+      ),
     }));
 
   return tockSlackUsers;
