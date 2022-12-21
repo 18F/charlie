@@ -58,7 +58,7 @@ module.exports = async (app, config = process.env) => {
       .filter((tockUser) => tockUser.tz === tz)
       .filter((tockUser) =>
         truants.some(
-          (t) => t.email.toLowerCase() === tockUser.email.toLowerCase()
+          (t) => t.email?.toLowerCase() === tockUser.email?.toLowerCase()
         )
       )
       .filter((tockUser) => !optout.isOptedOut(tockUser.slack_id));
