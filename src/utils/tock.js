@@ -67,11 +67,11 @@ const get18FUsersWhoHaveNotTocked = async (now, weeksAgo = 1) => {
 
   const tockUsers = await getCurrent18FTockUsers();
 
-  const allUnreportedUsers = await getFromTock(
+  const allUnTockedUsers = await getFromTock(
     `/reporting_period_audit/${reportingPeriodStart}.json`
   );
 
-  return allUnreportedUsers.filter((user) =>
+  return allUnTockedUsers.filter((user) =>
     tockUsers.some((tockUser) => tockUser.tock_id === user.id)
   );
 };

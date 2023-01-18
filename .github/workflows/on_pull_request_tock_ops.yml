@@ -19,5 +19,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "It looks like you're updating the Tock truancy report. Please ensure that the 18F director of operations is aware of these changes because the Tock truancy report is used by the ops team and needs to function."
+              body: "It looks like you're updating the Tock report. Please ensure that the 18F director of operations is aware of these changes because the Tock report is used by the ops team and needs to function."
             });

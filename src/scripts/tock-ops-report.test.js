@@ -8,7 +8,7 @@ const {
   },
 } = require("../utils/test");
 
-describe("Tock truancy reporter for ops", () => {
+describe("Tock reporter for ops", () => {
   const app = getApp();
 
   const scheduleJob = jest.fn();

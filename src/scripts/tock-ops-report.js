@@ -35,7 +35,7 @@ module.exports = (app, config = process.env) => {
       .minute(TRUANT_REPORT_TIME.minute())
       .second(0);
 
-    // If we've already passed the truancy report time for the current work week,
+    // If we've already passed the report time for the current work week,
     // jump to the next Monday, and then scoot forward over any holidays.
     if (reportTime.isBefore(moment())) {
       reportTime.add(7, "days").day(1);
