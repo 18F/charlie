@@ -15,7 +15,7 @@ describe("utils / tock", () => {
 
   const {
     get18FTockSlackUsers,
-    get18FTockTruants,
+    get18FUsersWhoHaveNotTocked,
     getCurrent18FTockUsers,
   } = require("./tock"); // eslint-disable-line global-require
 
@@ -184,7 +184,7 @@ describe("utils / tock", () => {
     ]);
   });
 
-  describe("gets a list of 18F Tock users who are truant", () => {
+  describe("gets a list of 18F Tock users who have not Tocked", () => {
     beforeAll(() => {
       jest.useFakeTimers();
     });
@@ -200,23 +200,19 @@ describe("utils / tock", () => {
     it("defaults to looking at the reporting period from a week ago", async () => {
       const date = moment("2020-10-14");
       jest.setSystemTime(date.toDate());
-      const truants = await get18FTockTruants(date);
+      const users = await get18FUsersWhoHaveNotTocked(date);
 
-      // Only user 1 is truant from the previous period.
-      expect(truants).toEqual([
-        { id: 1, email: "email 1", username: "user 1" },
-      ]);
+      // Only user 1 has not reported in the previous period.
+      expect(users).toEqual([{ id: 1, email: "email 1", username: "user 1" }]);
     });
 
     it("defaults to looking at the reporting period from this week", async () => {
       const date = moment("2020-10-14");
       jest.setSystemTime(date.toDate());
-      const truants = await get18FTockTruants(date, 0);
+      const users = await get18FUsersWhoHaveNotTocked(date, 0);
 
-      // Only user 5 is truant in the current period.
-      expect(truants).toEqual([
-        { id: 5, email: "email 5", username: "user 5" },
-      ]);
+      // Only user 5 has not reported in the current period.
+      expect(users).toEqual([{ id: 5, email: "email 5", username: "user 5" }]);
     });
   });
 });

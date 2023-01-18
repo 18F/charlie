@@ -5,7 +5,7 @@ const {
   utils: {
     optOut,
     slack: { sendDirectMessage },
-    tock: { get18FTockSlackUsers, get18FTockTruants },
+    tock: { get18FTockSlackUsers, get18FUsersWhoHaveNotTocked },
   },
 } = require("../utils/test");
 
@@ -33,7 +33,7 @@ describe("Optimistic Tock", () => {
 
     optOut.mockReturnValue({ button: { button: "goes here" }, isOptedOut });
 
-    get18FTockTruants.mockResolvedValue([
+    get18FUsersWhoHaveNotTocked.mockResolvedValue([
       {
         id: "tock1",
         email: "user@one",
