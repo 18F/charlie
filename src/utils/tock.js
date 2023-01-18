@@ -48,14 +48,14 @@ const getCurrent18FTockUsers = async () => {
 };
 
 /**
- * Get the 18F truant users for the most recent completed Tock reporting
+ * Get the 18F users who have not recorded their time in Tock for a given time
  * period.
  * @async
  * @param {Object} now Moment object representing the current time.
  * @param {Number} weeksAgo How many weeks in the past to check. Defaults to 1.
- * @returns {<Promise<Array<Object>>} The list of truant users
+ * @returns {<Promise<Array<Object>>} The list of users who have not Tocked
  */
-const get18FTockTruants = async (now, weeksAgo = 1) => {
+const get18FUsersWhoHaveNotTocked = async (now, weeksAgo = 1) => {
   while (now.format("dddd") !== "Sunday") {
     now.subtract(1, "day");
   }
@@ -67,12 +67,12 @@ const get18FTockTruants = async (now, weeksAgo = 1) => {
 
   const tockUsers = await getCurrent18FTockUsers();
 
-  const allTruants = await getFromTock(
+  const allUnreportedUsers = await getFromTock(
     `/reporting_period_audit/${reportingPeriodStart}.json`
   );
 
-  return allTruants.filter((truant) =>
-    tockUsers.some((tockUser) => tockUser.tock_id === truant.id)
+  return allUnreportedUsers.filter((user) =>
+    tockUsers.some((tockUser) => tockUser.tock_id === user.id)
   );
 };
 
@@ -118,6 +118,6 @@ const get18FTockSlackUsers = async () => {
 
 module.exports = {
   getCurrent18FTockUsers,
-  get18FTockTruants,
+  get18FUsersWhoHaveNotTocked,
   get18FTockSlackUsers,
 };

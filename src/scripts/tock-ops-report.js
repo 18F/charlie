@@ -4,13 +4,13 @@ const scheduler = require("node-schedule");
 const {
   dates: { getCurrentWorkWeek },
   slack: { postMessage },
-  tock: { get18FTockTruants },
+  tock: { get18FUsersWhoHaveNotTocked },
 } = require("../utils");
 
 module.exports = (app, config = process.env) => {
   if (!config.TOCK_API || !config.TOCK_TOKEN) {
     app.logger.warn(
-      "Tock truant report disabled: Tock API URL or access token is not set"
+      "Tock compliance report disabled: Tock API URL or access token is not set"
     );
     return;
   }
@@ -26,7 +26,7 @@ module.exports = (app, config = process.env) => {
     ","
   );
 
-  const getNextTruantReportTime = () => {
+  const getNextReportTime = () => {
     // The reporting time for the current work week would be the first day of
     // that working week.
     const reportTime = moment
@@ -48,36 +48,38 @@ module.exports = (app, config = process.env) => {
   };
 
   const report = async () => {
-    const truants = await get18FTockTruants(moment.tz(TRUANT_REPORT_TIMEZONE));
+    const untockedUsers = await get18FUsersWhoHaveNotTocked(
+      moment.tz(TRUANT_REPORT_TIMEZONE)
+    );
 
-    if (truants.length > 0) {
-      const truantList = truants
+    if (untockedUsers.length > 0) {
+      const untockedList = untockedUsers
         .map(({ username }) => `• ${username}`)
         .join("\n");
 
-      const truantReport = {
+      const tockComplianceReport = {
         attachments: [
           {
-            fallback: truantList,
+            fallback: untockedList,
             color: "#FF0000",
-            text: truantList,
+            text: untockedList,
           },
         ],
         username: "Angry Tock",
         icon_emoji: ":angrytock:",
-        text: "*The following users are currently truant on Tock:*",
+        text: "*The following users have not yet reported their time on Tock:*",
       };
 
       await Promise.all(
         TRUANT_REPORT_TO.map((channel) =>
-          postMessage({ ...truantReport, channel })
+          postMessage({ ...tockComplianceReport, channel })
         )
       );
     }
   };
 
   const scheduleNextReport = () => {
-    const when = getNextTruantReportTime();
+    const when = getNextReportTime();
 
     scheduler.scheduleJob(when.toDate(), async () => {
       await report();

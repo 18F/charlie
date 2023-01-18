@@ -3,7 +3,7 @@ const {
   getApp,
   utils: {
     dates: { getCurrentWorkWeek },
-    tock: { get18FTockTruants },
+    tock: { get18FUsersWhoHaveNotTocked },
     slack: { postMessage },
   },
 } = require("../utils/test");
@@ -109,7 +109,7 @@ describe("Tock truancy reporter for ops", () => {
 
       it("honors ANGRY_TOCK_REPORT_TO", async () => {
         getCurrentWorkWeek.mockReturnValue([NOW]);
-        get18FTockTruants.mockReturnValue([{ username: "hi" }]);
+        get18FUsersWhoHaveNotTocked.mockReturnValue([{ username: "hi" }]);
 
         script(app, {
           TOCK_API: true,
@@ -168,7 +168,7 @@ describe("Tock truancy reporter for ops", () => {
 
         it("uses a default if honors ANGRY_TOCK_REPORT_TO is not set", async () => {
           getCurrentWorkWeek.mockReturnValue([NOW]);
-          get18FTockTruants.mockReturnValue([{ username: "hi" }]);
+          get18FUsersWhoHaveNotTocked.mockReturnValue([{ username: "hi" }]);
 
           script(app, {
             TOCK_API: true,
@@ -260,9 +260,9 @@ describe("Tock truancy reporter for ops", () => {
       reportFn = scheduleJob.mock.calls[0][1];
     });
 
-    describe("when there are no truants", () => {
+    describe("when all users have Tocked", () => {
       beforeEach(() => {
-        get18FTockTruants.mockResolvedValue([]);
+        get18FUsersWhoHaveNotTocked.mockResolvedValue([]);
       });
 
       it("does not send a report", async () => {
@@ -272,9 +272,9 @@ describe("Tock truancy reporter for ops", () => {
       });
     });
 
-    describe("when there are some truants", () => {
+    describe("when some users have not Tocked", () => {
       beforeEach(() => {
-        get18FTockTruants.mockResolvedValue([
+        get18FUsersWhoHaveNotTocked.mockResolvedValue([
           { username: "alice" },
           { username: "bob" },
         ]);
@@ -293,19 +293,10 @@ describe("Tock truancy reporter for ops", () => {
           ],
           channel: "#18f-supes",
           icon_emoji: ":angrytock:",
-          text: "*The following users are currently truant on Tock:*",
+          text: "*The following users have not yet reported their time on Tock:*",
           username: "Angry Tock",
         });
       });
     });
   });
 });
-
-/*
-
-REPORTER TESTS:
-===============
-- when there are no truants
-- when there are some truants
-
-*/

@@ -4,14 +4,14 @@ const scheduler = require("node-schedule");
 const {
   dates: { getCurrentWorkWeek },
   slack: { sendDirectMessage },
-  tock: { get18FTockSlackUsers, get18FTockTruants },
+  tock: { get18FTockSlackUsers, get18FUsersWhoHaveNotTocked },
   helpMessage,
 } = require("../utils");
 
 module.exports = (app, config = process.env) => {
   helpMessage.registerNonInteractive(
     "Angry Tock",
-    "On the first morning of the work week, Angry Tock will disappointedly remind Tock-able users who haven't Tocked yet. At the end of the day, it'll also let supervisors know about folks who are still truant."
+    "On the first morning of the work week, Angry Tock will disappointedly remind Tock-able users who haven't Tocked yet. At the end of the day, it'll also let supervisors know about folks who still have not Tocked."
   );
 
   const TOCK_API_URL = config.TOCK_API;
@@ -28,7 +28,7 @@ module.exports = (app, config = process.env) => {
   );
 
   /**
-   * Shout at all the truant users.
+   * "Shout" at users who have not yet Tocked.
    * @async
    * @param {Object} options
    * @param {Boolean} options.calm Whether this is Happy Tock or Angry Tock. Angry
@@ -44,15 +44,16 @@ module.exports = (app, config = process.env) => {
     };
 
     const tockSlackUsers = await get18FTockSlackUsers();
-    const truants = await get18FTockTruants(moment.tz(ANGRY_TOCK_TIMEZONE));
-    const slackableTruants = tockSlackUsers.filter((tockUser) =>
-      truants.some(
-        (truant) =>
-          truant.email?.toLowerCase() === tockUser.email?.toLowerCase()
+    const usersWhoNeedToTock = await get18FUsersWhoHaveNotTocked(
+      moment.tz(ANGRY_TOCK_TIMEZONE)
+    );
+    const slackUsersWhoNeedToTock = tockSlackUsers.filter((tockUser) =>
+      usersWhoNeedToTock.some(
+        (user) => user.email?.toLowerCase() === tockUser.email?.toLowerCase()
       )
     );
 
-    slackableTruants.forEach(({ slack_id: slackID }) => {
+    slackUsersWhoNeedToTock.forEach(({ slack_id: slackID }) => {
       sendDirectMessage(slackID, message);
     });
   };

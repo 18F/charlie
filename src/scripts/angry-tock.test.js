@@ -5,7 +5,7 @@ const {
   utils: {
     dates: { getCurrentWorkWeek },
     slack: { sendDirectMessage },
-    tock: { get18FTockSlackUsers, get18FTockTruants },
+    tock: { get18FTockSlackUsers, get18FUsersWhoHaveNotTocked },
   },
 } = require("../utils/test");
 
@@ -37,7 +37,7 @@ describe("Angry Tock", () => {
     jest.setSystemTime(0);
     jest.resetAllMocks();
 
-    get18FTockTruants.mockResolvedValue([
+    get18FUsersWhoHaveNotTocked.mockResolvedValue([
       {
         id: "tock1",
         email: "user@one",
@@ -217,7 +217,7 @@ describe("Angry Tock", () => {
     });
   });
 
-  it("sends a calm/disappointed message first, then an angry message and truant report", async () => {
+  it("sends a calm/disappointed message first, then an angry message", async () => {
     // Monday, May 1, 1978 - Ernest Nathan Morial, first African-American mayor
     // of New Orleans, is inaugurated.
     const initial = moment.tz(
@@ -277,11 +277,11 @@ describe("Angry Tock", () => {
       text: ":angrytock: <https://tock.18f.gov|Tock your time>! You gotta!",
     });
 
-    // Clear everything out again, and make sure that the "angry" shout turns
-    // very happy if there aren't any truants.
+    // Clear everything out again, and make sure that the "angry" shout doesn't
+    // shout.
     sendDirectMessage.mockClear();
 
-    get18FTockTruants.mockResolvedValue([]);
+    get18FUsersWhoHaveNotTocked.mockResolvedValue([]);
     await angryShout();
 
     expect(sendDirectMessage.mock.calls.length).toBe(0);

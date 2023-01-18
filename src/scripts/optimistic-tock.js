@@ -4,7 +4,7 @@ const scheduler = require("node-schedule");
 const {
   optOut,
   slack: { sendDirectMessage },
-  tock: { get18FTockTruants, get18FTockSlackUsers },
+  tock: { get18FUsersWhoHaveNotTocked, get18FTockSlackUsers },
   helpMessage,
 } = require("../utils");
 
@@ -48,23 +48,26 @@ module.exports = async (app, config = process.env) => {
     };
 
     // Get all the folks who have not submitted their current Tock.
-    const truants = await get18FTockTruants(moment.tz(tz), 0);
+    const usersWhoNeedToTock = await get18FUsersWhoHaveNotTocked(
+      moment.tz(tz),
+      0
+    );
 
     // Now get the list of Slacky-Tocky users in the current timezone who
     // have not submitted their Tock. Tsk tsk.
     const tockSlackUsers = await get18FTockSlackUsers();
 
-    const truantTockSlackUsers = tockSlackUsers
+    const slackUsersWhoNeedToTock = tockSlackUsers
       .filter((tockUser) => tockUser.tz === tz)
       .filter((tockUser) =>
-        truants.some(
+        usersWhoNeedToTock.some(
           (t) => t.email?.toLowerCase() === tockUser.email?.toLowerCase()
         )
       )
       .filter((tockUser) => !optout.isOptedOut(tockUser.slack_id));
 
     await Promise.all(
-      truantTockSlackUsers.map(async ({ slack_id: slackID }) => {
+      slackUsersWhoNeedToTock.map(async ({ slack_id: slackID }) => {
         await sendDirectMessage(slackID, message);
       })
     );
