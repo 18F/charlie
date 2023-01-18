@@ -17,7 +17,7 @@ describe("Tock truancy reporter for ops", () => {
   // Load this module *after* everything gets mocked. Otherwise the module will
   // load the unmocked stuff and the tests won't work.
   // eslint-disable-next-line global-require
-  const script = require("./tock-truant-ops-report");
+  const script = require("./tock-ops-report");
 
   beforeEach(() => {
     jest.resetAllMocks();
