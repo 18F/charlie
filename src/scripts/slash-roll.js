@@ -11,7 +11,7 @@ module.exports = async (app) => {
       await say({
         // icon_emoji: "",
         // username: "",
-        text: `You rolled a dieRoll(20)`,
+        text: `You rolled a ${dieRoll(20)}`,
         // thread_ts: threadId,
       });
     }
