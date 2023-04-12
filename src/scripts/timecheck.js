@@ -22,7 +22,7 @@ module.exports = async (app) => {
       const now = moment();
       const then = moment.tz(timezone);
 
-      const [hh, mm] = time.split(":");
+      const [hh, mm] = time.split(":").map((v) => +v);
       then.hour(hh);
       then.minute(mm);
 
