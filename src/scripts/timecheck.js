@@ -23,7 +23,7 @@ module.exports = async (app) => {
         then.add(12, "hours");
       }
 
-      await say({ channel, thread_ts: thread, text: then.format() });
+      await say({ channel, thread_ts: thread, text: then.format("h:mm a") });
     }
   );
 };
