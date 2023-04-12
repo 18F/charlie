@@ -10,7 +10,7 @@ module.exports = async (app) => {
         users: { info },
       },
       context: {
-        matches: [time],
+        matches: [, time],
       },
       event: { channel, thread_ts: thread, user },
       say,
