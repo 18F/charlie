@@ -31,17 +31,22 @@ module.exports = async (app) => {
 
       const durationUntilThen = moment.duration(then.diff(now));
 
+      const sayCheck = (minutes) =>
+        say({
+          channel,
+          icon_emoji: ":alarm_clock:",
+          text: `${minutes} minutes remaining`,
+          thread_ts: thread,
+          username: "Time check",
+        });
+
       const thirtyMinutes = durationUntilThen
         .clone()
         .subtract(30, "minutes")
         .as("milliseconds");
       if (thirtyMinutes > 0) {
         setTimeout(() => {
-          say({
-            channel,
-            thread_ts: thread,
-            text: `:bell: 30 minutes remaining`,
-          });
+          sayCheck(30);
         }, thirtyMinutes);
       }
 
@@ -51,11 +56,7 @@ module.exports = async (app) => {
         .as("milliseconds");
       if (fifteenMinutes > 0) {
         setTimeout(() => {
-          say({
-            channel,
-            thread_ts: thread,
-            text: `:bell: 15 minutes remaining`,
-          });
+          sayCheck(15);
         }, fifteenMinutes);
       }
 
@@ -65,11 +66,7 @@ module.exports = async (app) => {
         .as("milliseconds");
       if (fiveMinutes > 0) {
         setTimeout(() => {
-          say({
-            channel,
-            thread_ts: thread,
-            text: `:bell: 5 minutes remaining`,
-          });
+          sayCheck(5);
         }, fiveMinutes);
       }
     }
