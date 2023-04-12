@@ -6,9 +6,7 @@ module.exports = async (app) => {
     directMention(),
     /timecheck (\d{1,2}:\d{2})/i,
     async ({
-      client: {
-        users: { info },
-      },
+      client,
       context: {
         matches: [, time],
       },
@@ -17,7 +15,7 @@ module.exports = async (app) => {
     }) => {
       const {
         user: { tz: timezone },
-      } = await info({ user });
+      } = await client.users.info({ user });
 
       const now = moment();
       const then = moment.tz(timezone);
@@ -28,6 +26,50 @@ module.exports = async (app) => {
 
       if (then.isBefore(now)) {
         then.add(12, "hours");
+      }
+
+      const durationUntilThen = moment.duration(then.diff(now));
+
+      const thirtyMinutes = durationUntilThen
+        .clone()
+        .subtract(30, "minutes")
+        .as("milliseconds");
+      if (thirtyMinutes > 0) {
+        setTimeout(() => {
+          say({
+            channel,
+            thread_ts: thread,
+            text: `:bell: 30 minutes remaining`,
+          });
+        }, thirtyMinutes);
+      }
+
+      const fifteenMinutes = durationUntilThen
+        .clone()
+        .subtract(15, "minutes")
+        .as("milliseconds");
+      if (fifteenMinutes > 0) {
+        setTimeout(() => {
+          say({
+            channel,
+            thread_ts: thread,
+            text: `:bell: 15 minutes remaining`,
+          });
+        }, thirtyMinutes);
+      }
+
+      const fiveMinutes = durationUntilThen
+        .clone()
+        .subtract(5, "minutes")
+        .as("milliseconds");
+      if (fiveMinutes > 0) {
+        setTimeout(() => {
+          say({
+            channel,
+            thread_ts: thread,
+            text: `:bell: 5 minutes remaining`,
+          });
+        }, thirtyMinutes);
       }
 
       await say({
