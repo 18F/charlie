@@ -5,13 +5,15 @@ module.exports = async (app) => {
     directMention(),
     /timecheck/i,
     async ({
-      event: {
-        channel,
-        thread_ts: thread,
-        user: { tz: timezone },
+      client: {
+        users: { info },
       },
+      event: { channel, thread_ts: thread, user },
       say,
     }) => {
+      const {
+        user: { tz: timezone },
+      } = await info({ user });
       await say(`${channel}, ${thread}, ${timezone}`);
     }
   );
