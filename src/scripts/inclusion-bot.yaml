@@ -255,8 +255,8 @@ triggers:
       - vocal
       - assertive
     why: >-
-      ":TERM:" is usually used to silence Black people and imply that they do
-      not have a right to be assertive.
+      ":TERM:" is often used to silence Black people and imply that they do not
+      have a right to be assertive.
 
   - matches:
       - peanut gallery
@@ -341,18 +341,9 @@ triggers:
     alternatives:
       - hunker down
     why: >-
-      ":TERM:" arose from colonization, and interactions between Native
-      Americans and settlers. We want to avoid this association.
-
-  - matches:
-      - hold down the fort
-    alternatives:
-      - keep things afloat
-      - keep an eye on things
-    why: >-
-      ":TERM:" arose as a military phrase and is also viewed as a metaphor for
-      colonization and violence against Native Americans. We want to avoid this
-      association.
+      ":TERM:" came to be associated with "savage" Native Americans due to
+      Hollywood westerns of the 1950s and 1960s. We want to avoid reinforcing
+      harmful stereotypes.
 
   - matches:
       - spirit animal
