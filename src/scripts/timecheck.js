@@ -23,6 +23,7 @@ module.exports = async (app) => {
       const [hh, mm] = time.split(":").map((v) => +v);
       then.hour(hh);
       then.minute(mm);
+      then.second(0);
 
       if (then.isBefore(now)) {
         then.add(12, "hours");
@@ -55,7 +56,7 @@ module.exports = async (app) => {
             thread_ts: thread,
             text: `:bell: 15 minutes remaining`,
           });
-        }, thirtyMinutes);
+        }, fifteenMinutes);
       }
 
       const fiveMinutes = durationUntilThen
@@ -69,14 +70,8 @@ module.exports = async (app) => {
             thread_ts: thread,
             text: `:bell: 5 minutes remaining`,
           });
-        }, thirtyMinutes);
+        }, fiveMinutes);
       }
-
-      await say({
-        channel,
-        thread_ts: thread,
-        text: `${time} | ${hh}:${mm} | ${then.format("h:mm a z")}`,
-      });
     }
   );
 };
