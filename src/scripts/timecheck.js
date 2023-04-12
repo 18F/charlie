@@ -9,6 +9,9 @@ module.exports = async (app) => {
       client: {
         users: { info },
       },
+      context: {
+        matches: [time],
+      },
       event: { channel, thread_ts: thread, user },
       say,
     }) => {
@@ -17,7 +20,11 @@ module.exports = async (app) => {
       } = await info({ user });
 
       const now = moment();
-      const then = moment.tz("3:00", timezone);
+      const then = moment.tz(timezone);
+
+      const [hh, mm] = time.split(":");
+      then.hour(hh);
+      then.minute(mm);
 
       if (then.isBefore(now)) {
         then.add(12, "hours");
