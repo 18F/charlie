@@ -366,6 +366,15 @@ triggers:
       traditions. We want to show respect towards all religious traditions.
 
   - matches:
+      - off the reservation
+    alternatives:
+      - off-topic, off-script, breaking the rules
+    why: >-
+      This expression refers to laws that restricted the free movement of
+      Indigenous people. A person who was “off the reservation” was behaving
+      “lawlessly.” We want to avoid upholding colonizing language and ideas.
+
+  - matches:
       - guru
     alternatives:
       - authority
