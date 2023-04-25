@@ -468,6 +468,24 @@ triggers:
       voting. We want to avoid slavery and racist oppression references.
 
   - matches:
+      - goddamn
+      - goddam
+      - goddamnit
+      - goddammit
+    alternatives:
+      - awful, terrible, wretched
+    why: >-
+      ":TERM:" implies that God condemns, curses or reproaches. We want to show
+      respect towards all religious traditions.more.
+
+  - matches:
+      - jesus fucking
+      - fucking christ
+    alternatives:
+      - Wow, oh no, oh my
+    why: We want to show respect towards all religious traditions.
+
+  - matches:
       - guys
       - guyz
     alternatives:
@@ -528,32 +546,16 @@ triggers:
 
   - matches:
       - fuck
-      - shit
     alternatives:
-      - 
+      - ''
     why: >-
       ":TERM:" can trigger emotions related to abuse, trauma, and sexual assault
       that employees may not want to process at work.
 
   - matches:
-      - goddamn
-      - goddam
-      - goddamnit
-      - goddammit
+      - shit
     alternatives:
-      - awful
-      - terrible
-      - wretched
+      - ''
     why: >-
-      ":TERM:" implies that God condemns, curses or reproaches. We want to show 
-      respect towards all religious traditions.
-
-  - matches:
-      - fucking christ
-      - jesus fucking 
-    alternatives:
-      - Wow
-      - oh no
-      - oh my
-    why: >-
-      ":TERM:" we want to show respect towards all religious traditions.
+      ":TERM:" can trigger emotions related to vulgarity that employees may not
+      want to process at work.
