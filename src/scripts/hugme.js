@@ -31,13 +31,13 @@ module.exports = (app) => {
     helpMessage.registerInteractive(
       "Hug Me",
       "hug me",
-      "Need a little hug in your life? Friends from TTS past have left us a gift, and Charlie will deliver one whenever you need!",
+      "Need a hug? Friends from TTS past have left us images of themselves providing a hug as a gift, and Charlie will deliver one whenever you need!",
       true
     );
     helpMessage.registerInteractive(
       "Hug Bomb",
       "hug bomb [number]",
-      "Need even more hug? Charlie will happily deliver more! Defaults to three simultaneous hugs.",
+      "Need more than one hug? Charlie will happily deliver multiple! Delivers three images of hugs from friends of TTS past.",
       true
     );
 
