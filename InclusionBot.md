@@ -74,6 +74,10 @@ approves your changes, they will be merged and become active in the bot.
 | open the kimono, open kimono                     | share information                                                                             | This term arises from the sexualization of Asian women. We want to avoid sexist, racist, and sexual references.<br><br>See [The Problematic Origins of Common Business Jargon](https://www.fastcompany.com/90239290/six-business-phrases-that-have-racist-origins) for more.                                                                                                                                           |
 | grandfathered                                    | legacy<br>included retroactively                                                              | This term arose from voter restrictions that prevented Black people from voting. We want to avoid slavery and racist oppression references.<br><br>See [The Problematic Origins of Common Business Jargon](https://www.fastcompany.com/90239290/six-business-phrases-that-have-racist-origins) for more.                                                                                                               |
 
+| Goddamn, goddam, goddamnit, goddammit                                    | awful, terrible, wretched                                                              | This term can be offensive or triggering to some religious traditions because it implies a deity cursing or reproaching people. We want to show respect towards all religious traditions. |
+
+| jesus fucking, fucking christ                                    | We want to show respect towards all religious traditions. |
+
 # Sexist
 
 | Instead of   | Consider                 | Why                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -88,3 +92,7 @@ approves your changes, they will be merged and become active in the bot.
 | ------------------------------------ | -------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | postmortem, post mortem, post-mortem | project reflection<br>project or incident review<br>retrospective<br>retro | This term can trigger emotions related to death that employees may not want to process at work. |
 | drop-dead date                       | last possible date                                                         | This term can trigger emotions related to death that employees may not want to process at work  |
+
+| fuck                       |                                                          | This term can trigger emotions related to abuse, trauma, and sexual assault that employees may not want to process at work.  |
+
+| shit                       |                                                          | This term can trigger emotions related to vulgarity that employees may not want to process at work.  |
