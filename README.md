@@ -14,7 +14,8 @@ A Slack app bot used within 18F for fun and work.
 
 ##### Coffeemate
 
-Change 2
+Change 3
+
 
 Schedule virtual coffees with random teammates! Not sure who you should talk to?
 Charlie can help! Say `coffee me` to get put into the virtual coffee queue. As
