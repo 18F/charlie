@@ -15,7 +15,7 @@
     "@18f/us-federal-holidays": "^2.1.1",
     "@slack/bolt": "^3.5.0",
     "aws-sdk": "^2.1354.0",
-    "axios": "^0.27.2",
+    "axios": "^1.6.0",
     "cfenv": "^1.2.3",
     "cheerio": "^1.0.0-rc.12",
     "csv-parse": "^5.0.4",
