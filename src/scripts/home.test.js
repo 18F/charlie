@@ -49,7 +49,7 @@ describe("Charlie's home app", () => {
 
       expect(app.action).toHaveBeenCalledWith(
         "set_options",
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -145,7 +145,7 @@ describe("Charlie's home app", () => {
       await home;
       expect(app.event).toHaveBeenCalledWith(
         "app_home_opened",
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -174,7 +174,7 @@ describe("Charlie's home app", () => {
         { key: "thing 2", name: "Thing Two", description: "The 2nd thing" },
         { key: "thing 3", name: "Thing Three", description: "The 3rd thing" },
         { key: "thing 4", name: "Thing Four", description: "The fourth thing" },
-        { key: "thing 5", name: "Thing Five", description: "The fifth thing" }
+        { key: "thing 5", name: "Thing Five", description: "The fifth thing" },
       );
 
       app.brain.set(BRAIN_KEY, {
@@ -323,7 +323,7 @@ describe("Charlie's home app", () => {
         { key: "thing 2", name: "Thing Two", description: "The 2nd thing" },
         { key: "thing 3", name: "Thing Three", description: "The 3rd thing" },
         { key: "thing 4", name: "Thing Four", description: "The fourth thing" },
-        { key: "thing 5", name: "Thing Five", description: "The fifth thing" }
+        { key: "thing 5", name: "Thing Five", description: "The fifth thing" },
       );
 
       app.brain.set(BRAIN_KEY, {

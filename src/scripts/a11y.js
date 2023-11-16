@@ -7,7 +7,7 @@ module.exports = (app) => {
   helpMessage.registerInteractive(
     "A11y bot",
     "ask a11y",
-    "Ready to learn more about accessibility? A11y bot is here! Get a list of commands that A11y bot can respond to."
+    "Ready to learn more about accessibility? A11y bot is here! Get a list of commands that A11y bot can respond to.",
   );
 
   app.message(/ask a(11|ll)y+$/i, async ({ say }) => {

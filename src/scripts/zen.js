@@ -25,7 +25,7 @@ module.exports = (app) => {
     "Zen Bot",
     "zen",
     "Fetches and displays a random product, techy, or code-focused message of zen. Read it, and breathe.",
-    true
+    true,
   );
 
   app.message(
@@ -35,6 +35,6 @@ module.exports = (app) => {
       incrementStats("zen");
       const { data } = await axios.get("https://api.github.com/zen");
       say({ text: data, thread_ts: thread });
-    }
+    },
   );
 };

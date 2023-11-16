@@ -13,7 +13,7 @@ describe("U.S. Code bot", () => {
     usc(app);
     expect(app.message).toHaveBeenCalledWith(
       expect.any(RegExp),
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -97,7 +97,7 @@ describe("U.S. Code bot", () => {
           ...source
             .trim()
             .split("\n")
-            .map((v) => v.trim())
+            .map((v) => v.trim()),
         );
 
         axios.get.mockImplementation(async () => ({ data: html.join("") }));

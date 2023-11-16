@@ -68,7 +68,7 @@ const gitGovRegex = new RegExp(
     "((get\\s?)?\\.gov)",
     "(\\s(?<re_search>.+))?",
   ].join(""),
-  "i"
+  "i",
 );
 
 /** A file hosted in GitHub which is regularly updated with domains. */
@@ -214,14 +214,14 @@ module.exports = (app) => {
     ".Gov",
     "git.gov",
     "There are over 7,000 .gov domains on the net! Charlie can give you one at random.",
-    false
+    false,
   );
 
   helpMessage.registerInteractive(
     ".Gov",
     "Curious if a (city, state, tribal, judicial...) domain exists (for X)? Charlie can help you find out!",
     "(type of government) .gov (search term)",
-    true
+    true,
   );
 
   /** Exposed only for testing. */
@@ -248,7 +248,7 @@ module.exports = (app) => {
           }
           return [];
         })
-        .catch(() => [])
+        .catch(() => []),
     );
 
     let filteredDomains = [];
@@ -278,7 +278,7 @@ module.exports = (app) => {
           ...filterByField(DATA_FIELDS.CITY),
           ...filterByField(DATA_FIELDS.STATE),
           ...filterByField(DATA_FIELDS.TYPE),
-        ])
+        ]),
       );
     }
 
@@ -318,7 +318,7 @@ module.exports = (app) => {
       const statusString = status === "OK" ? "" : ` (${status})`;
       blocks.push(
         `<https://${name}|${name}>${statusString}, ` +
-          `presented by _${agency}_ in _${city}_, _${state}_`
+          `presented by _${agency}_ in _${city}_, _${state}_`,
       );
     }
 
@@ -359,6 +359,6 @@ module.exports = (app) => {
         thread,
       };
       await module.exports.dotGov(args);
-    }
+    },
   );
 };

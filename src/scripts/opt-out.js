@@ -25,6 +25,6 @@ module.exports = (app) => {
         optedOut[value].push(userId);
         app.brain.set(BRAIN_KEY, optedOut);
       }
-    }
+    },
   );
 };

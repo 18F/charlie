@@ -20,7 +20,7 @@ describe("Charlie self-help", () => {
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       "help",
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -141,7 +141,7 @@ describe("Charlie self-help", () => {
               { name: "f bot", helpText: "flippity flop floop floop" },
             ],
           ],
-        ])
+        ]),
       );
     });
 

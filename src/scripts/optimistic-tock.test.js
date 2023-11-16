@@ -133,7 +133,7 @@ describe("Optimistic Tock", () => {
       times.forEach((scheduledTime) => {
         expect(scheduleJob).toHaveBeenCalledWith(
           scheduledTime,
-          expect.any(Function)
+          expect.any(Function),
         );
       });
 
@@ -141,7 +141,7 @@ describe("Optimistic Tock", () => {
       // same time of day as when the bot started.
       expect(scheduleJob).toHaveBeenCalledWith(
         moment.tz("1984-01-08T12:32:18", "America/New_York").toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -168,7 +168,7 @@ describe("Optimistic Tock", () => {
       times.forEach((scheduledTime) => {
         expect(scheduleJob).toHaveBeenCalledWith(
           scheduledTime,
-          expect.any(Function)
+          expect.any(Function),
         );
       });
 
@@ -176,7 +176,7 @@ describe("Optimistic Tock", () => {
       // same time of day as when the bot started.
       expect(scheduleJob).toHaveBeenCalledWith(
         moment.tz("1986-07-06T12:43:44", "America/New_York").toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -212,7 +212,7 @@ describe("Optimistic Tock", () => {
       ].forEach((scheduledTime) => {
         expect(scheduleJob).toHaveBeenCalledWith(
           scheduledTime,
-          expect.any(Function)
+          expect.any(Function),
         );
       });
 
@@ -220,7 +220,7 @@ describe("Optimistic Tock", () => {
       // same time of day as when the bot started.
       expect(scheduleJob).toHaveBeenCalledWith(
         moment.tz("1985-09-15T09:45:00", "America/New_York").toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
   });

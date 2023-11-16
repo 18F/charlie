@@ -12,7 +12,7 @@ const getHolidayText = () => {
   const holiday = getNextHoliday();
   const nextOne = moment(holiday.date);
   const daysUntil = Math.ceil(
-    moment.duration(nextOne.utc().format("x") - Date.now()).asDays()
+    moment.duration(nextOne.utc().format("x") - Date.now()).asDays(),
   );
 
   const emoji = emojis.get(holiday.alsoObservedAs ?? holiday.name);
@@ -29,7 +29,7 @@ module.exports = (app) => {
     "Federal holidays",
     "next holiday",
     "Itching for a day off and want to know when the next holiday is? Charlie knows all the (standard, recurring) federal holidays and will gladly tell you what's coming up next!",
-    true
+    true,
   );
 
   registerDidYouKnow(() => ({

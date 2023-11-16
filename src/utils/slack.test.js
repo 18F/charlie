@@ -215,7 +215,7 @@ describe("utils / slack", () => {
     await sendDirectMessage(
       ["user 1", "user 2"],
       { text: "moop moop" },
-      config
+      config,
     );
 
     expect(defaultClient.conversations.open).toHaveBeenCalledWith({

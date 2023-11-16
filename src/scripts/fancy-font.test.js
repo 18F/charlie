@@ -12,7 +12,7 @@ describe("fancy-font", () => {
     fancyFont(app);
     expect(app.message).toHaveBeenCalledWith(
       /^fancy font (.*)$/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

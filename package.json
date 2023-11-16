@@ -42,7 +42,5 @@
   "jest": {
     "testEnvironment": "node"
   },
-  "prettier": {
-    "trailingComma": "es5"
-  }
+  "prettier": {}
 }

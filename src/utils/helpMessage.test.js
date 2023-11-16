@@ -18,7 +18,7 @@ describe("help message registrar and reporter", () => {
       helpMessage.registerInteractive("bot", "trigger", "help text");
 
       expect(helpMessage.getHelp().has(helpMessage.type.interactive)).toBe(
-        true
+        true,
       );
       expect(helpMessage.getHelp().get(helpMessage.type.interactive)).toEqual([
         {
@@ -34,7 +34,7 @@ describe("help message registrar and reporter", () => {
       helpMessage.registerInteractive("bot", "trigger", "help text", true);
 
       expect(helpMessage.getHelp().has(helpMessage.type.interactive)).toBe(
-        true
+        true,
       );
       expect(helpMessage.getHelp().get(helpMessage.type.interactive)).toEqual([
         {
@@ -51,7 +51,7 @@ describe("help message registrar and reporter", () => {
     helpMessage.registerNonInteractive("bot", "help text");
 
     expect(helpMessage.getHelp().has(helpMessage.type.noninteractive)).toBe(
-      true
+      true,
     );
     expect(helpMessage.getHelp().get(helpMessage.type.noninteractive)).toEqual([
       {

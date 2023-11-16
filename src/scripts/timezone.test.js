@@ -79,7 +79,7 @@ describe("Handy Tau-bot timezone conversions", () => {
 
     expect(app.message).toHaveBeenCalledWith(
       /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -95,19 +95,19 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user dn", "1:00")
+        responseFor("user dn", "1:00"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ch", "2:00")
+        responseFor("user ch", "2:00"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ak", "11:00")
+        responseFor("user ak", "11:00"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user id", "2:00")
+        responseFor("user id", "2:00"),
       );
 
       // Make sure only the above messages were posted.
@@ -119,7 +119,7 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user dn", "1:00")
+        responseFor("user dn", "1:00"),
       );
       // trusting other tests to verify contents for the other 3 users
       expect(slack.postEphemeralMessage.mock.calls.length).toEqual(5);
@@ -131,11 +131,11 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user dn", "1:00")
+        responseFor("user dn", "1:00"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ak", "11:00")
+        responseFor("user ak", "11:00"),
       );
 
       expect(slack.postEphemeralMessage.mock.calls.length).toEqual(3);
@@ -146,23 +146,23 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ny", "4:00")
+        responseFor("user ny", "4:00"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ch", "3:00")
+        responseFor("user ch", "3:00"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user dn", "2:00")
+        responseFor("user dn", "2:00"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user la", "1:00")
+        responseFor("user la", "1:00"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ak", "12:00")
+        responseFor("user ak", "12:00"),
       );
 
       // Make sure only the above messages were posted.
@@ -174,7 +174,7 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user dn", "2:00 pm")
+        responseFor("user dn", "2:00 pm"),
       );
 
       // Not testing filtering here, so trust the previous tests.
@@ -185,15 +185,15 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ny", "1:15 pm")
+        responseFor("user ny", "1:15 pm"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user dn", "11:15 am")
+        responseFor("user dn", "11:15 am"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ak", "9:15 am")
+        responseFor("user ak", "9:15 am"),
       );
     });
 
@@ -202,11 +202,11 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ny", "1:15 am")
+        responseFor("user ny", "1:15 am"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user la", "10:15 pm")
+        responseFor("user la", "10:15 pm"),
       );
     });
 
@@ -217,13 +217,13 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ny", "4:00")
+        responseFor("user ny", "4:00"),
       );
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ch", "3:00")
+        responseFor("user ch", "3:00"),
       );
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ak", "12:00")
+        responseFor("user ak", "12:00"),
       );
       expect(slack.postEphemeralMessage.mock.calls.length).toEqual(4);
     });
@@ -247,15 +247,15 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ny", "1:42")
+        responseFor("user ny", "1:42"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user ch", "12:42")
+        responseFor("user ch", "12:42"),
       );
 
       expect(slack.postEphemeralMessage).toHaveBeenCalledWith(
-        responseFor("user la", "10:42")
+        responseFor("user la", "10:42"),
       );
     });
   });

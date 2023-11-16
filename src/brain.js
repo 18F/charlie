@@ -9,7 +9,7 @@ const set = async (key, value) => {
   brain.set(key, value);
   await client.query(
     "INSERT INTO brain (key, value) VALUES($1, $2) ON CONFLICT (key) DO UPDATE SET value=$2",
-    [key, JSON.stringify(value)]
+    [key, JSON.stringify(value)],
   );
 };
 
@@ -18,7 +18,7 @@ const initialize = async (config = process.env) => {
   await client.connect();
 
   await client.query(
-    "CREATE TABLE IF NOT EXISTS brain (key TEXT PRIMARY KEY, value TEXT)"
+    "CREATE TABLE IF NOT EXISTS brain (key TEXT PRIMARY KEY, value TEXT)",
   );
 
   const data = await client.query("SELECT * FROM brain");

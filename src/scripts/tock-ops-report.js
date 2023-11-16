@@ -10,7 +10,7 @@ const {
 module.exports = (app, config = process.env) => {
   if (!config.TOCK_API || !config.TOCK_TOKEN) {
     app.logger.warn(
-      "Tock compliance report disabled: Tock API URL or access token is not set"
+      "Tock compliance report disabled: Tock API URL or access token is not set",
     );
     return;
   }
@@ -19,11 +19,11 @@ module.exports = (app, config = process.env) => {
     config.ANGRY_TOCK_TIMEZONE || "America/New_York";
   const TRUANT_REPORT_TIME = moment(
     config.ANGRY_TOCK_SECOND_TIME || "16:00",
-    "HH:mm"
+    "HH:mm",
   );
 
   const TRUANT_REPORT_TO = (config.ANGRY_TOCK_REPORT_TO || "#18f-supes").split(
-    ","
+    ",",
   );
 
   const getNextReportTime = () => {
@@ -49,7 +49,7 @@ module.exports = (app, config = process.env) => {
 
   const report = async () => {
     const untockedUsers = await get18FUsersWhoHaveNotTocked(
-      moment.tz(TRUANT_REPORT_TIMEZONE)
+      moment.tz(TRUANT_REPORT_TIMEZONE),
     );
 
     if (untockedUsers.length > 0) {
@@ -72,8 +72,8 @@ module.exports = (app, config = process.env) => {
 
       await Promise.all(
         TRUANT_REPORT_TO.map((channel) =>
-          postMessage({ ...tockComplianceReport, channel })
-        )
+          postMessage({ ...tockComplianceReport, channel }),
+        ),
       );
     }
   };

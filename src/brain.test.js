@@ -27,7 +27,7 @@ describe("the brain", () => {
     // One for creating the table, if necessary; one for reading existing data
     expect(query.mock.calls.length).toBe(2);
     expect(query.mock.calls[0][0]).toEqual(
-      "CREATE TABLE IF NOT EXISTS brain (key TEXT PRIMARY KEY, value TEXT)"
+      "CREATE TABLE IF NOT EXISTS brain (key TEXT PRIMARY KEY, value TEXT)",
     );
     expect(query).toHaveBeenCalledWith("SELECT * FROM brain");
     expect(brain.get("key")).toEqual("value");
@@ -48,7 +48,7 @@ describe("the brain", () => {
     expect(brain.get("new key")).toEqual("new value");
     expect(query).toHaveBeenCalledWith(
       "INSERT INTO brain (key, value) VALUES($1, $2) ON CONFLICT (key) DO UPDATE SET value=$2",
-      ["new key", '"new value"']
+      ["new key", '"new value"'],
     );
   });
 });

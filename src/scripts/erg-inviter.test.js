@@ -38,14 +38,14 @@ describe("ERG inviter", () => {
 
       expect(app.action).toHaveBeenCalledWith(
         bot.REQUEST_ERG_INVITATION_ACTION_ID,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
     it("sends a message to the appropriate channel when a user requests an invitation", async () => {
       bot(app);
       const handler = app.getActionHandler(
-        bot.REQUEST_ERG_INVITATION_ACTION_ID
+        bot.REQUEST_ERG_INVITATION_ACTION_ID,
       );
       const ack = jest.fn().mockResolvedValue();
 
@@ -85,7 +85,7 @@ describe("ERG inviter", () => {
       expect(app.message).toHaveBeenCalledWith(
         expect.any(Function),
         /ergs/i,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -147,7 +147,7 @@ describe("ERG inviter", () => {
       bot(app);
 
       expect(homepage.registerInteractive).toHaveBeenCalledWith(
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -184,7 +184,7 @@ describe("ERG inviter", () => {
       bot(app);
       expect(app.action).toHaveBeenCalledWith(
         bot.SHOW_ERG_MODAL_ACTION_ID,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
