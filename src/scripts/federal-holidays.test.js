@@ -30,7 +30,7 @@ describe("federal holidays bot", () => {
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       expect.any(RegExp),
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -87,7 +87,7 @@ describe("federal holidays bot", () => {
 
       expect(say.mock.calls.length).toBe(1);
       expect(say).toHaveBeenCalledWith(
-        "The next federal holiday is Test Holiday day in 1 days on Friday, January 2nd"
+        "The next federal holiday is Test Holiday day in 1 days on Friday, January 2nd",
       );
     });
 
@@ -106,7 +106,7 @@ describe("federal holidays bot", () => {
 
       expect(say.mock.calls.length).toBe(1);
       expect(say).toHaveBeenCalledWith(
-        "The next federal holiday is Other holiday day day day in 1 days on Friday, January 2nd"
+        "The next federal holiday is Other holiday day day day in 1 days on Friday, January 2nd",
       );
     });
   });
@@ -126,7 +126,7 @@ describe("federal holidays bot", () => {
 
       expect(say.mock.calls.length).toBe(1);
       expect(say).toHaveBeenCalledWith(
-        "The next federal holiday is Christmas Day :christmas_tree: in 1 days on Friday, January 2nd"
+        "The next federal holiday is Christmas Day :christmas_tree: in 1 days on Friday, January 2nd",
       );
     });
 
@@ -145,7 +145,7 @@ describe("federal holidays bot", () => {
 
       expect(say.mock.calls.length).toBe(1);
       expect(say).toHaveBeenCalledWith(
-        "The next federal holiday is Indigenous Peoples' Day in 1 days on Friday, January 2nd"
+        "The next federal holiday is Indigenous Peoples' Day in 1 days on Friday, January 2nd",
       );
     });
   });

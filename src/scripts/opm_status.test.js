@@ -19,7 +19,7 @@ describe("OPM status for DC-area offices", () => {
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       /opm status/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

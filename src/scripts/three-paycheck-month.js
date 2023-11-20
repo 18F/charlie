@@ -52,7 +52,7 @@ module.exports = (app) => {
     "Three-paycheck month",
     "three paycheck",
     "Sometimes we get three paychecks in a single month. Some people splurge on crab legs on those months, and Charlie can help you plan by letting you know when the next three-paycheck month is.",
-    true
+    true,
   );
 
   app.message(
@@ -68,6 +68,6 @@ module.exports = (app) => {
         text: `The next 3-paycheck month is ${next.format("MMMM yyyy")}.`,
         thread_ts: thread,
       });
-    }
+    },
   );
 };

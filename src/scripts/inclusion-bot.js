@@ -28,7 +28,7 @@ const getTriggers = () => {
         // quotes, single quote, or smart quotes). You can play around with the
         // regex here: https://regexr.com/61eiq
         `(${matches.join("|")})(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)`,
-        "i"
+        "i",
       ),
       ...rest,
     })),
@@ -38,7 +38,7 @@ const getTriggers = () => {
 module.exports = async (app) => {
   helpMessage.registerNonInteractive(
     "Inclusion bot",
-    "Charlie passively listens for language with racist, ableist, sexist, or other exclusionary histories. When it hears such words or phrases, it quietly lets the speaker know and offers some suggestions. What a great bot, helping nudge us all to thoughtful, inclusive language!"
+    "Charlie passively listens for language with racist, ableist, sexist, or other exclusionary histories. When it hears such words or phrases, it quietly lets the speaker know and offers some suggestions. What a great bot, helping nudge us all to thoughtful, inclusive language!",
   );
 
   // Use the module exported version here, so that it can be stubbed for testing
@@ -185,7 +185,7 @@ module.exports = async (app) => {
           blocks,
         },
       });
-    }
+    },
   );
 };
 

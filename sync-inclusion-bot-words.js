@@ -50,7 +50,7 @@ const getTriggerIgnoreMap = (currentConfig) => {
     // matches as the new trigger. There may not be one, but if...
     const existing = currentConfig.triggers.find(
       ({ matches: currentMatches }) =>
-        currentMatches.some((v) => newTrigger.matches.includes(v))
+        currentMatches.some((v) => newTrigger.matches.includes(v)),
     );
 
     // If there is an existing config that matches AND it has an ignore property
@@ -117,7 +117,7 @@ const main = async () => {
   await fs.writeFile(
     "src/scripts/inclusion-bot.yaml",
     [frontmatter, "", configYaml].join("\n"),
-    { encoding: "utf-8" }
+    { encoding: "utf-8" },
   );
 };
 

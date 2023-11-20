@@ -20,7 +20,7 @@ module.exports = (app) => {
   helpMessage.registerInteractive(
     "Coffeemate",
     "coffee me",
-    "Coffeemate can help you schedule virtual coffees :coffee: with random teammates! The bot will add you to a queue of people looking for coffee and will match you with someone else in the queue. Have fun!"
+    "Coffeemate can help you schedule virtual coffees :coffee: with random teammates! The bot will add you to a queue of people looking for coffee and will match you with someone else in the queue. Have fun!",
   );
 
   const addToCoffeeQueue = async (userId, message = false, scope = "") => {
@@ -135,7 +135,7 @@ module.exports = (app) => {
         // Now that the user's queue status has changed, update the homepage.
         homepage.refresh(userId, client);
       }
-    }
+    },
   );
 
   app.action(
@@ -154,7 +154,7 @@ module.exports = (app) => {
 
       // The user's queue status may have changed; update the homepage in case.
       homepage.refresh(userId, client);
-    }
+    },
   );
 
   app.message(/\bcoffee me\b/i, async (message) => {

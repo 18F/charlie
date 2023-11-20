@@ -26,7 +26,7 @@ app.start(port).then(async () => {
   app.logger.info("Brain is ready");
 
   const files = (await fs.readdir(path.join(__dirname, "scripts"))).filter(
-    (file) => file.endsWith(".js") && !file.endsWith(".test.js")
+    (file) => file.endsWith(".js") && !file.endsWith(".test.js"),
   );
 
   files.forEach((file) => {

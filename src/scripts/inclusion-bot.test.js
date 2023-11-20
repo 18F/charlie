@@ -93,7 +93,7 @@ triggers:
 
     expect(app.message).toHaveBeenCalledWith(
       /\b(match 1)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)|(match 2a|match 2b)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)\b/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -160,7 +160,7 @@ triggers:
 
       expectedMessage.attachments[0].blocks[1].text.text =
         expect.stringMatching(
-          /• Instead of saying "match 1," how about \*(a1|a2|a3)\*\?/
+          /• Instead of saying "match 1," how about \*(a1|a2|a3)\*\?/,
         );
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
     });
@@ -184,7 +184,7 @@ triggers:
 
       expectedMessage.attachments[0].blocks[1].text.text =
         expect.stringMatching(
-          /• Instead of saying "match 1," how about \*(a1|a2|a3)\*\?\n• Instead of saying "match 2a," how about \*b1\*\?/
+          /• Instead of saying "match 1," how about \*(a1|a2|a3)\*\?\n• Instead of saying "match 2a," how about \*b1\*\?/,
         );
 
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
@@ -203,7 +203,7 @@ triggers:
 
       expectedMessage.attachments[0].blocks[1].text.text =
         expect.stringMatching(
-          /• Instead of saying "match 2a," how about \*b1\*\?/
+          /• Instead of saying "match 2a," how about \*b1\*\?/,
         );
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
 
@@ -229,7 +229,7 @@ triggers:
 
       expectedMessage.attachments[0].blocks[1].text.text =
         expect.stringMatching(
-          /• Instead of saying "match 2a," how about \*b1\*\?/
+          /• Instead of saying "match 2a," how about \*b1\*\?/,
         );
       expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
 

@@ -18,7 +18,7 @@ describe("TTS Handbook search", () => {
     handbook(app);
     expect(app.message).toHaveBeenCalledWith(
       /^@?handbook (.+)$/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -53,7 +53,7 @@ describe("TTS Handbook search", () => {
       await handler(message);
 
       expect(axios.get).toHaveBeenCalledWith(
-        "https://search.usa.gov/search/?utf8=no&affiliate=tts-handbook&format=json&query=%22some%20'search'%20goes%20here%22"
+        "https://search.usa.gov/search/?utf8=no&affiliate=tts-handbook&format=json&query=%22some%20'search'%20goes%20here%22",
       );
     });
 

@@ -116,7 +116,7 @@ const postEphemeralResponse = async (toMsg, message, config = process.env) => {
       channel,
       thread_ts: thread,
     },
-    config
+    config,
   );
 };
 
@@ -129,7 +129,7 @@ const postMessage = async (message, { SLACK_TOKEN } = process.env) =>
 const sendDirectMessage = async (
   to,
   message,
-  { SLACK_TOKEN } = process.env
+  { SLACK_TOKEN } = process.env,
 ) => {
   const {
     channel: { id },
@@ -143,7 +143,7 @@ const sendDirectMessage = async (
       ...message,
       channel: id,
     },
-    { SLACK_TOKEN }
+    { SLACK_TOKEN },
   );
 };
 

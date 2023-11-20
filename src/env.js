@@ -4,7 +4,7 @@ if (process.env.VCAP_SERVICES) {
   const cfEnv = JSON.parse(process.env.VCAP_SERVICES);
   if (Array.isArray(cfEnv["user-provided"])) {
     const config = cfEnv["user-provided"].find(
-      ({ name }) => name === "charlie-config"
+      ({ name }) => name === "charlie-config",
     );
 
     if (config) {

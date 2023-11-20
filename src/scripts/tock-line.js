@@ -24,13 +24,13 @@ module.exports = (app) => {
     "Tock line (get)",
     "tock line",
     "Not sure what Tock line to bill this project to? Charlie might know! If someone has set a tock line for the channel, Charlie will gladly tell you what it is.",
-    true
+    true,
   );
   helpMessage.registerInteractive(
     "Tock line (set)",
     "set tock line",
     "Let Charlie help you keep track of the Tock line for a channel!",
-    true
+    true,
   );
 
   app.message(
@@ -56,7 +56,7 @@ module.exports = (app) => {
           thread_ts: thread,
         });
       }
-    }
+    },
   );
 
   app.message(
@@ -73,6 +73,6 @@ module.exports = (app) => {
         text: "Okay, I set the tock line for this room",
         thread_ts: thread,
       });
-    }
+    },
   );
 };

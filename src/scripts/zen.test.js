@@ -10,7 +10,7 @@ describe("zen bot", () => {
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       /\bzen\b/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

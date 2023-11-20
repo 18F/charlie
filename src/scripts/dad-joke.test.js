@@ -26,7 +26,7 @@ describe("dad jokes (are the best worst)", () => {
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       /dad joke/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

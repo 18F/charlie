@@ -32,18 +32,18 @@ module.exports = (app) => {
       "Hug Me",
       "hug me",
       "Need a hug? Friends from TTS past have left us images of themselves providing a hug as a gift, and Charlie will deliver one whenever you need!",
-      true
+      true,
     );
     helpMessage.registerInteractive(
       "Hug Bomb",
       "hug bomb [number]",
       "Need more than one hug? Charlie will happily deliver multiple! Delivers three images of hugs from friends of TTS past.",
-      true
+      true,
     );
 
     const creds = new AWS.Credentials(
       s3Creds.access_key_id,
-      s3Creds.secret_access_key
+      s3Creds.secret_access_key,
     );
     const BUCKET = s3Creds.bucket;
     const REGION = s3Creds.region;
@@ -65,8 +65,8 @@ module.exports = (app) => {
             const s3Objects = [...Array(count)].map(() =>
               data.Contents.splice(
                 Math.floor(Math.random() * data.Contents.length),
-                1
-              ).pop()
+                1,
+              ).pop(),
             );
 
             const blocks = s3Objects.map((s3Object) => ({
@@ -104,7 +104,7 @@ module.exports = (app) => {
         incrementStats("hug bot - multiple hugs");
         const count = +matches[2] || 3;
         module.exports.hugBomb(count, msg);
-      }
+      },
     );
   } else {
     app.logger.warn("Unable to find service creds for 'charlie-bucket'.");

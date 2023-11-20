@@ -19,7 +19,7 @@ const getBlocksFromResults = (results) =>
         type: "mrkdwn",
         text: `<${result.link}|${result.title.replace(
           /[^ -~]+/g,
-          ""
+          "",
         )}>\n${result.body.replace(/[^ -~]+/g, "")}`,
       },
     });
@@ -34,7 +34,7 @@ module.exports = (app) => {
   helpMessage.registerInteractive(
     "Handbook search",
     "@handbook <terms>",
-    "Wondering if the TTS Handbook has useful information but don't want to open your browser? Charlie can search for you! If it finds anything, it'll post links in a threaded response."
+    "Wondering if the TTS Handbook has useful information but don't want to open your browser? Charlie can search for you! If it finds anything, it'll post links in a threaded response.",
   );
 
   app.message(/^@?handbook (.+)$/i, async (msg) => {

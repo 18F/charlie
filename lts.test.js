@@ -58,7 +58,7 @@ describe("Charlie's Node.js LTS checker", () => {
 
       expect(version).toEqual(20);
       expect(global.fetch.mock.calls[0][0]).toEqual(
-        "https://raw.githubusercontent.com/nodejs/Release/main/schedule.json"
+        "https://raw.githubusercontent.com/nodejs/Release/main/schedule.json",
       );
     });
   });
@@ -68,7 +68,7 @@ describe("Charlie's Node.js LTS checker", () => {
       fs.readFile.mockResolvedValue(
         JSON.stringify({
           engines: { node: "^1527.54.2" },
-        })
+        }),
       );
 
       const version = await getPackageNodeVersion();
@@ -97,7 +97,7 @@ more stuff to ignore`);
       expect(version).toEqual(16);
       expect(fs.readFile).toHaveBeenCalledWith(
         "Dockerfile",
-        expect.any(Object)
+        expect.any(Object),
       );
     });
 
@@ -188,7 +188,7 @@ more stuff to ignore`);
             "  - uses: actions/setup-node",
             "  - something-else",
             "    node-version: 88",
-          ].join("\n")
+          ].join("\n"),
         );
 
         const output = await getWorkflowLinesWithInvalidNodeVersion(16);

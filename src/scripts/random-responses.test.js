@@ -160,7 +160,7 @@ describe("random responder", () => {
       expect(cache).toHaveBeenCalledWith(
         "random response from over there",
         expect.any(Number),
-        expect.any(Function)
+        expect.any(Function),
       );
       expect(axios.get).toHaveBeenCalledWith("over there");
       expect(data).toEqual("response data");
@@ -186,7 +186,7 @@ describe("random responder", () => {
               { name: "message seven", emoji: "seven", text: "seven" },
             ],
           },
-          "one"
+          "one",
         );
         expect(responses).toEqual([
           "message one",
@@ -200,7 +200,7 @@ describe("random responder", () => {
       it("also happily includes plural versions of search terms", async () => {
         const responses = await script.getResponses(
           { responseList: ["this is a hat", "these are hats"] },
-          "hat"
+          "hat",
         );
         expect(responses).toEqual(["this is a hat", "these are hats"]);
       });
@@ -208,7 +208,7 @@ describe("random responder", () => {
       it("excludes messages where the search term is only embedded in another word", async () => {
         const responses = await script.getResponses(
           { responseList: ["this is a hat", "that is not"] },
-          "hat"
+          "hat",
         );
         expect(responses).toEqual(["this is a hat"]);
       });
@@ -222,7 +222,7 @@ describe("random responder", () => {
               { name: "chapeau", emoji: "tophat", text: "fancy" },
             ],
           },
-          "hat"
+          "hat",
         );
         expect(responses).toEqual([
           "that is not",
@@ -239,7 +239,7 @@ describe("random responder", () => {
       script.attachTrigger(app, { trigger: "one trigger" });
       expect(app.message).toHaveBeenCalledWith(
         /one trigger/i,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -247,7 +247,7 @@ describe("random responder", () => {
       script.attachTrigger(app, { trigger: /one regex/g });
       expect(app.message).toHaveBeenCalledWith(
         /one regex/i,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -258,15 +258,15 @@ describe("random responder", () => {
 
       expect(app.message).toHaveBeenCalledWith(
         /trigger 1/i,
-        expect.any(Function)
+        expect.any(Function),
       );
       expect(app.message).toHaveBeenCalledWith(
         /trigger 2/i,
-        expect.any(Function)
+        expect.any(Function),
       );
       expect(app.message).toHaveBeenCalledWith(
         /trigger 3/i,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -277,15 +277,15 @@ describe("random responder", () => {
 
       expect(app.message).toHaveBeenCalledWith(
         /trigger 1/i,
-        expect.any(Function)
+        expect.any(Function),
       );
       expect(app.message).toHaveBeenCalledWith(
         /trigger 2/i,
-        expect.any(Function)
+        expect.any(Function),
       );
       expect(app.message).toHaveBeenCalledWith(
         /trigger 3/i,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
   });
@@ -323,7 +323,7 @@ describe("random responder", () => {
 
       expect(app.message).toHaveBeenCalledWith(
         /fact of facts/i,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 

@@ -11,7 +11,7 @@ module.exports = (app) => {
     "Dad Jokes",
     "dad joke",
     "Fetches a joke from Fatherhood.gov. Charlie will first set up the joke, then it'll provide the punchline!",
-    true
+    true,
   );
 
   app.message(
@@ -23,7 +23,7 @@ module.exports = (app) => {
       const jokes = await cache("dad jokes", 60, async () => {
         try {
           const { data } = await axios.get(
-            "https://fatherhood.gov/jsonapi/node/dad_jokes"
+            "https://fatherhood.gov/jsonapi/node/dad_jokes",
           );
 
           if (data && data.data) {
@@ -56,6 +56,6 @@ module.exports = (app) => {
           });
         }, 5000);
       }
-    }
+    },
   );
 };
