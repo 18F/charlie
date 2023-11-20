@@ -36,13 +36,13 @@ const matcher =
 module.exports = (app) => {
   helpMessage.registerNonInteractive(
     "Helpful tau bot/Baby Tock",
-    "If Charlie sees something it recognizes as a time posted into chat, it will send a message that only you can see, letting you know what that time is in your timezone. Charlie tries really hard."
+    "If Charlie sees something it recognizes as a time posted into chat, it will send a message that only you can see, letting you know what that time is in your timezone. Charlie tries really hard.",
   );
 
   const optout = optOut(
     "handy_tau_bot",
     "Baby Tock (Handy Tau Bot)",
-    "When someone posts a message containing a time, see that time translated into your local time below it."
+    "When someone posts a message containing a time, see that time translated into your local time below it.",
   );
 
   app.message(matcher, async (msg) => {
@@ -75,7 +75,7 @@ module.exports = (app) => {
         m = moment.tz(
           `${time.trim()}${ampm ? ` ${ampm}` : ""}`,
           "hh:mm a",
-          sourceTz
+          sourceTz,
         );
       }
 

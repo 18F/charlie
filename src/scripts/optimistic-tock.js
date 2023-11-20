@@ -11,7 +11,7 @@ const {
 module.exports = async (app, config = process.env) => {
   helpMessage.registerNonInteractive(
     "Optimistic Tock",
-    "Near the end of the last day of the workweek, Charlie will remind Tockable people who haven't submitted their Tock yet."
+    "Near the end of the last day of the workweek, Charlie will remind Tockable people who haven't submitted their Tock yet.",
   );
 
   const TOCK_API_URL = config.TOCK_API;
@@ -19,7 +19,7 @@ module.exports = async (app, config = process.env) => {
 
   if (!TOCK_API_URL || !TOCK_TOKEN) {
     app.logger.warn(
-      "OptimisticTock disabled: Tock API URL or access token is not set"
+      "OptimisticTock disabled: Tock API URL or access token is not set",
     );
     return;
   }
@@ -27,7 +27,7 @@ module.exports = async (app, config = process.env) => {
   const optout = optOut(
     "optimistic_tock",
     "Optimistic Tock",
-    "Receive a message near the end of the last work day of the week reminding you to Tock, if you are Tockable and have not yet submitted your time."
+    "Receive a message near the end of the last work day of the week reminding you to Tock, if you are Tockable and have not yet submitted your time.",
   );
 
   const reminder = (tz) => async () => {
@@ -50,7 +50,7 @@ module.exports = async (app, config = process.env) => {
     // Get all the folks who have not submitted their current Tock.
     const usersWhoNeedToTock = await get18FUsersWhoHaveNotTocked(
       moment.tz(tz),
-      0
+      0,
     );
 
     // Now get the list of Slacky-Tocky users in the current timezone who
@@ -61,15 +61,15 @@ module.exports = async (app, config = process.env) => {
       .filter((tockUser) => tockUser.tz === tz)
       .filter((tockUser) =>
         usersWhoNeedToTock.some(
-          (t) => t.email?.toLowerCase() === tockUser.email?.toLowerCase()
-        )
+          (t) => t.email?.toLowerCase() === tockUser.email?.toLowerCase(),
+        ),
       )
       .filter((tockUser) => !optout.isOptedOut(tockUser.slack_id));
 
     await Promise.all(
       slackUsersWhoNeedToTock.map(async ({ slack_id: slackID }) => {
         await sendDirectMessage(slackID, message);
-      })
+      }),
     );
   };
 

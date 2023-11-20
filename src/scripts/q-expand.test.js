@@ -43,7 +43,7 @@ describe("q-expand", () => {
     script(app);
     expect(app.message).toHaveBeenCalledWith(
       /^qexp?\s+([a-z0-9-]{1,8}\*?)$/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

@@ -105,8 +105,8 @@ describe("Inclusion bot config file", () => {
   const ymlStr = fs.readFileSync(
     path.join(
       path.dirname(require.resolve("./inclusion-bot")),
-      "inclusion-bot.yaml"
-    )
+      "inclusion-bot.yaml",
+    ),
   );
   const yml = yaml.load(ymlStr, { json: true });
 

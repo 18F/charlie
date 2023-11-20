@@ -26,13 +26,13 @@ describe("tock line", () => {
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       /tock( line)?$/i,
-      expect.any(Function)
+      expect.any(Function),
     );
 
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       /set tock( line)? (.*)$/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

@@ -98,7 +98,7 @@ module.exports = (app) => {
     "Glossary",
     "(define or glossary) <term>",
     "Not sure what something means? The TTS glossary might have something to help you, and Charlie gives you a shortcut to access the glossary directly from Slack.",
-    true
+    true,
   );
 
   app.message(
@@ -115,7 +115,7 @@ module.exports = (app) => {
       // Cache the glossary for 1 minute
       const glossary = await cache("glossary get", 60, async () => {
         const { data } = await axios.get(
-          "https://raw.githubusercontent.com/18F/the-glossary/main/glossary.yml"
+          "https://raw.githubusercontent.com/18F/the-glossary/main/glossary.yml",
         );
 
         return yaml.load(data, { json: true }).entries;
@@ -139,6 +139,6 @@ module.exports = (app) => {
       }
 
       say(response);
-    }
+    },
   );
 };

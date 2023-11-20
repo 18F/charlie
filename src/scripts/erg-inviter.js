@@ -25,7 +25,7 @@ module.exports = async (app) => {
     "ERG Inviter",
     "ergs",
     "Charlie can send you a list of TTS employee resource and affinity groups that accept automated invitation requests. This command will send you a private message listing the ERGs and a button for each one to let the group know you'd like an invitation.",
-    true
+    true,
   );
 
   const ergs = module.exports.getERGs();
@@ -72,7 +72,7 @@ module.exports = async (app) => {
           blocks: getButtons(),
         },
       });
-    }
+    },
   );
 
   app.action(
@@ -99,7 +99,7 @@ module.exports = async (app) => {
         text: "Okay, I've sent your request to join that channel.",
         username: "Inclusion Bot",
       });
-    }
+    },
   );
 
   app.message(directMention(), /ergs/i, ({ event: { user } }) => {

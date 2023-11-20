@@ -91,7 +91,7 @@ const getWorkflowLinesWithInvalidNodeVersion = async (currentLTSVersion) => {
     for (const [index, line] of lines.entries()) {
       // Node could be referenced via a workflow job or step container.
       const [, nodeContainerVersion] = line.match(
-        /^\s*container: node:(\d\S+)/
+        /^\s*container: node:(\d\S+)/,
       ) ?? [null, false];
 
       if (nodeContainerVersion) {
@@ -181,7 +181,7 @@ const main = async () => {
   const dockerMajor = await module.exports.getDockerNodeVersion();
   const invalidWorkflowNodes =
     await module.exports.getWorkflowLinesWithInvalidNodeVersion(
-      currentLTSVersion
+      currentLTSVersion,
     );
 
   const text = [];
@@ -207,7 +207,7 @@ const main = async () => {
     text.push(`Workflow file ${file} is out of date`);
     for (const [line, version] of lines) {
       text.push(
-        `  line ${line} uses Node ${version}; wanted ${currentLTSVersion}`
+        `  line ${line} uses Node ${version}; wanted ${currentLTSVersion}`,
       );
     }
   }

@@ -33,14 +33,14 @@ const getResponses = async (config, searchTerm = false) => {
       async () => {
         const { data } = await axios.get(config.responseUrl);
         return data;
-      }
+      },
     );
   }
 
   if (searchTerm) {
     const regex = new RegExp(
       `\\b(${searchTerm}|${plural(searchTerm)})\\b`,
-      "i"
+      "i",
     );
     let filtered = responses.filter((r) => {
       if (typeof r === "object") {
@@ -51,7 +51,7 @@ const getResponses = async (config, searchTerm = false) => {
     if (filtered.length === 0) {
       const embeddedRegex = new RegExp(
         `(${searchTerm}|${plural(searchTerm)})`,
-        "i"
+        "i",
       );
       filtered = responses.filter((r) => {
         if (typeof r === "object") {
@@ -81,11 +81,13 @@ const responseFrom =
   ({ botName = null, defaultEmoji = null, ...config } = {}) =>
   async ({ event: { thread_ts: thread }, message: { text }, say }) => {
     incrementStats(
-      `random response: ${botName ?? `unnamed bot [trigger: ${config.tragger}`}`
+      `random response: ${
+        botName ?? `unnamed bot [trigger: ${config.tragger}`
+      }`,
     );
 
     const [, searchTerm] = text.match(
-      new RegExp(`(\\S+) ${config.trigger}`, "i")
+      new RegExp(`(\\S+) ${config.trigger}`, "i"),
     ) ?? [false, false];
 
     const message = { thread_ts: thread };
@@ -132,7 +134,7 @@ const responseFrom =
 const attachTrigger = (app, { trigger, ...config }) => {
   if (Array.isArray(trigger)) {
     trigger.forEach((t) =>
-      app.message(new RegExp(t, "i"), responseFrom({ ...config, trigger }))
+      app.message(new RegExp(t, "i"), responseFrom({ ...config, trigger })),
     );
   } else {
     app.message(new RegExp(trigger, "i"), responseFrom({ ...config, trigger }));
@@ -148,7 +150,7 @@ module.exports = async (app) => {
         config.trigger
           .replace(/\(\?<!.+?\)/, "")
           .replace(/\(([^|]+)\|.+?\)/g, "$1")
-          .replace(/s\?$/, "")
+          .replace(/s\?$/, ""),
       );
       module.exports.attachTrigger(app, config);
     });
@@ -157,7 +159,7 @@ module.exports = async (app) => {
     helpMessage.registerInteractive(
       "Facts and random responses",
       triggers.map((t) => `• ${t}`).join("\n"),
-      "Charlie knows *_so many_* facts. Dog facts, cat facts, giraffe facts, dolphin facts. There are just so many facts. Charlie will gladly share its knowledge of any of these!"
+      "Charlie knows *_so many_* facts. Dog facts, cat facts, giraffe facts, dolphin facts. There are just so many facts. Charlie will gladly share its knowledge of any of these!",
     );
 
     app.message(/fact of facts/i, async (res) => {

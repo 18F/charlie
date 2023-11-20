@@ -32,8 +32,8 @@ describe("ERG inviter config file", () => {
   const ymlStr = fs.readFileSync(
     path.join(
       path.dirname(require.resolve("./erg-inviter")),
-      "erg-inviter.yaml"
-    )
+      "erg-inviter.yaml",
+    ),
   );
   const yml = yaml.load(ymlStr, { json: true });
 

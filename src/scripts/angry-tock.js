@@ -11,7 +11,7 @@ const {
 module.exports = (app, config = process.env) => {
   helpMessage.registerNonInteractive(
     "Angry Tock",
-    "On the first morning of the work week, Angry Tock will disappointedly remind Tock-able users who haven't Tocked yet. At the end of the day, it'll also let supervisors know about folks who still have not Tocked."
+    "On the first morning of the work week, Angry Tock will disappointedly remind Tock-able users who haven't Tocked yet. At the end of the day, it'll also let supervisors know about folks who still have not Tocked.",
   );
 
   const TOCK_API_URL = config.TOCK_API;
@@ -20,11 +20,11 @@ module.exports = (app, config = process.env) => {
   const ANGRY_TOCK_TIMEZONE = config.ANGRY_TOCK_TIMEZONE || "America/New_York";
   const ANGRY_TOCK_FIRST_ALERT = moment(
     config.ANGRY_TOCK_FIRST_TIME || "10:00",
-    "HH:mm"
+    "HH:mm",
   );
   const ANGRY_TOCK_SECOND_ALERT = moment(
     config.ANGRY_TOCK_SECOND_TIME || "16:00",
-    "HH:mm"
+    "HH:mm",
   );
 
   /**
@@ -45,12 +45,12 @@ module.exports = (app, config = process.env) => {
 
     const tockSlackUsers = await get18FTockSlackUsers();
     const usersWhoNeedToTock = await get18FUsersWhoHaveNotTocked(
-      moment.tz(ANGRY_TOCK_TIMEZONE)
+      moment.tz(ANGRY_TOCK_TIMEZONE),
     );
     const slackUsersWhoNeedToTock = tockSlackUsers.filter((tockUser) =>
       usersWhoNeedToTock.some(
-        (user) => user.email?.toLowerCase() === tockUser.email?.toLowerCase()
-      )
+        (user) => user.email?.toLowerCase() === tockUser.email?.toLowerCase(),
+      ),
     );
 
     slackUsersWhoNeedToTock.forEach(({ slack_id: slackID }) => {
@@ -130,7 +130,7 @@ module.exports = (app, config = process.env) => {
 
   if (!TOCK_API_URL || !TOCK_TOKEN) {
     app.logger.warn(
-      "AngryTock disabled: Tock API URL or access token is not set"
+      "AngryTock disabled: Tock API URL or access token is not set",
     );
     return;
   }

@@ -62,7 +62,7 @@ module.exports = (app) => {
     "US Code bot",
     "[title] USC [section] (<maybe>)(<paragraphs>)(<too>)",
     "If you drop a citation to the US Code, Charlie will attempt to look it up on the <https://www.law.cornell.edu/uscode/text|Cornell LII> website and post the text in a thread. Handy!",
-    false
+    false,
   );
 
   app.action(
@@ -95,7 +95,7 @@ module.exports = (app) => {
 
         // If there are any subsections, parse those too.
         children: [...dom("> .subsection, > .paragraph", sectionDom)].map((c) =>
-          parseSubcomponent(c, dom)
+          parseSubcomponent(c, dom),
         ),
       };
 
@@ -179,7 +179,7 @@ module.exports = (app) => {
           ],
         },
       });
-    }
+    },
   );
 
   app.message(
@@ -211,7 +211,7 @@ module.exports = (app) => {
         // For a look at how this regex works, check:
         // https://regexper.com/#%2F%28%5Cd%2B%29%5Cs*%3Fu%5C.%3F%5Cs%3Fs%5C.%3F%5Cs%3Fc%28%5C.%7Code%29%3F%5Cs*%3F%C2%A7%3F%5Cs*%3F%28%5Cd%2B%29%28%5Cs*%5C%28%28%5Ba-z%5D%7Ci%2B%7C%5Cd%2B%29%5C%29%29*%2Fi
         //
-        /(\d+)\s*?u\.?\s?s\.?\s?c(\.|ode)?\s*?§?\s*?(\d+)(\s*\(([a-z]|i+|\d+)\))*/i
+        /(\d+)\s*?u\.?\s?s\.?\s?c(\.|ode)?\s*?§?\s*?(\d+)(\s*\(([a-z]|i+|\d+)\))*/i,
       ) ?? [""])[0]
         // Reminder that this captures the entire citation, including any
         // subcitations, if there are any. Again, we only keep the first element
@@ -255,7 +255,7 @@ module.exports = (app) => {
             type: "button",
             text: { type: "plain_text", text: "See text" },
             value: `${titleNumber} ${sectionNumber} ${subcitations.join(
-              " "
+              " ",
             )}`.trim(),
             action_id: "us code text",
           },
@@ -269,6 +269,6 @@ module.exports = (app) => {
       if (response.text) {
         say(response);
       }
-    }
+    },
   );
 };

@@ -52,13 +52,13 @@ describe("the hug bot", () => {
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       /hug me/i,
-      expect.any(Function)
+      expect.any(Function),
     );
 
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       /hug bomb( (\d+))?/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -133,7 +133,7 @@ describe("the hug bot", () => {
 
     expect(listObjects).toHaveBeenCalledWith(
       { Bucket: "bucket" },
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(say).toHaveBeenCalledWith({
       blocks: [

@@ -18,7 +18,7 @@ describe("date utility library", () => {
     it("defaults to America/New_York time", async () => {
       // Midnight on May 28 in eastern timezone
       jest.setSystemTime(
-        +moment.tz("2012-05-28", "YYYY-MM-DD", "America/New_York").format("x")
+        +moment.tz("2012-05-28", "YYYY-MM-DD", "America/New_York").format("x"),
       );
 
       const nextHoliday = getNextHoliday();
@@ -41,7 +41,7 @@ describe("date utility library", () => {
       // timezone is US central timezone, "now" is still May 27, so the
       // "next" holiday should be May 28 - Memorial Day
       jest.setSystemTime(
-        +moment.tz("2012-05-28", "YYYY-MM-DD", "America/New_York").format("x")
+        +moment.tz("2012-05-28", "YYYY-MM-DD", "America/New_York").format("x"),
       );
 
       const nextHoliday = getNextHoliday("America/Chicago");
@@ -100,7 +100,7 @@ describe("date utility library", () => {
     it("correctly handles a week with no holidays", () => {
       // Non-holiday week
       jest.setSystemTime(
-        +moment.tz("2022-11-17", "America/New_York").format("x")
+        +moment.tz("2022-11-17", "America/New_York").format("x"),
       );
 
       const dates = getCurrentWorkWeek();
@@ -117,7 +117,7 @@ describe("date utility library", () => {
     it("correctly handles a week with a Monday holiday", () => {
       // Christmas 2022, falls on a Sunday, but is observed on Monday
       jest.setSystemTime(
-        +moment.tz("2022-12-26", "America/New_York").format("x")
+        +moment.tz("2022-12-26", "America/New_York").format("x"),
       );
 
       const dates = getCurrentWorkWeek();
@@ -133,7 +133,7 @@ describe("date utility library", () => {
     it("correctly handles a week with a Friday holiday", () => {
       // Veterans Day 2022, falls on a Friday
       jest.setSystemTime(
-        +moment.tz("2022-11-08", "America/New_York").format("x")
+        +moment.tz("2022-11-08", "America/New_York").format("x"),
       );
 
       const dates = getCurrentWorkWeek();
@@ -149,7 +149,7 @@ describe("date utility library", () => {
     it("correctly handles a week with a midweek holiday", () => {
       // Thanksgiving 2022, falls on a Thursday
       jest.setSystemTime(
-        +moment.tz("2022-11-24", "America/New_York").format("x")
+        +moment.tz("2022-11-24", "America/New_York").format("x"),
       );
 
       const dates = getCurrentWorkWeek();

@@ -113,7 +113,7 @@ describe("dot-gov domains", () => {
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       /((?<re_type>(Gov(ernment)?)|(City)|(County)|(Executive(\sBranch)?)|(Judicial(\sBranch)?)|(Legislative(\sBranch)?)|(Fed(eral)?)|((Ind(ependent)?\s)?Intra(state)?)|(Inter(state)?)|(State)|(Trib(e|(al))))\s)?((get\s?)?\.gov)(\s(?<re_search>.+))?/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -133,7 +133,7 @@ describe("dot-gov domains", () => {
       expect(cache).toHaveBeenCalledWith(
         "dotgov domains",
         1440,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -210,7 +210,7 @@ describe("dot-gov domains", () => {
         expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
           "There are 9 `.gov` domains right now! Have you seen this one?",
           expect.stringMatching(
-            /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
+            /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/,
           ),
         ]);
       });
@@ -223,7 +223,7 @@ describe("dot-gov domains", () => {
         expect(message.say.mock.calls[0][0].text.split("\n")).toEqual([
           "There are 9 `.gov` domains right now! Have you seen this one?",
           expect.stringMatching(
-            /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/
+            /<https:\/\/[\w\d-]+\.GOV\|[\w\d-]+\.GOV> \([^)]+\), presented by _[^_]+_ in _[^_]+_, _[^_]+_/,
           ),
         ]);
       });
