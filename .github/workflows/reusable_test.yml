@@ -1,16 +1,16 @@
 name: test and lint
 
-on: 
+on:
   workflow_call:
 
 jobs:
   lint:
     name: lint
     runs-on: ubuntu-latest
-    container: node:18
+    container: node:20
     steps:
-      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v3
         with:
           path: ./node_modules
           key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
@@ -20,10 +20,10 @@ jobs:
   format:
     name: verify formatting
     runs-on: ubuntu-latest
-    container: node:18
+    container: node:20
     steps:
-      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v3
         with:
           path: ./node_modules
           key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
@@ -33,10 +33,10 @@ jobs:
   test:
     name: unit tests
     runs-on: ubuntu-latest
-    container: node:18
+    container: node:20
     steps:
-      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v3
         with:
           path: ./node_modules
           key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1

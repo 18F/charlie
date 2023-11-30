@@ -93,7 +93,7 @@ function qExpander(expandThis, csvData) {
     // putting asterisks around it. Unfortunately that won't bold it, but it's
     // something, at least?
     fullResponse.push(
-      getCodeLine(initialism, csvData).replace(/└──(.*)$/, "└──*$1*")
+      getCodeLine(initialism, csvData).replace(/└──(.*)$/, "└──*$1*"),
     );
 
     for (let substr = initialism.length - 1; substr > 0; substr -= 1) {
@@ -115,7 +115,7 @@ module.exports = (app) => {
   helpMessage.registerInteractive(
     "Q-Expander",
     "qex [code]",
-    "Ever wonder what the Q* initialisms are after everyone's names? Each letter describes where a person fits in the organization. Charlie can show you what those codes mean in tree-form, so you can see the organizational hierarchy!"
+    "Ever wonder what the Q* initialisms are after everyone's names? Each letter describes where a person fits in the organization. Charlie can show you what those codes mean in tree-form, so you can see the organizational hierarchy!",
   );
 
   const csvData = module.exports.getCsvData();
@@ -133,7 +133,7 @@ module.exports = (app) => {
         thread_ts: thread,
       };
       say(response);
-    }
+    },
   );
 };
 module.exports.getCsvData = getCsvData;

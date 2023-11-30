@@ -4,7 +4,7 @@ on:
   schedule:
     # 7pm UTC, 15th of every month
     # Scheduled to hopefully be during TTS business days most of the time
-    - cron: '0 19 15 * *'
+    - cron: "0 19 15 * *"
 
 jobs:
   lts-check:
@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@1e204e9a9253d643386038d443f96446fa156a97
-      - uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-      
+          node-version: 20
+
       - run: node lts.js

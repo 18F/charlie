@@ -20,7 +20,7 @@ describe("coffeemate", () => {
 
     expect(app.message).toHaveBeenCalledWith(
       /\bcoffee me\b/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -134,7 +134,7 @@ describe("coffeemate", () => {
             icon_emoji: ":coffee:",
             text: "You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:",
             username: "Coffeemate",
-          }
+          },
         );
         expect(app.brain.get(coffeemate.BRAIN_KEY)).toEqual([]);
       });
@@ -156,7 +156,7 @@ describe("coffeemate", () => {
             icon_emoji: ":coffee:",
             text: "You two have been paired up for coffee. The next step is to figure out a time that works for both of you. Enjoy! :coffee:",
             username: "Coffeemate",
-          }
+          },
         );
         expect(app.brain.get(coffeemate.BRAIN_KEY)).toEqual([]);
       });
@@ -180,7 +180,7 @@ describe("coffeemate", () => {
 
       expect(app.action).toHaveBeenCalledWith(
         coffeemate.COFFEE_ACTION_ID,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -189,7 +189,7 @@ describe("coffeemate", () => {
 
       expect(app.action).toHaveBeenCalledWith(
         coffeemate.UNCOFFEE_ACTION_ID,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -203,7 +203,7 @@ describe("coffeemate", () => {
         expect(message.ack).toHaveBeenCalled();
         expect(homepage.refresh).toHaveBeenCalledWith(
           message.body.user.id,
-          message.client
+          message.client,
         );
       });
 
@@ -217,7 +217,7 @@ describe("coffeemate", () => {
         expect(message.ack).toHaveBeenCalled();
         expect(homepage.refresh).toHaveBeenCalledWith(
           message.body.user.id,
-          message.client
+          message.client,
         );
       });
     });
@@ -233,7 +233,7 @@ describe("coffeemate", () => {
         expect(message.ack).toHaveBeenCalled();
         expect(homepage.refresh).toHaveBeenCalledWith(
           message.body.user.id,
-          message.client
+          message.client,
         );
       });
 
@@ -250,7 +250,7 @@ describe("coffeemate", () => {
         // update the homepage.
         expect(homepage.refresh).not.toHaveBeenCalledWith(
           message.body.user.id,
-          message.client
+          message.client,
         );
       });
     });
@@ -261,7 +261,7 @@ describe("coffeemate", () => {
       coffeemate(app);
 
       expect(homepage.registerInteractive).toHaveBeenCalledWith(
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 

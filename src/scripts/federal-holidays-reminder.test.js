@@ -31,7 +31,7 @@ describe("holiday reminder", () => {
         bot(null, {});
         expect(scheduleJob).toHaveBeenCalledWith(
           moment(nextHoliday.date).subtract(3, "days").hour(15).toDate(),
-          expect.any(Function)
+          expect.any(Function),
         );
       });
 
@@ -48,7 +48,7 @@ describe("holiday reminder", () => {
             .hour(4)
             .minute(32)
             .toDate(),
-          expect.any(Function)
+          expect.any(Function),
         );
       });
     });
@@ -61,7 +61,7 @@ describe("holiday reminder", () => {
         bot(null);
         expect(scheduleJob).toHaveBeenCalledWith(
           moment(nextHoliday.date).subtract(1, "day").hour(15).toDate(),
-          expect.any(Function)
+          expect.any(Function),
         );
       });
 
@@ -76,7 +76,7 @@ describe("holiday reminder", () => {
             .hour(4)
             .minute(32)
             .toDate(),
-          expect.any(Function)
+          expect.any(Function),
         );
       });
     });
@@ -104,7 +104,7 @@ describe("holiday reminder", () => {
       expect(postMessage).toHaveBeenCalledWith({
         channel: "general",
         text: expect.stringMatching(
-          /^<!here\|here> Remember that \*Thursday\* is a federal holiday in observance of \*test holiday\*! .+$/
+          /^<!here\|here> Remember that \*Thursday\* is a federal holiday in observance of \*test holiday\*! .+$/,
         ),
       });
 
@@ -114,7 +114,7 @@ describe("holiday reminder", () => {
       // for the subsequent tests below.
       expect(scheduleJob).toHaveBeenCalledWith(
         moment(date).hour(15).toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -127,14 +127,14 @@ describe("holiday reminder", () => {
       expect(postMessage).toHaveBeenCalledWith({
         channel: "test channel",
         text: expect.stringMatching(
-          /^<!here\|here> Remember that \*Thursday\* is a federal holiday in observance of \*test holiday\*! .+$/
+          /^<!here\|here> Remember that \*Thursday\* is a federal holiday in observance of \*test holiday\*! .+$/,
         ),
       });
 
       // Sets up a job for tomorrow to schedule the next reminder
       expect(scheduleJob).toHaveBeenCalledWith(
         moment(date).hour(15).toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -145,14 +145,14 @@ describe("holiday reminder", () => {
       expect(postMessage).toHaveBeenCalledWith({
         channel: "general",
         text: expect.stringMatching(
-          /^<!here|here> Remember that \*Thursday\* is a federal holiday in observance of \*Veterans Day\* :salute-you:! .+$/
+          /^<!here|here> Remember that \*Thursday\* is a federal holiday in observance of \*Veterans Day\* :salute-you:! .+$/,
         ),
       });
 
       // Sets up a job for tomorrow to schedule the next reminder
       expect(scheduleJob).toHaveBeenCalledWith(
         moment(date).hour(15).toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -168,7 +168,7 @@ describe("holiday reminder", () => {
       nextSchedule();
       expect(scheduleJob).toHaveBeenCalledWith(
         moment(nextHoliday.date).subtract(1, "day").hour(15).toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
   });

@@ -14,12 +14,12 @@ describe("pull in everything, so we get good coverage", () => {
       dirs.map(async (dir) => {
         const allFiles = await fs.readdir(path.join(__dirname, dir));
         const sourceFiles = allFiles.filter(
-          (f) => f.endsWith(".js") && !f.endsWith(".test.js")
+          (f) => f.endsWith(".js") && !f.endsWith(".test.js"),
         );
         sourceFiles.forEach((f) => {
           require(`./${dir}/${f}`);
         });
-      })
+      }),
     );
   });
 });

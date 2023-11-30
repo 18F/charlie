@@ -25,7 +25,7 @@ const scheduleReminder = (config = process.env) => {
   // date in eastern timezone instead.
   const targetTime = moment.tz(
     getNextElectionDay().format("YYYY-MM-DD"),
-    "America/New_York"
+    "America/New_York",
   );
 
   // Then adjust it to the correct time.
@@ -34,9 +34,12 @@ const scheduleReminder = (config = process.env) => {
 
   scheduler.scheduleJob(targetTime.toDate(), async () => {
     postElectionDayReminder(config);
-    setTimeout(() => {
-      scheduleReminder(config);
-    }, 48 * 60 * 60 * 1000);
+    setTimeout(
+      () => {
+        scheduleReminder(config);
+      },
+      48 * 60 * 60 * 1000,
+    );
   });
 };
 
@@ -45,7 +48,7 @@ module.exports = (_, config = process.env) => {
 
   helpMessage.registerNonInteractive(
     "Election Day",
-    `On Election Day in the United States, Charlie will post a reminder in #${CHANNEL} to celebrate the cornerstorn of democracy in #i-voted!`
+    `On Election Day in the United States, Charlie will post a reminder in #${CHANNEL} to celebrate the cornerstorn of democracy in #i-voted!`,
   );
 
   registerDidYouKnow(() => {
@@ -56,7 +59,7 @@ module.exports = (_, config = process.env) => {
       text: {
         type: "mrkdwn",
         text: `The next federal :vote-gov: Election Day is ${nextElectionDay.format(
-          "MMMM Do, YYYY"
+          "MMMM Do, YYYY",
         )}`,
       },
     };

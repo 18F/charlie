@@ -63,7 +63,7 @@ module.exports = (app) => {
   helpMessage.registerInteractive(
     "Fancy Font",
     "fancy font <words>",
-    "Feeling fancy, and want your message to reflect that? Charlie is here to fancify your words!"
+    "Feeling fancy, and want your message to reflect that? Charlie is here to fancify your words!",
   );
 
   app.message(/^fancy font (.*)$/i, ({ context, message, say }) => {

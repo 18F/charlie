@@ -13,7 +13,7 @@ describe("ask a11y", () => {
     a11y(app);
     expect(app.message).toHaveBeenCalledWith(
       /ask a(11|ll)y+$/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

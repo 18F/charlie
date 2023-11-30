@@ -100,6 +100,8 @@ triggers:
       - tiger nuts
       - snack nuts
       - stir crazy
+      - crazy egg
+      - insane clown posse
     why: >-
       ":TERM:" arose as a derogatory reference to people with mental illnesses.
       We want to avoid stigmatizing mental illness.
@@ -485,6 +487,17 @@ triggers:
     alternatives:
       - Wow, oh no, oh my
     why: We want to show respect towards all religious traditions.
+
+  - matches:
+      - mumbo jumbo
+    alternatives:
+      - jargon
+      - confusing language
+    why: >-
+      The term ":TERM:" was used to stereotype African languages and cultures
+      that didn't make sense to European colonizers. See [Here are some commonly
+      used terms that actually have racist origins](https://abcnews.go.com/Politics/commonly-terms-racist-origins/story?id=71840410)
+      for more.
 
   - matches:
       - guys

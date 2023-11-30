@@ -23,7 +23,7 @@ describe("three-paycheck month bot tells you when the next three-paycheck month 
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       expect.any(RegExp),
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

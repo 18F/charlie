@@ -23,17 +23,17 @@ module.exports = async (app) => {
     }) => {
       if (botName === false) {
         botName = (await getSlackUsers()).find(
-          (u) => u.id === botUserId
+          (u) => u.id === botUserId,
         ).real_name;
       }
 
       const modules = getHelp();
 
       const interactiveBots = [...modules.get(interactive)].sort((a, b) =>
-        a.name.localeCompare(b.name)
+        a.name.localeCompare(b.name),
       );
       const noninteractiveBots = [...modules.get(noninteractive)].sort((a, b) =>
-        a.name.localeCompare(b.name)
+        a.name.localeCompare(b.name),
       );
 
       const blocks = [
@@ -56,7 +56,7 @@ module.exports = async (app) => {
               }\`\`\``,
             },
           },
-          { type: "divider" }
+          { type: "divider" },
         );
       }
       // get rid of the last divider
@@ -73,7 +73,7 @@ module.exports = async (app) => {
             type: "section",
             text: { type: "mrkdwn", text: `*${bot.name}*: ${bot.helpText}` },
           },
-          { type: "divider" }
+          { type: "divider" },
         );
       }
       // get rid of the last divider
@@ -115,6 +115,6 @@ module.exports = async (app) => {
       for await (const message of messages) {
         await say(message);
       }
-    }
+    },
   );
 };

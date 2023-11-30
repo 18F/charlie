@@ -81,12 +81,12 @@ describe("Tock reporter for ops", () => {
 
         const expected = moment.tz(
           "2022-11-14T16:00:00",
-          "America/Los_Angeles"
+          "America/Los_Angeles",
         );
 
         expect(scheduleJob).toHaveBeenCalledWith(
           expected.toDate(),
-          expect.any(Function)
+          expect.any(Function),
         );
       });
 
@@ -103,7 +103,7 @@ describe("Tock reporter for ops", () => {
 
         expect(scheduleJob).toHaveBeenCalledWith(
           expected.toDate(),
-          expect.any(Function)
+          expect.any(Function),
         );
       });
 
@@ -121,10 +121,10 @@ describe("Tock reporter for ops", () => {
         await fn();
 
         expect(postMessage).toHaveBeenCalledWith(
-          expect.objectContaining({ channel: "#test-channel" })
+          expect.objectContaining({ channel: "#test-channel" }),
         );
         expect(postMessage).toHaveBeenCalledWith(
-          expect.objectContaining({ channel: "other-one" })
+          expect.objectContaining({ channel: "other-one" }),
         );
       });
 
@@ -142,7 +142,7 @@ describe("Tock reporter for ops", () => {
 
           expect(scheduleJob).toHaveBeenCalledWith(
             expected.toDate(),
-            expect.any(Function)
+            expect.any(Function),
           );
         });
 
@@ -157,12 +157,12 @@ describe("Tock reporter for ops", () => {
 
           const expected = moment.tz(
             "2022-11-14T16:00:00",
-            "America/Los_Angeles"
+            "America/Los_Angeles",
           );
 
           expect(scheduleJob).toHaveBeenCalledWith(
             expected.toDate(),
-            expect.any(Function)
+            expect.any(Function),
           );
         });
 
@@ -179,7 +179,7 @@ describe("Tock reporter for ops", () => {
           await fn();
 
           expect(postMessage).toHaveBeenCalledWith(
-            expect.objectContaining({ channel: "#18f-supes" })
+            expect.objectContaining({ channel: "#18f-supes" }),
           );
         });
       });
@@ -201,7 +201,7 @@ describe("Tock reporter for ops", () => {
 
           expect(scheduleJob).toHaveBeenCalledWith(
             expected.toDate(),
-            expect.any(Function)
+            expect.any(Function),
           );
         });
       });
@@ -218,12 +218,12 @@ describe("Tock reporter for ops", () => {
 
             const expected = moment.tz(
               "2022-11-21T16:00:00",
-              "America/New_York"
+              "America/New_York",
             );
 
             expect(scheduleJob).toHaveBeenCalledWith(
               expected.toDate(),
-              expect.any(Function)
+              expect.any(Function),
             );
           });
         });
@@ -238,12 +238,12 @@ describe("Tock reporter for ops", () => {
 
             const expected = moment.tz(
               "2022-10-11T16:00:00",
-              "America/New_York"
+              "America/New_York",
             );
 
             expect(scheduleJob).toHaveBeenCalledWith(
               expected.toDate(),
-              expect.any(Function)
+              expect.any(Function),
             );
           });
         });

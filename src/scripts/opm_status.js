@@ -28,7 +28,7 @@ module.exports = (robot) => {
   helpMessage.registerInteractive(
     "OPM's DC office status",
     "opm status",
-    "Working in DC and want to know if the office is closed due to snow or, perhaps, raven attack? Charlie is good friends with the bots over at OPM and will gladly fetch that information for you. No more having to open a web browser all by yourself!"
+    "Working in DC and want to know if the office is closed due to snow or, perhaps, raven attack? Charlie is good friends with the bots over at OPM and will gladly fetch that information for you. No more having to open a web browser all by yourself!",
   );
 
   robot.message(
@@ -39,7 +39,7 @@ module.exports = (robot) => {
 
       try {
         const { data, status } = await axios.get(
-          "https://www.opm.gov/json/operatingstatus.json"
+          "https://www.opm.gov/json/operatingstatus.json",
         );
         if (status !== 200) {
           throw new Error("Invalid status");
@@ -59,6 +59,6 @@ module.exports = (robot) => {
           unfurl_media: false,
         });
       }
-    }
+    },
   );
 };

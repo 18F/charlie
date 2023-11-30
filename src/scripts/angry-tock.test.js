@@ -118,7 +118,7 @@ describe("Angry Tock", () => {
           // breaking Babe Ruth's record.
           const time = moment.tz(
             "1974-04-08 00:00:00",
-            config.ANGRY_TOCK_TIMEZONE
+            config.ANGRY_TOCK_TIMEZONE,
           );
           jest.setSystemTime(time.toDate());
 
@@ -129,7 +129,7 @@ describe("Angry Tock", () => {
           time.hour(10);
           expect(scheduleJob).toHaveBeenCalledWith(
             time.toDate(),
-            expect.any(Function)
+            expect.any(Function),
           );
         });
       });
@@ -140,7 +140,7 @@ describe("Angry Tock", () => {
             // Monday, May 20, 1991: Michael Jordan named NBA MVP.
             const time = moment.tz(
               "1991-05-20 11:00:00",
-              config.ANGRY_TOCK_TIMEZONE
+              config.ANGRY_TOCK_TIMEZONE,
             );
             jest.setSystemTime(time.toDate());
 
@@ -152,7 +152,7 @@ describe("Angry Tock", () => {
             time.minute(45);
             expect(scheduleJob).toHaveBeenCalledWith(
               time.toDate(),
-              expect.any(Function)
+              expect.any(Function),
             );
           });
         });
@@ -165,7 +165,7 @@ describe("Angry Tock", () => {
             // DC-area federal employees. So... just a note for the future!
             const initial = moment.tz(
               "1997-01-27 20:00:00",
-              config.ANGRY_TOCK_TIMEZONE
+              config.ANGRY_TOCK_TIMEZONE,
             );
             jest.setSystemTime(initial.toDate());
 
@@ -177,11 +177,11 @@ describe("Angry Tock", () => {
             // students gathered for a public memorial for Carl Sagan.
             const scheduled = moment.tz(
               "1997-02-03 10:00:00",
-              config.ANGRY_TOCK_TIMEZONE
+              config.ANGRY_TOCK_TIMEZONE,
             );
             expect(scheduleJob).toHaveBeenCalledWith(
               scheduled.toDate(),
-              expect.any(Function)
+              expect.any(Function),
             );
           });
         });
@@ -195,7 +195,7 @@ describe("Angry Tock", () => {
         // Space Station.
         const initial = moment.tz(
           "2019-10-18 09:00:00",
-          config.ANGRY_TOCK_TIMEZONE
+          config.ANGRY_TOCK_TIMEZONE,
         );
         jest.setSystemTime(initial.toDate());
 
@@ -207,11 +207,11 @@ describe("Angry Tock", () => {
         // years old, is found new Abu Dhabi.
         const scheduled = moment.tz(
           "2019-10-21 10:00:00",
-          config.ANGRY_TOCK_TIMEZONE
+          config.ANGRY_TOCK_TIMEZONE,
         );
         expect(scheduleJob).toHaveBeenCalledWith(
           scheduled.toDate(),
-          expect.any(Function)
+          expect.any(Function),
         );
       });
     });
@@ -222,7 +222,7 @@ describe("Angry Tock", () => {
     // of New Orleans, is inaugurated.
     const initial = moment.tz(
       "1978-05-01 09:00:00",
-      config.ANGRY_TOCK_TIMEZONE
+      config.ANGRY_TOCK_TIMEZONE,
     );
     jest.setSystemTime(initial.toDate());
 

@@ -14,7 +14,7 @@ const getChannelName = (() => {
       const response = await client.conversations.list();
       allChannels = response.channels.reduce(
         (channels, { id, name }) => ({ ...channels, [id]: name }),
-        {}
+        {},
       );
     }
     return allChannels[channelID];
@@ -50,7 +50,7 @@ const getHasRespondedToUserRecently = (userID) => {
 module.exports = (robot) => {
   helpMessage.registerNonInteractive(
     "Travel team",
-    "Did you know that the TTS Travel team takes weekends and holidays too? It's true, they do! And Charlie knows it too. If you drop a question or comment in the travel channel on a closed day, Charlie will remind you that the office is closed and offer some helpful tips to get you through. It will also let you know when the Travel team will be back in the office!"
+    "Did you know that the TTS Travel team takes weekends and holidays too? It's true, they do! And Charlie knows it too. If you drop a question or comment in the travel channel on a closed day, Charlie will remind you that the office is closed and offer some helpful tips to get you through. It will also let you know when the Travel team will be back in the office!",
   );
 
   robot.message(
@@ -73,6 +73,6 @@ module.exports = (robot) => {
           username: "TTS Travel Team",
         });
       }
-    }
+    },
   );
 };

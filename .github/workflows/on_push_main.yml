@@ -1,6 +1,6 @@
 name: push to main
 
-on: 
+on:
   push:
     branches:
       - main
@@ -8,32 +8,32 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/reusable_build.yml
-  
+
   test:
     needs: [build]
     uses: ./.github/workflows/reusable_test.yml
-  
+
   deploy:
     needs: [test]
     uses: ./.github/workflows/reusable_deploy.yml
     with:
       environment: prod
     secrets: inherit
-  
+
   release:
     name: publish release
     needs: [deploy]
     runs-on: ubuntu-latest
-    container: node:18
+    container: node:20
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@af513c7a016048ae468971c52ed77d9562c7c819
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v3
         with:
           path: ./node_modules
           key: 18f-bot-${{ runner.os }}-${{ hashFiles('package.json') }}-v1
-      - uses: actions/cache@d1255ad9362389eac595a9ae406b8e8cb3331f16
+      - uses: actions/cache@v3
         id: npmcache
         with:
           path: ./npm-cache
@@ -50,7 +50,7 @@ jobs:
         id: hash
         run: |
           echo "::set-output name=sha::$(shasum -a 256 ${{ steps.zip.outputs.zip_path }} | cut -d' ' -f1)"
-      - uses: softprops/action-gh-release@1e07f4398721186383de40550babbdf2b84acfc5
+      - uses: softprops/action-gh-release@v1
         with:
           files: ${{ steps.zip.outputs.zip_path }}
           name: ${{ steps.time.outputs.human }}

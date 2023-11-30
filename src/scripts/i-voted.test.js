@@ -40,7 +40,7 @@ describe("Election Day reminder bot", () => {
 
       expect(helpMessage.registerNonInteractive).toHaveBeenCalledWith(
         "Election Day",
-        expect.stringMatching(/#general-talk/)
+        expect.stringMatching(/#general-talk/),
       );
     });
 
@@ -49,7 +49,7 @@ describe("Election Day reminder bot", () => {
 
       expect(helpMessage.registerNonInteractive).toHaveBeenCalledWith(
         "Election Day",
-        expect.stringMatching(/#bob/)
+        expect.stringMatching(/#bob/),
       );
     });
   });
@@ -82,7 +82,7 @@ describe("Election Day reminder bot", () => {
 
       expect(scheduleJob).toHaveBeenCalledWith(
         moment.tz("1973-04-04T10:00:00", "America/New_York").toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -91,7 +91,7 @@ describe("Election Day reminder bot", () => {
 
       expect(scheduleJob).toHaveBeenCalledWith(
         moment.tz("1973-04-04T16:00:00", "America/New_York").toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -116,14 +116,14 @@ describe("Election Day reminder bot", () => {
       callback();
 
       getNextElectionDay.mockReturnValue(
-        moment.utc("1988-11-09", "YYYY-MM-DD")
+        moment.utc("1988-11-09", "YYYY-MM-DD"),
       );
 
       jest.runAllTimers();
 
       expect(scheduleJob).toHaveBeenCalledWith(
         moment.tz("1988-11-09T10:00:00", "America/New_York").toDate(),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
   });

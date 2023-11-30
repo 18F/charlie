@@ -74,7 +74,7 @@ describe("glossary", () => {
     expect(app.message).toHaveBeenCalledWith(
       expect.any(Function),
       /(define|glossary) (.+)/i,
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -93,8 +93,8 @@ describe("glossary", () => {
         await handler(message);
         expect(message.say).toHaveBeenCalledWith(
           expectedResponse(
-            "I couldn't find *a term with no match*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+a term with no match|add it to the glossary>?"
-          )
+            "I couldn't find *a term with no match*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+a term with no match|add it to the glossary>?",
+          ),
         );
       });
     });
@@ -108,7 +108,7 @@ describe("glossary", () => {
         it("returns the correct definitions", async () => {
           await handler(message);
           expect(message.say).toHaveBeenCalledWith(
-            expectedResponse(backendResponse)
+            expectedResponse(backendResponse),
           );
         });
       });
@@ -119,7 +119,7 @@ describe("glossary", () => {
         it("returns the correct definitions", async () => {
           await handler(message);
           expect(message.say).toHaveBeenCalledWith(
-            expectedResponse(backendResponse)
+            expectedResponse(backendResponse),
           );
         });
       });
@@ -130,7 +130,7 @@ describe("glossary", () => {
         it("returns the correct definitions", async () => {
           await handler(message);
           expect(message.say).toHaveBeenCalledWith(
-            expectedResponse(backendResponse)
+            expectedResponse(backendResponse),
           );
         });
       });
@@ -145,8 +145,8 @@ describe("glossary", () => {
             await handler(message);
             expect(message.say).toHaveBeenCalledWith(
               expectedResponse(
-                "The term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!"
-              )
+                "The term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!",
+              ),
             );
           });
         });
@@ -158,8 +158,8 @@ describe("glossary", () => {
 
             expect(message.say).toHaveBeenCalledWith(
               expectedResponse(
-                "*Alternative dispute resolution*: ADR includes dispute resolution processes and techniques that fall outside of the government judicial process."
-              )
+                "*Alternative dispute resolution*: ADR includes dispute resolution processes and techniques that fall outside of the government judicial process.",
+              ),
             );
           });
         });
@@ -171,8 +171,8 @@ describe("glossary", () => {
             await handler(message);
             expect(message.say).toHaveBeenCalledWith(
               expectedResponse(
-                "*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials."
-              )
+                "*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials.",
+              ),
             );
           });
         });
@@ -186,8 +186,8 @@ describe("glossary", () => {
             await handler(message);
             expect(message.say).toHaveBeenCalledWith(
               expectedResponse(
-                "I couldn't find *LOL*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+LOL|add it to the glossary>?"
-              )
+                "I couldn't find *LOL*. Once you find out what it means, would you please <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=add-a-new-term.md&title=Add+new+term:+LOL|add it to the glossary>?",
+              ),
             );
           });
         });
@@ -199,8 +199,8 @@ describe("glossary", () => {
               await handler(message);
               expect(message.say).toHaveBeenCalledWith(
                 expectedResponse(
-                  "_T&M_ means:\n*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials."
-                )
+                  "_T&M_ means:\n*Time & materials*: A contractual arrangement whereby payment is made on the basis of time and materials.",
+                ),
               );
             });
           });
@@ -212,8 +212,8 @@ describe("glossary", () => {
                 expectedResponse(
                   "_POP_ means:" +
                     "\n*Procurement Operating Procedure*: The procedure for procuring a procurement" +
-                    "\nThe term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!"
-                )
+                    "\nThe term *Period of Performance* is in the glossary, but does not have a definition. If you find out what it means, <https://github.com/18F/the-glossary/issues/new?assignees=&labels=&template=edit-a-term.md&title=Definition+for+Period of Performance|please add it>!",
+                ),
               );
             });
           });

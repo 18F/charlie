@@ -68,11 +68,11 @@ const get18FUsersWhoHaveNotTocked = async (now, weeksAgo = 1) => {
   const tockUsers = await getCurrent18FTockUsers();
 
   const allUnTockedUsers = await getFromTock(
-    `/reporting_period_audit/${reportingPeriodStart}.json`
+    `/reporting_period_audit/${reportingPeriodStart}.json`,
   );
 
   return allUnTockedUsers.filter((user) =>
-    tockUsers.some((tockUser) => tockUser.tock_id === user.id)
+    tockUsers.some((tockUser) => tockUser.tock_id === user.id),
   );
 };
 
@@ -102,14 +102,14 @@ const get18FTockSlackUsers = async () => {
     .filter((tock) =>
       slackUsers.some(
         (slackUser) =>
-          slackUser.email?.toLowerCase() === tock.email?.toLowerCase()
-      )
+          slackUser.email?.toLowerCase() === tock.email?.toLowerCase(),
+      ),
     )
     .map((tock) => ({
       ...tock,
       ...slackUsers.find(
         (slackUser) =>
-          slackUser.email?.toLowerCase() === tock.email?.toLowerCase()
+          slackUser.email?.toLowerCase() === tock.email?.toLowerCase(),
       ),
     }));
 

@@ -139,10 +139,10 @@ module.exports = async (app) => {
       if (dirty) {
         await app.brain.set(OPT_OUT_BRAIN_KEY, optedOut);
       }
-    }
+    },
   );
 
   app.event("app_home_opened", ({ event, client }) =>
-    publishView(event.user, client)
+    publishView(event.user, client),
   );
 };
