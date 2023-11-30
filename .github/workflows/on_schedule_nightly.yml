@@ -3,7 +3,7 @@ name: nightly restage
 on:
   schedule:
     # 3am UTC
-    - cron: '0 3 * * *'
+    - cron: "0 3 * * *"
 
 jobs:
   restage:
@@ -27,3 +27,4 @@ jobs:
           cf restage $CF_APP
           cf target -s $CF_SPACE_DEV
           cf stop $CF_APP
+          cf delete-service charlie-brain -f
