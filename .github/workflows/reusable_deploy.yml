@@ -29,7 +29,22 @@ jobs:
       - name: add extra deployment steps for dev
         id: devSteps
         if: ${{ inputs.environment == 'dev' }}
-        run: echo 'command="cf create-service aws-rds micro-psql charlie-brain; bash .github/workflows/wait-for-database.sh"' >> "$GITHUB_OUTPUT"
+        env:
+          CF_API: ${{ secrets.CF_API }}
+          CF_ORG: ${{ secrets.CF_ORG }}
+          CF_PASSWORD: ${{ secrets.CF_PASSWORD }}
+          CF_SPACE: ${{ inputs.environment }}
+          CF_USERNAME: ${{ secrets.CF_USERNAME }}
+        run: |
+          cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
+          cf create-service aws-rds micro-psql charlie-brain
+          STATUS="$(cf service charlie-brain | grep "  status:" | awk -F ":" '{print $2}' | xargs)"
+          while [ "$STATUS"  != "create succeeded" ]
+          do
+            echo "Waiting for database service to be ready..."
+            sleep 10
+            STATUS="$(cf service charlie-brain | grep "  status:" | awk -F ":" '{print $2}' | xargs echo)"
+          done
       - name: push to cloud.gov
         env:
           CF_API: ${{ secrets.CF_API }}
@@ -39,5 +54,4 @@ jobs:
           CF_USERNAME: ${{ secrets.CF_USERNAME }}
         run: |
           cf login -a $CF_API -u $CF_USERNAME -p $CF_PASSWORD -o $CF_ORG -s $CF_SPACE
-          ${{ steps.devSteps.outputs.command }}
           cf push -f manifest.yml --vars-file ./${{ inputs.environment }}.yml
