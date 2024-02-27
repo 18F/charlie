@@ -43,7 +43,7 @@ jobs:
           do
             echo "Waiting for database service to be ready..."
             sleep 10
-            $STATUS=$(cf service charlie-brain | grep "  status:" | awk -F ":" '{print $2}' | xargs)
+            STATUS="$(cf service charlie-brain | grep "  status:" | awk -F ":" '{print $2}' | xargs echo)"
           done
       - name: push to cloud.gov
         env:
