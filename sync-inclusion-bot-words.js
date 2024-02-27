@@ -69,8 +69,8 @@ const getTriggerExtraMetadataMap = (currentConfig) => {
     }
     // If there is an existing config that matches AND it has an ignore property
     // add the existing ignore property on to the new trigger.
-    if (existing?.strict) {
-      mapped.strict = existing.strict;
+    if (existing?.optional) {
+      mapped.optional = existing.optional;
     }
 
     mapped.why = newTrigger.why;

@@ -2,6 +2,7 @@ const fs = require("fs");
 const {
   getApp,
   utils: {
+    optOut,
     slack: { addEmojiReaction, postEphemeralResponse },
   },
 } = require("../utils/test");
@@ -56,6 +57,9 @@ describe("Inclusion bot", () => {
   const app = getApp();
 
   const msg = {
+    event: {
+      user: "abc123",
+    },
     message: {
       id: "message id",
       room: "channel id",
@@ -64,8 +68,17 @@ describe("Inclusion bot", () => {
     },
   };
 
+  const isOptedOut = jest.fn();
+
   beforeEach(() => {
     jest.resetAllMocks();
+
+    isOptedOut.mockReturnValue(false);
+
+    optOut.mockReturnValue({
+      button: { button: "goes here" },
+      isOptedOut,
+    });
 
     fs.readFileSync.mockReturnValue(`
 link: https://link.url
@@ -85,6 +98,11 @@ triggers:
       - match 2b
     alternatives:
       - b1
+  - matches:
+      - match 3
+    alternatives:
+      - b3
+    optional: true
 `);
   });
 
@@ -92,7 +110,7 @@ triggers:
     bot(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      /\b(match 1)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)|(match 2a|match 2b)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)\b/i,
+      /\b(match 1)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)|(match 2a|match 2b)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)|(match 3)(?=[^"“”']*(["“”'][^"“”']*["“”'][^"“”']*)*$)\b/i,
       expect.any(Function),
     );
   });
@@ -110,6 +128,7 @@ triggers:
                 type: "mrkdwn",
                 text: "This is the message",
               },
+              button: "goes here",
             },
             {
               accessory: {
@@ -150,6 +169,8 @@ triggers:
     beforeEach(() => {
       bot(app);
       handler = app.getHandler();
+
+      expectedMessage.attachments[0].blocks[1].accessory.value = "match 1";
     });
 
     it("handles a single triggering phrase", () => {
@@ -235,6 +256,65 @@ triggers:
 
       // Reset the parts of the expected message that we changed above.
       expectedMessage.attachments[0].blocks[1].accessory.value = "match 1";
+    });
+
+    it("does not add the opt-out button if the user is already opted-out", () => {
+      isOptedOut.mockReturnValue(true);
+
+      const noButton = JSON.parse(JSON.stringify(expectedMessage));
+      delete noButton.attachments[0].blocks[0].button;
+
+      msg.message.text = "hello this is the match 1 trigger";
+      handler(msg);
+
+      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "wave");
+
+      noButton.attachments[0].blocks[1].text.text = expect.stringMatching(
+        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*\?/,
+      );
+      expect(postEphemeralResponse).toHaveBeenCalledWith(msg, noButton);
+    });
+
+    it("does trigger on optional words if the user is not opted out", () => {
+      msg.message.text = "hello this is the match 3 trigger";
+      handler(msg);
+
+      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "wave");
+
+      expectedMessage.attachments[0].blocks[1].accessory.value = "match 3";
+      expectedMessage.attachments[0].blocks[1].text.text =
+        expect.stringMatching(
+          /• Instead of saying "match 3," how about \*b3\*\?/,
+        );
+      expect(postEphemeralResponse).toHaveBeenCalledWith(msg, expectedMessage);
+    });
+
+    it("does not trigger if the user is opted-out and the trigger phrase is optional", () => {
+      isOptedOut.mockReturnValue(true);
+
+      msg.message.text = "hello this is the match 3 trigger";
+      handler(msg);
+
+      expect(addEmojiReaction).not.toHaveBeenCalled();
+
+      expect(postEphemeralResponse).not.toHaveBeenCalled();
+    });
+
+    it("does trigger on non-optional words but leaves out optional words if the user is opted-out", () => {
+      isOptedOut.mockReturnValue(true);
+
+      msg.message.text = "hello this is the match 1 and the match 3 trigger";
+      handler(msg);
+
+      expect(addEmojiReaction).toHaveBeenCalledWith(msg, "wave");
+
+      const noButton = { ...expectedMessage };
+      delete noButton.attachments[0].blocks[0].button;
+
+      noButton.attachments[0].blocks[1].text.text = expect.stringMatching(
+        /• Instead of saying "match 1," how about \*(a1|a2|a3)\*\?/,
+      );
+      expect(postEphemeralResponse).toHaveBeenCalledWith(msg, noButton);
     });
   });
 });
