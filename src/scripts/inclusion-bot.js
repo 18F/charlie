@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const {
+  optOut,
   slack: { addEmojiReaction, postEphemeralResponse },
   stats: { incrementStats },
   helpMessage,
@@ -39,6 +40,12 @@ module.exports = async (app) => {
   helpMessage.registerNonInteractive(
     "Inclusion bot",
     "Charlie passively listens for language with racist, ableist, sexist, or other exclusionary histories. When it hears such words or phrases, it quietly lets the speaker know and offers some suggestions. What a great bot, helping nudge us all to thoughtful, inclusive language!",
+  );
+
+  const optout = optOut(
+    "inclusion_bot_strict",
+    "Inclusion Bot | Strict mode",
+    "Inclusion Bot operates in strict mode by default, highlighting all language that we have identified as racist, ableist, sexist, or otherwise exclusionary. We believe this is the ideal way to use Inclusion Bot. However, we recognize that some people may not want to be reminded about some of the language identified, so we offer a way to have Inclusion Bot only highlight language that we, as an organization, believe strongly should not be used. We encourage people to keep the stricter mode enabled as a learning aid, but if it makes you feel excluded yourself, please opt out of it.",
   );
 
   // Use the module exported version here, so that it can be stubbed for testing
@@ -120,6 +127,7 @@ module.exports = async (app) => {
                 },
               ],
             },
+            ...optout.button,
           ],
         },
       ],
