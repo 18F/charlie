@@ -14,7 +14,7 @@ const set = async (key, value) => {
 };
 
 const initialize = async (config = process.env) => {
-  client = new Client({ connectionString: config.DATABASE_URL });
+  client = new Client({ connectionString: config.DATABASE_URL, ssl: true });
   await client.connect();
 
   await client.query(
