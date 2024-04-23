@@ -27,7 +27,7 @@
     "botName": "Alumni Dag Intro",
     "defaultEmoji": ":dog:",
     "trigger": "d(o|a)g intros?",
-    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/alumni-dag-intros.json"
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dag-intros-alumni.json"
   },
   {
     "botName": "Cat Bot",
