@@ -20,7 +20,7 @@
   {
     "botName": "Dag Intro",
     "defaultEmoji": ":dog:",
-    "trigger": "d(o|a)g intros?",
+    "trigger": "(?<!alumni )d(o|a)g intros?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dag-intros.json"
   },
   {
@@ -38,8 +38,14 @@
   {
     "botName": "Cat Intro",
     "defaultEmoji": ":smile_cat:",
-    "trigger": "cat intros?",
+    "trigger": "(?<!alumni )cat intros?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/cat-intros.json"
+  },
+  {
+    "botName": "Alumni Cat Intro",
+    "defaultEmoji": ":smile_cat:",
+    "trigger": "alumni cat intros?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/cat-intros-alumni.json"
   },
   {
     "botName": "Pet Bot",
