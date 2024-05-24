@@ -40,8 +40,12 @@ module.exports = (app) => {
     },
   }));
 
-  app.message(directMention(), /next (federal )?holiday/i, ({ say }) => {
-    say(getHolidayText());
-    incrementStats("next federal holiday request");
-  });
+  app.message(
+    directMention(),
+    /next (federal )?holiday/i,
+    ({ event: { thread_ts: thread, ts }, say }) => {
+      say({ text: getHolidayText(), thread_ts: thread ?? ts });
+      incrementStats("next federal holiday request");
+    },
+  );
 };
