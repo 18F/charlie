@@ -83,12 +83,13 @@ describe("federal holidays bot", () => {
         name: "Test Holiday day",
       });
 
-      handler({ say });
+      handler({ event: {}, say });
 
       expect(say.mock.calls.length).toBe(1);
-      expect(say).toHaveBeenCalledWith(
-        "The next federal holiday is Test Holiday day in 1 days on Friday, January 2nd",
-      );
+      expect(say).toHaveBeenCalledWith({
+        text: "The next federal holiday is Test Holiday day in 1 days on Friday, January 2nd",
+        thread_ts: undefined,
+      });
     });
 
     it("uses an alternate name, if provided", () => {
@@ -102,12 +103,13 @@ describe("federal holidays bot", () => {
         alsoObservedAs: "Other holiday day day day",
       });
 
-      handler({ say });
+      handler({ event: { thread_ts: "thread" }, say });
 
       expect(say.mock.calls.length).toBe(1);
-      expect(say).toHaveBeenCalledWith(
-        "The next federal holiday is Other holiday day day day in 1 days on Friday, January 2nd",
-      );
+      expect(say).toHaveBeenCalledWith({
+        text: "The next federal holiday is Other holiday day day day in 1 days on Friday, January 2nd",
+        thread_ts: "thread",
+      });
     });
   });
 
@@ -122,12 +124,13 @@ describe("federal holidays bot", () => {
         name: "Christmas Day",
       });
 
-      handler({ say });
+      handler({ event: {}, say });
 
       expect(say.mock.calls.length).toBe(1);
-      expect(say).toHaveBeenCalledWith(
-        "The next federal holiday is Christmas Day :christmas_tree: in 1 days on Friday, January 2nd",
-      );
+      expect(say).toHaveBeenCalledWith({
+        text: "The next federal holiday is Christmas Day :christmas_tree: in 1 days on Friday, January 2nd",
+        thread_ts: undefined,
+      });
     });
 
     it("does not include the emoji if the holiday does not have one", () => {
@@ -141,12 +144,13 @@ describe("federal holidays bot", () => {
         alsoObservedAs: "Indigenous Peoples' Day",
       });
 
-      handler({ say });
+      handler({ event: {}, say });
 
       expect(say.mock.calls.length).toBe(1);
-      expect(say).toHaveBeenCalledWith(
-        "The next federal holiday is Indigenous Peoples' Day in 1 days on Friday, January 2nd",
-      );
+      expect(say).toHaveBeenCalledWith({
+        text: "The next federal holiday is Indigenous Peoples' Day in 1 days on Friday, January 2nd",
+        thread_ts: undefined,
+      });
     });
   });
 });
