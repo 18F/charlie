@@ -15,7 +15,7 @@ const loadConfigs = async () =>
  * @param {*} config The configuration to fetch responses for.
  * @returns {Promise<Array>} Resolves an array of responses
  */
-const getResponses = async (config, searchTerm = false) => {
+const getResponses = async (config, searchTerm = false, negate = false) => {
   let responses = [];
 
   // If the config has a list of responses, use it
@@ -42,11 +42,14 @@ const getResponses = async (config, searchTerm = false) => {
       `\\b(${searchTerm}|${plural(searchTerm)})\\b`,
       "i",
     );
+
     let filtered = responses.filter((r) => {
       if (typeof r === "object") {
-        return regex.test(`${r.name} ${r.emoji} ${r.text}`);
+        const match = regex.test(`${r.name} ${r.emoji} ${r.text}`);
+        return negate ? !match : match;
       }
-      return regex.test(r);
+      const match = regex.test(r);
+      return negate ? !match : match;
     });
     if (filtered.length === 0) {
       const embeddedRegex = new RegExp(
@@ -86,9 +89,9 @@ const responseFrom =
       }`,
     );
 
-    const [, searchTerm] = text.match(
-      new RegExp(`(\\S+) ${config.trigger}`, "i"),
-    ) ?? [false, false];
+    const [, , negate, searchTerm] = text.match(
+      new RegExp(`(^|\\w)(-?)(\\S+) ${config.trigger}`, "i"),
+    ) ?? [false, false, false, false];
 
     const message = { thread_ts: thread };
     if (defaultEmoji) {
@@ -98,7 +101,7 @@ const responseFrom =
       message.username = botName;
     }
 
-    const responses = await getResponses(config, searchTerm);
+    const responses = await getResponses(config, searchTerm, negate.length > 0);
     const response = responses[Math.floor(Math.random() * responses.length)];
 
     if (typeof response === "object") {
