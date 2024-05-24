@@ -43,8 +43,8 @@ module.exports = (app) => {
   app.message(
     directMention(),
     /next (federal )?holiday/i,
-    ({ event: { thread_ts: thread, ts }, say }) => {
-      say({ text: getHolidayText(), thread_ts: thread ?? ts });
+    ({ event: { thread_ts: thread }, say }) => {
+      say({ text: getHolidayText(), thread_ts: thread });
       incrementStats("next federal holiday request");
     },
   );

@@ -83,12 +83,12 @@ describe("federal holidays bot", () => {
         name: "Test Holiday day",
       });
 
-      handler({ event: { ts: 0 }, say });
+      handler({ event: {}, say });
 
       expect(say.mock.calls.length).toBe(1);
       expect(say).toHaveBeenCalledWith({
         text: "The next federal holiday is Test Holiday day in 1 days on Friday, January 2nd",
-        thread_ts: 0,
+        thread_ts: undefined,
       });
     });
 
@@ -103,7 +103,7 @@ describe("federal holidays bot", () => {
         alsoObservedAs: "Other holiday day day day",
       });
 
-      handler({ event: { thread_ts: "thread", ts: 12345 }, say });
+      handler({ event: { thread_ts: "thread" }, say });
 
       expect(say.mock.calls.length).toBe(1);
       expect(say).toHaveBeenCalledWith({
@@ -124,12 +124,12 @@ describe("federal holidays bot", () => {
         name: "Christmas Day",
       });
 
-      handler({ event: { ts: 12345 }, say });
+      handler({ event: {}, say });
 
       expect(say.mock.calls.length).toBe(1);
       expect(say).toHaveBeenCalledWith({
         text: "The next federal holiday is Christmas Day :christmas_tree: in 1 days on Friday, January 2nd",
-        thread_ts: 12345,
+        thread_ts: undefined,
       });
     });
 
@@ -144,12 +144,12 @@ describe("federal holidays bot", () => {
         alsoObservedAs: "Indigenous Peoples' Day",
       });
 
-      handler({ event: { ts: 0 }, say });
+      handler({ event: {}, say });
 
       expect(say.mock.calls.length).toBe(1);
       expect(say).toHaveBeenCalledWith({
         text: "The next federal holiday is Indigenous Peoples' Day in 1 days on Friday, January 2nd",
-        thread_ts: 0,
+        thread_ts: undefined,
       });
     });
   });
