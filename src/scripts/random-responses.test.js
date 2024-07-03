@@ -229,6 +229,21 @@ describe("random responder", () => {
           { name: "chapeau", emoji: "tophat", text: "fancy" },
         ]);
       });
+
+      it("allows for negated search terms", async () => {
+        const responses = await script.getResponses(
+          {
+            responseList: [
+              "there is a dog",
+              "there is a cat",
+              "there is a frog",
+            ],
+          },
+          "frog",
+          true,
+        );
+        expect(responses).toEqual(["there is a dog", "there is a cat"]);
+      });
     });
   });
 
