@@ -182,7 +182,7 @@ module.exports = (app) => {
           blocks: [
             ...textBlocks.map((blockText) => ({
               type: "section",
-              text: { type: "mrkdwn", blockText },
+              text: { type: "mrkdwn", text: blockText },
             })),
             {
               type: "context",
