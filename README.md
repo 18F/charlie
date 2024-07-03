@@ -48,6 +48,7 @@ facts. There are just so many facts. You can just say `dog fact` (or
 | `alan fact`       | Shares a fact about people named Alan             |
 | `alumni dog fact` | Shares a fact about a dog belonging to a TTS alum |
 | `ask ally fact`   | Shares a fact about accessible web development    |
+| `bird fact`       | Shares a fact about a TTS person's bird           |
 | `cat fact`        | Shares a fact about a TTS person's cat            |
 | `dog fact`        | Shares a fact about a TTS person's dog            |
 | `dolphin fact`    | Shares a fact about dolphins                      |
