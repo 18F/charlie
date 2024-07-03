@@ -154,6 +154,23 @@ module.exports = (app) => {
         }
       }
 
+      let compiledText = text.join("\n");
+      const textBlocks = [];
+
+      while (compiledText.length > 3000) {
+        const nextCandidate = compiledText.substring(0, 3000).match(/\s\S$/);
+        if (nextCandidate) {
+          textBlocks.push(compiledText.substring(0, nextCandidate.index));
+          compiledText = compiledText.substring(nextCandidate.index + 1);
+        } else {
+          // Safety bail out. This shouldn't happen, but just in case the regex
+          // goes sideways for some reason, it'd be good to catch it and let
+          // us fail the Slack API schema check.
+          break;
+        }
+      }
+      textBlocks.push(compiledText);
+
       client.views.open({
         trigger_id: triggerId,
         view: {
@@ -163,10 +180,10 @@ module.exports = (app) => {
             text: `${pieces[0]} U.S. Code § ${pieces[1]}`,
           },
           blocks: [
-            {
+            ...textBlocks.map((blockText) => ({
               type: "section",
-              text: { type: "mrkdwn", text: text.join("\n") },
-            },
+              text: { type: "mrkdwn", blockText },
+            })),
             {
               type: "context",
               elements: [
