@@ -157,11 +157,27 @@ module.exports = (app) => {
       let compiledText = text.join("\n");
       const textBlocks = [];
 
-      while (compiledText.length > 3000) {
-        const nextCandidate = compiledText.substring(0, 3000).match(/\s\S$/);
+      // The text in a Slack block is limited to 3,000 characters. Previously
+      // Slack would break up long blocks into multiple messages for us
+      // automatically, but it doesn't do that anymore. So we need to split up
+      // long messages into multiple blocks here.
+      const MAX_TEXT_LENGTH = 3_000;
+      while (compiledText.length > MAX_TEXT_LENGTH) {
+        // The breakpoint for a string should be the nearest whitespace before
+        // the character limit mark. This regex will find it for us.
+        const nextCandidate = compiledText
+          .substring(0, MAX_TEXT_LENGTH)
+          .match(/\s\S\s?$/);
+
         if (nextCandidate) {
+          // The .index property is the starting position of the regex match.
+          // We can use that to extract the next piece of text.
           textBlocks.push(compiledText.substring(0, nextCandidate.index));
-          compiledText = compiledText.substring(nextCandidate.index + 1);
+
+          // And then we remove it from the base text string so we can repeat
+          // until we're done. The +1 gets rid of the whitespace that caused
+          // the match, and .trim() removes any trailing whitespace.
+          compiledText = compiledText.substring(nextCandidate.index + 1).trim();
         } else {
           // Safety bail out. This shouldn't happen, but just in case the regex
           // goes sideways for some reason, it'd be good to catch it and let

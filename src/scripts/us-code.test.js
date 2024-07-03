@@ -244,6 +244,68 @@ describe("U.S. Code bot", () => {
                 expect(request.client.views.open).toHaveBeenCalledWith(modal);
               });
             });
+
+            describe("and the total section content is over 3,000 characters", () => {
+              it("breaks up the message into multiple blocks", async () => {
+                const longMessage = [...Array(5_000)]
+                  .map((_, i) => `${(i + 1) % 10}`)
+                  .join(" ");
+
+                axios.get.mockImplementation(async () => ({
+                  data: `<h1 id="page_title">XX USC YYY - Section Name</h1><div class="tab-pane active"><div class="section"><div class="content">${longMessage}</div></div></div>`,
+                }));
+
+                await requestModal(request);
+
+                modal.view.blocks[0].text.text = `*XX USC YYY - Section Name*\n${longMessage.substring(
+                  0,
+                  // Subtract 28 to account for the section heading text above.
+                  // Then, subtract 1 to eat the matched space. Finally, subtract
+                  // 2 more to account for some quirks about this particular string:
+                  // the 3,000th character is a space (e.g., "4 5 6 "). The regex
+                  // will therefore match on the space between the 5 and 6 (rather
+                  // than the last space), and the 6 will be sent to the next
+                  // block. So subtract two for the " 6" that gets sent forward.
+                  3_000 - 31,
+                )}`;
+                modal.view.blocks.splice(1, 0, {
+                  type: "section",
+                  text: {
+                    type: "mrkdwn",
+                    // 30 is the 31 from above, minus the space before the 6 in
+                    // "4 5 6".
+                    // 33 exists for the same reason as above, and now needs to
+                    // account for the spaces at the start of our string (before
+                    // the 6) and at the end of our string (the part that gets
+                    // sent forward)
+                    text: longMessage.substring(3_000 - 30, 6_000 - 33),
+                  },
+                });
+                modal.view.blocks.splice(2, 0, {
+                  text: {
+                    type: "mrkdwn",
+                    // More string position manipulation around spaces. This one
+                    // was trial and error to find the right ones, but it's based
+                    // on the same reasoning as the above ones.
+                    text: longMessage.substring(6_000 - 32, 9_000 - 35),
+                  },
+                  type: "section",
+                });
+                modal.view.blocks.splice(3, 0, {
+                  text: {
+                    type: "mrkdwn",
+                    text: longMessage.substring(9_000 - 34),
+                  },
+                  type: "section",
+                });
+
+                try {
+                  expect(request.client.views.open).toHaveBeenCalledWith(modal);
+                } finally {
+                  modal.view.blocks.splice(1, 3);
+                }
+              });
+            });
           });
 
           describe("and the section does have subsections", () => {
