@@ -135,5 +135,11 @@
     "defaultEmoji": ":capybara:",
     "trigger": "capybara facts?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/capybaras.json"
+  },
+  {
+    "botName": "National Parks Facts",
+    "defaultEmoji": ":nps:",
+    "trigger":"(national )?parks? facts?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/nps.json"
   }
 ]
