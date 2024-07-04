@@ -55,6 +55,7 @@ facts. There are just so many facts. You can just say `dog fact` (or
 | `ed simulator`    | Shares a quote from 18F alumni Ed Mullen          |
 | `giraffe fact`    | Shares a fact of dubious truth about giraffes     |
 | `minnesota facts` | Shares a fact about the state of Minnesota        |
+| `park fact`       | Shares a fact about the US National Parks         |
 | `randy fact`      | Shares a fact about 18F staff member Randy        |
 | `screambot`       | Joyfully screams along with you                   |
 | `wisconsin facts` | Shares a fact about the state of Wisconsin        |
