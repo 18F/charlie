@@ -50,7 +50,7 @@ const scheduleReminder = (_, config = process.env) => {
 
     await postMessage({
       channel: CHANNEL,
-      text: `<!here|here> Remember that *${holiday.date.format(
+      text: `<!here> Remember that *${holiday.date.format(
         "dddd",
       )}* is a federal holiday in observance of *${
         holiday.alsoObservedAs ?? holiday.name
