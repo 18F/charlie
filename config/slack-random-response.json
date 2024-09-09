@@ -141,5 +141,11 @@
     "defaultEmoji": ":nps:",
     "trigger":"(national )?parks? facts?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/nps.json"
+  },
+  {
+    "botName": "Dinosaur Facts",
+    "defaultEmoji": ":dino:",
+    "trigger": "dino(saur)? facts?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dinosaurs.json"
   }
 ]
