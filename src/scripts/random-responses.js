@@ -93,7 +93,7 @@ const responseFrom =
       new RegExp(`(^|\\w)(-?)(\\S+) ${config.trigger}`, "i"),
     ) ?? [false, false, false, false];
 
-    const message = { thread_ts: thread };
+    const message = { thread_ts: thread, unfurl_links: false };
     if (defaultEmoji) {
       message.icon_emoji = defaultEmoji;
     }
