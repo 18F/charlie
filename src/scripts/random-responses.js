@@ -94,8 +94,16 @@ const responseFrom =
     ) ?? [false, false, false, false];
 
     const message = { thread_ts: thread, unfurl_links: false };
+
     if (defaultEmoji) {
-      message.icon_emoji = defaultEmoji;
+      // The default emoji defined by the config may be a single emoji or a list.
+      // If it's a list, pick one at random.
+      if (Array.isArray(defaultEmoji)) {
+        message.icon_emoji =
+          defaultEmoji[Math.floor(Math.random() * defaultEmoji.length)];
+      } else {
+        message.icon_emoji = defaultEmoji;
+      }
     }
     if (botName) {
       message.username = botName;
