@@ -475,7 +475,9 @@ triggers:
       - goddamnit
       - goddammit
     alternatives:
-      - awful, terrible, wretched
+      - awful
+      - terrible
+      - wretched
     why: >-
       ":TERM:" can be offensive or triggering to some religious traditions
       because it implies a deity cursing or reproaching people. We want to show
@@ -485,7 +487,9 @@ triggers:
       - jesus fucking
       - fucking christ
     alternatives:
-      - Wow, oh no, oh my
+      - Wow
+      - oh no
+      - oh my
     why: We want to show respect towards all religious traditions.
 
   - matches:
@@ -495,9 +499,20 @@ triggers:
       - confusing language
     why: >-
       The term ":TERM:" was used to stereotype African languages and cultures
-      that didn't make sense to European colonizers. See [Here are some commonly
-      used terms that actually have racist origins](https://abcnews.go.com/Politics/commonly-terms-racist-origins/story?id=71840410)
-      for more.
+      that didn't make sense to European colonizers.
+
+  - matches:
+      - kowtow
+      - kow tow
+      - cowtow
+    alternatives:
+      - submit
+      - grovel
+    why: >-
+      The modern usage of this word refers to groveling or submission, which is
+      a disconnect from its real meaning as an act of deep respect. Modern usage
+      of ":TERM:" misses cultural nuance and perpetuates cultural
+      misunderstanding.
 
   - matches:
       - guys
