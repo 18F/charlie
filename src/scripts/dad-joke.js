@@ -3,6 +3,7 @@ const axios = require("axios");
 const {
   cache,
   helpMessage,
+  sample,
   stats: { incrementStats },
 } = require("../utils");
 
@@ -38,7 +39,7 @@ module.exports = (app) => {
         }
       });
 
-      const joke = jokes[Math.floor(Math.random() * jokes.length)];
+      const joke = sample(jokes);
       if (joke) {
         say({
           icon_emoji: ":dog-joke-setup:",

@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const {
+  sample,
   slack: { addEmojiReaction, postEphemeralResponse },
   stats: { incrementStats },
   helpMessage,
@@ -87,11 +88,9 @@ module.exports = async (app) => {
     addEmojiReaction(msg, "wave");
 
     // Pick a random alternative
-    const pretexts = specificMatch.map(({ alternatives, text }) => {
-      const alternative =
-        alternatives[Math.floor(Math.random() * alternatives.length)];
-      return `• Instead of saying "${text}," how about *${alternative}*?`;
-    });
+    const pretexts = specificMatch.map(({ alternatives, text }) =>
+      `• Instead of saying "${text}," how about *${sample(alternatives)}*?`
+    );
 
     // And say hello.
     postEphemeralResponse(msg, {

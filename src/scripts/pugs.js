@@ -1,6 +1,7 @@
 const { directMention } = require("@slack/bolt");
 const {
   helpMessage,
+  sample,
   stats: { incrementStats },
 } = require("../utils");
 
@@ -31,7 +32,7 @@ const makePugs = (count = 1) =>
   [...Array(count)].map(() => ({
     type: "image",
     title: { type: "plain_text", text: "a pug!" },
-    image_url: pugs[Math.floor(Math.random() * pugs.length)],
+    image_url: sample(pugs),
     alt_text: "a pug",
   }));
 

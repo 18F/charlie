@@ -7,6 +7,7 @@ const optOut = require("./optOut");
 const slack = require("./slack");
 const stats = require("./stats");
 const tock = require("./tock");
+const sample = require("./sample");
 
 module.exports = {
   cache,
@@ -15,6 +16,7 @@ module.exports = {
   holidays,
   homepage,
   optOut,
+  sample,
   slack,
   stats,
   tock,

@@ -3,6 +3,7 @@ const scheduler = require("node-schedule");
 const {
   dates: { getNextHoliday },
   holidays: { emojis },
+  sample,
   slack: { postMessage },
   helpMessage,
 } = require("../utils");
@@ -54,9 +55,7 @@ const scheduleReminder = (_, config = process.env) => {
         "dddd",
       )}* is a federal holiday in observance of *${
         holiday.alsoObservedAs ?? holiday.name
-      }*${emoji ? ` ${emoji}` : ""}! ${
-        workLessMessages[Math.floor(Math.random() * workLessMessages.length)]
-      }`,
+      }*${emoji ? ` ${emoji}` : ""}! ${sample(workLessMessages)}`,
     });
   };
 
