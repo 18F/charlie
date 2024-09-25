@@ -134,6 +134,19 @@ describe("random responder", () => {
           config.defaultEmoji = null;
         });
 
+        it("and the list of emoji is empty", async () => {
+          config.defaultEmoji = [];
+          random
+            .mockReturnValueOnce(3 / 5)
+            .mockReturnValueOnce(0)
+            .mockReturnValueOnce(0);
+
+          const { responseList, expected } = responsePermutations[0];
+          await script.responseFrom({ ...config, responseList })(message);
+
+          expect(message.say).toHaveBeenCalledWith(expected);
+        });
+
         responsePermutations.forEach(({ testName, responseList, expected }) => {
           it(testName, async () => {
             config.defaultEmoji = [

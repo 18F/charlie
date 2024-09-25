@@ -99,8 +99,10 @@ const responseFrom =
       // The default emoji defined by the config may be a single emoji or a list.
       // If it's a list, pick one at random.
       if (Array.isArray(defaultEmoji)) {
-        message.icon_emoji =
-          defaultEmoji[Math.floor(Math.random() * defaultEmoji.length)];
+        if (defaultEmoji.length > 0) {
+          message.icon_emoji =
+            defaultEmoji[Math.floor(Math.random() * defaultEmoji.length)];
+        }
       } else {
         message.icon_emoji = defaultEmoji;
       }
