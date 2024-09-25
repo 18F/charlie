@@ -88,8 +88,9 @@ module.exports = async (app) => {
     addEmojiReaction(msg, "wave");
 
     // Pick a random alternative
-    const pretexts = specificMatch.map(({ alternatives, text }) =>
-      `• Instead of saying "${text}," how about *${sample(alternatives)}*?`
+    const pretexts = specificMatch.map(
+      ({ alternatives, text }) =>
+        `• Instead of saying "${text}," how about *${sample(alternatives)}*?`,
     );
 
     // And say hello.
