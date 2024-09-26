@@ -101,8 +101,7 @@ const responseFrom =
       // If it's a list, pick one at random.
       if (Array.isArray(defaultEmoji)) {
         if (defaultEmoji.length > 0) {
-          message.icon_emoji =
-            defaultEmoji[Math.floor(Math.random() * defaultEmoji.length)];
+          message.icon_emoji = sample(defaultEmoji);
         }
       } else {
         message.icon_emoji = defaultEmoji;
