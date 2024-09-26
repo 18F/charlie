@@ -11,4 +11,8 @@ describe("utils / sample", () => {
   it("still returns a random item when randomValue is not provided", () => {
     expect(arr).toContain(sample(arr));
   });
+
+  it("returns undefined when an array is empty", () => {
+    expect(sample([])).toBeUndefined();
+  })
 });
