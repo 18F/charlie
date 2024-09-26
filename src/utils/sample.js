@@ -6,7 +6,9 @@
  * @return {T=} an item from the array (or undefined if empty array)
  */
 function sample(arr, randomValue = Math.random()) {
-  return arr[Math.floor(randomValue * arr.length)];
+  return arr[
+    Math.min(Math.max(0, Math.floor(randomValue * arr.length)), arr.length - 1)
+  ];
 }
 
 module.exports = sample;
