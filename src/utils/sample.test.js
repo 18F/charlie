@@ -14,5 +14,5 @@ describe("utils / sample", () => {
 
   it("returns undefined when an array is empty", () => {
     expect(sample([])).toBeUndefined();
-  })
+  });
 });
