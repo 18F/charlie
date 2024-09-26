@@ -1,9 +1,9 @@
 const { directMention } = require("@slack/bolt");
 const {
   helpMessage,
-  sample,
   stats: { incrementStats },
 } = require("../utils");
+const sample = require("../utils/sample");
 
 const pugs = [
   "https://i.imgur.com/kXngLij.png",

@@ -3,10 +3,10 @@ const fs = require("fs");
 const plural = require("plural");
 const {
   cache,
-  sample,
   stats: { incrementStats },
   helpMessage,
 } = require("../utils");
+const sample = require("../utils/sample");
 
 const loadConfigs = async () =>
   JSON.parse(fs.readFileSync("config/slack-random-response.json"));

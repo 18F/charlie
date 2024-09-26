@@ -2,11 +2,11 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const {
-  sample,
   slack: { addEmojiReaction, postEphemeralResponse },
   stats: { incrementStats },
   helpMessage,
 } = require("../utils");
+const sample = require("../utils/sample");
 
 const capitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
 

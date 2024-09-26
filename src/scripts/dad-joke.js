@@ -3,9 +3,9 @@ const axios = require("axios");
 const {
   cache,
   helpMessage,
-  sample,
   stats: { incrementStats },
 } = require("../utils");
+const sample = require("../utils/sample");
 
 module.exports = (app) => {
   helpMessage.registerInteractive(

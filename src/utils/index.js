@@ -4,7 +4,6 @@ const helpMessage = require("./helpMessage");
 const holidays = require("./holidays");
 const homepage = require("./homepage");
 const optOut = require("./optOut");
-const sample = require("./sample");
 const slack = require("./slack");
 const stats = require("./stats");
 const tock = require("./tock");
@@ -16,7 +15,6 @@ module.exports = {
   holidays,
   homepage,
   optOut,
-  sample,
   slack,
   stats,
   tock,

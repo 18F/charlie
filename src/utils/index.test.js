@@ -9,7 +9,6 @@ describe("utils / index", () => {
       "holidays",
       "homepage",
       "optOut",
-      "sample",
       "slack",
       "stats",
       "tock",

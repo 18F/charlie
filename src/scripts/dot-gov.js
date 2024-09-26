@@ -42,7 +42,8 @@ const https = require("https");
 const { parse } = require("csv-parse/sync");
 /* eslint-enable import/no-unresolved */
 
-const { cache, helpMessage, sample } = require("../utils");
+const { cache, helpMessage } = require("../utils");
+const sample = require("../utils/sample");
 
 /** A regex string for searching the 9 types of .gov domain entities in a variety of ways. */
 const domainTypesRegex = [
