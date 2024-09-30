@@ -102,7 +102,14 @@
   },
   {
     "botName": "screambot",
-    "defaultEmoji": ":kevin-home-alone-scream:",
+    "defaultEmoji": [
+      ":kevin-home-alone-scream:",
+      ":khan:",
+      ":scream-into-the-void:",
+      ":screaming-cowboy:",
+      ":gull-scream:",
+      ":the-scream:"
+    ],
     "trigger": "screambot",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/scream.json"
   },
@@ -139,7 +146,7 @@
   {
     "botName": "National Parks Facts",
     "defaultEmoji": ":nps:",
-    "trigger":"(national )?parks? facts?",
+    "trigger": "(national )?parks? facts?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/nps.json"
   },
   {
