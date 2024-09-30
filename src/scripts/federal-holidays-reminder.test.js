@@ -104,7 +104,7 @@ describe("holiday reminder", () => {
       expect(postMessage).toHaveBeenCalledWith({
         channel: "general",
         text: expect.stringMatching(
-          /^<!here\|here> Remember that \*Thursday\* is a federal holiday in observance of \*test holiday\*! .+$/,
+          /^<!here> Remember that \*Thursday\* is a federal holiday in observance of \*test holiday\*! .+$/,
         ),
       });
 
@@ -127,7 +127,7 @@ describe("holiday reminder", () => {
       expect(postMessage).toHaveBeenCalledWith({
         channel: "test channel",
         text: expect.stringMatching(
-          /^<!here\|here> Remember that \*Thursday\* is a federal holiday in observance of \*test holiday\*! .+$/,
+          /^<!here> Remember that \*Thursday\* is a federal holiday in observance of \*test holiday\*! .+$/,
         ),
       });
 
@@ -145,7 +145,7 @@ describe("holiday reminder", () => {
       expect(postMessage).toHaveBeenCalledWith({
         channel: "general",
         text: expect.stringMatching(
-          /^<!here|here> Remember that \*Thursday\* is a federal holiday in observance of \*Veterans Day\* :salute-you:! .+$/,
+          /^<!here> Remember that \*Thursday\* is a federal holiday in observance of \*Veterans Day\* :salute-you:! .+$/,
         ),
       });
 
