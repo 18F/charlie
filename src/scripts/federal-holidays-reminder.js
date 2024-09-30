@@ -6,6 +6,7 @@ const {
   slack: { postMessage },
   helpMessage,
 } = require("../utils");
+const sample = require("../utils/sample");
 
 const workLessMessages = [
   "Only do 32 hours worth of work since there are only 32 hours to do them in!",
@@ -54,9 +55,7 @@ const scheduleReminder = (_, config = process.env) => {
         "dddd",
       )}* is a federal holiday in observance of *${
         holiday.alsoObservedAs ?? holiday.name
-      }*${emoji ? ` ${emoji}` : ""}! ${
-        workLessMessages[Math.floor(Math.random() * workLessMessages.length)]
-      }`,
+      }*${emoji ? ` ${emoji}` : ""}! ${sample(workLessMessages)}`,
     });
   };
 

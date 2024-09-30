@@ -5,6 +5,7 @@ const {
   helpMessage,
   stats: { incrementStats },
 } = require("../utils");
+const sample = require("../utils/sample");
 
 module.exports = (app) => {
   helpMessage.registerInteractive(
@@ -38,7 +39,7 @@ module.exports = (app) => {
         }
       });
 
-      const joke = jokes[Math.floor(Math.random() * jokes.length)];
+      const joke = sample(jokes);
       if (joke) {
         say({
           icon_emoji: ":dog-joke-setup:",
