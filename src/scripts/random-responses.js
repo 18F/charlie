@@ -6,6 +6,7 @@ const {
   stats: { incrementStats },
   helpMessage,
 } = require("../utils");
+const sample = require("../utils/sample");
 
 const loadConfigs = async () =>
   JSON.parse(fs.readFileSync("config/slack-random-response.json"));
@@ -93,16 +94,25 @@ const responseFrom =
       new RegExp(`(^|\\w)(-?)(\\S+) ${config.trigger}`, "i"),
     ) ?? [false, false, false, false];
 
-    const message = { thread_ts: thread };
+    const message = { thread_ts: thread, unfurl_links: false };
+
     if (defaultEmoji) {
-      message.icon_emoji = defaultEmoji;
+      // The default emoji defined by the config may be a single emoji or a list.
+      // If it's a list, pick one at random.
+      if (Array.isArray(defaultEmoji)) {
+        if (defaultEmoji.length > 0) {
+          message.icon_emoji = sample(defaultEmoji);
+        }
+      } else {
+        message.icon_emoji = defaultEmoji;
+      }
     }
     if (botName) {
       message.username = botName;
     }
 
     const responses = await getResponses(config, searchTerm, negate.length > 0);
-    const response = responses[Math.floor(Math.random() * responses.length)];
+    const response = sample(responses);
 
     if (typeof response === "object") {
       message.text = response.text;
@@ -168,7 +178,7 @@ module.exports = async (app) => {
     app.message(/fact of facts/i, async (res) => {
       incrementStats("random response: fact of facts");
       // Pick a random fact config
-      const factConfig = configs[Math.floor(Math.random() * configs.length)];
+      const factConfig = sample(configs);
 
       // Get a message handler for the chosen configuration and then run it!
       module.exports.responseFrom(factConfig)(res);

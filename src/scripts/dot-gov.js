@@ -43,6 +43,7 @@ const { parse } = require("csv-parse/sync");
 /* eslint-enable import/no-unresolved */
 
 const { cache, helpMessage } = require("../utils");
+const sample = require("../utils/sample");
 
 /** A regex string for searching the 9 types of .gov domain entities in a variety of ways. */
 const domainTypesRegex = [
@@ -171,8 +172,7 @@ const selectDomainsAtRandom = (domainsArr, numToSelect) => {
   const output = new Set();
   if (domainsArr.length >= numToSelect) {
     while (output.size < numToSelect) {
-      const randInt = Math.floor(Math.random() * domainsArr.length);
-      output.add(domainsArr[randInt]);
+      output.add(sample(domainsArr));
     }
   }
   return Array.from(output);

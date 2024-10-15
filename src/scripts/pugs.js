@@ -3,6 +3,7 @@ const {
   helpMessage,
   stats: { incrementStats },
 } = require("../utils");
+const sample = require("../utils/sample");
 
 const pugs = [
   "https://i.imgur.com/kXngLij.png",
@@ -31,7 +32,7 @@ const makePugs = (count = 1) =>
   [...Array(count)].map(() => ({
     type: "image",
     title: { type: "plain_text", text: "a pug!" },
-    image_url: pugs[Math.floor(Math.random() * pugs.length)],
+    image_url: sample(pugs),
     alt_text: "a pug",
   }));
 

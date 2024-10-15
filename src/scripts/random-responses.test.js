@@ -38,7 +38,11 @@ describe("random responder", () => {
       {
         testName: "simple string response",
         responseList: ["a message"],
-        expected: { text: "a message", thread_ts: "thread timestamp" },
+        expected: {
+          text: "a message",
+          thread_ts: "thread timestamp",
+          unfurl_links: false,
+        },
       },
       {
         testName: "string with emoji",
@@ -47,12 +51,17 @@ describe("random responder", () => {
           text: "b message",
           thread_ts: "thread timestamp",
           icon_emoji: ":emoji:",
+          unfurl_links: false,
         },
       },
       {
         testName: "message object with no name or emoji",
         responseList: [{ text: "c message" }],
-        expected: { text: "c message", thread_ts: "thread timestamp" },
+        expected: {
+          text: "c message",
+          thread_ts: "thread timestamp",
+          unfurl_links: false,
+        },
       },
       {
         testName: "message object with no name",
@@ -61,6 +70,7 @@ describe("random responder", () => {
           text: "d message",
           thread_ts: "thread timestamp",
           icon_emoji: ":emoji:",
+          unfurl_links: false,
         },
       },
       {
@@ -70,6 +80,7 @@ describe("random responder", () => {
           text: "e message",
           thread_ts: "thread timestamp",
           username: "bob",
+          unfurl_links: false,
         },
       },
       {
@@ -80,6 +91,7 @@ describe("random responder", () => {
           thread_ts: "thread timestamp",
           icon_emoji: ":emoji:",
           username: "bob",
+          unfurl_links: false,
         },
       },
     ];
@@ -98,19 +110,62 @@ describe("random responder", () => {
     });
 
     describe("with default emoji set", () => {
-      const baseExpectation = { icon_emoji: ":default-emoji:" };
+      describe("as a single emoji", () => {
+        const baseExpectation = { icon_emoji: ":default-emoji:" };
 
-      responsePermutations.forEach(({ testName, responseList, expected }) => {
-        it(testName, async () => {
-          config.defaultEmoji = ":default-emoji:";
-          random.mockReturnValue(0);
+        responsePermutations.forEach(({ testName, responseList, expected }) => {
+          it(testName, async () => {
+            config.defaultEmoji = ":default-emoji:";
+            random.mockReturnValue(0);
 
+            await script.responseFrom({ ...config, responseList })(message);
+
+            expect(random).toHaveBeenCalled();
+            expect(message.say).toHaveBeenCalledWith({
+              ...baseExpectation,
+              ...expected,
+            });
+          });
+        });
+      });
+
+      describe("as a list of random emoji", () => {
+        afterAll(() => {
+          config.defaultEmoji = null;
+        });
+
+        it("and the list of emoji is empty", async () => {
+          config.defaultEmoji = [];
+          random
+            .mockReturnValueOnce(3 / 5)
+            .mockReturnValueOnce(0)
+            .mockReturnValueOnce(0);
+
+          const { responseList, expected } = responsePermutations[0];
           await script.responseFrom({ ...config, responseList })(message);
 
-          expect(random).toHaveBeenCalled();
-          expect(message.say).toHaveBeenCalledWith({
-            ...baseExpectation,
-            ...expected,
+          expect(message.say).toHaveBeenCalledWith(expected);
+        });
+
+        responsePermutations.forEach(({ testName, responseList, expected }) => {
+          it(testName, async () => {
+            config.defaultEmoji = [
+              ":default-emoji-1:",
+              ":default-emoji-2:",
+              ":default-emoji-3:",
+              ":default-emoji-4:",
+              ":default-emoji-5:",
+            ];
+            random
+              .mockReturnValueOnce(3 / 5)
+              .mockReturnValueOnce(0)
+              .mockReturnValueOnce(0);
+            await script.responseFrom({ ...config, responseList })(message);
+
+            expect(message.say).toHaveBeenCalledWith({
+              icon_emoji: config.defaultEmoji[3],
+              ...expected,
+            });
           });
         });
       });

@@ -6,6 +6,7 @@ const {
   stats: { incrementStats },
   helpMessage,
 } = require("../utils");
+const sample = require("../utils/sample");
 
 const capitalize = (str) => `${str[0].toUpperCase()}${str.slice(1)}`;
 
@@ -87,11 +88,10 @@ module.exports = async (app) => {
     addEmojiReaction(msg, "wave");
 
     // Pick a random alternative
-    const pretexts = specificMatch.map(({ alternatives, text }) => {
-      const alternative =
-        alternatives[Math.floor(Math.random() * alternatives.length)];
-      return `• Instead of saying "${text}," how about *${alternative}*?`;
-    });
+    const pretexts = specificMatch.map(
+      ({ alternatives, text }) =>
+        `• Instead of saying "${text}," how about *${sample(alternatives)}*?`,
+    );
 
     // And say hello.
     postEphemeralResponse(msg, {

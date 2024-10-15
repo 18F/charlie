@@ -50,6 +50,7 @@ facts. There are just so many facts. You can just say `dog fact` (or
 | `ask ally fact`   | Shares a fact about accessible web development    |
 | `bird fact`       | Shares a fact about a TTS person's bird           |
 | `cat fact`        | Shares a fact about a TTS person's cat            |
+| `dino fact`       | Shares a fact about dinosaurs                     |
 | `dog fact`        | Shares a fact about a TTS person's dog            |
 | `dolphin fact`    | Shares a fact about dolphins                      |
 | `ed simulator`    | Shares a quote from 18F alumni Ed Mullen          |
