@@ -37,6 +37,11 @@ invitation request. To see the complete list of ERGs and contact information,
 you can send yourself a direct message that just says `ergs` and Slackbot will
 respond with that information!
 
+##### Evermarch
+
+Ever wondered what day of March 2020, we're currently on? Charlie can tell you.
+Just say `evermarch` in any channel where Charlie is, and it'll let you know.
+
 ##### Facts
 
 Charlie knows **_so many_** facts. Dog facts, cat facts, giraffe facts, dolphin
