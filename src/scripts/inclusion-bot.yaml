@@ -503,8 +503,12 @@ triggers:
 
   - matches:
       - kowtow
+      - kotow
       - kow tow
+      - kow-tow
       - cowtow
+      - cow tow
+      - cow-tow
     alternatives:
       - submit
       - grovel
