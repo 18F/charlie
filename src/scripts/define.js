@@ -102,7 +102,7 @@ module.exports = (app) => {
   );
 
   app.message(
-    directMention(),
+    directMention,
     /(define|glossary) (.+)/i,
     async ({ context, event: { thread_ts: thread }, say }) => {
       incrementStats("define/glossary");

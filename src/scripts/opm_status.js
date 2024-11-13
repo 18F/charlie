@@ -32,7 +32,7 @@ module.exports = (robot) => {
   );
 
   robot.message(
-    directMention(),
+    directMention,
     /opm status/i,
     async ({ event: { thread_ts: thread }, say }) => {
       incrementStats("OPM status");

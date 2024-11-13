@@ -47,6 +47,7 @@ module.exports = (app) => {
     );
     const BUCKET = s3Creds.bucket;
     const REGION = s3Creds.region;
+
     const s3 = new AWS.S3({ region: REGION, credentials: creds });
 
     const hugUrl = ({ Key }) => {
@@ -92,13 +93,13 @@ module.exports = (app) => {
         });
       });
 
-    app.message(directMention(), /hug me/i, (msg) => {
+    app.message(directMention, /hug me/i, (msg) => {
       incrementStats("hug bot - single hug");
       module.exports.hugBomb(1, msg);
     });
 
     app.message(
-      directMention(),
+      directMention,
       /hug bomb( (\d+))?/i,
       ({ context: { matches }, ...msg }) => {
         incrementStats("hug bot - multiple hugs");

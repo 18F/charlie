@@ -102,7 +102,7 @@ module.exports = async (app) => {
     },
   );
 
-  app.message(directMention(), /ergs/i, ({ event: { user } }) => {
+  app.message(directMention, /ergs/i, ({ event: { user } }) => {
     incrementStats("list ERGs from message");
 
     sendDirectMessage(user, {

@@ -50,12 +50,12 @@ module.exports = (app) => {
     true,
   );
 
-  app.message(directMention(), /pug me/i, async ({ say }) => {
+  app.message(directMention, /pug me/i, async ({ say }) => {
     incrementStats("pug bot: one");
     say({ blocks: makePugs() });
   });
 
-  app.message(directMention(), /pug bomb ?(\d+)?/i, ({ context, say }) => {
+  app.message(directMention, /pug bomb ?(\d+)?/i, ({ context, say }) => {
     incrementStats("pug bot: multiple");
     const count = +context.matches[1] || 3;
     say({ blocks: makePugs(count) });

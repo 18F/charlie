@@ -16,7 +16,7 @@ module.exports = (app) => {
   );
 
   app.message(
-    directMention(),
+    directMention,
     /dad joke/i,
     async ({ message: { thread_ts: thread }, say }) => {
       incrementStats("dad joke");
