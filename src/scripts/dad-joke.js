@@ -24,7 +24,7 @@ module.exports = (app) => {
       const jokes = await cache("dad jokes", 60, async () => {
         try {
           const { data } = await axios.get(
-            "https://fatherhood.gov/jsonapi/node/dad_jokes",
+            "https://fatherhood.gov/jsonapi/node/dad_jokes?filter[status][value]=1",
           );
 
           if (data && data.data) {
