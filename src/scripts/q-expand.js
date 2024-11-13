@@ -49,7 +49,7 @@ function getCodeLine(code, csvData) {
     // If this is a contractor code, replace the lowercase c with -C again
     code.endsWith("c") ? `${code.slice(0, code.length - 1)}-C` : code,
     ": ",
-    code.endsWith("c") ? "Contractor" : csvData[code] ?? "???",
+    code.endsWith("c") ? "Contractor" : (csvData[code] ?? "???"),
   ].join("");
 }
 
