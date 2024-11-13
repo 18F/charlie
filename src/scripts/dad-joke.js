@@ -33,8 +33,10 @@ module.exports = (app) => {
               punchline: joke.attributes.field_joke_response,
             }));
           }
+          console.log("got nothing from the API");
           return [];
         } catch (e) {
+          console.log(e);
           return [];
         }
       });
