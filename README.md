@@ -93,13 +93,6 @@ can help! Just say `@handbook terms` and Charlie will search the Handbook for
 `terms` for you (replace `terms` with whatever you want). If it finds anything,
 it'll post links in a threaded response to your request.
 
-##### HugMe
-
-Need to see a little hug in your life? Friends from TTS past have left us a gift
-and Charlie will deliver it whenever you need. Just say `@charlie hug me` or
-`@charlie hug bomb <number>` to get a little happiness dropped right on your
-screen.
-
 ##### OPM's DC offices status
 
 Working in DC and want to know if the office is closed due to snow or, perhaps,
