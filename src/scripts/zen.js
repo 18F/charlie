@@ -29,7 +29,7 @@ module.exports = (app) => {
   );
 
   app.message(
-    directMention(),
+    directMention,
     /\bzen\b/i,
     async ({ event: { thread_ts: thread }, say }) => {
       incrementStats("zen");

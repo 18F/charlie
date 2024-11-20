@@ -34,7 +34,7 @@ module.exports = (app) => {
   );
 
   app.message(
-    directMention(),
+    directMention,
     /tock( line)?$/i,
     ({ event: { channel, text, thread_ts: thread }, say }) => {
       incrementStats("tock line: get");
@@ -60,7 +60,7 @@ module.exports = (app) => {
   );
 
   app.message(
-    directMention(),
+    directMention,
     /set tock( line)? (.*)$/i,
     ({ context: { matches }, event: { channel, thread_ts: thread }, say }) => {
       incrementStats("tock line: set");

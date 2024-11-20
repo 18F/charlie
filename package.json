@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@18f/us-federal-holidays": "^4.0.0",
-    "@slack/bolt": "^3.5.0",
+    "@slack/bolt": "^4.1.0",
     "aws-sdk": "^2.1354.0",
     "axios": "^1.7.7",
     "cfenv": "^1.2.3",
@@ -29,10 +29,10 @@
     "plural": "^1.1.0"
   },
   "engines": {
-    "node": "^20.9.0"
+    "node": "^22.8.0"
   },
   "devDependencies": {
-    "eslint": "^8.7.0",
+    "eslint": "^8.57.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.25.4",

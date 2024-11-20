@@ -41,7 +41,7 @@ module.exports = (app) => {
   }));
 
   app.message(
-    directMention(),
+    directMention,
     /next (federal )?holiday/i,
     ({ event: { thread_ts: thread }, say }) => {
       say({ text: getHolidayText(), thread_ts: thread });

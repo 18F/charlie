@@ -14,7 +14,7 @@ module.exports = async (app) => {
   let botName = false;
 
   app.message(
-    directMention(),
+    directMention,
     "help",
     async ({
       context: { botUserId },

@@ -349,7 +349,7 @@ module.exports = (app) => {
 
   /** get .gov version */
   app.message(
-    directMention(),
+    directMention,
     gitGovRegex,
     async ({ message: { thread_ts: thread }, context, say }) => {
       const args = {
