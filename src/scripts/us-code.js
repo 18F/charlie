@@ -1,4 +1,3 @@
-const axios = require("axios");
 const cheerio = require("cheerio");
 
 const {
@@ -77,7 +76,7 @@ module.exports = (app) => {
       const pieces = citation.split(" ");
       const url = `https://www.law.cornell.edu/uscode/text/${pieces[0]}/${pieces[1]}`;
 
-      const { data } = await axios.get(url);
+      const data = await fetch(url).then((r) => r.text());
       const dom = cheerio.load(data);
 
       const sectionDom = dom(".tab-pane.active div.section");
@@ -269,7 +268,7 @@ module.exports = (app) => {
       const response = { blocks: [], text: "", thread_ts: thread ?? ts };
 
       try {
-        const { data } = await axios.get(url);
+        const data = await fetch(url).then((r) => r.text());
         const dom = cheerio.load(data);
 
         const pageTitle = dom("h1#page_title")

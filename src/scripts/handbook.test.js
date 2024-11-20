@@ -1,5 +1,4 @@
 const {
-  axios,
   getApp,
   utils: {
     slack: { postEphemeralResponse },
@@ -10,8 +9,13 @@ const handbook = require("./handbook");
 describe("TTS Handbook search", () => {
   const app = getApp();
 
+  const fetchResponse = {
+    json: jest.fn(),
+  };
+
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.mockResolvedValue(fetchResponse);
   });
 
   it("subscribes to the right message", () => {
@@ -38,7 +42,7 @@ describe("TTS Handbook search", () => {
     });
 
     it("gracefully responds if there is an error", async () => {
-      axios.get.mockRejectedValue();
+      fetch.mockRejectedValue();
       await handler(message);
 
       expect(postEphemeralResponse).toHaveBeenCalledWith(message, {
@@ -52,7 +56,7 @@ describe("TTS Handbook search", () => {
       message.context.matches[2] = "”some ’search‘ goes here“";
       await handler(message);
 
-      expect(axios.get).toHaveBeenCalledWith(
+      expect(fetch).toHaveBeenCalledWith(
         "https://search.usa.gov/search/?utf8=no&affiliate=tts-handbook&format=json&query=%22some%20'search'%20goes%20here%22",
       );
     });
@@ -64,7 +68,7 @@ describe("TTS Handbook search", () => {
         });
 
         it("and there are no search results", async () => {
-          axios.get.mockResolvedValue({ data: { results: [] } });
+          fetchResponse.json.mockResolvedValue({ results: [] });
           await handler(message);
 
           expect(message.say).toHaveBeenCalledWith({
@@ -76,16 +80,14 @@ describe("TTS Handbook search", () => {
         });
 
         it("and there are some results", async () => {
-          axios.get.mockResolvedValue({
-            data: {
-              results: [
-                { body: "this is result #1", link: "link1", title: "result 1" },
-                { body: "this is result #2", link: "link2", title: "result 2" },
-                { body: "this is result #3", link: "link3", title: "result 3" },
-                { body: "this is result #4", link: "link4", title: "result 4" },
-                { body: "this is result #5", link: "link5", title: "result 5" },
-              ],
-            },
+          fetchResponse.json.mockResolvedValue({
+            results: [
+              { body: "this is result #1", link: "link1", title: "result 1" },
+              { body: "this is result #2", link: "link2", title: "result 2" },
+              { body: "this is result #3", link: "link3", title: "result 3" },
+              { body: "this is result #4", link: "link4", title: "result 4" },
+              { body: "this is result #5", link: "link5", title: "result 5" },
+            ],
           });
           await handler(message);
 
@@ -148,7 +150,7 @@ describe("TTS Handbook search", () => {
         });
 
         it("and there are no search results", async () => {
-          axios.get.mockResolvedValue({ data: { results: [] } });
+          fetchResponse.json.mockResolvedValue({ results: [] });
           await handler(message);
 
           expect(message.say).toHaveBeenCalledWith({
@@ -160,16 +162,14 @@ describe("TTS Handbook search", () => {
         });
 
         it("and there are some results", async () => {
-          axios.get.mockResolvedValue({
-            data: {
-              results: [
-                { body: "this is result #1", link: "link1", title: "result 1" },
-                { body: "this is result #2", link: "link2", title: "result 2" },
-                { body: "this is result #3", link: "link3", title: "result 3" },
-                { body: "this is result #4", link: "link4", title: "result 4" },
-                { body: "this is result #5", link: "link5", title: "result 5" },
-              ],
-            },
+          fetchResponse.json.mockResolvedValue({
+            results: [
+              { body: "this is result #1", link: "link1", title: "result 1" },
+              { body: "this is result #2", link: "link2", title: "result 2" },
+              { body: "this is result #3", link: "link3", title: "result 3" },
+              { body: "this is result #4", link: "link4", title: "result 4" },
+              { body: "this is result #5", link: "link5", title: "result 5" },
+            ],
           });
           await handler(message);
 

@@ -35,7 +35,6 @@
  */
 
 const { directMention } = require("@slack/bolt");
-const axios = require("axios");
 const https = require("https");
 
 /* eslint-disable import/no-unresolved */
@@ -186,15 +185,13 @@ const selectDomainsAtRandom = (domainsArr, numToSelect) => {
  * Returns a human-readable response status.
  */
 const checkDomainStatus = async (domainObj, timeout = 2000) =>
-  axios
-    .head(`https://${domainObj[DATA_FIELDS.NAME]}`, {
-      timeout,
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false,
-      }),
-    })
+  fetch(`https://${domainObj[DATA_FIELDS.NAME]}`, {
+    method: "HEAD",
+    agent: new https.Agent({ rejectUnauthorized: false }),
+    signal: AbortSignal.timeout(timeout),
+  })
     .then((response) => {
-      if (response && response.status) {
+      if (response?.ok && response.status) {
         return response.statusText;
       }
       return "Unknown Status";
@@ -203,7 +200,7 @@ const checkDomainStatus = async (domainObj, timeout = 2000) =>
       if (error.response) {
         return error.response.statusText;
       }
-      if (error.code === "CERT_HAS_EXPIRED") {
+      if (error.cause?.code === "CERT_HAS_EXPIRED") {
         return "Cert Expired";
       }
       return "Unknown Status";
@@ -240,14 +237,9 @@ module.exports = (app) => {
   module.exports.dotGov = async ({ entity, searchTerm, say, thread }) => {
     // fetch the domain list
     const domains = await cache("dotgov domains", 1440, async () =>
-      axios
-        .get(CISA_DOTGOV_DATA_URL)
-        .then((response) => {
-          if (response && response.data) {
-            return parse(response.data, { columns: true });
-          }
-          return [];
-        })
+      fetch(CISA_DOTGOV_DATA_URL)
+        .then((response) => response.text())
+        .then((data) => parse(data, { columns: true }))
         .catch(() => []),
     );
 

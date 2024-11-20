@@ -1,5 +1,4 @@
 const {
-  axios,
   getApp,
   utils: { cache },
 } = require("../utils/test");
@@ -228,8 +227,8 @@ describe("glossary", () => {
 
       const fetcher = cache.mock.calls[0].pop();
 
-      axios.get.mockResolvedValue({
-        data: `
+      fetch.mockResolvedValue({
+        text: async () => `
 entries:
   term 1: ATO
   term 2:

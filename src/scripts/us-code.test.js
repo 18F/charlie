@@ -1,12 +1,14 @@
-const { getApp, axios } = require("../utils/test");
+const { getApp } = require("../utils/test");
 
 const usc = require("./us-code");
 
 describe("U.S. Code bot", () => {
   const app = getApp();
+  const text = jest.fn();
 
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.mockResolvedValue({ text });
   });
 
   it("registers a handler", () => {
@@ -35,7 +37,7 @@ describe("U.S. Code bot", () => {
 
     describe("if there is any kind of unexpected error", () => {
       beforeEach(() => {
-        axios.get.mockRejectedValue({});
+        fetch.mockRejectedValue({});
       });
 
       it("does not say anything", async () => {
@@ -46,7 +48,7 @@ describe("U.S. Code bot", () => {
 
     describe("for a title or subsection that does not exist", () => {
       beforeEach(() => {
-        axios.get.mockRejectedValue({ response: { status: 404 } });
+        fetch.mockRejectedValue({ response: { status: 404 } });
       });
 
       it("tells us it doesn't exist", async () => {
@@ -100,7 +102,7 @@ describe("U.S. Code bot", () => {
             .map((v) => v.trim()),
         );
 
-        axios.get.mockImplementation(async () => ({ data: html.join("") }));
+        text.mockImplementation(async () => html.join(""));
       });
 
       it("sends the user a message with the title and a button for the full text", async () => {
@@ -251,9 +253,10 @@ describe("U.S. Code bot", () => {
                   .map((_, i) => `${(i + 1) % 10}`)
                   .join(" ");
 
-                axios.get.mockImplementation(async () => ({
-                  data: `<h1 id="page_title">XX USC YYY - Section Name</h1><div class="tab-pane active"><div class="section"><div class="content">${longMessage}</div></div></div>`,
-                }));
+                text.mockImplementation(
+                  async () =>
+                    `<h1 id="page_title">XX USC YYY - Section Name</h1><div class="tab-pane active"><div class="section"><div class="content">${longMessage}</div></div></div>`,
+                );
 
                 await requestModal(request);
 

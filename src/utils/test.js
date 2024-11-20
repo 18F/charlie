@@ -1,4 +1,3 @@
-const axios = require("axios");
 const brain = require("../brain");
 const {
   cache,
@@ -11,10 +10,11 @@ const {
   tock,
 } = require("./index");
 
-// Mock axios and the utility functions, to make it easier for tests to use.
-jest.mock("axios");
+// Mock fetch and the utility functions, to make it easier for tests to use.
 jest.mock("../brain");
 jest.mock("./index");
+
+global.fetch = jest.fn();
 
 module.exports = {
   getApp: () => {
@@ -85,7 +85,6 @@ module.exports = {
       },
     };
   },
-  axios,
   brain,
   utils: {
     cache,

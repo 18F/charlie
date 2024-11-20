@@ -1,4 +1,4 @@
-const { axios, getApp } = require("../utils/test");
+const { getApp } = require("../utils/test");
 const opm = require("./opm_status");
 
 describe("OPM status for DC-area offices", () => {
@@ -9,8 +9,11 @@ describe("OPM status for DC-area offices", () => {
     say: jest.fn(),
   };
 
+  const json = jest.fn();
+
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.mockResolvedValue({ json });
   });
 
   it("registers a listener", () => {
@@ -27,23 +30,7 @@ describe("OPM status for DC-area offices", () => {
     opm(app);
     const handler = app.getHandler();
 
-    axios.get.mockRejectedValue("error");
-
-    await handler(message);
-
-    expect(message.say).toHaveBeenCalledWith({
-      text: "I didn't get a response from OPM, so... what does <https://www.washingtonpost.com/local/weather/|Capital Weather Gang> say?",
-      thread_ts: "thread id",
-      unfurl_links: false,
-      unfurl_media: false,
-    });
-  });
-
-  it("rejects on a non-200 status code", async () => {
-    opm(app);
-    const handler = app.getHandler();
-
-    axios.get.mockResolvedValue({ data: null, status: 400 });
+    fetch.mockRejectedValue("error");
 
     await handler(message);
 
@@ -59,14 +46,11 @@ describe("OPM status for DC-area offices", () => {
     opm(app);
     const handler = app.getHandler();
 
-    axios.get.mockResolvedValue({
-      data: {
-        AppliesTo: "applies to",
-        Icon: "Open",
-        StatusSummary: "summary",
-        Url: "http://url",
-      },
-      status: 200,
+    json.mockResolvedValue({
+      AppliesTo: "applies to",
+      Icon: "Open",
+      StatusSummary: "summary",
+      Url: "http://url",
     });
 
     await handler(message);

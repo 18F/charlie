@@ -1,4 +1,3 @@
-const axios = require("axios");
 const {
   helpMessage,
   slack: { postEphemeralResponse },
@@ -54,7 +53,7 @@ module.exports = (app) => {
     const url = `${baseUrl}${encodeURIComponent(searchString)}`;
 
     try {
-      const { data } = await axios.get(url);
+      const data = await fetch(url).then((r) => r.json());
       const results = data.results.slice(0, 3);
 
       if (results.length === 0) {

@@ -1,5 +1,4 @@
 const {
-  axios,
   getApp,
   utils: { cache },
 } = require("../utils/test");
@@ -99,10 +98,16 @@ describe("dot-gov domains", () => {
     username: ".Gov",
   };
 
+  const fetchResponse = {
+    json: jest.fn(),
+    text: jest.fn(),
+  };
+
   beforeAll(() => {});
 
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.mockResolvedValue(fetchResponse);
   });
 
   afterAll(() => {});
@@ -138,37 +143,38 @@ describe("dot-gov domains", () => {
     });
 
     describe("gets domains from github if the cache is expired or whatever", () => {
-      let fetch;
+      let fetcher;
+
       beforeEach(async () => {
         cache.mockResolvedValue([]);
         await handler(message);
-        fetch = cache.mock.calls[0][2];
+        fetcher = cache.mock.calls[0][2];
       });
 
       it("if the API throws an error", async () => {
-        axios.get.mockRejectedValue("error");
-        const out = await fetch();
+        fetch.mockRejectedValue("error");
+        const out = await fetcher();
 
         expect(out).toEqual([]);
       });
 
       it("if the API returns a malformed object", async () => {
-        axios.get.mockResolvedValue({ data: { data_is_missing: [] } });
-        const out = await fetch();
+        fetchResponse.json.mockResolvedValue({ data: { data_is_missing: [] } });
+        const out = await fetcher();
 
         expect(out).toEqual([]);
       });
 
       it("if the API doesn't return any domains", async () => {
-        axios.get.mockResolvedValue({ data: { data: [] } });
-        const out = await fetch();
+        fetchResponse.json.mockResolvedValue({ data: { data: [] } });
+        const out = await fetcher();
 
         expect(out).toEqual([]);
       });
 
       it("if the API does return some domains", async () => {
-        axios.get.mockResolvedValue({
-          data: [
+        fetchResponse.text.mockResolvedValue(
+          [
             "Domain Name,Domain Type,Agency,Organization,City,State,Security Contact Email",
             "ALBANYCA.GOV,City,Non-Federal Agency,City of Albany,Albany,CA,(blank)",
             "BELLEPLAINEIOWA.GOV,City,Non-Federal Agency,City of Belle Plaine,Belle Plaine,IA,(blank)",
@@ -180,18 +186,14 @@ describe("dot-gov domains", () => {
             "VIVOTE.GOV,State,Non-Federal Agency,Election System of the Virgin Islands,St Croix,VI,(blank)",
             "CHICKASAW-NSN.GOV,Tribal,Non-Federal Agency,the Chickasaw Nation,Ada,OK,(blank)",
           ].join("\n"),
-        });
-        const out = await fetch();
+        );
+        const out = await fetcher();
 
         expect(out).toEqual(mockCache);
       });
     });
 
     describe("responds with a domain", () => {
-      beforeEach(() => {
-        axios.head.mockImplementation(() => Promise.resolve("Ok"));
-      });
-
       it("unless there aren't any domains", async () => {
         cache.mockResolvedValue([]);
         await handler(message);
@@ -216,7 +218,7 @@ describe("dot-gov domains", () => {
       });
 
       it("even if checking the status of the domain fails", async () => {
-        axios.head.mockImplementation(() => Promise.reject(new Error()));
+        fetch.mockRejectedValue(new Error());
         cache.mockResolvedValue(mockCache);
         await handler(message);
 
@@ -281,10 +283,6 @@ describe("dot-gov domains", () => {
     const message = { message: { thread_ts: "thread id" }, say: jest.fn() };
 
     describe("responds with results", () => {
-      beforeEach(() => {
-        axios.head.mockImplementation(() => Promise.resolve("Ok"));
-      });
-
       it("if there aren't any results", async () => {
         cache.mockResolvedValue(mockCache);
         message.context = {
@@ -341,9 +339,6 @@ describe("dot-gov domains", () => {
       });
     });
     describe("filters correctly by entity", () => {
-      beforeEach(() => {
-        axios.head.mockImplementation(() => Promise.resolve("Ok"));
-      });
       it("if entity is executive", async () => {
         cache.mockResolvedValue(mockCache);
         message.context = {

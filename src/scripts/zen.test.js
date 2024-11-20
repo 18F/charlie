@@ -1,8 +1,14 @@
-const { axios, getApp } = require("../utils/test");
+const { getApp } = require("../utils/test");
 const zen = require("./zen");
 
 describe("zen bot", () => {
   const app = getApp();
+  const text = jest.fn();
+
+  beforeEach(() => {
+    jest.resetAllMocks();
+    fetch.mockResolvedValue({ text });
+  });
 
   it("subscribes to direct mentions that include the word 'zen'", () => {
     zen(app);
@@ -15,6 +21,7 @@ describe("zen bot", () => {
   });
 
   it("fetches a zen message from the GitHub API when triggered", async () => {
+    zen(app);
     const handler = app.getHandler();
 
     const message = {
@@ -24,7 +31,7 @@ describe("zen bot", () => {
       say: jest.fn(),
     };
 
-    axios.get.mockResolvedValue({ data: "zen message" });
+    text.mockResolvedValue("zen message");
 
     await handler(message);
 

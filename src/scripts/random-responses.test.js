@@ -1,6 +1,5 @@
 const fs = require("fs");
 const {
-  axios,
   getApp,
   utils: { cache },
 } = require("../utils/test");
@@ -10,8 +9,12 @@ const script = require("./random-responses");
 jest.mock("fs");
 
 describe("random responder", () => {
+  const json = jest.fn();
+
   beforeEach(() => {
     jest.resetAllMocks();
+
+    fetch.mockResolvedValue({ json });
   });
 
   describe("response builder", () => {
@@ -203,7 +206,7 @@ describe("random responder", () => {
     });
 
     it("gets responses from a url", async () => {
-      axios.get.mockResolvedValue({ data: "response data" });
+      json.mockResolvedValue("response data");
       cache.mockResolvedValue("cached data");
 
       const responses = await script.getResponses({
@@ -217,7 +220,7 @@ describe("random responder", () => {
         expect.any(Number),
         expect.any(Function),
       );
-      expect(axios.get).toHaveBeenCalledWith("over there");
+      expect(fetch).toHaveBeenCalledWith("over there");
       expect(data).toEqual("response data");
       expect(responses).toEqual("cached data");
     });

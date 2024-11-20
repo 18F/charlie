@@ -1,4 +1,3 @@
-const axios = require("axios");
 const fs = require("fs");
 const plural = require("plural");
 const {
@@ -31,10 +30,7 @@ const getResponses = async (config, searchTerm = false, negate = false) => {
     responses = await cache(
       `random response from ${config.responseUrl}`,
       5,
-      async () => {
-        const { data } = await axios.get(config.responseUrl);
-        return data;
-      },
+      async () => fetch(config.responseUrl).then((r) => r.json()),
     );
   }
 
