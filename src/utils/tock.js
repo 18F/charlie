@@ -1,9 +1,12 @@
+const path = require("node:path");
 const { cache } = require("./cache");
 const { getSlackUsers } = require("./slack");
 
 const getFromTock = async (url) =>
   cache(`tock fetch: ${url}`, 10, async () => {
-    const absoluteURL = new URL(url, process.env.TOCK_API);
+    const absoluteURL = new URL(process.env.TOCK_API);
+    absoluteURL.pathname = path.join(absoluteURL.pathname, url);
+
     return fetch(absoluteURL, {
       headers: { Authorization: `Token ${process.env.TOCK_TOKEN}` },
     }).then((r) => r.json());
