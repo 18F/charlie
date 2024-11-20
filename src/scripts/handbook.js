@@ -41,15 +41,17 @@ module.exports = (app) => {
 
     const {
       context: {
-        matches: [, , search],
+        matches: [, search],
       },
       event: { thread_ts: thread, ts },
       say,
     } = msg;
 
+    console.log(msg.context.matches);
+
     const searchString = search
-      .replace(/[”“]/g, '"') // replace smart quotes
-      .replace(/[’‘]/g, "'"); // more smart quotes
+      ?.replace(/[”“]/g, '"') // replace smart quotes
+      ?.replace(/[’‘]/g, "'"); // more smart quotes
     const url = `${baseUrl}${encodeURIComponent(searchString)}`;
 
     try {

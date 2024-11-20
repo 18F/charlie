@@ -28,7 +28,7 @@ describe("TTS Handbook search", () => {
 
   describe("it handles bot triggers", () => {
     const message = {
-      context: { matches: [null, null, "search string"] },
+      context: { matches: [null, "search string"] },
       event: { thread_ts: undefined, ts: 150 },
       say: jest.fn(),
     };
@@ -38,7 +38,7 @@ describe("TTS Handbook search", () => {
       handbook(app);
       handler = app.getHandler();
 
-      message.context.matches[2] = "search string";
+      message.context.matches[1] = "search string";
     });
 
     it("gracefully responds if there is an error", async () => {
@@ -53,7 +53,7 @@ describe("TTS Handbook search", () => {
     });
 
     it("converts characters accordingly before putting them in the search URL", async () => {
-      message.context.matches[2] = "”some ’search‘ goes here“";
+      message.context.matches[1] = "”some ’search‘ goes here“";
       await handler(message);
 
       expect(fetch).toHaveBeenCalledWith(

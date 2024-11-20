@@ -90,10 +90,10 @@ const DOMAIN_TYPES = {
 
 /** Current list of fields available in the CSV file. */
 const DATA_FIELDS = {
-  NAME: "Domain Name",
-  TYPE: "Domain Type",
+  NAME: "Domain name",
+  TYPE: "Domain type",
   AGENCY: "Agency",
-  ORG: "Organization",
+  ORG: "Organization name",
   CITY: "City",
   STATE: "State",
 };
