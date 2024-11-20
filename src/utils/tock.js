@@ -4,7 +4,9 @@ const { getSlackUsers } = require("./slack");
 const getFromTock = async (url) =>
   cache(`tock fetch: ${url}`, 10, async () => {
     const absoluteURL = new URL(url, process.env.TOCK_API);
-    return fetch(absoluteURL).then((r) => r.json());
+    return fetch(absoluteURL, {
+      headers: { Authorization: `Token ${process.env.TOCK_TOKEN}` },
+    }).then((r) => r.json());
   });
 
 /**
