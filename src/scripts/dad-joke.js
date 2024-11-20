@@ -1,5 +1,6 @@
 const { directMention } = require("@slack/bolt");
 const fs = require("node:fs/promises");
+const path = require("node:path");
 const {
   helpMessage,
   stats: { incrementStats },
@@ -15,7 +16,9 @@ module.exports = async (app) => {
   );
 
   const jokes = JSON.parse(
-    await fs.readFile("./dad-joke.json", { encoding: "utf-8" }),
+    await fs.readFile(path.join(__dirname, "dad-joke.json"), {
+      encoding: "utf-8",
+    }),
   );
 
   app.message(
