@@ -120,6 +120,12 @@ const postEphemeralResponse = async (toMsg, message, config = process.env) => {
   );
 };
 
+const postFile = async (message, { SLACK_TOKEN } = process.env) =>
+  defaultClient.filesUploadV2({
+    ...message,
+    token: SLACK_TOKEN,
+  });
+
 const postMessage = async (message, { SLACK_TOKEN } = process.env) =>
   defaultClient.chat.postMessage({
     ...message,
@@ -154,6 +160,7 @@ module.exports = {
   getSlackUsersInConversation,
   postEphemeralMessage,
   postEphemeralResponse,
+  postFile,
   postMessage,
   sendDirectMessage,
   setClient,

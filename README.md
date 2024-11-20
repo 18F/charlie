@@ -12,6 +12,13 @@ A Slack app bot used within 18F for fun and work.
 
 ### Interactive bots
 
+#### BioArt
+
+Get a piece of art curated by the National Institutes of Health! The
+[BioArt source](https://bioart.niaid.nih.gov/) project is a collection of
+science visuals, including artistic represetnations of bacteria, viruses, cells,
+animals, and more! Just say `bio art` or `bio-art` to get some art!
+
 ##### Coffeemate
 
 Schedule virtual coffees with random teammates! Not sure who you should talk to?

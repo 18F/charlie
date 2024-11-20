@@ -1,12 +1,10 @@
 const {
   cache,
   helpMessage,
-  slack: { postEphemeralResponse },
+  slack: { postFile },
   stats: { incrementStats },
 } = require("../utils");
 const sample = require("../utils/sample");
-
-const identity = { icon_emoji: ":dna:", username: "NIH BioArt" };
 
 const permitted = new Set([
   "fungi",
@@ -95,15 +93,6 @@ const getRandomEntity = async () => {
   };
 };
 
-if (require.main === module) {
-  const main = async () => {
-    const entity = await getRandomEntity();
-
-    console.log(entity);
-  };
-  main();
-}
-
 module.exports = (app) => {
   helpMessage.registerInteractive(
     "Bio-Art",
@@ -111,7 +100,7 @@ module.exports = (app) => {
     "Get a random piece of bio-art from our friends at the National Institutes of Health!",
   );
 
-  app.message(/bio(-)?art/i, async (msg) => {
+  app.message(/bio(-| )?art/i, async (msg) => {
     incrementStats("bio-art");
     const { channel, thread_ts: thread } = msg.message;
 
@@ -120,8 +109,7 @@ module.exports = (app) => {
       .then((r) => r.arrayBuffer())
       .then((a) => Buffer.from(a));
 
-    app.client.filesUploadV2({
-      ...identity,
+    postFile({
       channel_id: channel,
       thread_ts: thread,
       initial_comment: `${entity.title} (art by ${entity.creator})`,
