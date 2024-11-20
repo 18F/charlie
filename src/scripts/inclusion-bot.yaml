@@ -575,7 +575,17 @@ triggers:
       - last possible date
     why: >-
       ":TERM:" can trigger emotions related to death that employees may not want
-      to process at work
+      to process at work.
+
+  - matches:
+      - suicide
+      - suicidal
+      - kill yourself
+    alternatives:
+      - ''
+    why: >-
+      ":TERM:" can trigger emotions related to death that employees may not want
+      to process at work.
 
   - matches:
       - fuck
