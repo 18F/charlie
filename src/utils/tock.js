@@ -1,16 +1,15 @@
-const axios = require("axios");
+const path = require("node:path");
 const { cache } = require("./cache");
 const { getSlackUsers } = require("./slack");
 
-const tockAPI = axios.create({
-  baseURL: process.env.TOCK_API,
-  headers: { Authorization: `Token ${process.env.TOCK_TOKEN}` },
-});
-
 const getFromTock = async (url) =>
   cache(`tock fetch: ${url}`, 10, async () => {
-    const { data } = await tockAPI.get(url);
-    return data;
+    const absoluteURL = new URL(process.env.TOCK_API);
+    absoluteURL.pathname = path.join(absoluteURL.pathname, url);
+
+    return fetch(absoluteURL, {
+      headers: { Authorization: `Token ${process.env.TOCK_TOKEN}` },
+    }).then((r) => r.json());
   });
 
 /**

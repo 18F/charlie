@@ -1,5 +1,4 @@
 const {
-  axios,
   getApp,
   utils: { cache },
 } = require("../utils/test");
@@ -12,81 +11,81 @@ describe("dot-gov domains", () => {
     {
       Agency: "Non-Federal Agency",
       City: "Albany",
-      "Domain Name": "ALBANYCA.GOV",
-      "Domain Type": "City",
-      Organization: "City of Albany",
+      "Domain name": "ALBANYCA.GOV",
+      "Domain type": "City",
+      "Organization name": "City of Albany",
       "Security Contact Email": "(blank)",
       State: "CA",
     },
     {
       Agency: "Non-Federal Agency",
       City: "Belle Plaine",
-      "Domain Name": "BELLEPLAINEIOWA.GOV",
-      "Domain Type": "City",
-      Organization: "City of Belle Plaine",
+      "Domain name": "BELLEPLAINEIOWA.GOV",
+      "Domain type": "City",
+      "Organization name": "City of Belle Plaine",
       "Security Contact Email": "(blank)",
       State: "IA",
     },
     {
       Agency: "U.S. Department of Agriculture",
       City: "Washington",
-      "Domain Name": "RURAL.GOV",
-      "Domain Type": "Federal - Executive",
-      Organization: "Rural Development",
+      "Domain name": "RURAL.GOV",
+      "Domain type": "Federal - Executive",
+      "Organization name": "Rural Development",
       "Security Contact Email": "cyber.(blank)",
       State: "DC",
     },
     {
       Agency: "The Supreme Court",
       City: "Washington",
-      "Domain Name": "SUPREMECOURTUS.GOV",
-      "Domain Type": "Federal - Judicial",
-      Organization: "Supreme Court of the United Statest",
+      "Domain name": "SUPREMECOURTUS.GOV",
+      "Domain type": "Federal - Judicial",
+      "Organization name": "Supreme Court of the United Statest",
       "Security Contact Email": "(blank)",
       State: "DC",
     },
     {
       Agency: "Government Publishing Office",
       City: "Washington",
-      "Domain Name": "USCODE.GOV",
-      "Domain Type": "Federal - Legislative",
-      Organization: "United States Government Publishing Office",
+      "Domain name": "USCODE.GOV",
+      "Domain type": "Federal - Legislative",
+      "Organization name": "United States Government Publishing Office",
       "Security Contact Email": "(blank)",
       State: "DC",
     },
     {
       Agency: "Non-Federal Agency",
       City: "Arizona City",
-      "Domain Name": "ACSD-AZ.GOV",
-      "Domain Type": "Independent Intrastate",
-      Organization: "Arizona City Sanitary District ",
+      "Domain name": "ACSD-AZ.GOV",
+      "Domain type": "Independent Intrastate",
+      "Organization name": "Arizona City Sanitary District ",
       "Security Contact Email": "(blank)",
       State: "AZ",
     },
     {
       Agency: "Non-Federal Agency",
       City: "Mechanicsburg",
-      "Domain Name": "EMSCOMPACT.GOV",
-      "Domain Type": "Interstate",
-      Organization: "Interstate Commission for EMS Personnel Practice",
+      "Domain name": "EMSCOMPACT.GOV",
+      "Domain type": "Interstate",
+      "Organization name": "Interstate Commission for EMS Personnel Practice",
       "Security Contact Email": "(blank)",
       State: "PA",
     },
     {
       Agency: "Non-Federal Agency",
       City: "St Croix",
-      "Domain Name": "VIVOTE.GOV",
-      "Domain Type": "State",
-      Organization: "Election System of the Virgin Islands",
+      "Domain name": "VIVOTE.GOV",
+      "Domain type": "State",
+      "Organization name": "Election System of the Virgin Islands",
       "Security Contact Email": "(blank)",
       State: "VI",
     },
     {
       Agency: "Non-Federal Agency",
       City: "Ada",
-      "Domain Name": "CHICKASAW-NSN.GOV",
-      "Domain Type": "Tribal",
-      Organization: "the Chickasaw Nation",
+      "Domain name": "CHICKASAW-NSN.GOV",
+      "Domain type": "Tribal",
+      "Organization name": "the Chickasaw Nation",
       "Security Contact Email": "(blank)",
       State: "OK",
     },
@@ -99,10 +98,16 @@ describe("dot-gov domains", () => {
     username: ".Gov",
   };
 
+  const fetchResponse = {
+    json: jest.fn(),
+    text: jest.fn(),
+  };
+
   beforeAll(() => {});
 
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.mockResolvedValue(fetchResponse);
   });
 
   afterAll(() => {});
@@ -138,38 +143,39 @@ describe("dot-gov domains", () => {
     });
 
     describe("gets domains from github if the cache is expired or whatever", () => {
-      let fetch;
+      let fetcher;
+
       beforeEach(async () => {
         cache.mockResolvedValue([]);
         await handler(message);
-        fetch = cache.mock.calls[0][2];
+        fetcher = cache.mock.calls[0][2];
       });
 
       it("if the API throws an error", async () => {
-        axios.get.mockRejectedValue("error");
-        const out = await fetch();
+        fetch.mockRejectedValue("error");
+        const out = await fetcher();
 
         expect(out).toEqual([]);
       });
 
       it("if the API returns a malformed object", async () => {
-        axios.get.mockResolvedValue({ data: { data_is_missing: [] } });
-        const out = await fetch();
+        fetchResponse.json.mockResolvedValue({ data: { data_is_missing: [] } });
+        const out = await fetcher();
 
         expect(out).toEqual([]);
       });
 
       it("if the API doesn't return any domains", async () => {
-        axios.get.mockResolvedValue({ data: { data: [] } });
-        const out = await fetch();
+        fetchResponse.json.mockResolvedValue({ data: { data: [] } });
+        const out = await fetcher();
 
         expect(out).toEqual([]);
       });
 
       it("if the API does return some domains", async () => {
-        axios.get.mockResolvedValue({
-          data: [
-            "Domain Name,Domain Type,Agency,Organization,City,State,Security Contact Email",
+        fetchResponse.text.mockResolvedValue(
+          [
+            "Domain name,Domain type,Agency,Organization name,City,State,Security Contact Email",
             "ALBANYCA.GOV,City,Non-Federal Agency,City of Albany,Albany,CA,(blank)",
             "BELLEPLAINEIOWA.GOV,City,Non-Federal Agency,City of Belle Plaine,Belle Plaine,IA,(blank)",
             "RURAL.GOV,Federal - Executive,U.S. Department of Agriculture,Rural Development,Washington,DC,cyber.(blank)",
@@ -180,18 +186,14 @@ describe("dot-gov domains", () => {
             "VIVOTE.GOV,State,Non-Federal Agency,Election System of the Virgin Islands,St Croix,VI,(blank)",
             "CHICKASAW-NSN.GOV,Tribal,Non-Federal Agency,the Chickasaw Nation,Ada,OK,(blank)",
           ].join("\n"),
-        });
-        const out = await fetch();
+        );
+        const out = await fetcher();
 
         expect(out).toEqual(mockCache);
       });
     });
 
     describe("responds with a domain", () => {
-      beforeEach(() => {
-        axios.head.mockImplementation(() => Promise.resolve("Ok"));
-      });
-
       it("unless there aren't any domains", async () => {
         cache.mockResolvedValue([]);
         await handler(message);
@@ -216,7 +218,7 @@ describe("dot-gov domains", () => {
       });
 
       it("even if checking the status of the domain fails", async () => {
-        axios.head.mockImplementation(() => Promise.reject(new Error()));
+        fetch.mockRejectedValue(new Error());
         cache.mockResolvedValue(mockCache);
         await handler(message);
 
@@ -281,10 +283,6 @@ describe("dot-gov domains", () => {
     const message = { message: { thread_ts: "thread id" }, say: jest.fn() };
 
     describe("responds with results", () => {
-      beforeEach(() => {
-        axios.head.mockImplementation(() => Promise.resolve("Ok"));
-      });
-
       it("if there aren't any results", async () => {
         cache.mockResolvedValue(mockCache);
         message.context = {
@@ -341,9 +339,6 @@ describe("dot-gov domains", () => {
       });
     });
     describe("filters correctly by entity", () => {
-      beforeEach(() => {
-        axios.head.mockImplementation(() => Promise.resolve("Ok"));
-      });
       it("if entity is executive", async () => {
         cache.mockResolvedValue(mockCache);
         message.context = {

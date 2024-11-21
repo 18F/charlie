@@ -1,5 +1,4 @@
 const {
-  axios,
   getApp,
   utils: { cache },
 } = require("../utils/test");
@@ -228,8 +227,11 @@ describe("glossary", () => {
 
       const fetcher = cache.mock.calls[0].pop();
 
-      axios.get.mockResolvedValue({
-        data: `
+      fetch.mockResolvedValue({
+        // The data being pulled across the network is expected to be YAML, so
+        // we need to be sure we format it correctly here. Hence the funky-looking
+        // string.
+        text: async () => `
 entries:
   term 1: ATO
   term 2:
