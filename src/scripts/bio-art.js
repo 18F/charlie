@@ -1,7 +1,7 @@
 const {
   cache,
   helpMessage,
-  slack: { postFile },
+  slack: { postFile, postMessage },
   stats: { incrementStats },
 } = require("../utils");
 const sample = require("../utils/sample");
@@ -104,22 +104,33 @@ module.exports = (app) => {
     incrementStats("bio-art");
     const { channel, thread_ts: thread } = msg.message;
 
-    const entity = await getRandomEntity();
-    const file = await get(entity.fileUrl)
-      .then((r) => r.arrayBuffer())
-      .then((a) => Buffer.from(a));
+    try {
+      const entity = await getRandomEntity();
+      const file = await get(entity.fileUrl)
+        .then((r) => r.arrayBuffer())
+        .then((a) => Buffer.from(a));
 
-    postFile({
-      channel_id: channel,
-      thread_ts: thread,
-      initial_comment: `${entity.title} (art by ${entity.creator})`,
-      file_uploads: [
-        {
-          file,
-          filename: `${entity.title.toLowerCase()}.png`,
-          alt_text: entity.title,
-        },
-      ],
-    });
+      postFile({
+        channel_id: channel,
+        thread_ts: thread,
+        initial_comment: `${entity.title} (art by ${entity.creator})`,
+        file_uploads: [
+          {
+            file,
+            filename: `${entity.title.toLowerCase()}.png`,
+            alt_text: entity.title,
+          },
+        ],
+      });
+    } catch (e) {
+      app.logger.error("bio-art error:");
+      app.logger.error(e);
+
+      postMessage({
+        channel,
+        thread_ts: thread,
+        text: "There was a problem fetching BioArt.",
+      });
+    }
   });
 };

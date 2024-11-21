@@ -2,7 +2,7 @@ const {
   getApp,
   utils: {
     cache,
-    slack: { postFile },
+    slack: { postFile, postMessage },
   },
 } = require("../utils/test");
 
@@ -10,6 +10,9 @@ const script = require("./bio-art");
 
 describe("bio-art", () => {
   const app = getApp();
+  const requestMessage = {
+    message: { channel: "channel", thread_ts: "thread" },
+  };
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -117,14 +120,25 @@ describe("bio-art", () => {
       random.mockRestore();
     });
 
-    describe("if there are errors", () => {});
+    describe("if there are errors", () => {
+      it("fails to fetch an image", async () => {
+        fetch.mockRejectedValue("this is the error");
+
+        await handler(requestMessage);
+
+        expect(postMessage).toHaveBeenCalledWith({
+          channel: "channel",
+          thread_ts: "thread",
+          text: "There was a problem fetching BioArt.",
+        });
+        expect(app.logger.error).toHaveBeenCalledWith("this is the error");
+      });
+    });
 
     describe("if there are no errors", () => {
       describe("populates caches correctly", () => {
         it("fetches a list of permitted ontology IDs", async () => {
-          await handler({
-            message: { channel: "channel", thread_ts: "thread" },
-          });
+          await handler(requestMessage);
 
           const populator = cache.mock.calls
             .find(([key]) => key === "bio-art ontology id")
@@ -150,9 +164,7 @@ describe("bio-art", () => {
 
         describe("fetches a list of entities for a set of ontology IDs", () => {
           it("if there is only one page of results", async () => {
-            await handler({
-              message: { channel: "channel", thread_ts: "thread" },
-            });
+            await handler(requestMessage);
 
             const populator = cache.mock.calls
               .find(([key]) => key.startsWith("bio-art entities"))
@@ -181,9 +193,7 @@ describe("bio-art", () => {
           });
 
           it("if there are several pages of results", async () => {
-            await handler({
-              message: { channel: "channel", thread_ts: "thread" },
-            });
+            await handler(requestMessage);
 
             const populator = cache.mock.calls
               .find(([key]) => key.startsWith("bio-art entities"))
@@ -263,7 +273,7 @@ describe("bio-art", () => {
       it("responds with some art", async () => {
         random.mockReturnValue(0);
 
-        await handler({ message: { channel: "channel", thread_ts: "thread" } });
+        await handler(requestMessage);
 
         // We fetch the correct file
         expect(fetch).toHaveBeenCalledWith(
