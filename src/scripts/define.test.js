@@ -228,6 +228,9 @@ describe("glossary", () => {
       const fetcher = cache.mock.calls[0].pop();
 
       fetch.mockResolvedValue({
+        // The data being pulled across the network is expected to be YAML, so
+        // we need to be sure we format it correctly here. Hence the funky-looking
+        // string.
         text: async () => `
 entries:
   term 1: ATO
