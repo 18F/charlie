@@ -80,28 +80,22 @@ describe("bio-art", () => {
           case "bio-art entities [one,two,three]":
             return [
               {
-                fields: {
-                  id: [1],
-                  title: ["An art"],
-                  creator: ["Zeus"],
-                  filesinfo: ["svg:bob|bmp:george|PNG:image1a,image1b,image1c"],
-                },
+                id: [1],
+                title: ["An art"],
+                creator: ["Zeus"],
+                filesinfo: ["svg:bob|bmp:george|PNG:image1a,image1b,image1c"],
               },
               {
-                fields: {
-                  id: [2],
-                  title: ["Some art"],
-                  creator: ["Persephone"],
-                  filesinfo: ["svg:bob|bmp:george|PNG:image2a,image2b,image2c"],
-                },
+                id: [2],
+                title: ["Some art"],
+                creator: ["Persephone"],
+                filesinfo: ["svg:bob|bmp:george|PNG:image2a,image2b,image2c"],
               },
               {
-                fields: {
-                  id: [3],
-                  title: ["The art"],
-                  creator: ["Athena"],
-                  filesinfo: ["svg:bob|bmp:george|PNG:image3a,image3b,image3c"],
-                },
+                id: [3],
+                title: ["The art"],
+                creator: ["Athena"],
+                filesinfo: ["svg:bob|bmp:george|PNG:image3a,image3b,image3c"],
               },
             ];
           default:
@@ -171,9 +165,9 @@ describe("bio-art", () => {
               .pop();
 
             fetch.mockResolvedValue({
-              json: jest
-                .fn()
-                .mockResolvedValue({ hits: { found: 1, hit: [1] } }),
+              json: jest.fn().mockResolvedValue({
+                hits: { found: 1, hit: [{ fields: 1 }] },
+              }),
             });
 
             const entities = await populator();
@@ -208,7 +202,7 @@ describe("bio-art", () => {
                     json: jest.fn().mockResolvedValue({
                       hits: {
                         found: 250,
-                        hit: [...Array(100)].map((_, i) => i),
+                        hit: [...Array(100)].map((_, i) => ({ fields: i })),
                       },
                     }),
                   };
@@ -218,7 +212,9 @@ describe("bio-art", () => {
                     json: jest.fn().mockResolvedValue({
                       hits: {
                         found: 250,
-                        hit: [...Array(100)].map((_, i) => 100 + i),
+                        hit: [...Array(100)].map((_, i) => ({
+                          fields: 100 + i,
+                        })),
                       },
                     }),
                   };
@@ -228,7 +224,9 @@ describe("bio-art", () => {
                     json: jest.fn().mockResolvedValue({
                       hits: {
                         found: 250,
-                        hit: [...Array(50)].map((_, i) => 200 + i),
+                        hit: [...Array(50)].map((_, i) => ({
+                          fields: 200 + i,
+                        })),
                       },
                     }),
                   };
