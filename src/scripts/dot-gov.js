@@ -35,7 +35,6 @@
  */
 
 const { directMention } = require("@slack/bolt");
-const axios = require("axios");
 const https = require("https");
 
 /* eslint-disable import/no-unresolved */
@@ -43,6 +42,7 @@ const { parse } = require("csv-parse/sync");
 /* eslint-enable import/no-unresolved */
 
 const { cache, helpMessage } = require("../utils");
+const sample = require("../utils/sample");
 
 /** A regex string for searching the 9 types of .gov domain entities in a variety of ways. */
 const domainTypesRegex = [
@@ -90,10 +90,10 @@ const DOMAIN_TYPES = {
 
 /** Current list of fields available in the CSV file. */
 const DATA_FIELDS = {
-  NAME: "Domain Name",
-  TYPE: "Domain Type",
+  NAME: "Domain name",
+  TYPE: "Domain type",
   AGENCY: "Agency",
-  ORG: "Organization",
+  ORG: "Organization name",
   CITY: "City",
   STATE: "State",
 };
@@ -171,8 +171,7 @@ const selectDomainsAtRandom = (domainsArr, numToSelect) => {
   const output = new Set();
   if (domainsArr.length >= numToSelect) {
     while (output.size < numToSelect) {
-      const randInt = Math.floor(Math.random() * domainsArr.length);
-      output.add(domainsArr[randInt]);
+      output.add(sample(domainsArr));
     }
   }
   return Array.from(output);
@@ -186,15 +185,13 @@ const selectDomainsAtRandom = (domainsArr, numToSelect) => {
  * Returns a human-readable response status.
  */
 const checkDomainStatus = async (domainObj, timeout = 2000) =>
-  axios
-    .head(`https://${domainObj[DATA_FIELDS.NAME]}`, {
-      timeout,
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false,
-      }),
-    })
+  fetch(`https://${domainObj[DATA_FIELDS.NAME]}`, {
+    method: "HEAD",
+    agent: new https.Agent({ rejectUnauthorized: false }),
+    signal: AbortSignal.timeout(timeout),
+  })
     .then((response) => {
-      if (response && response.status) {
+      if (response?.ok && response.status) {
         return response.statusText;
       }
       return "Unknown Status";
@@ -203,7 +200,7 @@ const checkDomainStatus = async (domainObj, timeout = 2000) =>
       if (error.response) {
         return error.response.statusText;
       }
-      if (error.code === "CERT_HAS_EXPIRED") {
+      if (error.cause?.code === "CERT_HAS_EXPIRED") {
         return "Cert Expired";
       }
       return "Unknown Status";
@@ -240,14 +237,9 @@ module.exports = (app) => {
   module.exports.dotGov = async ({ entity, searchTerm, say, thread }) => {
     // fetch the domain list
     const domains = await cache("dotgov domains", 1440, async () =>
-      axios
-        .get(CISA_DOTGOV_DATA_URL)
-        .then((response) => {
-          if (response && response.data) {
-            return parse(response.data, { columns: true });
-          }
-          return [];
-        })
+      fetch(CISA_DOTGOV_DATA_URL)
+        .then((response) => response.text())
+        .then((data) => parse(data, { columns: true }))
         .catch(() => []),
     );
 
@@ -349,7 +341,7 @@ module.exports = (app) => {
 
   /** get .gov version */
   app.message(
-    directMention(),
+    directMention,
     gitGovRegex,
     async ({ message: { thread_ts: thread }, context, say }) => {
       const args = {

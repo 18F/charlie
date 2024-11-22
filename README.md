@@ -37,6 +37,11 @@ invitation request. To see the complete list of ERGs and contact information,
 you can send yourself a direct message that just says `ergs` and Slackbot will
 respond with that information!
 
+##### Evermarch
+
+Ever wondered what day of March 2020, we're currently on? Charlie can tell you.
+Just say `evermarch` in any channel where Charlie is, and it'll let you know.
+
 ##### Facts
 
 Charlie knows **_so many_** facts. Dog facts, cat facts, giraffe facts, dolphin
@@ -48,12 +53,15 @@ facts. There are just so many facts. You can just say `dog fact` (or
 | `alan fact`       | Shares a fact about people named Alan             |
 | `alumni dog fact` | Shares a fact about a dog belonging to a TTS alum |
 | `ask ally fact`   | Shares a fact about accessible web development    |
+| `bird fact`       | Shares a fact about a TTS person's bird           |
 | `cat fact`        | Shares a fact about a TTS person's cat            |
+| `dino fact`       | Shares a fact about dinosaurs                     |
 | `dog fact`        | Shares a fact about a TTS person's dog            |
 | `dolphin fact`    | Shares a fact about dolphins                      |
 | `ed simulator`    | Shares a quote from 18F alumni Ed Mullen          |
 | `giraffe fact`    | Shares a fact of dubious truth about giraffes     |
 | `minnesota facts` | Shares a fact about the state of Minnesota        |
+| `park fact`       | Shares a fact about the US National Parks         |
 | `randy fact`      | Shares a fact about 18F staff member Randy        |
 | `screambot`       | Joyfully screams along with you                   |
 | `wisconsin facts` | Shares a fact about the state of Wisconsin        |
@@ -84,13 +92,6 @@ information for a particular topic but don't want to open your browser? Charlie
 can help! Just say `@handbook terms` and Charlie will search the Handbook for
 `terms` for you (replace `terms` with whatever you want). If it finds anything,
 it'll post links in a threaded response to your request.
-
-##### HugMe
-
-Need to see a little hug in your life? Friends from TTS past have left us a gift
-and Charlie will deliver it whenever you need. Just say `@charlie hug me` or
-`@charlie hug bomb <number>` to get a little happiness dropped right on your
-screen.
 
 ##### OPM's DC offices status
 

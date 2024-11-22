@@ -20,8 +20,14 @@
   {
     "botName": "Dag Intro",
     "defaultEmoji": ":dog:",
-    "trigger": "d(o|a)g intros?",
+    "trigger": "(?<!alumni )d(o|a)g intros?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dag-intros.json"
+  },
+  {
+    "botName": "Alumni Dag Intro",
+    "defaultEmoji": ":dog:",
+    "trigger": "d(o|a)g intros?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dag-intros-alumni.json"
   },
   {
     "botName": "Cat Bot",
@@ -32,8 +38,14 @@
   {
     "botName": "Cat Intro",
     "defaultEmoji": ":smile_cat:",
-    "trigger": "cat intros?",
+    "trigger": "(?<!alumni )cat intros?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/cat-intros.json"
+  },
+  {
+    "botName": "Alumni Cat Intro",
+    "defaultEmoji": ":smile_cat:",
+    "trigger": "alumni cat intros?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/cat-intros-alumni.json"
   },
   {
     "botName": "Pet Bot",
@@ -90,7 +102,14 @@
   },
   {
     "botName": "screambot",
-    "defaultEmoji": ":kevin-home-alone-scream:",
+    "defaultEmoji": [
+      ":kevin-home-alone-scream:",
+      ":khan:",
+      ":scream-into-the-void:",
+      ":screaming-cowboy:",
+      ":gull-scream:",
+      ":the-scream:"
+    ],
     "trigger": "screambot",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/scream.json"
   },
@@ -123,5 +142,17 @@
     "defaultEmoji": ":capybara:",
     "trigger": "capybara facts?",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/capybaras.json"
+  },
+  {
+    "botName": "National Parks Facts",
+    "defaultEmoji": ":nps:",
+    "trigger": "(national )?parks? facts?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/nps.json"
+  },
+  {
+    "botName": "Dinosaur Facts",
+    "defaultEmoji": ":dino:",
+    "trigger": "dino(saur)? facts?",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/dinosaurs.json"
   }
 ]

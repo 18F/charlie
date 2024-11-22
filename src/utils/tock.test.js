@@ -1,16 +1,11 @@
 const moment = require("moment");
+require("./test");
 
 describe("utils / tock", () => {
-  const create = jest.fn();
-  jest.doMock("axios", () => ({ create }));
-
-  const get = jest.fn();
-  create.mockReturnValue({ get });
-
   const getSlackUsers = jest.fn();
   jest.doMock("./slack", () => ({ getSlackUsers }));
 
-  process.env.TOCK_API = "tock api";
+  process.env.TOCK_API = "https://tock";
   process.env.TOCK_TOKEN = "tock token";
 
   const {
@@ -67,87 +62,80 @@ describe("utils / tock", () => {
     },
   ]);
 
-  get.mockImplementation(async (url) => {
-    switch (url) {
-      case "/user_data.json":
-        return {
-          data: [
-            {
-              is_18f_employee: true,
-              is_active: true,
-              current_employee: true,
-              user: "user 1",
-            },
-            {
-              is_18f_employee: false,
-              is_active: true,
-              current_employee: true,
-              user: "user 2",
-            },
-            {
-              is_18f_employee: true,
-              is_active: false,
-              current_employee: true,
-              user: "user 3",
-            },
-            {
-              is_18f_employee: true,
-              is_active: true,
-              current_employee: false,
-              user: "user 4",
-            },
-            {
-              is_18f_employee: true,
-              is_active: true,
-              current_employee: true,
-              user: "user 5",
-            },
-          ],
-        };
+  fetch.mockImplementation(async (url) => {
+    const json = jest.fn();
 
-      case "/users.json":
-        return {
-          data: [
-            { email: "email 1", id: 1, username: "user 1" },
-            { email: "email 2", id: 2, username: "user 2" },
-            { email: "email 3", id: 3, username: "user 3" },
-            { email: "email 4", id: 4, username: "user 4" },
-            { email: "email 5", id: 5, username: "user 5" },
-          ],
-        };
+    switch (url.toString()) {
+      case "https://tock/user_data.json":
+        json.mockResolvedValue([
+          {
+            is_18f_employee: true,
+            is_active: true,
+            current_employee: true,
+            user: "user 1",
+          },
+          {
+            is_18f_employee: false,
+            is_active: true,
+            current_employee: true,
+            user: "user 2",
+          },
+          {
+            is_18f_employee: true,
+            is_active: false,
+            current_employee: true,
+            user: "user 3",
+          },
+          {
+            is_18f_employee: true,
+            is_active: true,
+            current_employee: false,
+            user: "user 4",
+          },
+          {
+            is_18f_employee: true,
+            is_active: true,
+            current_employee: true,
+            user: "user 5",
+          },
+        ]);
+        break;
 
-      case "/reporting_period_audit/2020-10-04.json":
-        return {
-          data: [
-            {
-              id: 1,
-              username: "user 1",
-              email: "email 1",
-            },
-          ],
-        };
+      case "https://tock/users.json":
+        json.mockResolvedValue([
+          { email: "email 1", id: 1, username: "user 1" },
+          { email: "email 2", id: 2, username: "user 2" },
+          { email: "email 3", id: 3, username: "user 3" },
+          { email: "email 4", id: 4, username: "user 4" },
+          { email: "email 5", id: 5, username: "user 5" },
+        ]);
+        break;
 
-      case "/reporting_period_audit/2020-10-11.json":
-        return {
-          data: [
-            {
-              id: 5,
-              username: "user 5",
-              email: "email 5",
-            },
-          ],
-        };
+      case "https://tock/reporting_period_audit/2020-10-04.json":
+        json.mockResolvedValue([
+          {
+            id: 1,
+            username: "user 1",
+            email: "email 1",
+          },
+        ]);
+        break;
+
+      case "https://tock/reporting_period_audit/2020-10-11.json":
+        json.mockResolvedValue([
+          {
+            id: 5,
+            username: "user 5",
+            email: "email 5",
+          },
+        ]);
+        break;
 
       default:
-        throw new Error("unmocked url");
+        throw new Error(`unmocked url: ${url}`);
     }
-  });
 
-  it("sets up the default Axios client correctly", () => {
-    expect(create).toHaveBeenCalledWith({
-      baseURL: "tock api",
-      headers: { Authorization: "Token tock token" },
-    });
+    return { json };
   });
 
   it("gets a list of current 18F Tock users", async () => {

@@ -7,7 +7,7 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
-    container: node:20
+    container: node:22
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v3

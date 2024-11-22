@@ -12,7 +12,6 @@
 //   @bot define contracting officer
 
 const { directMention } = require("@slack/bolt");
-const axios = require("axios");
 const he = require("he");
 const yaml = require("js-yaml");
 const {
@@ -102,7 +101,7 @@ module.exports = (app) => {
   );
 
   app.message(
-    directMention(),
+    directMention,
     /(define|glossary) (.+)/i,
     async ({ context, event: { thread_ts: thread }, say }) => {
       incrementStats("define/glossary");
@@ -114,9 +113,9 @@ module.exports = (app) => {
 
       // Cache the glossary for 1 minute
       const glossary = await cache("glossary get", 60, async () => {
-        const { data } = await axios.get(
+        const data = await fetch(
           "https://raw.githubusercontent.com/18F/the-glossary/main/glossary.yml",
-        );
+        ).then((r) => r.text());
 
         return yaml.load(data, { json: true }).entries;
       });

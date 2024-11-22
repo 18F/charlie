@@ -11,7 +11,6 @@
 //    lauraggit
 
 const { directMention } = require("@slack/bolt");
-const axios = require("axios");
 const {
   helpMessage,
   stats: { incrementStats },
@@ -32,18 +31,16 @@ module.exports = (robot) => {
   );
 
   robot.message(
-    directMention(),
+    directMention,
     /opm status/i,
     async ({ event: { thread_ts: thread }, say }) => {
       incrementStats("OPM status");
 
       try {
-        const { data, status } = await axios.get(
+        const data = await fetch(
           "https://www.opm.gov/json/operatingstatus.json",
-        );
-        if (status !== 200) {
-          throw new Error("Invalid status");
-        }
+        ).then((r) => r.json());
+
         say({
           icon_emoji: icons[data.Icon],
           text: `${data.StatusSummary} for ${data.AppliesTo}. (<${data.Url}|Read more>)`,

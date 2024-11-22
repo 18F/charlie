@@ -14,7 +14,7 @@
 //   anildigital
 //
 const { directMention } = require("@slack/bolt");
-const axios = require("axios");
+
 const {
   helpMessage,
   stats: { incrementStats },
@@ -29,12 +29,14 @@ module.exports = (app) => {
   );
 
   app.message(
-    directMention(),
+    directMention,
     /\bzen\b/i,
     async ({ event: { thread_ts: thread }, say }) => {
       incrementStats("zen");
-      const { data } = await axios.get("https://api.github.com/zen");
-      say({ text: data, thread_ts: thread });
+      const text = await fetch("https://api.github.com/zen").then((r) =>
+        r.text(),
+      );
+      say({ text, thread_ts: thread });
     },
   );
 };

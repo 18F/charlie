@@ -1,4 +1,3 @@
-const axios = require("axios");
 const {
   helpMessage,
   slack: { postEphemeralResponse },
@@ -42,19 +41,21 @@ module.exports = (app) => {
 
     const {
       context: {
-        matches: [, , search],
+        matches: [, search],
       },
       event: { thread_ts: thread, ts },
       say,
     } = msg;
 
+    console.log(msg.context.matches);
+
     const searchString = search
-      .replace(/[”“]/g, '"') // replace smart quotes
-      .replace(/[’‘]/g, "'"); // more smart quotes
+      ?.replace(/[”“]/g, '"') // replace smart quotes
+      ?.replace(/[’‘]/g, "'"); // more smart quotes
     const url = `${baseUrl}${encodeURIComponent(searchString)}`;
 
     try {
-      const { data } = await axios.get(url);
+      const data = await fetch(url).then((r) => r.json());
       const results = data.results.slice(0, 3);
 
       if (results.length === 0) {

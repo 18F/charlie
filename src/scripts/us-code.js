@@ -1,4 +1,3 @@
-const axios = require("axios");
 const cheerio = require("cheerio");
 
 const {
@@ -77,7 +76,7 @@ module.exports = (app) => {
       const pieces = citation.split(" ");
       const url = `https://www.law.cornell.edu/uscode/text/${pieces[0]}/${pieces[1]}`;
 
-      const { data } = await axios.get(url);
+      const data = await fetch(url).then((r) => r.text());
       const dom = cheerio.load(data);
 
       const sectionDom = dom(".tab-pane.active div.section");
@@ -154,6 +153,39 @@ module.exports = (app) => {
         }
       }
 
+      let compiledText = text.join("\n");
+      const textBlocks = [];
+
+      // The text in a Slack block is limited to 3,000 characters. Previously
+      // Slack would break up long blocks into multiple messages for us
+      // automatically, but it doesn't do that anymore. So we need to split up
+      // long messages into multiple blocks here.
+      const MAX_TEXT_LENGTH = 3_000;
+      while (compiledText.length > MAX_TEXT_LENGTH) {
+        // The breakpoint for a string should be the nearest whitespace before
+        // the character limit mark. This regex will find it for us.
+        const nextCandidate = compiledText
+          .substring(0, MAX_TEXT_LENGTH)
+          .match(/\s\S\s?$/);
+
+        if (nextCandidate) {
+          // The .index property is the starting position of the regex match.
+          // We can use that to extract the next piece of text.
+          textBlocks.push(compiledText.substring(0, nextCandidate.index));
+
+          // And then we remove it from the base text string so we can repeat
+          // until we're done. The +1 gets rid of the whitespace that caused
+          // the match, and .trim() removes any trailing whitespace.
+          compiledText = compiledText.substring(nextCandidate.index + 1).trim();
+        } else {
+          // Safety bail out. This shouldn't happen, but just in case the regex
+          // goes sideways for some reason, it'd be good to catch it and let
+          // us fail the Slack API schema check.
+          break;
+        }
+      }
+      textBlocks.push(compiledText);
+
       client.views.open({
         trigger_id: triggerId,
         view: {
@@ -163,10 +195,10 @@ module.exports = (app) => {
             text: `${pieces[0]} U.S. Code § ${pieces[1]}`,
           },
           blocks: [
-            {
+            ...textBlocks.map((blockText) => ({
               type: "section",
-              text: { type: "mrkdwn", text: text.join("\n") },
-            },
+              text: { type: "mrkdwn", text: blockText },
+            })),
             {
               type: "context",
               elements: [
@@ -236,7 +268,7 @@ module.exports = (app) => {
       const response = { blocks: [], text: "", thread_ts: thread ?? ts };
 
       try {
-        const { data } = await axios.get(url);
+        const data = await fetch(url).then((r) => r.text());
         const dom = cheerio.load(data);
 
         const pageTitle = dom("h1#page_title")

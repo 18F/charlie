@@ -1,4 +1,3 @@
-const axios = require("axios");
 const fs = require("fs");
 const plural = require("plural");
 const {
@@ -6,6 +5,7 @@ const {
   stats: { incrementStats },
   helpMessage,
 } = require("../utils");
+const sample = require("../utils/sample");
 
 const loadConfigs = async () =>
   JSON.parse(fs.readFileSync("config/slack-random-response.json"));
@@ -15,7 +15,7 @@ const loadConfigs = async () =>
  * @param {*} config The configuration to fetch responses for.
  * @returns {Promise<Array>} Resolves an array of responses
  */
-const getResponses = async (config, searchTerm = false) => {
+const getResponses = async (config, searchTerm = false, negate = false) => {
   let responses = [];
 
   // If the config has a list of responses, use it
@@ -30,10 +30,7 @@ const getResponses = async (config, searchTerm = false) => {
     responses = await cache(
       `random response from ${config.responseUrl}`,
       5,
-      async () => {
-        const { data } = await axios.get(config.responseUrl);
-        return data;
-      },
+      async () => fetch(config.responseUrl).then((r) => r.json()),
     );
   }
 
@@ -42,11 +39,14 @@ const getResponses = async (config, searchTerm = false) => {
       `\\b(${searchTerm}|${plural(searchTerm)})\\b`,
       "i",
     );
+
     let filtered = responses.filter((r) => {
       if (typeof r === "object") {
-        return regex.test(`${r.name} ${r.emoji} ${r.text}`);
+        const match = regex.test(`${r.name} ${r.emoji} ${r.text}`);
+        return negate ? !match : match;
       }
-      return regex.test(r);
+      const match = regex.test(r);
+      return negate ? !match : match;
     });
     if (filtered.length === 0) {
       const embeddedRegex = new RegExp(
@@ -86,20 +86,29 @@ const responseFrom =
       }`,
     );
 
-    const [, searchTerm] = text.match(
-      new RegExp(`(\\S+) ${config.trigger}`, "i"),
-    ) ?? [false, false];
+    const [, , negate, searchTerm] = text.match(
+      new RegExp(`(^|\\w)(-?)(\\S+) ${config.trigger}`, "i"),
+    ) ?? [false, false, false, false];
 
-    const message = { thread_ts: thread };
+    const message = { thread_ts: thread, unfurl_links: false };
+
     if (defaultEmoji) {
-      message.icon_emoji = defaultEmoji;
+      // The default emoji defined by the config may be a single emoji or a list.
+      // If it's a list, pick one at random.
+      if (Array.isArray(defaultEmoji)) {
+        if (defaultEmoji.length > 0) {
+          message.icon_emoji = sample(defaultEmoji);
+        }
+      } else {
+        message.icon_emoji = defaultEmoji;
+      }
     }
     if (botName) {
       message.username = botName;
     }
 
-    const responses = await getResponses(config, searchTerm);
-    const response = responses[Math.floor(Math.random() * responses.length)];
+    const responses = await getResponses(config, searchTerm, negate.length > 0);
+    const response = sample(responses);
 
     if (typeof response === "object") {
       message.text = response.text;
@@ -165,7 +174,7 @@ module.exports = async (app) => {
     app.message(/fact of facts/i, async (res) => {
       incrementStats("random response: fact of facts");
       // Pick a random fact config
-      const factConfig = configs[Math.floor(Math.random() * configs.length)];
+      const factConfig = sample(configs);
 
       // Get a message handler for the chosen configuration and then run it!
       module.exports.responseFrom(factConfig)(res);

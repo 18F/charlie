@@ -7,7 +7,7 @@ jobs:
   lint:
     name: lint
     runs-on: ubuntu-latest
-    container: node:20
+    container: node:22
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v3
@@ -20,7 +20,7 @@ jobs:
   format:
     name: verify formatting
     runs-on: ubuntu-latest
-    container: node:20
+    container: node:22
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v3
@@ -33,7 +33,7 @@ jobs:
   test:
     name: unit tests
     runs-on: ubuntu-latest
-    container: node:20
+    container: node:22
     steps:
       - uses: actions/checkout@v4
       - uses: actions/cache@v3
