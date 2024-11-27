@@ -114,6 +114,12 @@
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/scream.json"
   },
   {
+    "botName": "Trivia!",
+    "defaultEmoji": [":bangbang:"],
+    "trigger": "trivia me",
+    "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/trivia.json"
+  },
+  {
     "botName": "Randy Facts",
     "defaultEmoji": ":tech-randy:",
     "trigger": "randy fact",
