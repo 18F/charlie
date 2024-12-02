@@ -106,6 +106,19 @@ const main = async () => {
       .filter(({ matches }) => !/^instead of/i.test(matches.join(","))),
   };
 
+  // Sort the triggers by their first matches. This is meant to make it easier
+  // for folks to find what they're looking for if they need to manually tweak
+  // the yaml file.
+  md.triggers.sort(({ matches: aa }, { matches: bb }) => {
+    // Get the Unicode numeric value for the first character of the first match
+    // in each of the triggers we're comparing.
+    const a = aa[0].toLowerCase().charCodeAt(0);
+    const b = bb[0].toLowerCase().charCodeAt(0);
+
+    // Now we can just do math!
+    return a - b;
+  });
+
   // Parse the object back into a yaml string
   const configYaml = jsYaml
     .dump(md)
