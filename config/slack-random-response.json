@@ -116,7 +116,7 @@
   {
     "botName": "Trivia!",
     "defaultEmoji": [":bangbang:"],
-    "trigger": "trivia me",
+    "trigger": "trivia (me|please)",
     "responseUrl": "https://raw.githubusercontent.com/18F/charlie-slack-bot-facts/main/trivia.json"
   },
   {
