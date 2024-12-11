@@ -1,9 +1,17 @@
 module.exports = async (app) => {
-  app.event("reaction_added", async ({ item: { channel, ts } }) => {
-    const link = await app.client.chat.getPermalink({
-      channel,
-      message_ts: ts,
-    });
-    console.log(link);
-  });
+  app.event(
+    "reaction_added",
+    async ({
+      event: {
+        item: { channel, ts },
+      },
+      client,
+    }) => {
+      const link = await client.chat.getPermalink({
+        channel,
+        message_ts: ts,
+      });
+      console.log(link);
+    },
+  );
 };
