@@ -11,7 +11,7 @@
 
 const path = require("path");
 const xlsx = require("node-xlsx");
-const { stringify } = require("csv-stringify/sync");
+const { stringify } = require("csv-stringify/sync"); // eslint-disable-line import/no-unresolved
 const fs = require("fs");
 
 /**
@@ -40,9 +40,10 @@ function convert({ inXlsxPath, outCsvPath }) {
    * */
 
   /** @type Row[] */
-  const outRows = inRows.map((row) => {
-    return { stub: row[departmentIdIndex], desc: row[descriptionIndex] };
-  });
+  const outRows = inRows.map((row) => ({
+    stub: row[departmentIdIndex],
+    desc: row[descriptionIndex],
+  }));
 
   const output = stringify([
     ["stub", "desc"],

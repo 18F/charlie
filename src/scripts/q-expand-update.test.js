@@ -1,8 +1,8 @@
-const { convert } = require("./q-expand-update");
 const xlsx = require("node-xlsx");
-const { parse } = require("csv-parse/sync");
+const { parse } = require("csv-parse/sync"); // eslint-disable-line import/no-unresolved
 const Fs = require("fake-fs");
 const path = require("path");
+const { convert } = require("./q-expand-update");
 
 describe("q-expand-update", () => {
   const inXlsxPath = "/tmp/path/to/source.xlsx";
