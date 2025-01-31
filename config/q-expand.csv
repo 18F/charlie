@@ -1,2059 +1,2192 @@
-stub,"desc"
-10P,"Office of the Regional Commiss"
-10P1,"Ofc of the Deputy Regl Commiss"
-10PC,"Design and Construction Divisi"
-10PCC,"Capital Projects Branch"
-10PCE,"Professional Services Branch"
-10PCEA,"Regional Requirements Developm"
-10PCEB,"Regional Program Management Of"
-10PCP,"Project Management Branch"
-10PCPA,"Project Delivery Team A"
-10PCPB,"Project Delivery Team B"
-10PCPC,"Project Delivery Team C"
-10PCPD,"Project Delivery Team D"
-10PE,"Electric Vehicle Infra. Prog."
-10PEA,"Program Branch"
-10PEB,"Contract Branch"
-10PM,"Facilities Management Division"
-10PMA,"Owned Service Center"
-10PMAA,"Alaska Field Office"
-10PMAB,"Oregon Field Office"
-10PMAC,"Western Field Office"
-10PMAD,"Eastern Field Office"
-10PMAE,"Land Port of Entry Field Offic"
-10PMB,"Leased Service Center"
-10PMBA,"Southeast Leased Field Office"
-10PMBB,"Northwest Leased Field Office"
-10PME,"Safety, Environmental, and Ene"
-10PMEA,"Environment, Health & Fire Saf"
-10PMF,"Building Ops. & Tenant Svcs. B"
-10PMFA,"Building Operations Section"
-10PMFB,"Tenant Services Section"
-10PP,"Planning Division"
-10PPA,"Client Planning Branch"
-10PPAA,"Client Planning Team A"
-10PPB,"Bus. Analysis, Inventory & Ren"
-10PPT,"Portfolio Planning Branch"
-10PPTA,"Asset Management Team"
-10PQ,"Acquisition Management Divisio"
-10PQC,"Construction Acquisition Branc"
-10PQCA,"Acquisitions Team A"
-10PQCB,"Acquisitions Team B"
-10PQD,"Service Contracts Branch"
-10PQDA,"Service Contracts Team A"
-10PQDB,"Service Contracts Team B"
-10PQE,"Capital Construction and IDV B"
-10PQF,"Policy Branch"
-10PR,"Leasing & Realty Service Divis"
-10PRA,"Lease Acquisition Branch"
-10PRAA,"Lease Acquisition Team A"
-10PRAB,"Lease Acquisition Team B"
-10PRAC,"Post Occupancy Team"
-10PRB,"Lease Project Management Branc"
-10PRBA,"Lease Project Management Team"
-10PRBB,"Lease Project Management Team"
-10PRBC,"Lease Project Management Team"
-10PRC,"Lease Program & Policy Branch"
-10PX,"Office of Chief of Staff"
-11OBAMA,"Washington, DC"
-1P,"Office of the Regional Commiss"
-1P1,"Deputy Regional Commissioner"
-1P1A,"Data Analytics & Program Mgmt."
-1PC,"Design and Construction Divisi"
-1PCM,"Project Management Branch"
-1PCS,"Technical Services Branch"
-1PCSA,"Electical Engineering Section"
-1PCSB,"Mechanical Engineering Section"
-1PCT,"LPOE Project Management Office"
-1PCTA,"Maine Section"
-1PCTB,"Vermont Section"
-1PM,"Facilities Management & Svcs P"
-1PME,"Energy and Utilities Branch"
-1PMF,"Building Operations & Tenant S"
-1PP,"Portfolio Mgmt & Client Engage"
-1PPA,"Portfolio Management Branch"
-1PPB,"Client Engagement Branch"
-1PQ,"Acquisition Management Divisio"
-1PQA,"Acquisition Policy Branch"
-1PQB,"Contract Operations Branch I"
-1PQC,"Contract Operations Branch II"
-1PQD,"Contract Operations Branch III"
-1PQE,"Contract Operations Branch IV"
-1PR,"Real Estate Acquisition Divisi"
-1PRL,"Leasing Branch"
-1PRP,"Project Management Branch"
-1PS,"Service Centers Division"
-1PSK,"North Service Center Branch"
-1PSL,"South Service Center Branch"
-1PSM,"Boston Service Center Branch"
-1PSMJ,"JFK Office, Boston Service Cen"
-1PSS,"Administrative Support Branch"
-1PZ,"Real Property Utilztn & Dispos"
-1PZB,"Boston Operations Branch"
-1PZC,"Chicago Operations Branch"
-1PZS,"Special Operations Branch"
-2A,"Office of the Regional Adminis"
-2CLINTON,"New York City, NY"
-2P,"Office of the Regional Commiss"
-2P1,"Climate & Infra. Program Mgmt."
-2P1A,"Inflation Reduction Act Progra"
-2P1B,"Bipartisan Infra. Law Program"
-2PC,"Design and Construction Divisi"
-2PCA,"Regional Chief Architect"
-2PCB,"Bklyn Queens LI & NJ Branch"
-2PCM,"Manhattan Branch"
-2PCU,"Upstate and Caribbean Branch"
-2PG,"Organizational Resources Divis"
-2PM,"Facilities Management Division"
-2PMB,"Building Operations Programs B"
-2PMS,"Safety & Environmental Mgmt Br"
-2PMT,"Energy & Sustainability Branch"
-2PP,"Project Management Division"
-2PPB,"Bklyn Queens LI & NJ Branch"
-2PPC,"Caribbean Branch"
-2PPH,"High Risk Project Branch"
-2PPM,"Manhattan Branch"
-2PPU,"Upstate New York Branch"
-2PQ,"Acquisition Management Divisio"
-2PQA,"Repair and Alterations Branch"
-2PQB,"Simplified Acquisition Branch"
-2PQC,"Capital Construction Branch"
-2PQD,"Building Services Branch"
-2PQX,"Acq. Programs & Quality Assura"
-2PR,"Leasing Division"
-2PRC,"Caribbean & New Jersey Branch"
-2PRM,"Manhattn Bklyn Queens & LI Bra"
-2PRP,"Project Management Branch"
-2PRR,"Realty Support Branch"
-2PRU,"Upstate New York Branch"
-2PSE,"EbM Service Center"
-2PSEB,"Brooklyn Field Office"
-2PSEC,"Caribbean Field Office"
-2PSEL,"Long Island Field Office"
-2PSEN,"New Jersey Field Office"
-2PSEU,"Upstate New York Field Office"
-2PSEUA,"Albany Office"
-2PSEUB,"Buffalo Office"
-2PSEUN,"Border Station Office"
-2PSEUS,"Syracuse Office"
-2PSM,"Manhattan Service Center"
-2PSMF,"Federal Plaza Field Office"
-2PSMG,"Greater Manhattan Field Office"
-2PSML,"Lower Manhattan Field Office"
-2PT,"Portfolio Management Division"
-2PTC,"Client Solutions Branch"
-2PTM,"Asset Analysis Branch"
-2PTS,"Asset Strategy Branch"
-3P,"Office of the Regional Commiss"
-3P1,"Office of the Chief of Staff"
-3P1A,"Organizational & Admin Resourc"
-3P1B,"Business Strategy Branch"
-3P1C,"Strategic Communications Branc"
-3PC,"Design and Construction Divisi"
-3PCN,"Professional Services North Br"
-3PCNC,"Charleston Section"
-3PCNK,"Pittsburgh Section"
-3PCNP,"Philadelphia, NJ  & Delaware S"
-3PCS,"Professional Services South Br"
-3PCSB,"Maryland Section"
-3PCSR,"Richmond Section"
-3PCSS,"SSA Section"
-3PCT,"Technical Services Branch"
-3PCTS,"Technical Services Section"
-3PCW,"Workplace Branch"
-3PCWD,"Interior Design Section"
-3PCWS,"Workplace Solutions Section"
-3PD,"Project Delivery Division"
-3PDA,"SSA Lease Project Delivery Off"
-3PDC,"Judiciary Project Delivery Off"
-3PDH,"Law Enforcement Project Delive"
-3PDI,"Statuatory Agencies Project De"
-3PDJ,"Regulatory Agencies Project De"
-3PDS,"SSA Delegated Project Delivery"
-3PM,"Facilities Management Division"
-3PME,"Buildings Ops & Tenant Service"
-3PMS,"Safety, Risk Mgmt & Environmen"
-3PMSE,"Environmental Section"
-3PMT,"Technical Program Support Bran"
-3PQ1,"Acquisition Management Divisio"
-3PQ1F,"Field Office Contracts Branch"
-3PQ1FB,"Balt, Woodlawn & VA FO Contrac"
-3PQ1FP,"Phil & Del Val FO Contracts Se"
-3PQ1FV,"WV & Pittsburgh FO Contracts S"
-3PQ1N,"Acquisition Services North Bra"
-3PQ1NP,"Phila, Del Val, & Pittsburgh S"
-3PQ1NS,"Social Security Administration"
-3PQ1P,"Policy and Programs Branch"
-3PQ1S,"Acquisition Services South Bra"
-3PQ1SV,"Virginia Section"
-3PQ1SW,"Maryland and West Virginia Sec"
-3PQ2,"Acq. Ctr for Facility Mgmt Svc"
-3PQ2A,"R3 Facility Management Service"
-3PQ2AM,"R3 Facility Management Service"
-3PQ2B,"R4 Facility Management Service"
-3PQ2BS,"R4 Facility Management Service"
-3PQ2C,"NCR Facility Management Servic"
-3PQ2CN,"NCR Facility Management Servic"
-3PR,"Real Estate Acquisition Divisi"
-3PRF,"Realty Support Branch"
-3PRFA,"Lease Administration Section A"
-3PRFB,"Lease Administration Section B"
-3PRFC,"Lease Administration Section C"
-3PRFD,"Data Quality Assurance Section"
-3PRFF,"Federal Occupancy Agreement Se"
-3PRN,"North Branch"
-3PRNC,"Charleston Section"
-3PRND,"Delaware Valley Section"
-3PRNK,"Pittsburgh Section"
-3PRS,"South Branch"
-3PRSB,"Baltimore Section"
-3PRSR,"Richmond Section"
-3PRT,"Technical Branch"
-3PS,"Property Management Division"
-3PSB,"Baltimore Field Office"
-3PSBB,"Baltimore Property Mgmt Sectio"
-3PSBC,"Baltimore Construction Mgmt Se"
-3PSBW,"Woodlawn Property Mgmt Section"
-3PSC,"Charleston Field Office"
-3PSCC,"Charleston Construction Mgmt S"
-3PSCH,"Charleston Property Mgmt Secti"
-3PSCM,"Martinsburg Property Mgmt Sect"
-3PSD,"Delaware Valley Field Office"
-3PSDC,"Del Val Construction Mgmt Sect"
-3PSDG,"PA & Delaware Property Mgmt Se"
-3PSDN,"New Jersey Property Mgmt Secti"
-3PSK,"Pittsburgh Field Office"
-3PSKC,"Pittsburgh Construction Mgmt S"
-3PSKH,"Harrisburg Property Mgmt Secti"
-3PSKP,"Pittsburgh Property Mgmt Secti"
-3PSP,"Philadelphia Field Office"
-3PSPB,"Byrne/Green Property Mgmt Sect"
-3PSPC,"Philadelphia Construction Mgmt"
-3PSPN,"Custom House/Nix Property Mgmt"
-3PSR,"Richmond Field Office"
-3PSRC,"Richmond Construction Mgmt Sec"
-3PSRN,"Norfolk Property Mgmt Section"
-3PSRR,"Richmond Property Mgmt Section"
-3PT,"Portfolio Management Division"
-3PTA,"Customer Accounts Branch"
-3PTN,"North Branch"
-3PTS,"South Branch"
-3PX,"Capital Project Delivery Divis"
-3PXA,"Program Management Office"
-3PXB,"Project Delivery Studio B"
-3PXC,"Project Delivery Studio C"
-3PXD,"Project Delivery Studio D"
-3PXE,"Project Delivery Studio E"
-45TRUMP,"Former President Trump"
-4A,"Office of the Regional Adminis"
-4P,"Office of the Regional Commiss"
-4P1,"Ofc of the Deputy Regional Com"
-4P1B,"Blue Ridge Service Center Divi"
-4P1BA,"Blue Ridge East Field Office"
-4P1BAA,"Blue Ridge East Operations Sec"
-4P1BAB,"Blue Ridge East Operations Sec"
-4P1BAC,"Blue Ridge East Operations Sec"
-4P1BAD,"Blue Ridge East Operations Sec"
-4P1BAE,"Blue Ridge East Construction S"
-4P1BB,"Blue Ridge West Field Office"
-4P1BBA,"Blue Ridge West Operations Sec"
-4P1BBB,"Blue Ridge West Operations Sec"
-4P1BBC,"Blue Ridge West Operations Sec"
-4P1BBD,"Blue Ridge West Operations Sec"
-4P1BBE,"Blue Ridge West Construction S"
-4P1BC,"Quality and Assurance Group"
-4P1E,"Architecture and Engineering D"
-4P1E1,"Dep. Architecture & Engineerin"
-4P1EA,"Architecture Branch"
-4P1ED,"Design Excellence Branch"
-4P1EM,"Mechanical Engineering Branch"
-4P1G,"Gulf Coast Service Center Divi"
-4P1GAA,"Florida North Operations Secti"
-4P1GAB,"Florida North Operations Secti"
-4P1GAC,"Florida North Operations Secti"
-4P1GAD,"Florida North Construction Svc"
-4P1GB,"Florida South Field Office"
-4P1GBA,"Florida South Operations Secti"
-4P1GBB,"Florida South Operations Secti"
-4P1GBC,"Florida South Construction Svc"
-4P1GC,"Mississippi Field Office"
-4P1GCA,"Mississippi Operations Section"
-4P1GCB,"Mississippi Construction Svcs."
-4P1GD,"Quality and Assurance Group"
-4P1L,"Leasing Division"
-4P1L1,"Deputy Leasing Division"
-4P1L1A,"Southern Branch"
-4P1L1AA,"Section 1"
-4P1L1B,"Gulf Coast Branch"
-4P1L1BA,"Section 1"
-4P1L1BB,"Section 2"
-4P1L1C,"Blue Ridge East Branch"
-4P1L1CA,"Section 1"
-4P1L1D,"Blue Ridge West Branch"
-4P1L1DA,"Section 1"
-4P1L1E,"Project Management Branch"
-4P1L1EA,"Section 1"
-4P1M,"Facilities Mgmt. Svcs. Program"
-4P1M1,"Dep. Facilities Mgmt. Svcs. Pr"
-4P1ME,"Energy and Sustainability Bran"
-4P1MO,"Operations & Bldg. Tenant Svcs"
-4P1MS,"Safety and Environmental Branc"
-4P1P,"Project Delivery Division"
-4P1P1,"Deputy Project Delivery Divisi"
-4P1PA,"Southern Branch"
-4P1PB,"Gulf Coast Branch"
-4P1PC,"Blue Ridge East Branch"
-4P1PD,"Blue Ridge West Branch"
-4P1PE,"Capital Branch A"
-4P1PF,"Capital Branch B"
-4P1Q,"Acquisition Management Divisio"
-4P1Q1,"Deputy Acquisition Management"
-4P1QA,"Southern Branch"
-4P1QB,"Gulf Coast Branch"
-4P1QC,"Blue Ridge East Branch"
-4P1QD,"Blue Ridge West Branch"
-4P1QE,"Capital/AE Branch"
-4P1QF,"Strategic Program Support Bran"
-4P1QG,"Special Projects Branch"
-4P1S,"Southern Service Center Divisi"
-4P1SA,"Atlanta North Field Office"
-4P1SAA,"Atlanta North Operations Secti"
-4P1SAB,"Atlanta North Operations Secti"
-4P1SAC,"Atlanta North Operations Secti"
-4P1SAD,"Atlanta North Construction Svc"
-4P1SB,"Atlanta South Field Office"
-4P1SBA,"Atlanta South Operations Secti"
-4P1SBB,"Atlanta South Operations Secti"
-4P1SBC,"Atlanta South Operations Secti"
-4P1SBD,"Atlanta South Construction Svc"
-4P1SC,"Alabama Field Office"
-4P1SCA,"Alabama Operations Section A"
-4P1SCB,"Alabama Operations Section B"
-4P1SCC,"Alabama Construction Services"
-4P1SD,"Quality and Assurance Group"
-4P1T,"Port. Mgmt. & Cust. Engagement"
-4P1T1,"Dep. Port. Mgmt. & Cust. Engag"
-4P1T1A,"Asset Management Branch"
-4P1T1B,"Portfolio Services Branch"
-4P1T1C,"Investment Branch"
-4P1TA,"Judiciary Branch"
-4P1TB,"Regulatory Branch"
-4P1TC,"Public Facing Branch"
-4P1TD,"DOJ Branch"
-4P1TE,"DOD/DHS Branch"
-4P2,"Office of the Chief of Staff"
-4P3,"Ofc. of Pol., Oversight, & Com"
-4P5,"Office of Strategy and Engagem"
-4P5A,"Program Management Branch"
-4P5B,"Strategy and Analysis Branch"
-4P5C,"RWA Branch"
-4PZ,"Ofc. of Real Prop. Utilization"
-4PZN,"Mid-Atlantic Branch"
-4PZS,"Southeastern Branch"
-4QFABC,"Section 6"
-5P,"Office of the Regional Commiss"
-5P1,"Ofc of the Deputy Regional Com"
-5P1C,"Chicagoland SC Operations Divi"
-5P1C1,"Deputy Chicagoland Svc Cntr Op"
-5P1C1A,"Facility Operations Team A"
-5P1C1B,"Facility Operations Team B"
-5P1C1D,"S. IL/IN/OH Facilities Operati"
-5P1CA,"Chicagoland Property Mgmt Ops"
-5P1CAA,"Dirksen Courthouse Field Offic"
-5P1CAB,"Kluczynski Field Office"
-5P1CAC,"Clark Street Field Office"
-5P1CAD,"Metcalfe Field Office"
-5P1CAE,"Chicagoland Leasing Office"
-5P1CC,"Chicagoland SC Project Mgmt Br"
-5P1F,"Facilities Mgmt and Svcs Progs"
-5P1FA,"Building Ops and Tenant Servic"
-5P1FB,"Energy and Sustainability Bran"
-5P1FC,"Enviro, Safety & Fire Protecti"
-5P1FD,"Innovation, Technology & Perf."
-5P1N,"Northern SC Operations Divisio"
-5P1NA,"MI Property Management Operati"
-5P1NAA,"Detroit Metro Field Office"
-5P1NAB,"Levin Courthouse Field Office"
-5P1NAC,"McNamara Federal Building Fiel"
-5P1NAD,"Grand Rapids Field Office"
-5P1NAE,"Battle Creek Field Office"
-5P1NB,"MN/WI Property Mgmt Operations"
-5P1NBA,"MN/WI Federal Field Office"
-5P1NBB,"MN/WI Courthouse Field Office"
-5P1NBC,"MN/WI Leasing Field Office"
-5P1NE,"Northern SC Project Management"
-5P1NEA,"Michigan East Team"
-5P1NEB,"MN/WI Team"
-5P1NEC,"Michigan West Team"
-5P1P,"Portfolio Management Division"
-5P1PA,"Asset Management Branch"
-5P1PB,"Portfolio Information & Data M"
-5P1PC,"Portfolio Analysis and Outleas"
-5P1S,"Southern SC Operations Divisio"
-5P1SA,"Ohio Property Mgmt Operations"
-5P1SAA,"Northern Ohio Field Office"
-5P1SAB,"Celebrezze Field Office"
-5P1SAC,"Columbus Field Office"
-5P1SAD,"Cincinnati Field Office"
-5P1SB,"SIL/IN Property Mgmt Operation"
-5P1SBA,"Bean Federal Center Field Offi"
-5P1SBB,"Downtown Indianapolis Field Of"
-5P1SBD,"Northern Indiana Field Office"
-5P1SBE,"Illinois Field Office"
-5P1SE,"Southern SC Project Management"
-5P1SEA,"OH Team"
-5P1SEB,"SIL/IN Team"
-5P2,"Office of the Chief of Staff"
-5P2D,"Design & Construct Proj Delivr"
-5P2DA,"Project Management Branch A"
-5P2DB,"Project Management Branch B"
-5P2P,"Design & Construct Proj Progs"
-5P2PA,"Design Programs Branch"
-5P2PB,"Project Management Programs Br"
-5P2PC,"Expert Resources Branch"
-5P2Q,"Acquisition Management Divisio"
-5P2Q1,"Deputy, Acquisition Management"
-5P2QA,"Acq Programs & Quality Assuran"
-5P2QB,"Building Services Contracting"
-5P2QBA,"Chicagoland Services Contracti"
-5P2QBB,"Southern Services Contracting"
-5P2QBC,"Northern Services Contracting"
-5P2QC,"Repair and Alteration Contract"
-5P2QCA,"Chicagoland Contracting Team ("
-5P2QCB,"Southern Contracting Team (BA5"
-5P2QCC,"Northern Contracting Team (BA5"
-5P2QD,"Energy and Specialized Service"
-5P2QDA,"Utilities/ESPC Team"
-5P2QDB,"Specialized Services Team"
-5P2QDC,"Micro-Purchase Team"
-5P2QE,"Captl & Cust Projects Contract"
-5P2QEA,"Customer Projects Contracting"
-5P2QEB,"Capital Construction Contracti"
-5P2R,"Real Estate Division"
-5P2R1,"Deputy, Real Estate Division"
-5P2RB,"Leasing Policy and Programs Br"
-5P2RCA,"Construction Management Team"
-5P2RCB,"Space Planning Team"
-5P2RD,"Cust Engagemnt & Workplace Sol"
-5P2RE,"Treasury/Specialized Proj. Mgm"
-5P2RF,"DOD/DHS/Justice Project Mgmt."
-5P2RG,"SSA/Judiciary Project Manageme"
-5P2RH,"Treasury/Specialized Leasing B"
-5P2RI,"DOD/DHS/Justice Leasing Branch"
-5P2RJ,"SSA/Judiciary Leasing Branch"
-5Q1FAB,"Branch B"
-6A,"Office of the Regional Adminis"
-6P,"Office of the Regional Commiss"
-6P1,"Ofc of Deputy Regional Commiss"
-6P1C,"Design & Construction Division"
-6P1CC,"COR Branch"
-6P1CD,"Professional Services Branch"
-6P1CE,"East Project Management Branch"
-6P1CF,"West Project Management Branch"
-6P1Q,"Acquisition Management Divisio"
-6P1QC,"Services Acquisition Branch"
-6P1QE,"Capital Construction and IDV B"
-6P1QP,"Acq Programs & Quality Assuran"
-6P1QS,"Small Projects Acquisition Bra"
-6P1QW,"Construction Acquisition Branc"
-6P1R,"Leasing Division"
-6P1RD,"Realty Support Branch"
-6P1RE,"East Leasing Services Branch"
-6P1RM,"Programs and Measures Branch"
-6P1RP,"Project Management Branch"
-6P1RW,"West Leasing Services Branch"
-6P1S,"Service Center Division"
-6P1SB,"Building Operations Branch"
-6P1SBE,"St. Louis East Field Office"
-6P1SBEA,"Section A"
-6P1SBEB,"Section B"
-6P1SBI,"Iowa Field Office"
-6P1SBIA,"Section A"
-6P1SBIB,"Section B"
-6P1SBK,"Kansas Field Office"
-6P1SBKA,"Section A"
-6P1SBKB,"Section B"
-6P1SBN,"Kansas City North Field Office"
-6P1SBNA,"Section A"
-6P1SBNB,"Section B"
-6P1SBO,"Nebraska Field Office"
-6P1SBOA,"Section A"
-6P1SBOB,"Section B"
-6P1SBS,"Kansas City South Field Office"
-6P1SBSA,"Section A"
-6P1SBSB,"Section B"
-6P1SBW,"St. Louis West Field Office"
-6P1SBWA,"Section A"
-6P1SBWB,"Section B"
-6P2,"Office of the Chief of Staff"
-6PM,"Facilities Management Division"
-6PMA,"Energy & Sustainability Branch"
-6PMB,"Building Services Branch"
-6PMD,"Occupancy Management Branch"
-6PT,"Portfolio Management Division"
-6PTA,"Asset Management Branch"
-6PTB,"Realty Policy and Analysis Bra"
-6PTC,"Client Solutions Branch"
-6PTD,"Federal Space Management Branc"
-7GWBUSH,"Houston, Texas"
-7P,"Office of the Regional Commiss"
-7P1,"Ofc of the Deputy Regl Commiss"
-7PA,"Project Delivery Division"
-7PAA,"Program Support & Proj. Delive"
-7PAAS,"Shell & Infra. Project Deliver"
-7PAC,"Project Delivery Branch A"
-7PACD,"Dallas Section"
-7PACN,"Oklahoma and New Mexico Sectio"
-7PACW,"Greater West Section"
-7PAD,"Project Delivery Branch B"
-7PADB,"Border Section"
-7PADH,"Houston and Arkansas Section"
-7PADL,"Louisiana Section"
-7PC,"Design and Construction Divisi"
-7PCA,"Project Management Branch A"
-7PCB,"Project Management Branch B"
-7PCD,"Architectural Branch"
-7PCE,"Engineering Branch"
-7PM,"Facilities Management & Svcs P"
-7PMB,"Building Operations Support Br"
-7PMC,"Safety & Environmental Branch"
-7PMD,"Energy & Sustainability Branch"
-7PQ,"Acquisition Management Divisio"
-7PQA,"Program Support Branch"
-7PQB,"Services Branch"
-7PQC,"Non-Prospectus Projects Branch"
-7PQD,"Energy & Acquisition Support B"
-7PR,"Leasing Division"
-7PRA,"Project Delivery Branch A"
-7PRB,"Project Delivery Branch B"
-7PRC,"Project Delivery Branch C"
-7PRO,"Lease Contracting Branch 2"
-7PRP,"Policy & Programs Branch"
-7PRT,"Lease Contracting Branch 1"
-7PS,"Service Centers Division"
-7PSA,"Contract Administration Branch"
-7PSAA,"Eastern/Greater West Section"
-7PSAB,"Border/Northern Section"
-7PSB,"Border Service Center"
-7PSBB,"Brownsville Field Office"
-7PSBC,"Las Cruces Field Office"
-7PSBD,"Del Rio Field Office"
-7PSBE,"El Paso Field Office"
-7PSBL,"Laredo Field Office"
-7PSBM,"McAllen Field Office"
-7PSBR,"Roswell Field Office"
-7PSC,"Service Center Project Deliver"
-7PSE,"Eastern Service Center"
-7PSEB,"Baton Rouge Field Office"
-7PSEH,"Houston Field Office"
-7PSEL,"Little Rock Field Office"
-7PSEN,"New Orleans Field Office"
-7PSES,"Shreveport Field Office"
-7PSET,"Tyler Field Office"
-7PSN,"Northern Service Center"
-7PSNA,"Albuquerque Field Office"
-7PSND,"Dallas Field Office"
-7PSNM,"Muskogee Field Office"
-7PSNO,"Oklahoma City Field Office"
-7PSNT,"Tulsa Field Office"
-7PSW,"Greater West Service Center"
-7PSWA,"Austin Field Office"
-7PSWC,"Corpus Christi Field Office"
-7PSWF,"Fort Worth Field Office"
-7PSWL,"Lubbock Field Office"
-7PSWS,"San Antonio Field Office"
-7PT,"Portfolio Mgmt & Cust Engagemn"
-7PTA,"Asset Mgmt & Portfolio Analysi"
-7PTC,"Portfolio Services Branch"
-7PTE,"Customer Engagement Branch B"
-7PZ,"Real Property Utilztn & Dispos"
-7PZA,"Real Prop Disp & Redeployment"
-7PZB,"Real Prop Utilztn & Prog Suppo"
-8A,"Office of the Regional Adminis"
-8P,"Office of the Regional Commiss"
-8PC,"Design and Construction Divisi"
-8PCC,"Capital Projects Branch"
-8PCM,"Project Management Office Bran"
-8PCP,"Planning and Technical Service"
-8PCS,"Small Projects Branch"
-8PQ,"Acquisition Management Divisio"
-8PQA,"Acquisition Branch A"
-8PQB,"Acquisition Branch B"
-8PR,"Leasing Division"
-8PRA,"Leasing Branch A"
-8PRB,"Leasing Branch B"
-8PRC,"Realty Support Branch"
-8PSCB,"Colorado Field Office"
-8PSCC,"Denver Field Office"
-8PSCD,"Denver Federal Center (DFC) Fi"
-8PSMF,"Facilities Mgmt & Services Pro"
-8PSMM,"Mtn Plains Property Mgmt Branc"
-8PSMMM,"Montana Field Office"
-8PSMMN,"North Dakota Field Office"
-8PSMMS,"South Dakota Field Office"
-8PSMMU,"Utah Field Office"
-8PSMMW,"Wyoming Field Office"
-8PT,"Portfolio Mgmt. & Cust. Engage"
-8PTA,"Internal Business Consulting B"
-8PTB,"Portfolio Management Branch"
-8PTBA,"Portfolio Operations Section"
-8PTBAA,"Rent Bill Management Team"
-8PTBAB,"BIS Team"
-8PTBB,"Portfolio Strategy Section"
-8PTC,"Customer Engagement Branch"
-8PTCA,"Interior Design Section"
-8PTCB,"Workplace Solutions Section"
-8PTCC,"Customer Planning Section"
-8PTCCA,"Federal Occupancy Team"
-9A,"Office of the Regional Adminis"
-9P,"Office of the Regional Commiss"
-9PC,"Design and Construction Divisi"
-9PCC,"Courts Branch"
-9PCD,"Design and Construction Progra"
-9PCF,"Federal Office Buildings Branc"
-9PCS,"Land Port of Entry Branch"
-9PCT,"Technical Services Branch"
-9PCW,"Total Workplace & Special Proj"
-9PD,"San Diego Service Center"
-9PDC,"Construction Services Branch"
-9PDH,"Hawaii Field Office"
-9PDN,"Nevada Field Office"
-9PDP,"Phoenix Field Office"
-9PDS,"San Diego Field Office"
-9PDT,"Tucson Field Office"
-9PF,"San Francisco Service Center"
-9PFB,"East Bay Field Office"
-9PFC,"Construction Services Branch"
-9PFG,"Golden Gate Field Office"
-9PFJ,"Central California Field Offic"
-9PFJF,"Fresno Office"
-9PFN,"Sacramento Field Office"
-9PL,"Los Angeles Service Center"
-9PLC,"Construction Services Branch"
-9PLL,"Laguna Field Office"
-9PLN,"North Los Angeles Field Office"
-9PLS,"First Street Field Office"
-9PLSP,"Pasadena Office"
-9PLW,"West Los Angeles Field Office"
-9PM,"Facilities Management Division"
-9PME,"Engineering Services Branch"
-9PMF,"Building Services Branch"
-9PMS,"Compliance & Sustainability Br"
-9PP,"Regional Program Management Of"
-9PPA,"Project Delivery Excellence Br"
-9PPB,"Cost and Schedule Management B"
-9PQ,"Acquisition Management Divisio"
-9PQA,"Simplified Acquisitions Branch"
-9PQAD,"San Diego Support Section"
-9PQAF,"San Francisco Support Section"
-9PQAL,"Los Angeles Support Section"
-9PQF,"Field Projects Branch"
-9PQFN,"North Section"
-9PQFS,"South Section"
-9PQO,"Oversight & Policy Branch"
-9PQP,"Capital Projects Branch"
-9PQPL,"Large Projects Section"
-9PQPM,"Mega Projects Section"
-9PQS,"Building Services Branch"
-9PQSD,"San Diego Section"
-9PQSE,"Energy/Non-Rec. Svcs Contracts"
-9PQSF,"San Francisco Section"
-9PQSL,"Los Angeles Section"
-9PR,"Real Estate Acquisition Divisi"
-9PRA,"Southern Lease Contracting Bra"
-9PRB,"Northern Lease Contracting Bra"
-9PRC,"Southern Project Management Br"
-9PRD,"Northern Project Management Br"
-9PRE,"Federal Space Management Branc"
-9PT,"Portfolio Management Division"
-9PTA,"Asset Management North Branch"
-9PTC,"Asset Management South Branch"
-9PTD,"Data and Rent Bill Management"
-9PTP,"Account Management Branch"
-9PZ,"Real Property Utilztn & Dispos"
-9PZD,"Disposition Branch"
-9PZR,"Utilization & Realty Svcs Bran"
-A,"Office of the Administrator"
-AC,"Office of the Chief of Staff"
-AD,"Office of the Deputy Administr"
-ADAA,"Operations Division"
-ADAB,"Technical Division"
-AK,"Office of Civil Rights"
-AKC,"Mission Delivery Office"
-AKCA,"Complaint Processing Branch"
-AKCB,"External Programs Branch"
-AKD,"Performance Mgmt & Mission Sup"
-B,"Office of the Chief Financial"
-BA,"Office of Audit Mgmt & Account"
-BAA,"Audit Management Division"
-BAI,"Internal Controls Division"
-BB,"Office of Budget"
-BBC,"Budget Control, Oversight & Fo"
-BBF,"FAS Budget Division"
-BBFA,"FAS Regional Support Branch"
-BBP,"PBS Budget Division"
-BBW,"WCF & Approp Accts Budget Divi"
-BG,"Office of Financial Management"
-BG2,"Pegasys Financial Services"
-BG2A,"Application Systems Developmen"
-BG2AA,"Analysis Branch"
-BG2AB,"Development Branch"
-BG2AC,"Testing Branch"
-BG2B,"Fin. Mgmt. Systms Ops. & Maint"
-BG2BA,"Change Control Branch"
-BG2BB,"Systems Maintenance Branch"
-BG2C,"Technical Services Division"
-BG2CA,"Database Administration Branch"
-BG2CB,"Systems Engineering Branch"
-BG2D,"Financial Services Division"
-BG2DA,"PBS Payments Branch"
-BG2DAA,"Utilities Payments Group"
-BG2DAB,"Leases Group"
-BG2DAC,"VITAP, Const, Direct & Misc Pa"
-BG2DBA,"Disbursement Control Group"
-BG2DBB,"Operations Group"
-BG2DC,"PBS Financial Analysis Branch"
-BG2DCA,"PBS Financial Analysis Group"
-BG2DCB,"Property Group"
-BG2DCC,"Cash Group"
-BG2DD,"PBS Accounts Receivable Branch"
-BG2DDA,"Cash Collections Group"
-BG2DDB,"Debt Collections Group"
-BG2DDC,"Rent Group"
-BG2DDD,"RWA Group"
-BG2E,"Financial Info. & Ops Division"
-BG2EA,"Financial Information Control"
-BG2EAA,"Gen. Accounting & Fin. Analysi"
-BG2EAB,"FAS Financial Analysis Section"
-BG2EAC,"Billings, FAS IT & General Fun"
-BG2EAD,"Sales and Claims Section"
-BG2EAE,"Billings, FAS Supply, and Flee"
-BG2EAF,"Cash Collections Section"
-BG2EB,"External Services Branch"
-BG2EBA,"Reports and Control Section"
-BG2EBB,"Accounts Payable Section"
-BG2EC,"Financial Ops. & Disbursement"
-BG2ECB,"Travel, Relo. & Credit Cards S"
-BG2ECC,"Operations Section"
-BG2ECD,"General Programs and IT Sectio"
-BG2ECE,"Federal Pay / Transportation S"
-BGA,"Accounting & Financial Reporti"
-BGC,"Consolidated Financial Service"
-BGF,"FAS Financial Services Divisio"
-BGN,"Financial Policy Division"
-BGP,"PBS Financial Operations Divis"
-BGR,"Robotics Process Automation Di"
-BI,"Ofc of Analytics Performance &"
-BIA,"Analytics and Decision Support"
-BIC,"Data Delivery & Management Div"
-BIS,"Strategy, Risk, & Perf. Mgmt D"
-BR,"Office of PBS Financial Servic"
-BR1,"Zone 1"
-BR1B,"Operations Division"
-BR1F,"Financial Management Division"
-BR1L,"Leasing and Revenue Division"
-BR1R,"RWA and Capital Projects Divis"
-BR2,"Zone 2"
-BR2B,"Operations Division"
-BR2C,"Centralized Processing Group"
-BR2F,"Financial Management Division"
-BR2L,"Leasing and Revenue Division"
-BR2R,"RWA and Capital Projects Divis"
-BR3,"Zone 3"
-BR3B,"Operations Division"
-BR3F,"Financial Management Division"
-BR3L,"Leasing and Revenue Division"
-BR3R,"RWA and Capital Projects Divis"
-BR4,"Zone 4"
-BR4B,"Operations Division"
-BR4F,"Financial Management Division"
-BR4L,"Leasing and Revenue Division"
-BR4R,"RWA and Capital Projects Divis"
-BRC,"PBS Analytics Division"
-C,"Office of Human Resources Mana"
-C0A,"Executive Resources Division"
-C0B,"Business & Acquisition Mgmt. D"
-C0BA,"Acquisition Branch"
-C0BB,"Business Branch"
-CR,"Office of Human Resources Serv"
-CR1,"Office of the Deputy Director"
-CR1B,"Benefits and Retirement Center"
-CR1BA,"Benefits and Retirement Branch"
-CR1BB,"Workers Compensation Branch"
-CR1C,"Classification Center"
-CR1P,"Processing & Personnel Rcrds M"
-CR1R,"National Recruitment Center"
-CR1T,"HRS Technology Center"
-CRC,"CABS HR Services Center"
-CRF,"HR Services Center (FAS)"
-CRF1,"HR Services Center (FAS), Depu"
-CRFA,"Workforce Relations Branch A"
-CRFB,"Workforce Relations Branch B"
-CRFC,"Recruitment Branch A"
-CRFD,"Recruitment Branch B"
-CRFE,"Recruitment Branch C"
-CRP,"HR Services Center (PBS)"
-CRP1,"HR Services Center (PBS), Depu"
-CRPA,"Workforce Relations Branch A"
-CRPB,"Workforce Relations Branch B"
-CRPC,"Recruitment Branch A"
-CRPD,"Recruitment Branch B"
-CRPE,"Recruitment Branch C"
-CRS,"HR Services Center (Staff Offi"
-CRS1,"HR Services Center (Staff Ofcs"
-CRSA,"Workforce Relations Branch"
-CRSB,"Recruitment Branch A"
-CRSC,"Recruitment Branch B"
-CS,"Office of Human Capital Strate"
-CSA,"Human Capital Policy & Program"
-CSC,"Human Capital Strategic Planni"
-CSD,"Talent Development Division"
-CSDA,"Administration Branch"
-CSDB,"Instructional Services Branch"
-CSDBA,"eLearning & Instructional Desi"
-CSDC,"Programs Branch"
-CSDE,"Entry Level Training Branch"
-CSDE1,"Section 1"
-CSDP,"Performance Consultation Branc"
-CSDPA,"Org Dev Consultation Sec"
-CSDPB,"Training Consultation Sec"
-CSE,"Workforce Relations Division"
-CSG,"Analytics and Strategy Divisio"
-CSGA,"Human Capital Analytics Branch"
-CSGB,"Strategy, Planning & Portfolio"
-D,"Office of Mission Assurance"
-D1,"Ofc. of the Deputy Assoc. Admi"
-D2,"Office of the Chief of Staff"
-DB,"Office of the Chief Security O"
-DBA,"Personnel Security Division"
-DBAA,"Personnel Security Branch"
-DBAB,"HSPD-12 Branch"
-DBAC,"Security Programs Branch"
-DBB,"Physical Security Division"
-DBBA,"Physical Security Branch"
-DBBB,"Physical Access Control System"
-DC,"Ofc of the Principal Dep. Asso"
-DCA,"Management and Administration"
-DR,"Office of Emergency Management"
-DRA,"Field Ops & Mission Resilience"
-DRAA,"East-Field Ops & Mission Resil"
-DRAB,"Cent'l-Field Ops & Mission Res"
-DRAC,"West-Field Ops & Mission Resil"
-DRB,"Mission Resilience Support Div"
-DRC,"Mission Resilience Division"
-DRCA,"Future Operations & Preparedne"
-DRCB,"Nat'l Sec & Disaster Response"
-DRCC,"Current Operations Branch"
-E,"Ofc of Small & Disadvantaged B"
-EC,"Small Bus. Advocacy & Engagmnt"
-EC1,"Zone 1"
-EC2,"Zone 2"
-EP,"Small Bus Compliance & Goaling"
-ES3,"Zone 3"
-ES4,"Zone 4"
-G,"GSA Board of Contract Appeals"
-GJ,"Judicial Division"
-H,"Office of Administrative Servi"
-H1,"Ofc of Deputy Chief Admin Serv"
-H1A,"Office of Internal Acquisition"
-H1AA,"Acquisition Operations Divisio"
-H1AW,"Acquisition Services Division"
-H1C,"Office of Travel & Charge Card"
-H1CC,"Charge Card Division"
-H1CT,"Travel & Event Program Div"
-H1P,"Ofc Exec Sec & Prsl & Cngl Agc"
-H1PA,"Executive Secretariat Division"
-H2,"Office of Workplace Management"
-H2A,"DC Workplace Services Division"
-H2AA,"Central Office Branch"
-H2B,"Operational Support Division"
-H2C,"Regional Workplace Services Di"
-H2CA,"Eastern Zone"
-H2CB,"Midwestern Zone"
-H2CC,"Western Zone"
-I,"Office of GSA IT"
-ICTA,"FM IT Services Branch"
-ICTB,"OGP IT Services Branch"
-IDC,"Office of Corporate IT Service"
-IDCA,"Enterprise Systems Support Div"
-IDCAA,"Corporate Liaison Branch"
-IDCAB,"Messaging and Collaboration Br"
-IDCAC,"Website and Platform Managemen"
-IDCB,"Enterprise Platform Solutions"
-IDCBA,"Apps. Development & Solutions"
-IDCBB,"Enterprise Doc. Mgmt. Solution"
-IDCC,"HR & Payroll IT Services Divis"
-IDCCA,"HR IT Services Branch"
-IDCCB,"Payroll IT Services Branch"
-IDCD,"FM & OGP IT Services Division"
-IDCDA,"FM IT Services Branch"
-IDCDB,"OGP IT Services Branch"
-IDP,"Office of Public Building IT S"
-IDPA,"Business Integration Division"
-IDPAA,"Relationship Management Branch"
-IDPAB,"Requirements Development Branc"
-IDPB,"Building Technology Services D"
-IDPC,"Application Management Divisio"
-IDPCA,"Application Development Branch"
-IDPCB,"App. Ops. & Maintenance Branch"
-IDPD,"Center for Building Informatio"
-IDPDA,"Building Information Managemen"
-IDPDB,"Bldg. Info. Planning & Strateg"
-IDPE,"Transformation Program Managem"
-IDQ,"Office of Acquisition IT Servi"
-IDQA,"Center for FAS Managed Service"
-IDQAA,"Fleet Systems Division"
-IDQAB,"IAE Systems Division"
-IDQAC,"Per. Prop & Travel & Trans. Sy"
-IDQB,"Center for FAS Acquisition Sys"
-IDQBA,"E-Commerce Systems Division"
-IDQBB,"FAS IT Modernization Platform"
-IDQBC,"Cloud Integration Shared Svcs."
-IDQBD,"Contract Lifecycle Systems Div"
-IDQBE,"Market Research & Digital Exp."
-IDQBF,"Assisted Acquisition Systems D"
-IDT,"Office of Digital Infrastructu"
-IDTB,"Infrastructure Capabilities Di"
-IDTBB,"Solutions Identification Branc"
-IDTBC,"Enterprise Projects Branch A"
-IDTBD,"Enterprise Projects Branch B"
-IDTI,"Infrastructure Integration Div"
-IDTIB,"Solutions Delivery Branch"
-IDTIC,"Integration and Deployment Bra"
-IDTID,"Integration and Deployment Bra"
-IDTO,"Infrastructure Management Divi"
-IDTOA,"Platform Management Branch A"
-IDTOB,"Platform Management Branch B"
-IDTOC,"Communications Management Bran"
-IDTOD,"Communications Management Bran"
-IDTR,"End User Svcs & Customer Exp."
-IDTRA,"IT Support Services Branch A"
-IDTRB,"IT Support Services Branch B"
-IDTRC,"Digital Cust. Exp. & Prod. Mgm"
-IDTRD,"Digital Cust. Exp. & Prod. Mgm"
-IDTRE,"Supply Chain Management Branch"
-IDTRF,"Supply Chain Management Branch"
-IE,"Ofc. of Enterprise Data & Priv"
-IEA,"Information and Data Operation"
-IEB,"Data Governance and Privacy Di"
-IEC,"Records Management Division"
-IED,"IT Accessibility Division"
-IR,"Office of Digital Management"
-IRA,"Policy & Investment Mgmt. Divi"
-IRB,"User Experience and Usability"
-IRBA,"Training and Usability Branch"
-IRBB,"Digital Comms. & IT Emp. Exp."
-IRC,"Portfolio Strategy and Analysi"
-IRCA,"Portfolio Services Branch"
-IRCB,"Support Services Branch"
-IS,"Ofc of the Chief Info Security"
-ISE,"Security Engineering Division"
-ISI,"ICAM Shared Services Division"
-ISO,"Security Operations Division"
-ISP,"Policy and Compliance Division"
-IST,"ISSO Support Division"
-ISTE,"Enterprise Appl & Infrast Supp"
-IUA,"Digital Services Division"
-IUB,"Solutions Strategy Division"
-IUC,"Service Delivery Division"
-J,"Office of the Inspector Genera"
-JA,"Office of Audits"
-JA-2,"Northeast & Caribbean Region A"
-JA-3,"Mid-Atlantic Region Audit Offi"
-JA-4,"Southeast Sunbelt Region Audit"
-JA-5,"Great Lakes Region Audit Offic"
-JA-6,"Heartland Region Audit Office"
-JA-7,"Greater Southwest Region Audit"
-JA-9,"Pacific Rim Region Audit Offic"
-JA-A,"Center for Contract Audits"
-JAO,"Audit Planning, Policy and Ops"
-JA-R,"Real Property Audit Office"
-JAS,"Administration and Data System"
-JA-T,"Information Tech. & Finance Au"
-JC,"Counsel to the Inspector Gener"
-JE,"Office of Inspections"
-JI,"Office of Investigations"
-JIA,"Northeast Division"
-JIA-1,"New England Region Investigati"
-JIA-2,"Northeast Region Investigation"
-JIB,"Mid-Atlantic Division"
-JIB-3,"Mid-Atlantic Region Investigat"
-JIB-W,"National Capital Region Inv. O"
-JIC,"Southeast and Caribbean Divisi"
-JIC-4A,"SE & Caribbean Region Atlanta"
-JIC-4B,"SE & Caribbean Region Ft. Laud"
-JID,"Midwest Division"
-JID-5,"Great Lakes Region Investigati"
-JID-6,"Heartland Region Investigation"
-JIE,"Southwest and Rocky Mountain D"
-JIE-7,"Greater SW Region Investigatio"
-JIE-8,"Rocky Mountain Reg. Investigat"
-JIF,"Western Division"
-JIF-10,"Northwest/Arctic Region Inv. O"
-JIF-9A,"Pacific Rim Reg. Orange County"
-JIG,"Data Analytics Division"
-JII,"Intelligence Division"
-JIO,"Operations Division"
-JP,"Office of Administration"
-JPA,"Acquisitions and Operations Di"
-JPB,"Budget & Financial Management"
-JPH,"Human Resources Division"
-JPM,"Information Technology Divisio"
-L,"Office of the General Counsel"
-LD1,"New England Division"
-LD2,"Northeast and Caribbean Divisi"
-LD3,"Mid-Atlantic Division"
-LD4,"Southeast Sunbelt Division"
-LD5,"Great Lakes Division"
-LD6,"Heartland Division"
-LD7,"Greater Southwest Division"
-LD8,"Rocky Mountain Division"
-LD9,"Pacific Rim Division"
-LDA,"Northwest/Arctic Division"
-LDW,"National Capital Division"
-LE,"Ethics Law Division"
-LG,"General Law Division"
-LP,"Personal Property Division"
-LR,"Real Property Division"
-LT,"Technology Law Division"
-M,"OGP/Office of Associate Admini"
-M1,"Ofc. of the Principal Dep. Ass"
-M1A,"Ofc of Asset & Transportation"
-M1AA,"Aviation Policy Division"
-M1AC,"Real Property Policy Division"
-M1AD,"Personal Property Policy Divis"
-M1AE,"Trvl, Reloc, Mail & Trans. Pol"
-M1AG,"Motor Vehicle Division"
-M1AK,"Committee Management Secretari"
-M1D,"Office of Evidence and Analysi"
-M1E,"Office of Technology Policy"
-M1EA,"IT Modernization Division"
-M1ED,"IT Accessibility Division"
-M1EG,"Open Government Secretariat Di"
-M1EI,"Identity Assurance&Trusted Acc"
-M1ER,"Emerging Technology Division"
-M1ET,"IT Governance and Data Transpa"
-M1G,"Office of Fed. High-Perf. Gree"
-M1GA,"Integration Division"
-M1GB,"Performance Division"
-M1S,"Office of Evaluation Sciences"
-M1SG,"GSA Evaluation Division"
-M1SW,"Government-wide Evaluation Div"
-M1Y,"Ofc. of Shared Sol. & Perf. Im"
-MV,"Office of Acquisition Policy"
-MVA,"Ofc of Gen Svcs Acq Pol, Intgr"
-MVAA,"Procurement Management Review"
-MVAB,"Suspension and Debarment Divis"
-MVAC,"General Services Acq. Policy D"
-MVAD,"General Services Acq. Workforc"
-MVB,"Federal Acquisition Institute"
-MVBA,"Learning and Development Divis"
-MVBB,"Business Operations Division"
-MVC,"Office of Government-wide Acq."
-MVCA,"Federal Acquisition Policy Div"
-MVCB,"Regulatory Secretariat Divisio"
-MVCC,"Regulatory Info. Svc. Center D"
-O,"Ofc of Customer Experience"
-P,"Office of the Commissioner"
-P1,"Deputy Commissioner"
-P2,"Ofc. of the Dep. Com. Enterpri"
-P2S,"Strategy Management Division"
-P2SA,"Business Planning and Performa"
-P2SB,"Business Intelligence & Analyt"
-PA,"Office of Architecture and Eng"
-PA0A,"Center for Mission Support"
-PA0B,"Center for Community Planning"
-PA0C,"Center for Historic Buildings"
-PA0D,"Center for Fine Arts"
-PAA,"Architecture Division"
-PAAA,"Center for Architecture"
-PAAB,"Center for Workplace Strategy"
-PAAC,"Center for Integrated Solution"
-PAAD,"Center for Design Excellence"
-PAB,"Engineering Division"
-PABA,"Center for Engineering"
-PABC,"Center for Emerging Technologi"
-PAF,"Center for Workplace Strategy"
-PAG,"Center for Architecture"
-PB,"Office of Chief of Staff"
-PI,"Office of Real Property Dispos"
-PIA,"Operations and Analytics Divis"
-PIB,"Realty Services Division"
-PM,"Office of Facilities Managemen"
-PMA,"Energy Division"
-PMAA,"Energy Management Branch"
-PMAB,"Energy Savings Perf. Contract"
-PMB,"Facilities Tech. & Innovation"
-PMC,"Child Care Center of Expertise"
-PMCA,"Field Zone East Branch"
-PMCB,"Field Zone West Branch"
-PMCC,"Policy and Guidance Branch"
-PME,"Facility Operations Division"
-PMEA,"Owned Operations Branch"
-PMEB,"Lease Operations and Amenities"
-PMG,"Facility Risk Management Divis"
-PMH,"Center for Mission Support"
-PMI,"Climate and Sustainability Div"
-PMP,"Carbon Pollution-Free Elec. Di"
-PMPA,"Energy Procurement Branch"
-PMPB,"Clean Energy Branch"
-PQ,"Office of Acquisition Manageme"
-PQA,"Acquisition Policy and Program"
-PQAA,"Acquisition Programs Branch"
-PQAB,"Acq. Policy & Workforce Dev. B"
-PQB,"Acquisition Systems Management"
-PQC,"Acquisition Process Solutions"
-PR,"Office of Leasing"
-PRA,"Lease Project Mgmt & Tools Div"
-PRAA,"Center for Broker Services"
-PRAB,"Center for Lease Applications"
-PRAC,"Center for Lease Project Manag"
-PRB,"Lease Policy and Innovation Di"
-PRBA,"Ctr for Lease Prg Ovrsght Cmp"
-PRBD,"Ctr for Lease Del. & Contract"
-PRBE,"Ctr for Lease Policy, Tech. &"
-PT,"Ofc of Portfolio Mgmt & Cust."
-PTA,"Real Property Valuation Divisi"
-PTB,"Capital Assessment & Allocatio"
-PTBA,"Capital Allocation Branch"
-PTC,"Strategic Analysis Division"
-PTD,"Pricing Policy & Tools Divisio"
-PTH,"Customer Planning Division"
-PTO,"Organizational Support Divisio"
-PTP,"Customer Programs Division"
-PX,"Office of Project Delivery"
-PXA,"Special Programs Division"
-PXAA,"Acquisition Services Branch"
-PXAB,"Program Management Branch"
-PXB,"Center for Professional Excell"
-PXC,"Center for Cost, Schedule, and"
-PXD,"Center for Customer Delivery"
-PXE,"Center for Expert Resources"
-PXF,"Center for Construction Excell"
-PXG,"Center for Strategic Integrati"
-Q,"Office of the Commissioner"
-Q0A,"Chief of Staff"
-Q1,"Deputy Commissioner"
-Q1A,"F4 Program Management Office"
-Q1B,"Catalog & Solicitation Mgmt. P"
-Q1BA,"Division 1"
-Q1BB,"Division 2"
-Q1BBA,"Branch A"
-Q1BBB,"Branch B"
-Q2,"Technology Transformation Services"
-Q2A,"Office of TTS Delivery"
-Q2A0A,"Technology Operations Division"
-Q2AA,"Office of Solutions"
-Q2AAA,"Cloud.gov Division"
-Q2AAAA,"Engineering Branch"
-Q2AAB,"Login.gov Division"
-Q2AABA,"Operations Branch"
-Q2AABB,"Engineering Branch"
-Q2AABC,"Security UX Branch"
-Q2AABD,"Product Branch"
-Q2AABE,"Platform Branch"
-Q2AABF,"Security Branch"
-Q2AABG,"Partnerships and Growth Branch"
-Q2AABH,"Engineering Partnerships Branch"
-Q2AAC,"Platforms and Services Divisio"
-Q2AACA,"Communities and Collaboration"
-Q2AACB,"Web Tools Branch"
-Q2AACC,"Open Data & Participatory Scie"
-Q2AAD,"Public Experience Division"
-Q2AADA,"Content and Outreach Branch"
-Q2AADAA,"Outreach and Partnerships Sect"
-Q2AADAB,"Content Section"
-Q2AADB,"Customer and Product Experienc"
-Q2AADBA,"User Experience Section"
-Q2AADBB,"Product Management Section"
-Q2AADC,"Contact Center Operations Bran"
-Q2AADD,"Infrastructure and Technology"
-Q2AADDA,"Engineering Operations Section"
-Q2AADDB,"Analytics Section"
-Q2AAEA,"Branch A"
-Q2AAEB,"Branch B"
-Q2AAF,"Accelerators Division"
-Q2AAFA,"ARP Delivery Branch A"
-Q2AAFB,"TTS DevTools Branch"
-Q2AAFC,"10X Branch"
-Q2AAFD,"Benefits Studio Branch"
-Q2AB,"Office of Regulatory & Oversig"
-Q2ABA,"Modernized Rulemaking Division"
-Q2ABB,"Grants and Acquisition Divisio"
-Q2ABC,"Systems Design Division"
-Q2ABD,"Experience Design Division"
-Q2AC,"Office of Integrated Award Env"
-Q2ACA,"Management and Program Support"
-Q2ACB,"Bus. Applications Operations D"
-Q2ACC,"Outreach & Stakeholder Engagem"
-Q2AD,"Office of TTS Consulting"
-Q2ADA,"18F Division"
-Q2ADAAA,"Engineering Chapter"
-Q2ADAAAA,"Unit 1"
-Q2ADAAAB,"Stingarrays Cohort"
-Q2ADAAAC,"Quacks Cohort 🦆🦆"
-Q2ADAAAD,"Unit 4"
-Q2ADAAAE,"Electronachos Cohort"
-Q2ADAAAF,"Glamgoyles Cohort"
-Q2ADAAAG,"Unit 7"
-Q2ADAAAH,"Unit 8"
-Q2ADAAAI,"Unit 9"
-Q2ADAAB,"Product Chapter"
-Q2ADAABA,"Unit 1"
-Q2ADAABB,"Unit 2"
-Q2ADAABC,"Unit 3"
-Q2ADAABD,"Unit 4"
-Q2ADAAC,"Design Chapter"
-Q2ADAACA,"Unit 1"
-Q2ADAACB,"Unit 2"
-Q2ADAACC,"Unit 3"
-Q2ADAACD,"Unit 4"
-Q2ADAACE,"Unit 5"
-Q2ADAACF,"Unit 6"
-Q2ADAACG,"Unit 7"
-Q2ADAACH,"Unit 8"
-Q2ADAACI,"Unit 9"
-Q2ADAAD,"Acquisition Chapter"
-Q2ADABA,"Account Management Chapter"
-Q2ADB,"Centers of Excellence Division"
-Q2ADBA,"Data and Analytics Branch"
-Q2ADBB,"CX and Contact Center Branch"
-Q2ADBC,"Cloud Adoption and Infrastruct"
-Q2ADBD,"Acquisition Branch"
-Q2ADBE,"Client Services Branch"
-Q2ADBF,"Artificial Intelligence Branch"
-Q2ADBG,"Innovation Adoption Branch"
-Q2B,"Office of TTS Operations"
-Q2BA,"Acquisition Division"
-Q2BAA,"Oversight Branch"
-Q2BAB,"Operations Branch"
-Q2BB,"Business Operations Division"
-Q2BBA,"Finance Branch"
-Q2BBB,"Agreements Branch"
-Q2BC,"Market Development & Partnersh"
-Q2BCA,"Market Development Branch"
-Q2BD,"Outreach and Marketing Divisio"
-Q2BDA,"Outreach Branch"
-Q2BDB,"Digital Marketing Branch"
-Q2BE,"Talent Division"
-Q2BEA,"Talent Acquisition Branch A"
-Q2BEB,"Talent Acquisition Branch B"
-Q2BEC,"Talent Operations and Policy B"
-Q2CA,"Presidential Innovation Fellow"
-Q2CAA,"Branch A"
-Q2CAB,"Branch B"
-Q2CAC,"Branch C"
-Q2CAD,"Branch D"
-Q2CAE,"Branch E"
-Q2CB,"U.S. Digital Corps. Division"
-Q2CBA,"Branch A"
-Q2CBB,"Branch B"
-Q2CBC,"Branch C"
-Q2CBD,"Branch D"
-QC,"Office of Cust. & Stakeholder"
-QC0A,"Program Management Division"
-QC1,"Ofc. of the Dep. Assistant Com"
-QC1A,"Content Management Office"
-QCA,"Office of Account Management"
-QCAA,"Department of Defense Division"
+stub,desc
+G,GSA Board of Contract Appeals
+GJ,Judicial Division
+Q,Office of the Commissioner
+Q0A,Chief of Staff
+Q1,Deputy Commissioner
+Q1A,F4 Program Management Office
+Q1B,Catalog & Solicitation Mgmt. P
+Q1BA,Division 1
+Q1BB,Division 2
+Q1BBA,Branch A
+Q1BBB,Branch B
+Q2,"Deputy Commissioner/Director,"
+Q2A,Office of TTS Delivery
+Q2A0A,Technology Operations Division
+Q2AA,Office of Solutions
+Q2AAA,Cloud.gov Division
+Q2AAAA,Engineering Branch
+Q2AAB,Login.gov Division
+Q2AABA,Operations Branch
+Q2AABAA,Acquisition Section
+Q2AABAB,Operations Section
+Q2AABB,Engineering Branch
+Q2AABC,User Experience Branch
+Q2AABD,Product Branch
+Q2AABF,Security Branch
+Q2AABFA,Security Operations Section
+Q2AABFB,Fraud Section
+Q2AABFC,Platform Engineering Section
+Q2AABG,Partnerships and Growth Branch
+Q2AABH,Engineering Partnerships Branc
+Q2AAC,Platforms and Services Divisio
+Q2AACA,Communities and Collaboration
+Q2AACB,Web Tools Branch
+Q2AACC,Open Data & Participatory Scie
+Q2AAD,Public Experience Division
+Q2AADA,Content and Outreach Branch
+Q2AADAA,Outreach and Partnerships Sect
+Q2AADAB,Content Section
+Q2AADB,Customer and Product Experienc
+Q2AADBA,User Experience Section
+Q2AADBB,Product Management Section
+Q2AADC,Contact Center Operations Bran
+Q2AADD,Infrastructure and Technology
+Q2AADDA,Engineering Operations Section
+Q2AADDB,Analytics Section
+Q2AAE,FedRAMP Division
+Q2AAEA,Branch A
+Q2AAEB,Branch B
+Q2AAF,Accelerators Division
+Q2AAFA,ARP Delivery Branch
+Q2AAFB,Internal Investments Branch
+Q2AAFC,10X Branch
+Q2AAFCA,Section 1
+Q2AAFCB,Section 2
+Q2AAFD,Benefits Studio Branch
+Q2AAFDA,Section 1
+Q2AAFDB,Section 2
+Q2AB,Office of Regulatory & Oversig
+Q2ABA,Modernized Rulemaking Division
+Q2ABB,Grants and Acquisition Divisio
+Q2ABC,Systems Design Division
+Q2ABD,Experience Design Division
+Q2AC,Office of the IAE
+Q2ACA,Management and Program Support
+Q2ACB,Product Business Services Divi
+Q2ACC,Outreach & Stakeholder Engagem
+Q2ACD,Product CX and Design Division
+Q2ACE,Product Architecture & Shared
+Q2AD,Office of TTS Consulting
+Q2ADA,18F Division
+Q2ADAA,Chapters and Practices Branch
+Q2ADAAA,Engineering Section
+Q2ADAAAA,Unit 1
+Q2ADAAAB,Unit 2
+Q2ADAAAC,Unit 3
+Q2ADAAAD,Unit 4
+Q2ADAAAE,Unit 5
+Q2ADAAAF,Unit 6
+Q2ADAAAG,Unit 7
+Q2ADAAAH,Unit 8
+Q2ADAAAI,Unit 9
+Q2ADAAB,Product Section
+Q2ADAABA,Unit 1
+Q2ADAABB,Unit 2
+Q2ADAABC,Unit 3
+Q2ADAABD,Unit 4
+Q2ADAAC,Design Section
+Q2ADAACA,Unit 1
+Q2ADAACB,Unit 2
+Q2ADAACC,Unit 3
+Q2ADAACD,Unit 4
+Q2ADAACE,Unit 5
+Q2ADAACF,Unit 6
+Q2ADAACG,Unit 7
+Q2ADAACH,Unit 8
+Q2ADAACI,Unit 9
+Q2ADAAD,Acquisition Section
+Q2ADAB,Projects Branch
+Q2ADABA,Account Management Section
+Q2ADB,Centers of Excellence Division
+Q2ADBA,Data and Analytics Branch
+Q2ADBB,CX and Contact Center Branch
+Q2ADBC,Cloud Adoption and Infrastruct
+Q2ADBD,Acquisition Branch
+Q2ADBE,Client Services Branch
+Q2ADBF,Artificial Intelligence Branch
+Q2ADBG,Innovation Adoption Branch
+Q2B,Office of TTS Operations
+Q2BA,Acquisition Division
+Q2BAA,Oversight Branch
+Q2BAB,Operations Branch
+Q2BB,Business Operations Division
+Q2BBA,Finance Branch
+Q2BBB,Agreements Branch
+Q2BC,Market Development & Partnersh
+Q2BD,Outreach and Marketing Divisio
+Q2BE,Talent Division
+Q2BEA,Talent Acquisition Branch A
+Q2BEB,Talent Acquisition Branch B
+Q2BEC,Talent Operations and Policy B
+Q2C,TTS Fellowship Office
+Q2CA,Presidential Innovation Fellow
+Q2CAA,Branch A
+Q2CAB,Branch B
+Q2CAC,Branch C
+Q2CAD,Branch D
+Q2CAE,Branch E
+Q2CAF,Branch F
+Q2CB,U.S. Digital Corps. Division
+Q2CBA,Branch A
+Q2CBB,Branch B
+Q2CBC,Branch C
+Q2CBD,Branch D
+Q2CBE,Branch E
+Q2CBF,Branch F
+Q2CBG,Branch G
+Q2CBH,Branch H
+QC,Office of Cust. & Stakeholder
+QC0A,Program Management Division
+QC1,Ofc. of the Dep. Assistant Com
+QC1A,Content Management Office
+QCA,Office of Account Management
+QCAA,Department of Defense Division
 QCAAA,"U.S. Navy, Marine Corps. & OSD"
-QCAAAA,"Section 1"
-QCAAAB,"Section 2"
-QCAAB,"U.S. Army Branch"
-QCAABA,"Section 1"
-QCAABB,"Section 2"
-QCAAC,"U.S. Air Force and Space Force"
-QCAACA,"Section 1"
-QCAACB,"Section 2"
+QCAAAA,Section 1
+QCAAAB,Section 2
+QCAAB,U.S. Army Branch
+QCAABA,Section 1
+QCAABB,Section 2
+QCAAC,U.S. Air Force and Space Force
+QCAACA,Section 1
+QCAACB,Section 2
 QCAAD,"OCONUS-Asia, Pacific & N. Amer"
 QCAAE,"OCONUS-Europe, Africa & Mid. E"
-QCAB,"Civilian Division"
-QCABA,"Oversight Branch"
-QCABAA,"Section 1"
-QCABAB,"Section 2"
+QCAB,Civilian Division
+QCABA,Oversight Branch
+QCABAA,Section 1
+QCABAB,Section 2
 QCABB,"Health, Social Svcs. & Gen. Sc"
-QCABBA,"Section 1"
-QCABBB,"Section 2"
-QCABC,"Infrastructure and Other Branc"
-QCB,"Office of Integrated Marketing"
-QCBA,"Education Division"
-QCBAA,"Branch A"
-QCBAB,"Branch B"
-QCBBA,"Branch A"
-QCBBB,"Branch B"
-QCC,"Office of Customer Care"
-QCCA,"National Customer Svc. Center"
-QCCAA,"Branch A"
-QCCAB,"Branch B"
-QCCB,"Research and Survey Division"
-QCCC,"Market Research as a Service D"
-QCD,"Office of Analytics and Busine"
-QCDAA,"Account Analytics Branch"
-QCDAB,"Data Operations Branch"
-QCDB,"Business System Management Div"
-QCDBA,"Product Management Branch"
-QCDBB,"Innovative Tech. & Governance"
-QF,"Office of Assisted Acquisition"
-QF0B1BD,"Section 4"
-QF0B1CB,"Section 2"
-QF1,"Ofc of the Deputy Asst Commiss"
-QF1A,"Service Center 1"
-QF1B,"Service Center 2"
-QF1C,"Service Center 3"
-QF1D,"Service Center 4"
-QF2,"Office of AAS Operations"
-QF2A,"Service Center 1"
-QF2BA,"Division 1"
-QF2BB,"Division 2"
-QF2CA,"Division 1"
-QFA,"Office of APEX 1"
-QFAA,"Service Center 1"
-QFAAA,"Division 1"
-QFAAAA,"Branch A"
-QFAAAB,"Branch B"
-QFAABA,"Branch A"
-QFAABB,"Branch B"
-QFAAC,"Division 3"
-QFAACA,"Branch A"
-QFAACB,"Branch B"
-QFAAD,"Division 4"
-QFAADA,"Branch A"
-QFAADB,"Branch B"
-QFAC,"Service Center 3"
-QFACA,"Division 1"
-QFACAA,"Branch A"
-QFACAB,"Branch B"
-QFACAC,"Branch C"
-QFACB,"Division 2"
-QFACBA,"Branch A"
-QFACBB,"Branch B"
-QFACBC,"Branch C"
-QFB,"Office of APEX 2"
-QFBA,"Service Center 1"
-QFBAAA,"Branch A"
-QFBAAAA,"Section 1"
-QFBAAAB,"Section 2"
-QFBAAAC,"Section 3"
-QFBAAB,"Branch B"
-QFBAABA,"Section 1"
-QFBAABB,"Section 2"
-QFBAABC,"Section 3"
-QFBAACA,"Section 1"
-QFBAACB,"Section 2"
-QFBAACC,"Section 3"
-QFBC,"Service Center 3"
-QFBCAA,"Branch A"
-QFBCAAA,"Section 1"
-QFBCAAB,"Section 2"
-QFBCAAC,"Section 3"
-QFBCAB,"Branch B"
-QFBCABA,"Section 1"
-QFBCABB,"Section 2"
-QFBCABC,"Section 3"
-QFBCAC,"Branch C"
-QFBCACA,"Section 1"
-QFBCACB,"Section 2"
-QFBCACC,"Section 3"
-QFBCAD,"Branch D"
-QFC,"Office of APEX 3"
-QFCA,"Service Center 1"
-QFCAA,"Division 1"
-QFCAAA,"Branch A"
-QFCAAB,"Branch B"
-QFCABA,"Branch A"
-QFCABB,"Branch B"
-QFCABD,"Branch D"
-QFCAC,"Division 3"
-QFCACA,"Branch A"
-QFCACB,"Branch B"
-QFCC,"Service Center 3"
-QFCCA,"Division 1"
-QFCCB,"Division 2"
-QFCCC,"Division 3"
-QFCCD,"Division 4"
-QFCE,"Service Center 5"
-QFCEA,"Division 1"
-QFCEAA,"Branch A"
-QFCEAB,"Branch B"
-QFCEAC,"Branch C"
-QFCEB,"Division 2"
-QFCEBA,"Branch A"
-QFCEBB,"Branch B"
-QFCEC,"Division 3"
-QFCECB,"Branch B"
-QFCECC,"Branch C"
-QFCECD,"Branch D"
-QFD,"Office of APEX 4"
-QFDA,"Service Center 1"
-QFDAAA,"Branch A"
-QFDAAB,"Branch B"
-QFDABA,"Branch A"
-QFDABB,"Branch B"
-QFDAC,"Division 3"
-QFDACA,"Branch A"
-QFDACB,"Branch B"
-QFDADA,"Branch A"
-QFDADB,"Branch B"
-QFDADC,"Branch C"
-QFDB,"Service Center 2"
-QFDBA,"Division 1"
-QFDBB,"Division 2"
-QFDBC,"Division 3"
-QFDBD,"Division 4"
-QFE,"Office of APEX 5"
-QFEA,"Service Center 1"
-QFEAA,"Division 1"
-QFEAB,"Division 2"
-QFEAC,"Division 3"
-QFEAD,"Division 4"
-QFEAE,"Division 5"
-QFEB,"Service Center 2"
-QFEBA,"Division 1"
-QFEBB,"Division 2"
-QFEBC,"Division 3"
-QFEBD,"Division 4"
-QFEBE,"Division 5"
-QFEC,"Service Center 3"
-QFECA,"Division 1"
-QFECB,"Division 2"
-QFECC,"Division 3"
-QFECD,"Division 4"
-QFECE,"Division 5"
-QFECF,"Division 6"
-QFED,"Service Center 4"
-QFEDA,"Division 1"
-QFEDB,"Division 2"
-QFEDC,"Division 3"
-QFEDD,"Division 4"
-QFEDE,"Division 5"
-QFEDF,"Division 6"
-QFEE,"Service Center 5"
-QFEEA,"Division 1"
-QFEEB,"Division 2"
-QFEEC,"Division 3"
-QFEED,"Division 4"
-QFEFA,"Division 1"
-QFEFB,"Division 2"
-QFEFC,"Division 3"
-QFEFD,"Division 4"
-QFEG,"Service Center 7"
-QFEGA,"Division 1"
-QFEGB,"Division 2"
-QGA,"Management and Program Support"
-QM,"Ofc of Trvl Trans & Log Catego"
-QM0A,"Management & Program Support S"
-QMA,"Office of Acquisition Operatio"
-QMAA,"Center for Vehicle Acquisition"
-QMAAA,"Branch A"
-QMAAB,"Branch B"
-QMAAC,"Branch C"
-QMAACA,"Section 1"
-QMAACB,"Section 2"
-QMAC,"Ctr for Travel & Transportatio"
-QMACA,"Branch A"
-QMACB,"Branch B"
-QMC,"Ofc of Trvl Employee Relo & Tr"
+QCABBA,Section 1
+QCABBB,Section 2
+QCABC,Infrastructure and Other Branc
+QCABCA,Section 1
+QCB,Office of Integrated Marketing
+QCBA,Education Division
+QCBAA,Branch A
+QCBAB,Branch B
+QCBB,Marketing and Communications D
+QCBBA,Branch A
+QCBBB,Branch B
+QCC,Office of Customer Care
+QCCA,National Customer Svc. Center
+QCCAA,Branch A
+QCCAB,Branch B
+QCCB,Market Research and Advancemen
+QCCBA,Research and Intelligence Bran
+QCCBB,Market Research as a Service B
+QCD,Office of Analytics and Busine
+QCDA,Analytics and Data Operations
+QCDAA,Account Analytics Branch
+QCDAB,Data Operations Branch
+QCDB,Business System Management Div
+QCDBA,Product Management Branch
+QCDBB,Innovative Tech. & Governance
+QF,Office of Assisted Acquisition
+QF1,Ofc of the Deputy Asst Commiss
+QF1A,Service Center 1
+QF1B,Service Center 2
+QF1C,Service Center 3
+QF1D,Service Center 4
+QF2,Office of AAS Operations
+QF2A,Service Center 1
+QF2B,Service Center 2
+QF2BA,Division 1
+QF2BB,Division 2
+QF2BC,Division 3
+QF2C,Service Center 3
+QF2CA,Division 1
+QF2CB,Division 2
+QF2D,Service Center 4
+QFA,Office of APEX 1
+QFAA,Service Center 1
+QFAAA,Division 1
+QFAAAA,Branch A
+QFAAAB,Branch B
+QFAAB,Division 2
+QFAABA,Branch A
+QFAABB,Branch B
+QFAAC,Division 3
+QFAACA,Branch A
+QFAACB,Branch B
+QFAAD,Division 4
+QFAADA,Branch A
+QFAADB,Branch B
+QFAB,Service Center 2
+QFAC,Service Center 3
+QFACA,Division 1
+QFACAA,Branch A
+QFACAB,Branch B
+QFACAC,Branch C
+QFACB,Division 2
+QFACBA,Branch A
+QFACBB,Branch B
+QFACBC,Branch C
+QFACC,Division 3
+QFB,Office of APEX 2
+QFBA,Service Center 1
+QFBAA,Division 1
+QFBAAA,Branch A
+QFBAAAB,Section 2
+QFBAAB,Branch B
+QFBAABB,Section 2
+QFBAAC,Branch C
+QFBAACA,Section 1
+QFBAB,Division 2
+QFBABA,Branch A
+QFBABB,Branch B
+QFBABC,Branch C
+QFBAC,Division 3
+QFBACA,Branch A
+QFBACB,Branch B
+QFBACC,Branch C
+QFBB,Service Center 2
+QFBBA,Division 1
+QFBBB,Division 2
+QFBBC,Division 3
+QFBC,Service Center 3
+QFBCA,Division 1
+QFBCAA,Branch A
+QFBCAAA,Section 1
+QFBCAB,Branch B
+QFBCABA,Section 1
+QFBCABB,Section 2
+QFBCAC,Branch C
+QFBCACA,Section 1
+QFBCACC,Section 3
+QFBCAD,Branch D
+QFBD,Service Center 4
+QFBDA,Division 1
+QFBDB,Division 2
+QFC,Office of APEX 3
+QFCA,Service Center 1
+QFCAA,Division 1
+QFCAAA,Branch A
+QFCAAB,Branch B
+QFCAB,Division 2
+QFCABA,Branch A
+QFCABB,Branch B
+QFCABC,Branch C
+QFCABD,Branch D
+QFCAC,Division 3
+QFCACA,Branch A
+QFCACB,Branch B
+QFCC,Service Center 3
+QFCCA,Division 1
+QFCCB,Division 2
+QFCCC,Division 3
+QFCCD,Division 4
+QFCDA,Division 1
+QFCE,Service Center 5
+QFCEA,Division 1
+QFCEAA,Branch A
+QFCEAB,Branch B
+QFCEB,Division 2
+QFCEBA,Branch A
+QFCEBB,Branch B
+QFCEC,Division 3
+QFCECA,Branch A
+QFCECB,Branch B
+QFCECC,Branch C
+QFCECD,Branch D
+QFD,Office of APEX 4
+QFDA,Service Center 1
+QFDAA,Division 1
+QFDAB,Division 2
+QFDAC,Division 3
+QFDAD,Division 4
+QFDADC,Branch C
+QFDB,Service Center 2
+QFDBA,Division 1
+QFDBB,Division 2
+QFDBC,Division 3
+QFDBD,Division 4
+QFDC,Service Center 3
+QFE,Office of APEX 5
+QFEA,Service Center 1
+QFEAA,Division 1
+QFEAB,Division 2
+QFEAC,Division 3
+QFEAD,Division 4
+QFEAE,Division 5
+QFEAF,Division 6
+QFEB,Service Center 2
+QFEBA,Division 1
+QFEBB,Division 2
+QFEBC,Division 3
+QFEBD,Division 4
+QFEBE,Division 5
+QFEC,Service Center 3
+QFECA,Division 1
+QFECB,Division 2
+QFECC,Division 3
+QFECD,Division 4
+QFECE,Division 5
+QFECF,Division 6
+QFECG,Division 7
+QFECH,Division 8
+QFED,Service Center 4
+QFEDA,Division 1
+QFEDB,Division 2
+QFEDC,Division 3
+QFEDD,Division 4
+QFEDE,Division 5
+QFEDF,Division 6
+QFEDG,Division 7
+QFEDH,Division 8
+QFEEB,Division 2
+QFEED,Division 4
+QFEF,Service Center 6
+QFEFA,Division 1
+QFEFB,Division 2
+QFEFC,Division 3
+QFEFD,Division 4
+QFEG,Service Center 7
+QFEGA,Division 1
+QFEGB,Division 2
+QFEH,Service Center 8
+QFEHA,Division 1
+QFEHB,Division 2
+QFEHC,Division 3
+QM,Ofc of Trvl Trans & Log Catego
+QM0A,Management & Program Support S
+QMA,Office of Acquisition Operatio
+QMAA,Center for Vehicle Acquisition
+QMAAA,Branch A
+QMAAB,Branch B
+QMAAC,Branch C
+QMAACA,Section 1
+QMAACB,Section 2
+QMAC,Ctr for Travel & Transportatio
+QMACA,Branch A
+QMACB,Branch B
+QMC,Ofc of Trvl Employee Relo & Tr
 QMC1,"Deputy, Ofc of Trvl, Emp Reloc"
-QMC1A,"City Pairs Program Division"
+QMC1A,City Pairs Program Division
 QMC1B,"Lodging, Innov. Sol & Schedule"
-QMC1C,"E-Gov Travel Division"
-QMCA,"Transportation Audits Division"
-QMCAA,"Branch A"
-QMCAAA,"Section 1"
-QMCAAB,"Section 2"
-QMCAB,"Branch B"
-QMCAC,"Branch C"
-QMCB,"Strat. Plng, Bus. Mgmt & Admin"
-QMCC,"Transportation Management Divi"
-QMCG,"Emp Relocation Resource Center"
-QMD,"Office of Fleet Management"
-QMDA,"Purchasing Division"
-QMDAA,"Engineering Branch"
-QMDAB,"Contract and Supply Management"
-QMDAD,"Quality Assurance Branch"
-QMDC,"Business Management Division"
-QMDCA,"Business Intelligence Branch"
-QMDCAA,"Card Services Section"
-QMDCB,"Business Oversight Branch"
-QMDD,"Offering Support Division"
-QMDDA,"Offering Management Branch"
-QMDDB,"Ordering Management Branch"
-QMDDC,"Consolidations and Fleet Servi"
-QMDDD,"Short-term Rental Branch"
-QMDE,"Product Integration Division"
-QMDEA,"Operations and Maintenance Bra"
-QMDEB,"Product Integration Branch"
-QMDF,"Vehicle Management Division"
-QMDFA,"Maintenance & Accident Managem"
-QMDFAA,"Accident Mgmt Center (Atlanta)"
-QMDFAB,"Accident Mgmt Center (Kansas C"
-QMDFAC,"Maint Control Center (Atlanta)"
-QMDFAD,"Maint Control Center (Ft Worth"
-QMDFAE,"Maintenance Control Center (LO"
-QMDFD,"Vehicle Management Branch"
-QMDG,"Marketplace and Innovation Div"
-QMDGA,"Marketplace Branch"
-QMDGB,"Innovation Branch"
-QMDH,"Mgmt and Program Support Divis"
+QMC1C,E-Gov Travel Division
+QMCA,Transportation Audits Division
+QMCAA,Account and Collections Branch
+QMCAB,Audit Policy and Review Branch
+QMCAC,Disputes Resolution Branch
+QMCB,Chief of Staff & Strategic Pla
+QMCC,Transportation Management Divi
+QMCG,Emp Relocation Resource Center
+QMCM,Gov.-wide Category Management
+QMCT,ETSNext Division
+QMD,Office of Fleet Management
+QMDA,Purchasing Division
+QMDAA,Engineering Branch
+QMDAB,Contract and Supply Management
+QMDAD,Quality Assurance Branch
+QMDC,Business Management Division
+QMDCA,Business Intelligence Branch
+QMDCAA,Card Services Section
+QMDCB,Business Oversight Branch
+QMDD,Offering Support Division
+QMDDA,Offering Management Branch
+QMDDB,Ordering Management Branch
+QMDDC,Consolidations and Fleet Servi
+QMDDD,Short-term Rental Branch
+QMDE,Product Integration Division
+QMDEA,Operations and Maintenance Bra
+QMDEB,Product Integration Branch
+QMDF,Vehicle Management Division
+QMDFA,Maintenance & Accident Managem
+QMDFAA,Accident Mgmt Center (Atlanta)
+QMDFAB,Accident Mgmt Center (Kansas C
+QMDFAC,Maint Control Center (Atlanta)
+QMDFAD,Maint Control Center (Ft Worth
+QMDFAE,Maintenance Control Center (LO
+QMDFD,Vehicle Management Branch
+QMDG,Marketplace and Innovation Div
+QMDGA,Marketplace Branch
+QMDGB,Innovation Branch
+QMDH,Office of the Chief of Staff
+QMDHA,Development and Outreach Branc
+QMDHB,Strategic Resource Planning Br
 QMDZ,"Ofc of the Deputy Dir, Zonal O"
-QMDZ1,"Zone 1"
-QMDZ1FC,"Branch C"
-QMDZ1FCA,"San Juan Fleet Mgmt Center"
-QMDZ1FCB,"European Fleet Mgmt Center"
-QMDZ1FCC,"DC Metro Fleet Management Cent"
-QMDZ1FO,"Branch B"
-QMDZ1FOA,"Manchester Fleet Management Ce"
-QMDZ1FOB,"Hartford Fleet Mgmt Center"
-QMDZ1FOC,"New York Metro Fleet Mgmt Cent"
-QMDZ1FOD,"Buffalo Fleet Mgmt Center"
-QMDZ1FOF,"Pittsburgh Fleet Management Ce"
-QMDZ1FOG,"Baltimore Fleet Management Cen"
-QMDZ1FOI,"Norfolk Fleet Management Cente"
-QMDZ1FS,"Branch A"
-QMDZ1FSA,"Section 1"
-QMDZ1FSS,"Section 2"
-QMDZ2,"Zone 2"
-QMDZ2FO,"Branch B"
-QMDZ2FOA,"Atlanta Fleet Management Cente"
-QMDZ2FOB,"Fayetteville Fleet Management"
-QMDZ2FOC,"Cocoa Beach Fleet Management C"
-QMDZ2FOD,"Fort Walton Beach Fleet Manage"
-QMDZ2FOE,"Louisville Fleet Management Ce"
-QMDZ2FOF,"Milwaukee Fleet Management Cen"
-QMDZ2FOG,"Chicago Fleet Management Cente"
-QMDZ2FOH,"Dayton Fleet Management Center"
-QMDZ2FS,"Branch A"
-QMDZ2FSA,"Section 1"
-QMDZ2FSS,"Section 2"
-QMDZ3,"Zone 3"
-QMDZ3FO,"Branch B"
-QMDZ3FOA,"Kansas City Fleet Management C"
-QMDZ3FOB,"St. Louis Fleet Management Cen"
-QMDZ3FOC,"Fort Worth Fleet Management Ce"
-QMDZ3FOD,"Oklahoma City Fleet Management"
-QMDZ3FOE,"San Antonio Fleet Management C"
-QMDZ3FOF,"El Paso Fleet Management Cente"
-QMDZ3FOG,"Denver Fleet Management Center"
-QMDZ3FOH,"Bismark Fleet Management Cente"
-QMDZ3FOI,"Salt Lake City Fleet Managemen"
-QMDZ3FOJ,"Gallup Fleet Management Center"
-QMDZ3FS,"Branch A"
-QMDZ3FSA,"Section 1"
-QMDZ3FSS,"Section 2"
-QMDZ4,"Zone 4"
-QMDZ4FC,"Branch C"
-QMDZ4FCA,"Auburn Fleet Management Center"
-QMDZ4FCB,"Honolulu Fleet Management Cent"
-QMDZ4FCC,"Anchorage Fleet Management Cen"
-QMDZ4FO,"Branch B"
-QMDZ4FOA,"San Francisco Fleet Mgmt Cente"
-QMDZ4FOB,"San Diego Fleet Mgmt Center"
-QMDZ4FOD,"Phoenix Fleet Mgmt Center"
-QMDZ4FOF,"Vancouver Fleet Mgmt Center"
-QMDZ4FOI,"Los Angeles Fleet Management C"
-QMDZ4FS,"Branch A"
-QMDZ4FSA,"Section 1"
-QMDZ4FSS,"Section 2"
-QMDZA,"Management and Program Support"
-QMDZAA,"Program Support Center"
-QME,"Emergency Management Program O"
-QP,"Office of Strategy and Innovat"
-QPA,"Office of Strategy and Governa"
-QPAA,"Digital Consulting Division"
-QPAB,"FAS Str. Gov. Com. Prog. Mgmt."
-QPAC,"Government-wide Acq. Svcs. Div"
-QPACA,"Branch A"
-QPACB,"Branch B"
-QPAD,"Workforce Transformation Divis"
-QPADA,"Branch A"
-QPADB,"Branch B"
-QPAE,"Strategic Planning and Perf. D"
-QPAEA,"Branch A"
-QPAEB,"Branch B"
-QPB,"Office of Operations and Innov"
-QPBA,"Product Owner Division"
-QPBAA,"Branch A"
-QPBAB,"Branch B"
-QPBAC,"Branch C"
-QPBB,"Enterprise Systems Division"
-QPBC,"Process Improvement Division"
-QPBD,"Enterprise Data Division"
-QPBE,"Stakeholder Division"
-QPC,"Office of Management and Commu"
-QPCA,"Management and Program Support"
-QPCB,"Communication and Engagement D"
-QQ2F,"Branch F"
-QQGC,"Branch C"
-QR,"Ofc. of Prof. Svcs. & Human Ca"
-QR1,"Deputy Assistant Commissioner"
-QR1A,"Office of Contracting Operatio"
-QR1AA,"Contracting Division 1"
-QR1AAA,"Branch A"
-QR1AAB,"Branch B"
-QR1AAC,"Branch C"
-QR1AAD,"Branch D"
-QR1AB,"Contracting Division 2"
-QR1ABA,"Branch A"
-QR1ABB,"Branch B"
-QR1ABC,"Branch C"
-QR1ABD,"Branch D"
-QR1AC,"Contracting Division 3"
-QR1ACA,"Branch A"
-QR1ACB,"Branch B"
-QR1ACC,"Branch C"
-QR1ACD,"Branch D"
-QR1AD,"Contracting Division 4"
-QR1ADA,"Branch A"
-QR1ADB,"Branch B"
-QR1ADC,"Branch C"
-QR1ADD,"Branch D"
-QR1B,"Office of Program Operations"
-QR1BA,"Center for Professional Svcs."
-QR1BAA,"Prof. Svcs. Program Mgmt. Divi"
-QR1BAAA,"Branch A"
-QR1BAB,"Gov-wide Strtgc Int. & Bus. In"
-QR1BABA,"Branch A"
-QR1BABB,"Branch B"
-QR1BAC,"Direct Client Support Division"
-QR1BACA,"Branch A"
-QR1BACB,"Branch B"
-QR1BAD,"Stakeholder Engagement Divisio"
-QR1BADA,"Branch A"
-QR1BADB,"Branch B"
-QR1BADC,"Branch C"
-QR1BB,"Center for Charge Card Managem"
-QR1BBA,"Division 1"
-QR1BBB,"Division 2"
-QR1C,"Office of Business Operations"
-QR1CA,"Program Accountability Divisio"
-QR1CB,"Supplier Accountability Divisi"
-QR1CBA,"Branch A"
-QR1CBB,"Branch B"
-QR1CBC,"Branch C"
-QR1CC,"Mgmt. Support & Workforce Dev."
-QR1CD,"Technology Integration Divisio"
-QR2,"Office of Enterprise Strategy"
-QRAAA,"Branch A"
-QS,"Office of General Supplies and"
-QSA,"Office of Program and Supplier"
-QSAA,"Program Accountability Divisio"
-QSAAA,"Contract Quality and Audit Bra"
-QSAB,"Supplier Accountability Divisi"
-QSABA,"Supplier Management Branch"
-QSABB,"Supplier Assessment Branch"
-QSABBA,"Section 1"
-QSABBB,"Section 2"
-QSB,"Office of Business Operations"
-QSBA,"Human Resources and Program Su"
-QSBB,"Financial Analysis Division"
-QSBC,"Strategic Initiatives and Busi"
-QSBD,"Stakeholder Engagement Divisio"
-QSC,"Office of Contract Operations"
-QSCA,"MAS Contracting Division"
-QSCAA,"MAS Office Supply Branch"
-QSCAAA,"Section 1"
-QSCAAB,"Section 2"
-QSCAB,"MAS Office Management Branch"
-QSCABA,"Section 1"
-QSCABB,"Section 2"
-QSCABC,"Section 3"
-QSCABD,"Section 4"
-QSCAC,"MAS Facilities and Hardware Br"
-QSCACA,"Section 1"
-QSCACB,"Section 2"
-QSCACC,"Section 3"
-QSCAD,"MAS General Products Branch"
-QSCADA,"Section 1"
-QSCADB,"Section 2"
-QSCADC,"Section 3"
-QSCADD,"Section 4"
-QSCAE,"MAS Administrative Contracting"
-QSCAEA,"Section 1"
-QSCAEB,"Section 2"
-QSCB,"Special and Assisted Contracti"
-QSCBA,"Special Contracting Branch A"
-QSCBB,"Special Contracting Branch B"
-QSCBC,"Assisted Contracting Branch A"
-QSCBCA,"Section 1"
-QSCBCB,"Section 2"
-QSCBCC,"Section 3"
-QSCBD,"Assisted Contracting Branch B"
-QSCBDA,"Section 1"
-QSCBDB,"Section 2"
-QSCBDC,"Section 3"
-QSCC,"Supply Chain Management Contra"
-QSCCAA,"Section 1"
-QSCCAB,"Section 2"
-QSCCAC,"Section 3"
-QSCCB,"SCM General Products Branch"
-QSCCBA,"Section 1"
-QSCCBB,"Section 2"
-QSCCBC,"Section 3"
-QSCCC,"SCM Facilities and Hardware Br"
-QSCCCA,"Section 1"
-QSCCCB,"Section 2"
-QSCCCC,"Section 3"
-QSD,"Office of Program Operations"
-QSDA,"Retail Operations Division"
-QSDAA,"Operations Branch"
-QSDAAA,"Section 1"
-QSDAAB,"Section 2"
-QSDAABA,"Unit 1"
-QSDAB,"Strategic Integration Branch"
-QSDB,"Operations Division"
-QSDBA,"Commercial Platform Branch"
-QSDBB,"Category Management and MAS Br"
-QSDBC,"Business Development Branch"
-QSDBD,"Special Projects Branch"
-QSDC,"Personal Property Operations D"
-QSDCA,"Utilization and Disposal Branc"
-QSDCB,"Sales Branch"
-QSDCC,"Mid-Atlantic Branch"
-QSDCCA,"Mid-Atlantic Zone North Sectio"
-QSDCCB,"Mid-Atlantic Zone South Sectio"
-QSDCD,"Southeast Great Lakes Branch"
-QSDCDA,"Southeast Great Lakes Utilizat"
-QSDCDB,"Southeast Great Lakes Sales Se"
-QSDCDC,"Southeast Great Lakes Program"
-QSDCE,"Southwest Central Branch"
-QSDCEA,"Southwest Central Utilization"
-QSDCEB,"Southwest Central Sales Sectio"
-QSDCEBA,"Unit 1"
-QSDCEBB,"Unit 2"
-QSDCF,"Pacific Rim Branch"
-QSDCFA,"Pacific Rim Utilization and Di"
-QSDCFB,"Pacific Rim Sales Section"
-QSDCG,"National Capital Branch"
-QSDCGA,"National Capital Zone Utilizat"
-QSDCGB,"National Capital Zone Sales Se"
-QSDCGC,"National Capital Zone PPC Sect"
-QSDD,"Supply Chain Operations Divisi"
-QSDDA,"Supply Operations Branch"
-QSDDAA,"Operations Section"
-QSDDAAA,"Unit 1"
-QSDDAAB,"Unit 2"
-QSDDABA,"Unit 1"
-QSDDABB,"Unit 2"
-QSDDB,"Commodities Management Branch"
-QSDDBA,"Engineering Section"
-QSDDBAA,"Unit 1"
-QSDDBAB,"Unit 2"
-QSDDBAC,"Unit 3"
-QSDDBAD,"Unit 4"
-QSDDBB,"Cataloging Section"
-QSDDBBA,"Unit 1"
-QSDDBBB,"Unit 2"
-QSDDC,"Strategy and Solutions Develop"
-QSDDCA,"Policy and Strategy Section"
-QSDDCB,"COCOM Solutions Section"
-QT,"Office of IT Category"
-QT0A,"IT Vendor Management Office"
-QT1,"Deputy AC Ofc of IT Category"
-QT1A,"Mgmt Support & Workforce Dev D"
-QT1AA,"Branch A"
-QT1AB,"Branch B"
-QT1B,"Technology Governance & Mgmt D"
-QT1C,"Accountability & Opr'l Analysi"
-QT1D,"Office of Portfolio Mgmt"
-QT1E,"Enterprise Strategy Division"
-QT1EA,"Branch A"
-QT1EB,"Branch B"
-QT1F,"Enterprise Stakeholder Engagem"
-QT1FA,"Branch A"
-QT1FB,"Branch B"
-QT2,"Deputy AC Acquisition"
-QT2A,"Office of IT (Non-MAS) Acquisi"
-QT2AA,"Branch A"
-QT2AB,"Branch B"
-QT2B,"Acquisition Mission Support Di"
-QT2BA,"Branch A"
-QT2BB,"Branch B"
-QT2CA,"Branch A"
-QT2F,"Office of Acquisition Operatio"
-QT2F1,"Office of Acquisition Ops. & S"
-QT2F1AA,"Contract Division 1"
-QT2F1AAA,"Branch A"
-QT2F1AAB,"Branch B"
-QT2F1AAC,"Branch C"
-QT2F1ABA,"Branch A"
-QT2F1ABB,"Branch B"
-QT2F1ABC,"Branch C"
-QT2F1ACA,"Branch A"
-QT2F1ACB,"Branch B"
-QT2F1ACC,"Branch C"
-QT2F1BA,"Contract Division 1"
-QT2F1BAA,"Branch A"
-QT2F1BAB,"Branch B"
-QT2F1BAC,"Branch C"
-QT2F1BB,"Contract Division 2"
-QT2F1BBA,"Branch A"
-QT2F1BBB,"Branch B"
-QT2F1BBC,"Branch C"
-QT2F1BC,"Branch C"
-QT2F1BCA,"Branch A"
-QT2F1BCB,"Branch B"
-QT2F1BCC,"Branch C"
-QT2F1CA,"Contract Division 1"
-QT2F1CAA,"Branch A"
-QT2F1CAB,"Branch B"
-QT2F1CB,"Contract Division 2"
-QT2F1CBA,"Branch A"
-QT2F1CBB,"Branch B"
-QT2F1CCA,"Branch A"
-QT2F1CCB,"Branch B"
-QT2F1DA,"Branch A"
-QT2F2,"Office of Interagency Contract"
-QT2F2AA,"Interagency Acquisitions Divis"
-QT2F2AAA,"Branch A"
-QT2F2AAB,"Branch B"
-QT2F2AB,"Interagency Acquisitions Divis"
-QT2F2ABA,"Branch A"
-QT2F2BA,"Interagency Acquisitions Divis"
-QT2F2BAA,"Branch A"
-QT2F2BAB,"Branch B"
-QT2F2BBA,"Branch A"
-QT2F3,"Ofc. of Enterprise Telecoms So"
-QT2F3AAA,"Branch A"
-QT2F3AAB,"Branch B"
-QT2F3ABA,"Branch A"
-QT2F3ABB,"Branch B"
-QT2F3BA,"Contract Division 1"
-QT2F3BAA,"Branch A"
-QT2F3BAB,"Branch B"
-QT2F3BBA,"Branch A"
-QT2F3BBB,"Branch B"
-QT2F4,"Office of Governance"
-QT2F4A,"Governance Division 1"
-QT2F4AA,"Branch A"
-QT2F4AB,"Branch B"
-QT2F4BB,"Branch B"
-QT2F5,"Office of Supply Chain & Risk"
-QT2F5AAA,"Branch A"
-QT2F5AAB,"Branch B"
-QT2F5ABA,"Branch A"
-QT2F5ABB,"Branch B"
-QT3,"Deputy AC Category Mgmt"
-QT3A,"IT Security Division"
+QMDZ1,Zone 1
+QMDZ1FC,Branch C
+QMDZ1FCA,San Juan Fleet Mgmt Center
+QMDZ1FCB,European Fleet Mgmt Center
+QMDZ1FCC,DC Metro Fleet Management Cent
+QMDZ1FO,Branch B
+QMDZ1FOA,Manchester Fleet Management Ce
+QMDZ1FOB,Hartford Fleet Mgmt Center
+QMDZ1FOC,New York Metro Fleet Mgmt Cent
+QMDZ1FOD,Buffalo Fleet Mgmt Center
+QMDZ1FOF,Pittsburgh Fleet Management Ce
+QMDZ1FOG,Baltimore Fleet Management Cen
+QMDZ1FOI,Norfolk Fleet Management Cente
+QMDZ1FOJ,Philadelphia Fleet Management
+QMDZ1FS,Branch A
+QMDZ1FSA,Section 1
+QMDZ1FSS,Section 2
+QMDZ2,Zone 2
+QMDZ2FO,Branch B
+QMDZ2FOA,Atlanta Fleet Management Cente
+QMDZ2FOB,Fayetteville Fleet Management
+QMDZ2FOC,Cocoa Beach Fleet Management C
+QMDZ2FOD,Fort Walton Beach Fleet Manage
+QMDZ2FOE,Louisville Fleet Management Ce
+QMDZ2FOF,Milwaukee Fleet Management Cen
+QMDZ2FOG,Chicago Fleet Management Cente
+QMDZ2FOH,Dayton Fleet Management Center
+QMDZ2FS,Branch A
+QMDZ2FSA,Section 1
+QMDZ2FSS,Section 2
+QMDZ3,Zone 3
+QMDZ3FO,Branch B
+QMDZ3FOA,Kansas City Fleet Management C
+QMDZ3FOB,St. Louis Fleet Management Cen
+QMDZ3FOC,Fort Worth Fleet Management Ce
+QMDZ3FOD,Oklahoma City Fleet Management
+QMDZ3FOE,San Antonio Fleet Management C
+QMDZ3FOF,El Paso Fleet Management Cente
+QMDZ3FOG,Denver Fleet Management Center
+QMDZ3FOH,Bismark Fleet Management Cente
+QMDZ3FOI,Salt Lake City Fleet Managemen
+QMDZ3FOJ,Gallup Fleet Management Center
+QMDZ3FOK,Houston Fleet Management Cente
+QMDZ3FS,Branch A
+QMDZ3FSA,Section 1
+QMDZ3FSS,Section 2
+QMDZ4,Zone 4
+QMDZ4FC,Branch C
+QMDZ4FCA,Auburn Fleet Management Center
+QMDZ4FCB,Honolulu Fleet Management Cent
+QMDZ4FCC,Anchorage Fleet Management Cen
+QMDZ4FO,Branch B
+QMDZ4FOA,San Francisco Fleet Mgmt Cente
+QMDZ4FOB,San Diego Fleet Mgmt Center
+QMDZ4FOD,Phoenix Fleet Mgmt Center
+QMDZ4FOF,Vancouver Fleet Mgmt Center
+QMDZ4FOI,Los Angeles Fleet Management C
+QMDZ4FS,Branch A
+QMDZ4FSA,Section 1
+QMDZ4FSS,Section 2
+QMDZA,Management and Program Support
+QMDZAA,Program Support Center
+QME,Emergency Management Program O
+QP,Office of Strategy and Innovat
+QPA,Office of Strategy and Governa
+QPAA,Digital Consulting Division
+QPAB,FAS Str. Gov. Com. Prog. Mgmt.
+QPAC,Government-wide Acq. Svcs. Div
+QPACA,Branch A
+QPACB,Branch B
+QPAD,Workforce Transformation Divis
+QPADA,Branch A
+QPADB,Branch B
+QPAE,Strategic Planning and Perf. D
+QPAEA,Branch A
+QPAEB,Branch B
+QPB,Office of Operations and Innov
+QPBA,Product Owner Division
+QPBAA,Branch A
+QPBAB,Branch B
+QPBAC,Branch C
+QPBB,Enterprise Systems Division
+QPBC,Process Improvement Division
+QPBD,Enterprise Data Division
+QPBE,Stakeholder Division
+QPC,Office of Management and Commu
+QPCA,Management and Program Support
+QPCB,Communication and Engagement D
+QR,Ofc. of Prof. Svcs. & Human Ca
+QR1,Deputy Assistant Commissioner
+QR1A,Office of Contracting Operatio
+QR1AA,Contracting Division 1
+QR1AAA,Branch A
+QR1AAB,Branch B
+QR1AAC,Branch C
+QR1AAD,Branch D
+QR1AB,Contracting Division 2
+QR1ABA,Branch A
+QR1ABB,Branch B
+QR1ABC,Branch C
+QR1ABD,Branch D
+QR1AC,Contracting Division 3
+QR1ACA,Branch A
+QR1ACB,Branch B
+QR1ACC,Branch C
+QR1ACD,Branch D
+QR1AD,Contracting Division 4
+QR1ADA,Branch A
+QR1ADB,Branch B
+QR1ADC,Branch C
+QR1ADD,Branch D
+QR1B,Office of Program Operations
+QR1BA,Center for Professional Svcs.
+QR1BAA,Prof. Svcs. Program Mgmt. Divi
+QR1BAAA,Branch A
+QR1BAB,Gov-wide Strtgc Int. & Bus. In
+QR1BABA,Branch A
+QR1BABB,Branch B
+QR1BAC,Direct Client Support Division
+QR1BACA,Branch A
+QR1BACB,Branch B
+QR1BACC,Branch C
+QR1BAD,Stakeholder Engagement Divisio
+QR1BADA,Branch A
+QR1BADB,Branch B
+QR1BADC,Branch C
+QR1BB,Center for Charge Card Managem
+QR1BBA,Division 1
+QR1BBB,Division 2
+QR1C,Office of Business Operations
+QR1CA,Program Accountability Divisio
+QR1CB,Supplier Accountability Divisi
+QR1CBA,Branch A
+QR1CBB,Branch B
+QR1CBC,Branch C
+QR1CC,Mgmt. Support & Workforce Dev.
+QR1CD,Technology Integration Divisio
+QR2,Office of Enterprise Strategy
+QS,Office of General Supplies and
+QSA,Office of Program and Supplier
+QSAA,Program Accountability Divisio
+QSAAA,Contract Quality and Audit Bra
+QSAAB,Operational Guidance Branch
+QSAB,Supplier Accountability Divisi
+QSABA,Supplier Management Branch
+QSABB,Supplier Assessment Branch
+QSABBA,Section 1
+QSABBB,Section 2
+QSABBC,Section 3
+QSB,Office of Business Operations
+QSBA,Human Resources and Program Su
+QSBB,Financial Analysis Division
+QSBC,Strategic Initiatives and Busi
+QSBD,Stakeholder Engagement Divisio
+QSC,Office of Contract Operations
+QSCA,MAS Contracting Division
+QSCAA,MAS Office Supply Branch
+QSCAAA,Section 1
+QSCAAB,Section 2
+QSCAAC,Section 3
+QSCAB,MAS Office Management Branch
+QSCABA,Section 1
+QSCABB,Section 2
+QSCABC,Section 3
+QSCABD,Section 4
+QSCAC,MAS Facilities and Hardware Br
+QSCACA,Section 1
+QSCACB,Section 2
+QSCACC,Section 3
+QSCAD,MAS General Products Branch
+QSCADA,Section 1
+QSCADB,Section 2
+QSCADC,Section 3
+QSCADD,Section 4
+QSCAE,MAS Administrative Contracting
+QSCAEA,Section 1
+QSCAEB,Section 2
+QSCB,Special and Assisted Contracti
+QSCBA,Special Contracting Branch A
+QSCBB,Special Contracting Branch B
+QSCBC,Assisted Contracting Branch A
+QSCBCA,Section 1
+QSCBCB,Section 2
+QSCBCC,Section 3
+QSCBD,Assisted Contracting Branch B
+QSCBDA,Section 1
+QSCBDB,Section 2
+QSCBDC,Section 3
+QSCC,Supply Chain Management Contra
+QSCCA,SCM Office Supply and Manageme
+QSCCAA,Section 1
+QSCCAB,Section 2
+QSCCAC,Section 3
+QSCCAD,Section 4
+QSCCB,SCM General Products Branch
+QSCCBA,Section 1
+QSCCBB,Section 2
+QSCCBC,Section 3
+QSCCC,SCM Facilities and Hardware Br
+QSCCCA,Section 1
+QSCCCB,Section 2
+QSCCCC,Section 3
+QSD,Office of Program Operations
+QSDA,Customer Supply Center Divisio
+QSDAA,Operations Branch
+QSDAAA,Section 1
+QSDAAB,Section 2
+QSDAABA,Unit 1
+QSDAB,Strategic Integration Branch
+QSDB,Operations Division
+QSDBA,Commercial Platform Branch
+QSDBB,Category Management and MAS Br
+QSDBC,Business Development Branch
+QSDBD,Special Projects Branch
+QSDC,Personal Property Management D
+QSDCA,Utilization and Donation Branc
+QSDCB,Sales Branch
+QSDCBA,Sales Collection Section
+QSDCC,Northeast Capital Branch
+QSDCCA,Northeast Capital Utilization
+QSDCCAA,Unit 1
+QSDCCAB,Unit 2
+QSDCCB,Northeast Capital Sales Sectio
+QSDCCBA,Unit 1
+QSDCCBB,Unit 2
+QSDCCC,Northeast Capital Personal Pro
+QSDCD,Southeast Great Lakes Branch
+QSDCDA,Southeast Great Lakes Utilizat
+QSDCDB,Southeast Great Lakes Sales Se
+QSDCE,Southwest Central Branch
+QSDCEA,Southwest Central Utilization
+QSDCEB,Southwest Central Sales Sectio
+QSDCEBA,Unit 1
+QSDCEBB,Unit 2
+QSDCF,Pacific Rim Branch
+QSDCFA,Pacific Rim Utilization and Do
+QSDCFB,Pacific Rim Sales Section
+QSDD,Supply Chain Operations Divisi
+QSDDA,Supply Operations Branch
+QSDDAA,Operations Section
+QSDDAAA,Unit 1
+QSDDAAB,Unit 2
+QSDDAB,Transportation Section
+QSDDABA,Unit 1
+QSDDABB,Unit 2
+QSDDB,Commodities Management Branch
+QSDDBA,Engineering Section
+QSDDBAA,Unit 1
+QSDDBAB,Unit 2
+QSDDBAC,Unit 3
+QSDDBAD,Unit 4
+QSDDBB,Cataloging Section
+QSDDBBA,Unit 1
+QSDDBBB,Unit 2
+QSDDC,Strategy and Solutions Develop
+QSDDCA,Policy and Strategy Section
+QSDDCB,COCOM Solutions Section
+QT,Office of IT Category
+QT0A,IT Vendor Management Office
+QT1,Deputy AC Ofc of IT Category
+QT1A,Mgmt Support & Workforce Dev D
+QT1AA,Branch A
+QT1AB,Branch B
+QT1B,Technology Governance & Mgmt D
+QT1C,Accountability & Opr'l Analysi
+QT1D,Enterprise Intelligence Divisi
+QT1EA,Branch A
+QT1EB,Branch B
+QT1FA,Branch A
+QT1FB,Branch B
+QT1G,Office of the Chief of Staff
+QT2,Deputy AC Acquisition
+QT2A,Innovation Division
+QT2AA,Branch A
+QT2AB,Branch B
+QT2B,Acquisition Mission Support Di
+QT2BA,Branch A
+QT2BB,Branch B
+QT2F,Office of Acquisition Operatio
+QT2F1,Office of Acquisition Ops. & S
+QT2F1A,Acquisition Ops. & Solutions S
+QT2F1AA,Contract Division 1
+QT2F1AAA,Branch A
+QT2F1AAB,Branch B
+QT2F1AAC,Branch C
+QT2F1AB,Contract Division 2
+QT2F1ABA,Branch A
+QT2F1ABB,Branch B
+QT2F1ABC,Branch C
+QT2F1AC,Contract Division 3
+QT2F1ACA,Branch A
+QT2F1ACB,Branch B
+QT2F1ACC,Branch C
+QT2F1B,Acquisition Ops. & Solutions S
+QT2F1BA,Contract Division 1
+QT2F1BAA,Branch A
+QT2F1BAB,Branch B
+QT2F1BAC,Branch C
+QT2F1BB,Contract Division 2
+QT2F1BBA,Branch A
+QT2F1BBB,Branch B
+QT2F1BBC,Branch C
+QT2F1BC,Contract Division 3
+QT2F1BCA,Branch A
+QT2F1BCB,Branch B
+QT2F1BCC,Branch C
+QT2F1C,Acquisition Ops. & Solutions S
+QT2F1CA,Contract Division 1
+QT2F1CAA,Branch A
+QT2F1CAB,Branch B
+QT2F1CB,Contract Division 2
+QT2F1CBA,Branch A
+QT2F1CBB,Branch B
+QT2F1CC,Contract Division 3
+QT2F1CCA,Branch A
+QT2F1CCB,Branch B
+QT2F2,Office of Interagency Contract
+QT2F2A,Interagency Acquisitions Svc.
+QT2F2AA,Interagency Acquisitions Divis
+QT2F2AAA,Branch A
+QT2F2AAB,Branch B
+QT2F2AB,Interagency Acquisitions Divis
+QT2F2ABA,Branch A
+QT2F2B,Interagency Acquisitions Svc.
+QT2F2BA,Interagency Acquisitions Divis
+QT2F2BAA,Branch A
+QT2F2BAB,Branch B
+QT2F2BB,Interagency Acquisitions Divis
+QT2F2BBA,Branch A
+QT2F3,Ofc. of Enterprise Telecoms So
+QT2F3A,Enterprise Telecoms Sol. Acq.
+QT2F3AA,Contract Division 1
+QT2F3AAA,Branch A
+QT2F3AAB,Branch B
+QT2F3AB,Contract Division 2
+QT2F3ABA,Branch A
+QT2F3ABB,Branch B
+QT2F3B,Enterprise Telecoms Sol. Acq.
+QT2F3BA,Contract Division 1
+QT2F3BAA,Branch A
+QT2F3BAB,Branch B
+QT2F3BB,Contract Division 2
+QT2F3BBA,Branch A
+QT2F3BBB,Branch B
+QT2F4,Office of Governance
+QT2F4A,Governance Division 1
+QT2F4AA,Branch A
+QT2F4AB,Branch B
+QT2F4B,Governance Division 2
+QT2F4BA,Branch A
+QT2F4BB,Branch B
+QT2F5,Office of Supply Chain & Risk
+QT2F5A,Supply Chain Risk Mgmt. Servic
+QT2F5AA,Compliance Division
+QT2F5AAA,Branch A
+QT2F5AAB,Branch B
+QT2F5AB,Supply Chain Risk Management D
+QT2F5ABA,Branch A
+QT2F5ABB,Branch B
+QT3,Deputy AC Category Mgmt
+QT3A,IT Security Division
 QT3A1,"Deputy, IT Security Division"
-QT3A1A,"Branch A"
-QT3A1B,"Branch B"
-QT3AA,"Branch A"
-QT3AB,"Branch B"
-QT3B,"Identity Credential & Access M"
-QT3BA,"Branch A"
-QT3BB,"Branch B"
-QT3BC,"Branch C"
-QT3C,"Ofc of Enterprise Technology S"
+QT3A1A,Branch A
+QT3A1B,Branch B
+QT3AA,Branch A
+QT3AB,Branch B
+QT3B,Identity Credential & Access M
+QT3BA,Branch A
+QT3BB,Branch B
+QT3BC,Branch C
+QT3BD,Branch D
+QT3C,Ofc of Enterprise Technology S
 QT3C1,"Deputy, Ofc of Enterprise Tech"
-QT3CI,"Program Management Division"
-QT3CIA,"Branch A"
-QT3CIB,"Branch B"
-QT3CJ,"Business Management Division"
-QT3CJA,"Branch A"
-QT3CJAA,"Section 1"
-QT3CJAB,"Section 2"
-QT3CJAC,"Section 3"
-QT3CJB,"Branch B"
-QT3CJC,"Branch C"
-QT3CK,"Technical Account Management D"
-QT3CKA,"Branch A"
-QT3CKAA,"Section 1"
-QT3CKAB,"Section 2"
-QT3CKAC,"Section 3"
-QT3CKB,"Branch B"
-QT3CKBA,"Section 1"
-QT3CKBB,"Section 2"
-QT3CKC,"Branch C"
-QT3CL,"Operations & System Management"
-QT3CLA,"Branch A"
-QT3CLAA,"Section 1"
-QT3CLAB,"Section 2"
-QT3CLAC,"Section 3"
-QT3CLAD,"Section 4"
-QT3CLB,"Branch B"
-QT3CLBA,"Section 1"
-QT3CLBB,"Section 2"
-QT3CLC,"Branch C"
-QT3G,"Office of IT Svcs"
+QT3CI,Program Management Division
+QT3CIA,Branch A
+QT3CIB,Branch B
+QT3CJ,Business Management Division
+QT3CJA,Branch A
+QT3CJAA,Section 1
+QT3CJAB,Section 2
+QT3CJAC,Section 3
+QT3CJB,Branch B
+QT3CJC,Branch C
+QT3CK,Technical Account Management D
+QT3CKA,Branch A
+QT3CKAA,Section 1
+QT3CKAB,Section 2
+QT3CKAC,Section 3
+QT3CKB,Branch B
+QT3CKBA,Section 1
+QT3CKBB,Section 2
+QT3CKC,Branch C
+QT3CL,Operations & System Management
+QT3CLA,Branch A
+QT3CLAA,Section 1
+QT3CLAB,Section 2
+QT3CLAC,Section 3
+QT3CLAD,Section 4
+QT3CLB,Branch B
+QT3CLBA,Section 1
+QT3CLBB,Section 2
+QT3CLC,Branch C
+QT3G,Office of IT Svcs
 QT3G1,"Deputy, Office of IT Services"
-QT3GA,"Business and Operations Divisi"
-QT3GAA,"Branch A"
-QT3GAB,"Branch B"
-QT3GD,"Program Support Division"
-QT3GDA,"Branch A"
-QT3GDB,"Branch B"
-QT3GE,"Solutions Development Division"
-QT3J,"Office of Category Mgmt"
-QT3JA,"Category Mission Support Divis"
-QT3JC,"Customer Strategic Solutions D"
-QT3JCA,"Branch A"
-QT3JCB,"Branch B"
-QT3K,"Office of IT Products"
-QT3KA,"Software Div"
-QT3KAA,"Branch A"
-QT3KAB,"Branch B"
-QT3KB,"Hardware Div"
-QUBC,"Center C"
-QV,"Office of Policy and Complianc"
-QVA,"Acquisition Workforce Division"
-QVB,"Acquisition Policy Division"
-QVBA,"Branch A"
-QVBB,"Branch B"
-QVC,"Acquisition Management Divisio"
-QVCA,"Branch A"
-QVCB,"Branch B"
-QVD,"Acquisition Evidence & Analysi"
-QVDA,"Branch A"
-QVDB,"Branch B"
-QVE,"Management and Oversight Divis"
-QVF,"Office of Supply Chain Risk Ma"
-QVG,"Office of Industrial Climate"
-S,"Ofc of Congrl & Intergovtl Aff"
-WA,"Office of the Regional Adminis"
-WP,"Office of the Regional Commiss"
-WPD,"Office of Planning & Design Qu"
-WPD1,"Planning and Design Quality Di"
-WPD1A,"Architecture Branch"
-WPD1B,"Engineering Branch"
-WPD1C,"Interior Design Branch"
-WPD1D,"Planning Branch"
-WPD1E,"Fine Arts Branch"
-WPD1F,"Historic Preservation Branch"
-WPH,"Office of Acquisition"
-WPH1,"Deputy Director"
-WPH1A,"Construction Services Center"
-WPH1AA,"Construction Center 1"
-WPH1AB,"Construction Center 2"
-WPH1AC,"Construction Center 3"
-WPH1AD,"Construction Center 4"
-WPH1B,"Building Services Division"
-WPH1BA,"Services Center 1"
-WPH1BB,"Services Center 2"
-WPH1BC,"Services Center 3"
-WPH1BD,"Services Center 4"
-WPH1D,"Special Programs Division"
-WPH1DA,"White House Branch"
-WPH1DB,"Acquisition Regional Support B"
-WPH1DD,"FDA White Oak Branch"
-WPH2,"Office of the Chief of Staff"
-WPH20A,"Workforce Resources Branch"
-WPH2AA,"Compliance Branch"
-WPH2AB,"Policy Branch"
-WPH2AC,"Systems and Data Analytics Bra"
-WPI,"Office of Design and Construct"
-WPIA,"Capital Projects Division"
-WPIC,"Lease Projects Division"
-WPID,"Small Projects Division"
-WPIDA,"Project Planning and Execution"
-WPIDAA,"Potomac Team"
-WPIDAB,"Metropolitan Team"
-WPIDB,"Project Planning and Execution"
-WPIDBA,"Triangle Team"
-WPIDBAA,"Unit 1"
-WPIDBAB,"Unit 2"
-WPIDBC,"State Team"
-WPIDC,"Project Planning and Execution"
-WPIDCA,"Project Delivery and Developme"
-WPIDCC,"Plans and Controls Team"
-WPIDCD,"DC Service Team A"
-WPIDCE,"DC Service Team B"
-WPIDD,"White House Project Plng & Exe"
-WPIE,"Program Management Division"
-WPIEA,"Project Funding & Admin Suppor"
-WPIEB,"Project Operations Branch"
-WPIF,"Leasing Project Management Div"
-WPIFA,"Department of State Branch"
-WPIFB,"DOD & Exec Ofc of the Pres & C"
-WPIFC,"Department of Health and Human"
-WPIFD,"Department of Homeland Securit"
-WPIFE,"Department of Justice Branch"
-WPM,"Office of Facilities Managemen"
-WPM1,"Office of Facilities Mgmt Depu"
-WPM1A,"DC Service Center"
-WPM1B,"Metropolitan Service Center"
-WPM1BA,"White Oaks Facilities Complex"
-WPM1C,"Potomac Service Center"
-WPM1CA,"St. Elizabeth Campus"
-WPM1D,"Triangle Service Center"
-WPM1DA,"Ronald Reagan Bldg & Int'l Trd"
-WPM1E,"White House Service Center"
-WPMA,"Office of Facilities Mgmt Prog"
-WPMAA,"Facilities Program Support Div"
-WPMAA1D,"Resource Applications Branch"
-WPMAA1E,"Planning & Analytics Branch"
-WPMAAC,"Resource Management Liaison Br"
-WPMAAE,"Special Programs Branch"
-WPMAB,"Facilities Mgmt & Svcs Program"
-WPMABB,"Operations & Maintenance Branc"
-WPMABE,"Energy & Sustainability Branch"
+QT3GA,Business and Operations Divisi
+QT3GAA,Branch A
+QT3GAB,Branch B
+QT3GD,Program Support Division
+QT3GDA,Branch A
+QT3GDB,Branch B
+QT3GE,Solutions Development Division
+QT3J,Office of Category Mgmt
+QT3JA,Category Mission Support Divis
+QT3JC,Customer Strategic Solutions D
+QT3JCA,Branch A
+QT3JCB,Branch B
+QT3K,Office of IT Products
+QT3KA,Software Div
+QT3KAA,Branch A
+QT3KAB,Branch B
+QT3KB,Hardware Div
+QV,Office of Policy and Complianc
+QVA,Acquisition Workforce Division
+QVB,Acquisition Policy Division
+QVBA,Branch A
+QVBB,Branch B
+QVC,Acquisition Management Divisio
+QVCA,Branch A
+QVCB,Branch B
+QVD,Acquisition Evidence & Analysi
+QVDA,Branch A
+QVDB,Branch B
+QVE,Management and Oversight Divis
+QVF,Office of Supply Chain Risk Ma
+QVG,Office of Industrial Climate
+I,Office of GSA IT
+ID,Office of the Deputy CIO
+IDC,Office of Corporate IT Service
+IDCA,Enterprise Systems Support Div
+IDCAA,Corporate Liaison Branch
+IDCAB,Messaging and Collaboration Br
+IDCAC,Website and Platform Managemen
+IDCB,Enterprise Platform Solutions
+IDCBA,Apps. Development & Solutions
+IDCBB,Enterprise Doc. Mgmt. Solution
+IDCC,HR & Payroll IT Services Divis
+IDCCA,HR IT Services Branch
+IDCCB,Payroll IT Services Branch
+IDCD,FM & OGP IT Services Division
+IDCDA,FM IT Services Branch
+IDCDB,OGP IT Services Branch
+IDCE,PFS Technical Services Divisio
+IDCEA,Database Administration Branch
+IDCEB,Systems Engineering Branch
+IDP,Office of Public Building IT S
+IDPA,Business Integration Division
+IDPAA,Governance Branch
+IDPAB,Business Engagement Branch
+IDPB,Building Technology Services D
+IDPBA,Building IT Operations & Suppo
+IDPBB,Emerging Building Technologies
+IDPC,Tech. Ops. & Bus. Systems Supp
+IDPCA,Business Systems Support Branc
+IDPCB,Technical Operations Branch
+IDPD,Data Integration Svcs. & Cloud
+IDPDA,Data and Integration Services
+IDPDB,Cloud Operations Branch
+IDPE,Solutions Arch. & Modernizatio
+IDPEA,Solutions Arch. & Innovation B
+IDPEB,Modernization Operations Branc
+IDQ,Office of Acquisition IT Servi
+IDQA,Center for FAS Managed Service
+IDQAA,Fleet Systems Division
+IDQAB,IAE Systems Division
+IDQAC,Per. Prop & Travel & Trans. Sy
+IDQB,Center for FAS Acquisition Sys
+IDQBA,E-Commerce Systems Division
+IDQBB,FAS IT Modernization Platform
+IDQBC,Cloud Integration Shared Svcs.
+IDQBD,Contract Lifecycle Systems Div
+IDQBE,Market Research & Digital Exp.
+IDQBF,Assisted Acquisition Systems D
+IDQBG,Supply & Order Mgmt. Systems D
+IDT,Office of Digital Infrastructu
+IDTO,Infrastructure Management Divi
+IDTOA,Platform Infrastructure Mgmt.
+IDTOB,Identity Infrastructure Mgmt.
+IDTOC,Network Comms. Infra. Mgmt. Br
+IDTOD,Unified Comms. Infra. Mgmt. Br
+IDTOE,Facilities Infrastructure Mgmt
+IDTS,Infrastructure Solutions Divis
+IDTSA,Solutions Development Branch
+IDTSB,Enterprise Projects Branch A
+IDTSC,Enterprise Projects Branch B
+IDTSD,Solutions Implementation Branc
+IDTSE,Solutions Release and Deployme
+IDTX,End User Svcs. & Customer Exp.
+IDTXA,IT Support Services Branch
+IDTXB,Regional Customer Exp. Mgmt. B
+IDTXC,Customer Infra. Product Mgmt.
+IDTXD,Supply Chain Management Branch
+IE,Ofc. of Enterprise Data & Priv
+IEA,Information and Data Operation
+IEB,Data Governance and Privacy Di
+IEC,Records Management Division
+IED,IT Accessibility Division
+IR,Office of Digital Management
+IRA,Policy & Investment Mgmt. Divi
+IRB,User Experience and Usability
+IRBA,Training and Usability Branch
+IRBB,Digital Comms. & IT Emp. Exp.
+IRC,Portfolio Strategy and Analysi
+IRCA,Portfolio Services Branch
+IRCB,Support Services Branch
+IS,Ofc of the Chief Info Security
+ISE,Security Engineering Division
+ISI,ICAM Shared Services Division
+ISO,Security Operations Division
+ISP,Policy and Compliance Division
+IST,ISSO Support Division
+ISTE,Enterprise Appl & Infrast Supp
+ISTF,Staff Offices ISSO Support Bra
+IU,Office of the Chief Technology
+IUB,Solutions Strategy Division
+IUC,Service Delivery Division
+A,Office of the Administrator
+AC,Office of the Chief of Staff
+AD,Office of the Deputy Administr
+ADA,Technology Modernization Fund
+ADAA,Integrator Division
+ADAB,Proposal Development Division
+ADAC,Investment Management Division
+ADAD,Insights Division
+AG,Ofc of the Associate Administr
+Y,Fed Permitting Improvement Ste
+H,Office of Administrative Servi
+H1,Ofc of Deputy Chief Admin Serv
+H1A,Office of Internal Acquisition
+H1AA,Acquisition Operations Divisio
+H1AW,Acquisition Services Division
+H1C,Office of Travel & Charge Card
+H1CC,Charge Card Division
+H1CT,Travel & Event Program Div
+H1P,Ofc Exec Sec & Prsl & Cngl Agc
+H1PA,Executive Secretariat Division
+H2,Office of Workplace Management
+H2A,DC Workplace Services Division
+H2AA,Central Office Branch
+H2B,Operational Support Division
+H2C,Regional Workplace Services Di
+H2CA,Eastern Zone
+H2CB,Midwestern Zone
+H2CC,Western Zone
+O,Ofc of Customer Experience
+B,Office of the Chief Financial
+BA,Audit Management & Accountabil
+BAA,Audit Management Division
+BAI,Internal Controls Division
+BB,Office of Budget
+BBC,"Budget Control, Oversight & Fo"
+BBF,FAS Budget Division
+BBFA,FAS Regional Support Branch
+BBP,PBS Budget Division
+BBW,WCF & Approp Accts Budget Divi
+BG,Office of Financial Management
+BG1,Financial Operations Office
+BG1F,FAS Financial Services Divisio
+BG1FA,AAS Financial Ops. & Controls
+BG1FB,FAS Financial Ops. & Controls
+BG1FC,Reimbursable Agreemnts-Certifi
+BG1FD,Reimbursable Agreemnts-Accepta
+BG1P,PBS Financial Operations Divis
+BG1PA,Reimbursable Agreements & Cont
+BG1PB,"Fin. Policy, Compliance & Envi"
+BG1PC,PBS Property and Lease Account
+BG2,Pegasys Financial Services
+BG2A,Application Systems Developmen
+BG2AA,Analysis Branch
+BG2AB,Development Branch
+BG2AC,Testing Branch
+BG2B,Fin. Mgmt. Systms Ops. & Maint
+BG2BA,Change Control Branch
+BG2BB,Systems Maintenance Branch
+BG2D,Financial Services Division
+BG2DA,PBS Payments Branch
+BG2DAA,Utilities Payments Group
+BG2DAB,Leases Group
+BG2DAC,"VITAP, Const, Direct & Misc Pa"
+BG2DBA,Disbursement Control Group
+BG2DBB,Operations Group
+BG2DC,PBS Financial Analysis Branch
+BG2DCA,PBS Financial Analysis Group
+BG2DCB,Property Group
+BG2DCC,Cash Group
+BG2DD,PBS Accounts Receivable Branch
+BG2DDA,Cash Collections Group
+BG2DDB,Debt Collections Group
+BG2DDC,Rent Group
+BG2DDD,RWA Group
+BG2E,Financial Info. & Ops Division
+BG2EA,Financial Information Control
+BG2EAA,Gen. Accounting & Fin. Analysi
+BG2EAB,FAS Financial Analysis Section
+BG2EAC,"Billings, FAS IT & General Fun"
+BG2EAD,Sales and Claims Section
+BG2EAE,"Billings, FAS Supply, and Flee"
+BG2EAF,Cash Collections Section
+BG2EB,External Services Branch
+BG2EBA,Reports and Control Section
+BG2EBB,Accounts Payable Section
+BG2EC,Financial Ops. & Disbursement
+BG2ECB,"Travel, Relo. & Credit Cards S"
+BG2ECC,Operations Section
+BG2ECD,General Programs and IT Sectio
+BG2ECE,Federal Pay / Transportation S
+BGA,Accounting & Financial Reporti
+BGAA,Reporting Branch
+BGAB,Accounting Branch
+BGC,Payroll Services Division
+BGCA,Payroll Ops. & Customer Servic
+BGCB,"Accounting, Auditing, and Tax"
+BGR,Process Optimization & Automat
+BI,Ofc of Analytics Performance &
+BIA,Analytics and Decision Support
+BIC,Data Delivery & Management Div
+BIS,"Strategy, Risk, & Perf. Mgmt D"
+BR,Office of PBS Financial Servic
+BR1,Zone 1
+BR1B,Operations Division
+BR1F,Financial Management Division
+BR1L,Leasing and Revenue Division
+BR1R,RWA and Capital Projects Divis
+BR2,Zone 2
+BR2B,Operations Division
+BR2C,Centralized Processing Group
+BR2F,Financial Management Division
+BR2L,Leasing and Revenue Division
+BR2R,RWA and Capital Projects Divis
+BR3,Zone 3
+BR3B,Operations Division
+BR3F,Financial Management Division
+BR3L,Leasing and Revenue Division
+BR3R,RWA and Capital Projects Divis
+BR4,Zone 4
+BR4B,Operations Division
+BR4F,Financial Management Division
+BR4L,Leasing and Revenue Division
+BR4R,RWA and Capital Projects Divis
+BRC,PBS Analytics Division
+S,Ofc of Congrl & Intergovtl Aff
+AK,Office of Civil Rights
+AKC,Ofc. of the Dep. Associate Adm
+AKCA,Complaint Processing Branch
+AKCB,External Programs Branch
+AKD,Performance Mgmt & Mission Sup
+L,Office of the General Counsel
+LD1,New England Division
+LD2,Northeast and Caribbean Divisi
+LD3,Mid-Atlantic Division
+LD4,Southeast Sunbelt Division
+LD5,Great Lakes Division
+LD6,Heartland Division
+LD7,Greater Southwest Division
+LD8,Rocky Mountain Division
+LD9,Pacific Rim Division
+LDA,Northwest/Arctic Division
+LDW,National Capital Division
+LE,Ethics Law Division
+LG,General Law Division
+LP,Personal Property Division
+LR,Real Property Division
+LT,Technology Law Division
+M,OGP/Office of Associate Admini
+M1,Ofc. of the Principal Dep. Ass
+M1A,Ofc of Asset & Transportation
+M1AA,Aviation Policy Division
+M1AC,Real Property Policy Division
+M1AD,Personal Property Policy Divis
+M1AE,"Trvl, Reloc, Mail & Trans. Pol"
+M1AG,Motor Vehicle Division
+M1AK,Committee Management Secretari
+M1D,Office of Evidence and Analysi
+M1E,Office of Technology Policy
+M1EA,IT Modernization Division
+M1ED,IT Accessibility Division
+M1EG,Open Government Secretariat Di
+M1EI,Identity Assurance&Trusted Acc
+M1ER,Emerging Technology Division
+M1ET,IT Governance and Data Transpa
+M1G,Office of Fed. High-Perf. Gree
+M1GA,Integration Division
+M1GB,Performance Division
+M1S,Office of Evaluation Sciences
+M1SG,GSA Evaluation Division
+M1SW,Government-wide Evaluation Div
+M1Y,Ofc. of Shared Sol. & Perf. Im
+MV,Office of Acquisition Policy
+MVA,"Ofc of Gen Svcs Acq Pol, Intgr"
+MVAA,Procurement Management Review
+MVAB,Suspension and Debarment Divis
+MVAC,General Services Acq. Policy D
+MVAD,General Services Acq. Workforc
+MVB,Federal Acquisition Institute
+MVBA,Learning and Development Divis
+MVBB,Business Operations Division
+MVC,Office of Government-wide Acq.
+MVCA,Federal Acquisition Policy Div
+MVCB,Regulatory Secretariat Divisio
+MVCC,Regulatory Info. Svc. Center D
+C,Office of Human Resources Mana
+CA,Office of the Chief of Staff
+CAA,Business and Acquisition Mgmt.
+CAAA,Acquisition Branch
+CAAB,Business Branch
+CB,Analytics and Strategy Divisio
+CBA,Human Capital Analytics Branch
+CBB,"Strategy, Planning & Portfolio"
+CC,Human Capital Accountability D
+CD,"HC Strategic Planning, Pol. &"
+CDA,Talent Development Branch
+CDAA,Learning Solutions Section
+CDAB,Programs Section
+CDAC,Entry Level Training Section
+CDACA,Unit 1
+CDAD,Performance Consultation Secti
+CDAE,Organizational Development Sec
+CDB,ATD PMO
+CDBA,ATD Cohort Section A
+CDBB,ATD Cohort Section B
+CDBC,ATD Cohort Section C
+CDBD,ATD Cohort Section D
+CR,Office of Human Resources Serv
+CR1,Office of the Deputy Director
+CR1B,Benefits and Retirement Center
+CR1BA,Benefits and Retirement Branch
+CR1BB,Workers Compensation Branch
+CR1C,CABS HR Services Center
+CR1P,Processing & Personnel Rcrds M
+CR1PA,Processing Management Branch
+CR1T,HRS Technology Center
+CRA,National Classification Center
+CRB,Executive Resources Center
+CRC,Staffing Services Center
+CRC1,Staffing Policy and Programs O
+CRC1A,Staffing Program Management Br
+CRCA,National Recruitment Center
+CRCB,FAS Staffing Branch
+CRCBA,FAS Staffing Section A
+CRCBB,FAS Staffing Section B
+CRCBC,FAS Staffing Section C
+CRCC,PBS Staffing Branch
+CRCCA,PBS Staffing Section A
+CRCCB,PBS Staffing Section B
+CRCCC,PBS Staffing Section C
+CRCD,Staff Offices Staffing Branch
+CRCDA,Staff Offices Staffing Section
+CRCDB,Staff Offices Staffing Section
+CRD,Workforce Relations Services C
+CRD1,Workforce Relations Policy & P
+CRDA,FAS Workforce Relations Branch
+CRDB,FAS Workforce Relations Branch
+CRDC,PBS Workforce Relations Branch
+CRDD,PBS Workforce Relations Branch
+CRDE,Staff Offices Workforce Relati
+J,Office of the Inspector Genera
+JA,Office of Audits
+JA-2,Northeast & Caribbean Region A
+JA-3,Mid-Atlantic Region Audit Offi
+JA-4,Southeast Sunbelt Region Audit
+JA-5,Great Lakes Region Audit Offic
+JA-6,Heartland Region Audit Office
+JA-7,Greater Southwest Region Audit
+JA-9,Pacific Rim Region Audit Offic
+JA-A,Center for Contract Audits
+JA-F,Finance Audit Office
+JAO,"Audit Planning, Policy and Ops"
+JA-R,Real Property Audit Office
+JAS,Administration and Data System
+JA-T,Information Technology Audit O
+JC,Counsel to the Inspector Gener
+JE,Office of Inspections
+JI,Office of Investigations
+JIA,Northeast Division
+JIA-1,New England Region Investigati
+JIA-2,Northeast Region Investigation
+JIB,Mid-Atlantic Division
+JIB-3,Mid-Atlantic Region Investigat
+JIB-W,National Capital Region Inv. O
+JIC,Southeast and Caribbean Divisi
+JIC-4A,SE & Caribbean Region Atlanta
+JIC-4B,SE & Caribbean Region Ft. Laud
+JID,Midwest Division
+JID-5,Great Lakes Region Investigati
+JID-6,Heartland Region Investigation
+JIE,Southwest and Rocky Mountain D
+JIE-7,Greater SW Region Investigatio
+JIE-8,Rocky Mountain Reg. Investigat
+JIF,Western Division
+JIF-10,Northwest/Arctic Region Inv. O
+JIF-9A,Pacific Rim Reg. Orange County
+JIF-9B,Pacific Rim Region Sacramento
+JIG,Data Analytics Division
+JII,Intelligence Division
+JIO,Operations Division
+JP,Office of Administration
+JPA,Acquisitions and Operations Di
+JPB,Budget & Financial Management
+JPH,Human Resources Division
+JPM,Information Technology Divisio
+D,Office of Mission Assurance
+D1,Ofc. of the Deputy Assoc. Admi
+D2,Office of the Chief of Staff
+DB,Office of the Chief Security O
+DBA,Personnel Security Division
+DBAA,Personnel Security Branch
+DBAB,HSPD-12 Branch
+DBAC,Security Programs Branch
+DBB,Physical Security Division
+DBBA,Physical Security Branch
+DBBB,Physical Access Control System
+DC,Ofc of the Principal Dep. Asso
+DCA,Management and Administration
+DR,Office of Emergency Management
+DRA,Field Ops & Mission Resilience
+DRAA,East-Field Ops & Mission Resil
+DRAB,Cent'l-Field Ops & Mission Res
+DRAC,West-Field Ops & Mission Resil
+DRB,Mission Resilience Support Div
+DRC,Mission Resilience Division
+DRCA,Future Operations & Preparedne
+DRCB,Nat'l Sec & Disaster Response
+DRCC,Current Operations Branch
+10A,Office of the Regional Adminis
+1A,Office of the Regional Adminis
+2A,Office of the Regional Adminis
+3A,Office of the Regional Adminis
+4A,Office of the Regional Adminis
+5A,Office of the Regional Adminis
+6A,Office of the Regional Adminis
+7A,Office of the Regional Adminis
+8A,Office of the Regional Adminis
+9A,Office of the Regional Adminis
+WA,Office of the Regional Adminis
+Z,Office of Strategic Communicat
+ZC,Office of Client Engagement
+ZCR,Client Relations Division
+ZCRA,Acquisition Client Branch
+ZCRC,CXO Client Branch
+ZCRE,Real Estate Client Branch
+ZCRG,Policy and Shared Services Cli
+ZCRT,Technology Client Branch
+ZCZ,Regional Client Relations Divi
+ZCZ1,Regional Communications Zone 1
+ZCZ2,Regional Communications Zone 2
+ZCZ3,Regional Communications Zone 3
+ZM,Public Affairs Division
+ZMA,Social Media Branch
+ZMM,Media Affairs Program Mgmt Off
+ZMW,Editorial Communications PMO
+ZO,Operations Division
+ZOD,Digital Comunication Prog Mgmt
+ZOV,Visual Communication Prog Mgmt
+E,Ofc of Small & Disadvantaged B
+EC,Small Bus. Advocacy & Engagmnt
+EC1,Zone 1
+EC2,Zone 2
+EP,Small Bus Compliance & Goaling
+ES,Small Bus. Advocacy & Engagmnt
+ES3,Zone 3
+ES4,Zone 4
+10P,Office of the Regional Commiss
+10P1,Ofc of the Deputy Regl Commiss
+10PC,Design and Construction Divisi
+10PCC,Capital Projects Branch
+10PCE,Professional Services Branch
+10PCEA,Regional Requirements Developm
+10PCEB,Regional Program Management Of
+10PCP,Project Management Branch
+10PCPA,Project Delivery Team A
+10PCPB,Project Delivery Team B
+10PCPC,Project Delivery Team C
+10PCPD,Project Delivery Team D
+10PE,Electric Vehicle Infra. Prog.
+10PEA,Program Branch
+10PEB,Contract Branch
+10PM,Facilities Management Division
+10PMA,Owned Service Center
+10PMAA,Alaska Field Office
+10PMAB,Oregon Field Office
+10PMAC,Western Field Office
+10PMAD,Eastern Field Office
+10PMAE,Land Port of Entry Field Offic
+10PMB,Leased Service Center
+10PMBA,Southeast Leased Field Office
+10PMBB,Northwest Leased Field Office
+10PME,"Safety, Environmental, and Ene"
+10PMEA,"Environment, Health & Fire Saf"
+10PMF,Building Ops. & Tenant Svcs. B
+10PMFA,Building Operations Section
+10PMFB,Tenant Services Section
+10PP,Planning Division
+10PPA,Client Planning Branch
+10PPAA,Client Planning Team A
+10PPB,"Bus. Analysis, Inventory & Ren"
+10PPT,Portfolio Planning Branch
+10PPTA,Asset Management Team
+10PQ,Acquisition Management Divisio
+10PQC,Construction Acquisition Branc
+10PQCA,Acquisitions Team A
+10PQCB,Acquisitions Team B
+10PQD,Service Contracts Branch
+10PQDA,Service Contracts Team A
+10PQDB,Service Contracts Team B
+10PQE,Capital Construction and IDV B
+10PQF,Policy Branch
+10PR,Leasing & Realty Service Divis
+10PRA,Lease Acquisition Branch
+10PRAA,Lease Acquisition Team A
+10PRAB,Lease Acquisition Team B
+10PRAC,Post Occupancy Team
+10PRB,Lease Project Management Branc
+10PRBA,Lease Project Management Team
+10PRBB,Lease Project Management Team
+10PRBC,Lease Project Management Team
+10PRC,Lease Program & Policy Branch
+10PX,Office of Chief of Staff
+1P,Office of the Regional Commiss
+1P1,Deputy Regional Commissioner
+1P1A,Data Analytics & Program Mgmt.
+1PC,Design and Construction Divisi
+1PCM,Project Management Branch
+1PCS,Technical Services Branch
+1PCSA,Electical Engineering Section
+1PCSB,Mechanical Engineering Section
+1PCT,LPOE Project Management Office
+1PCTA,Maine Section
+1PCTB,Vermont Section
+1PM,Facilities Management & Svcs P
+1PME,Energy and Utilities Branch
+1PMF,Building Operations & Tenant S
+1PP,Portfolio Mgmt & Client Engage
+1PPA,Portfolio Management Branch
+1PPB,Client Engagement Branch
+1PQ,Acquisition Management Divisio
+1PQA,Acquisition Policy Branch
+1PQB,Contract Operations Branch I
+1PQC,Contract Operations Branch II
+1PQD,Contract Operations Branch III
+1PQE,Contract Operations Branch IV
+1PR,Real Estate Acquisition Divisi
+1PRL,Leasing Branch
+1PRP,Project Management Branch
+1PS,Service Centers Division
+1PSK,North Service Center Branch
+1PSL,South Service Center Branch
+1PSM,Boston Service Center Branch
+1PSMJ,"JFK Office, Boston Service Cen"
+1PSS,Administrative Support Branch
+1PZ,Real Property Utilztn & Dispos
+1PZB,Boston Operations Branch
+1PZC,Chicago Operations Branch
+1PZS,Special Operations Branch
+2P,Office of the Regional Commiss
+2P1,Climate & Infra. Program Mgmt.
+2P1A,Inflation Reduction Act Progra
+2P1B,Bipartisan Infra. Law Program
+2PC,Design and Construction Divisi
+2PCA,Regional Chief Architect
+2PCB,Bklyn Queens LI & NJ Branch
+2PCM,Manhattan Branch
+2PCU,Upstate and Caribbean Branch
+2PG,Organizational Resources Divis
+2PM,Facilities Management Division
+2PMB,Building Operations Programs B
+2PMS,Safety & Environmental Mgmt Br
+2PMT,Energy & Sustainability Branch
+2PP,Project Management Division
+2PPB,Bklyn Queens LI & NJ Branch
+2PPC,Caribbean Branch
+2PPH,High Risk Project Branch
+2PPM,Manhattan Branch
+2PPU,Upstate New York Branch
+2PQ,Acquisition Management Divisio
+2PQA,Repair and Alterations Branch
+2PQB,Simplified Acquisition Branch
+2PQC,Capital Construction Branch
+2PQD,Building Services Branch
+2PQX,Acq. Programs & Quality Assura
+2PR,Leasing Division
+2PRC,Caribbean & New Jersey Branch
+2PRD,Lease Proj. Del. Prog. & Proj.
+2PRM,Manhattn Bklyn Queens & LI Bra
+2PRP,Lease Project Management Branc
+2PRR,Realty Support Branch
+2PRU,Upstate New York Branch
+2PSE,EbM Service Center
+2PSEB,Brooklyn Field Office
+2PSEC,Caribbean Field Office
+2PSEL,Long Island Field Office
+2PSEN,New Jersey Field Office
+2PSEU,Upstate New York Field Office
+2PSEUA,Albany Office
+2PSEUB,Buffalo Office
+2PSEUN,Border Station Office
+2PSEUS,Syracuse Office
+2PSM,Manhattan Service Center
+2PSMF,Federal Plaza Field Office
+2PSMG,Greater Manhattan Field Office
+2PSML,Lower Manhattan Field Office
+2PT,Portfolio Management Division
+2PTC,Client Solutions Branch
+2PTM,Asset Analysis Branch
+2PTS,Asset Strategy Branch
+3P,Office of the Regional Commiss
+3P1,Office of the Chief of Staff
+3P1A,Organizational & Admin Resourc
+3P1B,Business Strategy Branch
+3P1C,Strategic Communications Branc
+3PC,Design and Construction Divisi
+3PCN,Professional Services North Br
+3PCNC,Charleston Section
+3PCNK,Pittsburgh Section
+3PCNP,"Philadelphia, NJ  & Delaware S"
+3PCS,Professional Services South Br
+3PCSB,Maryland Section
+3PCSR,Richmond Section
+3PCSS,SSA Section
+3PCT,Technical Services Branch
+3PCTS,Technical Services Section
+3PCW,Workplace Branch
+3PCWD,Interior Design Section
+3PCWS,Workplace Solutions Section
+3PD,Project Delivery Division
+3PDA,SSA Lease Project Delivery Off
+3PDC,Judiciary Project Delivery Off
+3PDH,Law Enforcement Project Delive
+3PDI,Statuatory Agencies Project De
+3PDJ,Regulatory Agencies Project De
+3PDS,SSA Delegated Project Delivery
+3PM,Facilities Management Division
+3PME,Buildings Ops & Tenant Service
+3PMS,"Safety, Risk Mgmt & Environmen"
+3PMSF,Fire Protection Section
+3PMT,Technical Program Support Bran
+3PQ1,Acquisition Management Divisio
+3PQ1F,Field Office Contracts Branch
+3PQ1FB,"Balt, Woodlawn & VA FO Contrac"
+3PQ1FP,Phil & Del Val FO Contracts Se
+3PQ1FV,WV & Pittsburgh FO Contracts S
+3PQ1N,Acquisition Services North Bra
+3PQ1NP,"Phila, Del Val, & Pittsburgh S"
+3PQ1NS,Social Security Administration
+3PQ1P,Policy and Programs Branch
+3PQ1S,Acquisition Services South Bra
+3PQ1SV,Virginia Section
+3PQ1SW,Maryland and West Virginia Sec
+3PQ2,Acq. Ctr for Facility Mgmt Svc
+3PQ2A,R3 Facility Management Service
+3PQ2AM,R3 Facility Management Service
+3PQ2B,R4 Facility Management Service
+3PQ2BS,R4 Facility Management Service
+3PQ2C,NCR Facility Management Servic
+3PQ2CN,NCR Facility Management Servic
+3PR,Real Estate Acquisition Divisi
+3PRF,Realty Support Branch
+3PRFA,Lease Administration Section A
+3PRFB,Lease Administration Section B
+3PRFC,Lease Administration Section C
+3PRFD,Data Quality Assurance Section
+3PRFF,Federal Occupancy Agreement Se
+3PRN,North Branch
+3PRNC,Charleston Section
+3PRND,Delaware Valley Section
+3PRNK,Pittsburgh Section
+3PRS,South Branch
+3PRSB,Baltimore Section
+3PRSR,Richmond Section
+3PRT,Technical Branch
+3PS,Property Management Division
+3PSB,Baltimore Field Office
+3PSBB,Baltimore Property Mgmt Sectio
+3PSBC,Construction Mgmt. Section
+3PSBL,Lease Administration Section
+3PSBW,Woodlawn Property Mgmt Section
+3PSC,Charleston Field Office
+3PSCC,Construction Mgmt. Section
+3PSCH,Charleston Property Mgmt Secti
+3PSCL,Lease Administration Section
+3PSCM,Martinsburg Property Mgmt Sect
+3PSD,Delaware Valley Field Office
+3PSDC,Construction Mgmt. Section
+3PSDG,PA & Delaware Property Mgmt Se
+3PSDL,Lease Administration Section
+3PSDN,New Jersey Property Mgmt Secti
+3PSK,Pittsburgh Field Office
+3PSKC,Construction Mgmt. Section
+3PSKH,Harrisburg Property Mgmt Secti
+3PSKL,Lease Administration Section
+3PSKP,Pittsburgh Property Mgmt Secti
+3PSP,Philadelphia Field Office
+3PSPB,Byrne/Green Property Mgmt Sect
+3PSPC,Construction Mgmt. Section
+3PSPN,Custom House/Nix Property Mgmt
+3PSR,Richmond Field Office
+3PSRC,Construction Mgmt. Section
+3PSRL,Lease Administration Section
+3PSRN,Norfolk/East Property Mgmt. Se
+3PSRR,Richmond/West Property Mgmt. S
+3PT,Portfolio Management Division
+3PTA,Customer Accounts Branch
+3PTN,North Branch
+3PTS,South Branch
+3PX,Capital Project Delivery Divis
+3PXA,Program Management Office
+3PXB,Project Delivery Studio B
+3PXC,Project Delivery Studio C
+3PXD,Project Delivery Studio D
+3PXE,Project Delivery Studio E
+4P,Office of the Regional Commiss
+4P1,Ofc of the Deputy Regional Com
+4P1B,Blue Ridge Service Center Divi
+4P1BA,Blue Ridge East Field Office
+4P1BAA,Blue Ridge East Operations Sec
+4P1BAB,Blue Ridge East Operations Sec
+4P1BAC,Blue Ridge East Operations Sec
+4P1BAD,Blue Ridge East Operations Sec
+4P1BAE,Blue Ridge East Construction S
+4P1BB,Blue Ridge West Field Office
+4P1BBA,Blue Ridge West Operations Sec
+4P1BBB,Blue Ridge West Operations Sec
+4P1BBC,Blue Ridge West Operations Sec
+4P1BBD,Blue Ridge West Operations Sec
+4P1BBE,Blue Ridge West Construction S
+4P1BC,Quality and Assurance Group
+4P1E,Architecture and Engineering D
+4P1E1,Dep. Architecture & Engineerin
+4P1EA,Architecture Branch
+4P1ED,Design Excellence Branch
+4P1EM,Mechanical Engineering Branch
+4P1G,Gulf Coast Service Center Divi
+4P1GA,Florida North Field Office
+4P1GAA,Florida North Operations Secti
+4P1GAB,Florida North Operations Secti
+4P1GAC,Florida North Operations Secti
+4P1GAD,Florida North Construction Svc
+4P1GB,Florida South Field Office
+4P1GBA,Florida South Operations Secti
+4P1GBB,Florida South Operations Secti
+4P1GBC,Florida South Construction Svc
+4P1GC,Mississippi Field Office
+4P1GCA,Mississippi Operations Section
+4P1GCB,Mississippi Construction Svcs.
+4P1GD,Quality and Assurance Group
+4P1L,Leasing Division
+4P1L1,Deputy Leasing Division
+4P1L1A,Southern Branch
+4P1L1AA,Section 1
+4P1L1B,Gulf Coast Branch
+4P1L1BA,Section 1
+4P1L1BB,Section 2
+4P1L1C,Blue Ridge East Branch
+4P1L1CA,Section 1
+4P1L1D,Blue Ridge West Branch
+4P1L1DA,Section 1
+4P1L1E,Project Management Branch
+4P1L1EA,Section 1
+4P1M,Facilities Mgmt. Svcs. Program
+4P1M1,Dep. Facilities Mgmt. Svcs. Pr
+4P1ME,Energy and Sustainability Bran
+4P1MO,Operations & Bldg. Tenant Svcs
+4P1MS,Safety and Environmental Branc
+4P1P,Project Delivery Division
+4P1P1,Deputy Project Delivery Divisi
+4P1PA,Southern Branch
+4P1PB,Gulf Coast Branch
+4P1PC,Blue Ridge East Branch
+4P1PD,Blue Ridge West Branch
+4P1PE,Capital Branch A
+4P1PF,Capital Branch B
+4P1Q,Acquisition Management Divisio
+4P1Q1,Deputy Acquisition Management
+4P1QA,Southern Branch
+4P1QB,Gulf Coast Branch
+4P1QC,Blue Ridge East Branch
+4P1QD,Blue Ridge West Branch
+4P1QE,Capital/AE Branch
+4P1QF,Strategic Program Support Bran
+4P1QG,Special Projects Branch
+4P1S,Southern Service Center Divisi
+4P1SA,Atlanta North Field Office
+4P1SAA,Atlanta North Operations Secti
+4P1SAB,Atlanta North Operations Secti
+4P1SAC,Atlanta North Operations Secti
+4P1SAD,Atlanta North Construction Svc
+4P1SB,Atlanta South Field Office
+4P1SBA,Atlanta South Operations Secti
+4P1SBB,Atlanta South Operations Secti
+4P1SBC,Atlanta South Operations Secti
+4P1SBD,Atlanta South Construction Svc
+4P1SC,Alabama Field Office
+4P1SCA,Alabama Operations Section A
+4P1SCB,Alabama Operations Section B
+4P1SCC,Alabama Construction Services
+4P1SD,Quality and Assurance Group
+4P1T,Port. Mgmt. & Cust. Engagement
+4P1T1,Dep. Port. Mgmt. & Cust. Engag
+4P1T1A,Asset Management Branch
+4P1T1B,Portfolio Services Branch
+4P1T1C,Investment Branch
+4P1TA,Judiciary Branch
+4P1TB,Regulatory Branch
+4P1TC,Public Facing Branch
+4P1TD,DOJ Branch
+4P1TE,DOD/DHS Branch
+4P2,Office of the Chief of Staff
+4P5,Office of Strategy and Engagem
+4P5A,Program Management Branch
+4P5B,Strategy and Analysis Branch
+4P5C,RWA Branch
+4PZ,Ofc. of Real Prop. Utilization
+4PZN,Mid-Atlantic Branch
+4PZS,Southeastern Branch
+5P,Office of the Regional Commiss
+5P1,Ofc of the Deputy Regional Com
+5P1C,Chicagoland SC Operations Divi
+5P1C1,Deputy Chicagoland Svc Cntr Op
+5P1C1A,Facility Operations Team A
+5P1C1B,Facility Operations Team B
+5P1CA,Chicagoland Property Mgmt Ops
+5P1CAA,Dirksen Courthouse Field Offic
+5P1CAB,Kluczynski Field Office
+5P1CAC,Clark Street Field Office
+5P1CAD,Metcalfe Field Office
+5P1CAE,Chicagoland Leasing Office
+5P1CC,Chicagoland SC Project Mgmt Br
+5P1F,Facilities Mgmt and Svcs Progs
+5P1FA,Building Ops and Tenant Servic
+5P1FB,Energy and Sustainability Bran
+5P1FC,"Enviro, Safety & Fire Protecti"
+5P1FD,"Innovation, Technology & Perf."
+5P1N,Northern SC Operations Divisio
+5P1NA,MI Property Management Operati
+5P1NAA,Detroit Metro Field Office
+5P1NAB,Levin Courthouse Field Office
+5P1NAC,McNamara Federal Building Fiel
+5P1NAD,West Michigan Field Office
+5P1NB,MN/WI Property Mgmt Operations
+5P1NBA,MN/WI Federal Field Office
+5P1NBB,MN/WI Courthouse Field Office
+5P1NBC,MN/WI Leasing Field Office
+5P1NE,Northern SC Project Management
+5P1NEA,Michigan East Team
+5P1NEB,MN/WI Team
+5P1NEC,Michigan West Team
+5P1P,Portfolio Management Division
+5P1PA,Asset Management Branch
+5P1PB,Portfolio Information & Data M
+5P1PC,Portfolio Analysis and Outleas
+5P1S,Southern SC Operations Divisio
+5P1SA,Ohio Property Mgmt Operations
+5P1SAA,Northern Ohio Field Office
+5P1SAB,Celebrezze Field Office
+5P1SAC,Columbus Field Office
+5P1SAD,Cincinnati Field Office
+5P1SB,SIL/IN Property Mgmt Operation
+5P1SBA,Bean Federal Center Field Offi
+5P1SBB,Downtown Indianapolis Field Of
+5P1SBD,Northern Indiana Field Office
+5P1SBE,Illinois Field Office
+5P1SE,Southern SC Project Management
+5P1SEA,Indiana Team
+5P1SEB,Southern Illinois Team
+5P1SEC,Ohio North Team
+5P1SED,Ohio South Team
+5P2,Office of the Chief of Staff
+5P2D,Design & Construct Proj Delivr
+5P2DA,Project Management Branch A
+5P2DB,Project Management Branch B
+5P2DC,COR Branch A
+5P2DD,COR Branch B
+5P2P,Design & Construct Proj Progs
+5P2PA,Cultural and Workplace Program
+5P2PB,Project Management Programs Br
+5P2PC,Expert Resources Branch
+5P2Q,Acquisition Management Divisio
+5P2Q1,"Deputy, Acquisition Management"
+5P2QA,Acq Programs & Quality Assuran
+5P2QB,Building Services Contracting
+5P2QBA,Chicagoland Services Contracti
+5P2QBB,Southern Services Contracting
+5P2QBC,Northern Services Contracting
+5P2QC,Repair and Alteration Contract
+5P2QCA,Chicagoland Contracting Team (
+5P2QCB,Southern Contracting Team (BA5
+5P2QCC,Northern Contracting Team (BA5
+5P2QD,Energy and Specialized Service
+5P2QDA,Utilities/ESPC Team
+5P2QDB,Specialized Services Team
+5P2QDC,Micro-Purchase Team
+5P2QE,Captl & Cust Projects Contract
+5P2QEA,Customer Projects Contracting
+5P2QEB,Capital Construction Contracti
+5P2R,Real Estate Division
+5P2R1,"Deputy, Real Estate Division"
+5P2RB,Leasing Policy and Programs Br
+5P2RC,Proj. Mgmt. Policy & Const. Co
+5P2RCA,Construction Management Team A
+5P2RCB,Construction Management Team B
+5P2RD,Client Engagement & Planning M
+5P2RE,Project Management Branch A
+5P2RF,Project Management Branch B
+5P2RG,Project Management Branch C
+5P2RH,Leasing Branch A
+5P2RI,Leasing Branch B
+5P2RJ,Leasing Branch C
+6P,Office of the Regional Commiss
+6P1,Ofc of Deputy Regional Commiss
+6P1C,Design & Construction Division
+6P1CC,COR Branch
+6P1CD,Professional Services Branch
+6P1CE,East Project Management Branch
+6P1CF,West Project Management Branch
+6P1Q,Acquisition Management Divisio
+6P1QC,Services Acquisition Branch
+6P1QE,Capital Construction and IDV B
+6P1QP,Acq Programs & Quality Assuran
+6P1QS,Small Projects Acquisition Bra
+6P1QW,Construction Acquisition Branc
+6P1R,Leasing Division
+6P1RD,Realty Support Branch
+6P1RE,East Leasing Services Branch
+6P1RM,Project Support Branch
+6P1RP,Project Management Branch
+6P1RW,West Leasing Services Branch
+6P1S,Service Center Division
+6P1SA,West Operations Branch
+6P1SAK,Kansas Field Office
+6P1SAKA,Section A
+6P1SAKB,Section B
+6P1SAN,Kansas City North Field Office
+6P1SANA,Section A
+6P1SANB,Section B
+6P1SAS,Kansas City South Field Office
+6P1SASA,Section A
+6P1SASB,Section B
+6P1SB,East Operations Branch
+6P1SBE,St. Louis East Field Office
+6P1SBEA,Section A
+6P1SBEB,Section B
+6P1SBI,Iowa Field Office
+6P1SBIA,Section A
+6P1SBIB,Section B
+6P1SBO,Nebraska Field Office
+6P1SBOA,Section A
+6P1SBOB,Section B
+6P1SBW,St. Louis West Field Office
+6P1SBWB,Section B
+6P2,Office of the Chief of Staff
+6PM,Facilities Management Division
+6PMA,Energy & Sustainability Branch
+6PMB,Building Services Branch
+6PMD,Occupancy Management Branch
+6PT,Portfolio Management Division
+6PTA,Asset Management Branch
+6PTB,Realty Policy and Analysis Bra
+6PTC,Customer Engagement Branch
+6PTD,Federal Workplace Solutions Br
+7P,Office of the Regional Commiss
+7P1,Ofc of the Deputy Regl Commiss
+7PA,Project Delivery Division
+7PAA,Program Support & Proj. Delive
+7PAAS,Shell & Infra. Project Deliver
+7PAC,Project Delivery Branch A
+7PACD,Dallas Section
+7PACN,Oklahoma and New Mexico Sectio
+7PACW,Greater West Section
+7PAD,Project Delivery Branch B
+7PADB,Border Section
+7PADH,Houston and Arkansas Section
+7PADL,Louisiana Section
+7PC,Design and Construction Divisi
+7PCA,Project Management Branch A
+7PCB,Project Management Branch B
+7PCD,Architectural Branch
+7PCE,Engineering Branch
+7PM,Facilities Management & Svcs P
+7PMB,Building Operations Support Br
+7PMC,Safety & Environmental Branch
+7PMD,Energy & Sustainability Branch
+7PQ,Acquisition Management Divisio
+7PQA,Program Support Branch
+7PQB,Services Branch
+7PQC,Non-Prospectus Projects Branch
+7PQD,Energy & Acquisition Support B
+7PR,Leasing Division
+7PRA,Project Delivery Branch A
+7PRB,Project Delivery Branch B
+7PRC,Project Delivery Branch C
+7PRO,Lease Contracting Branch 2
+7PRP,Policy & Programs Branch
+7PRT,Lease Contracting Branch 1
+7PS,Service Centers Division
+7PSA,Contract Administration Branch
+7PSAA,Eastern/Greater West Section
+7PSAB,Border/Northern Section
+7PSB,Border Service Center
+7PSBB,Brownsville Field Office
+7PSBC,Las Cruces Field Office
+7PSBD,Del Rio Field Office
+7PSBE,El Paso Field Office
+7PSBL,Laredo Field Office
+7PSBM,McAllen Field Office
+7PSBR,Roswell Field Office
+7PSC,Service Center Project Deliver
+7PSE,Eastern Service Center
+7PSEB,Baton Rouge Field Office
+7PSEH,Houston Field Office
+7PSEL,Little Rock Field Office
+7PSEN,New Orleans Field Office
+7PSES,Shreveport Field Office
+7PSET,Tyler Field Office
+7PSN,Northern Service Center
+7PSNA,Albuquerque Field Office
+7PSND,Dallas Field Office
+7PSNO,Oklahoma City Field Office
+7PSNT,Tulsa Field Office
+7PSW,Greater West Service Center
+7PSWA,Austin Field Office
+7PSWC,Corpus Christi Field Office
+7PSWF,Fort Worth Field Office
+7PSWL,Lubbock Field Office
+7PSWS,San Antonio Field Office
+7PT,Portfolio Mgmt & Cust Engagemn
+7PTA,Asset Mgmt & Portfolio Analysi
+7PTB,"Sites, Cap Invest & Rent Bill"
+7PTC,Portfolio Services Branch
+7PTD,Customer Engagement Branch A
+7PTE,Customer Engagement Branch B
+7PZ,Real Property Utilztn & Dispos
+7PZA,Real Prop Disp & Redeployment
+7PZB,Real Prop Utilztn & Prog Suppo
+8P,Office of the Regional Commiss
+8PC,Design and Construction Divisi
+8PCC,Capital Projects Branch
+8PCM,Project Management Office Bran
+8PCP,Planning and Technical Service
+8PCS,Small Projects Branch
+8PM,Facilities Management Division
+8PMA,Branch A
+8PMAA,Section 1
+8PMAB,Section 2
+8PMB,Branch B
+8PMBA,Section 1
+8PQ,Acquisition Management Divisio
+8PQA,Acquisition Branch A
+8PQAA,Section 1
+8PQAB,Section 2
+8PQAC,Section 3
+8PQB,Acquisition Branch B
+8PQBA,Section 1
+8PQBB,Section 2
+8PQBC,Section 3
+8PQBD,Section 4
+8PQC,Acquisition Branch C
+8PR,Leasing Division
+8PRA,Leasing Branch A
+8PRB,Leasing Branch B
+8PRC,Realty Support Branch
+8PS,Rocky Mountain Service Center
+8PSA,Colorado Property Management B
+8PSA0A,DFC East Team
+8PSA0B,DFC Central Team
+8PSA0C,DFC West Team
+8PSA0D,DFC Roads and Grounds Team
+8PSAA,Colorado Field Office
+8PSAAA,Colorado LAM Team
+8PSAAB,Mountain Plains LAM Team
+8PSAB,Denver Field Office
+8PSABA,Downtown Denver Team A
+8PSABB,Downtown Denver Team B
+8PSB,Mountain Plains Property Mgmt.
+8PSBA,Montana Field Office
+8PSBB,North Dakota Field Office
+8PSBC,South Dakota Field Office
+8PSBD,Utah Field Office
+8PSBDA,Team A
+8PSBE,Wyoming Field Office
+8PT,Portfolio Mgmt. & Cust. Engage
+8PTA,Internal Business Consulting B
+8PTB,Portfolio Management Branch
+8PTBA,Portfolio Operations Section
+8PTBAA,Rent Bill Management Team
+8PTBAB,BIS Team
+8PTBB,Portfolio Strategy Section
+8PTC,Customer Engagement Branch
+8PTCA,Interior Design Section
+8PTCB,Workplace Solutions Section
+8PTCC,Customer Planning Section
+8PTCCA,Federal Occupancy Team
+9P,Office of the Regional Commiss
+9PC,Design and Construction Divisi
+9PCC,Courts Branch
+9PCD,Design and Construction Progra
+9PCF,Federal Office Buildings Branc
+9PCS,Land Port of Entry Branch
+9PCT,Technical Services Branch
+9PCW,Total Workplace & Special Proj
+9PD,San Diego Service Center
+9PDC,Construction Services Branch
+9PDH,Hawaii Field Office
+9PDN,Nevada Field Office
+9PDP,Phoenix Field Office
+9PDS,San Diego Field Office
+9PDT,Tucson Field Office
+9PF,San Francisco Service Center
+9PFB,East Bay Field Office
+9PFC,Construction Services Branch
+9PFG,Golden Gate Field Office
+9PFJ,Central California Field Offic
+9PFJF,Fresno Office
+9PFN,Sacramento Field Office
+9PL,Los Angeles Service Center
+9PLC,Construction Services Branch
+9PLL,Laguna Field Office
+9PLN,North Los Angeles Field Office
+9PLS,First Street Field Office
+9PLSP,Pasadena Office
+9PLW,West Los Angeles Field Office
+9PM,Facilities Management Division
+9PME,Engineering Services Branch
+9PMF,Building Services Branch
+9PMS,Compliance & Sustainability Br
+9PP,Regional Program Management Of
+9PPA,Project Delivery Excellence Br
+9PPB,Cost and Schedule Management B
+9PQ,Acquisition Management Divisio
+9PQA,Simplified Acquisitions Branch
+9PQAD,San Diego Support Section
+9PQAF,San Francisco Support Section
+9PQAL,Los Angeles Support Section
+9PQF,Field Projects Branch
+9PQFN,North Section
+9PQFS,South Section
+9PQO,Oversight & Policy Branch
+9PQP,Capital Projects Branch
+9PQPL,Large Projects Section
+9PQPM,Mega Projects Section
+9PQS,Building Services Branch
+9PQSD,San Diego Section
+9PQSE,Energy/Non-Rec. Svcs Contracts
+9PQSF,San Francisco Section
+9PQSL,Los Angeles Section
+9PR,Real Estate Acquisition Divisi
+9PRA,Southern Lease Contracting Bra
+9PRB,Northern Lease Contracting Bra
+9PRC,Southern Project Management Br
+9PRD,Northern Project Management Br
+9PRE,Federal Space Management Branc
+9PT,Portfolio Management Division
+9PTA,Asset Management North Branch
+9PTC,Asset Management South Branch
+9PTD,Data and Rent Bill Management
+9PTP,Account Management Branch
+9PZ,Real Property Utilztn & Dispos
+9PZD,Disposition Branch
+9PZR,Utilization & Realty Svcs Bran
+P,Office of the Commissioner
+P1,Deputy Commissioner
+P2,Ofc. of the Dep. Com. Enterpri
+P2S,Strategy Management Division
+P2SA,Business Planning and Performa
+P2SB,Business Intelligence & Analyt
+PA,Office of Architecture and Eng
+PA0A,Center for Mission Support
+PA0B,Center for Community Planning
+PA0C,Center for Historic Buildings
+PA0D,Center for Fine Arts
+PAAA,Center for Architecture
+PAAB,Center for Workplace Strategy
+PAAC,Center for Integrated Solution
+PAAD,Center for Design Excellence
+PAB,Engineering Division
+PABA,Center for Engineering
+PABC,Center for Emerging Technologi
+PB,Office of Chief of Staff
+PI,Office of Real Property Dispos
+PIA,Operations and Analytics Divis
+PIB,Realty Services Division
+PM,Office of Facilities Managemen
+PM1,Office of the Deputy AC for Pr
+PM1A,Energy Division
+PM1AA,Energy Management Branch
+PM1AB,Energy Savings Perf. Contract
+PM1B,Facilities Tech. & Innovation
+PM1C,Climate and Sustainability Div
+PM2,Office of the Deputy AC for Op
+PM2A,Child Care Center of Expertise
+PM2AA,Field Zone East Branch
+PM2AB,Field Zone West Branch
+PM2AC,Policy and Guidance Branch
+PM2B,Facilities Operations Division
+PM2BA,Owned Operations Branch
+PM2BB,Lease Operations and Amenities
+PM2C,Facility Risk Management Divis
+PM3,Ofc. of the Dep. AC for Utilit
+PM3A,Retail Utility Services Divisi
+PM3AA,Retail Utility Procurement Bra
+PM3AB,Strategy and Support Branch
+PM3B,Regulated Utility Services Div
+PM3BA,Regulated Utility Procurement
+PMH,Center for Mission Support
+PQ,Office of Acquisition Manageme
+PQA,Acquisition Policy and Program
+PQAA,Acquisition Programs Branch
+PQAB,Acq. Policy & Workforce Dev. B
+PQB,Acquisition Systems Management
+PQC,Acquisition Process Solutions
+PR,Office of Leasing
+PRA,Lease Project Mgmt & Tools Div
+PRAA,Center for Broker Services
+PRAB,Center for Lease Applications
+PRAC,Center for Lease Project Manag
+PRB,Lease Policy and Innovation Di
+PRBA,Ctr for Lease Prg Ovrsght Cmp
+PRBD,Ctr for Lease Del. & Contract
+PRBE,"Ctr for Lease Policy, Tech. &"
+PT,Ofc of Portfolio Mgmt & Cust.
+PTA,Real Property Valuation Divisi
+PTB,Asset Management Division
+PTBA,Branch A
+PTBB,Branch B
+PTC,"Data Strategy, Innovation, and"
+PTD,Pricing Policy & Tools Divisio
+PTH,Customer Planning Division
+PTO,Organizational Support Divisio
+PTP,Customer Programs Division
+PX,Office of Project Delivery
+PXA,Special Programs Division
+PXAA,Acquisition Services Branch
+PXAB,Program Management Branch
+PXB,Center for Professional Excell
+PXC,"Center for Cost, Schedule, and"
+PXD,Center for Customer Delivery
+PXE,Center for Expert Resources
+PXF,Center for Construction Excell
+PXG,Center for Strategic Integrati
+WP,Office of the Regional Commiss
+WPD,Office of Planning & Design Qu
+WPD1,Planning and Design Quality Di
+WPD1A,Architecture Branch
+WPD1B,Engineering Branch
+WPD1C,Interior Design Branch
+WPD1D,Planning Branch
+WPD1E,Fine Arts Branch
+WPD1F,Historic Preservation Branch
+WPH,Office of Acquisition
+WPH1,Deputy Director
+WPH1A,Construction Services Center
+WPH1AA,Construction Center 1
+WPH1AB,Construction Center 2
+WPH1AC,Construction Center 3
+WPH1AD,Construction Center 4
+WPH1B,Building Services Division
+WPH1BA,Services Center 1
+WPH1BB,Services Center 2
+WPH1BC,Services Center 3
+WPH1BD,Services Center 4
+WPH1D,Special Programs Division
+WPH1DA,White House Branch
+WPH1DB,Acquisition Regional Support B
+WPH1DD,FDA White Oak Branch
+WPH2,Office of the Chief of Staff
+WPH20A,Workforce Resources Branch
+WPH2A,Policy and Compliance Division
+WPH2AA,Compliance Branch
+WPH2AB,Policy Branch
+WPH2AC,Systems and Data Analytics Bra
+WPI,Office of Design and Construct
+WPIA,Capital Projects Division
+WPIAA,Branch A
+WPIAB,Branch B
+WPIAC,Branch C
+WPIAD,Branch D
+WPIC,Lease Projects Division
+WPICA,Branch A
+WPICB,Branch B
+WPICC,Branch C
+WPICD,Branch D
+WPID,Small Projects Division
+WPIDA,Project Planning and Execution
+WPIDAA,Potomac Team
+WPIDAB,Metropolitan Team
+WPIDB,Project Planning and Execution
+WPIDBA,Triangle Team
+WPIDBAA,Unit 1
+WPIDBAB,Unit 2
+WPIDBC,State Team
+WPIDC,Project Planning and Execution
+WPIDCA,Project Delivery and Developme
+WPIDCC,Plans and Controls Team
+WPIDCD,DC Service Team A
+WPIDCE,DC Service Team B
+WPIDD,White House Project Plng & Exe
+WPIE,Program Management Division
+WPIEA,Project Funding & Admin Suppor
+WPIEB,Project Operations Branch
+WPIEC,Cost Estimating Branch
+WPIF,Lease Project Management Divis
+WPIFA,DOS & DOJ Branch
+WPIFB,DOD & DHS Branch
+WPIFC,HHS & EOPC Branch
+WPM,Office of Facilities Managemen
+WPM1,Office of Facilities Mgmt Depu
+WPM1A,DC Service Center
+WPM1B,Metropolitan Service Center
+WPM1BA,White Oaks Facilities Complex
+WPM1C,Potomac Service Center
+WPM1CA,St. Elizabeth Campus
+WPM1D,Triangle Service Center
+WPM1DA,Ronald Reagan Bldg & Int'l Trd
+WPM1E,White House Service Center
+WPMA,Office of Facilities Mgmt Prog
+WPMAA,Facilities Program Support Div
+WPMAA1D,Resource Applications Branch
+WPMAA1E,Planning & Analytics Branch
+WPMAAC,Resource Management Liaison Br
+WPMAAE,Special Programs Branch
+WPMAB,Facilities Mgmt & Svcs Program
+WPMABB,Operations & Maintenance Branc
+WPMABE,Energy & Sustainability Branch
 WPMABF,"Safety, Environment&Fire Prote"
 WPMABH,"Retail, Concessions&Speciality"
-WPMABJ,"Landscaping and Storm Water Br"
-WPMABK,"Delegations and Lease Manageme"
-WPMABL,"Smart Building Technology Bran"
+WPMABJ,Landscaping and Storm Water Br
+WPMABK,Delegations and Lease Manageme
+WPMABL,Smart Building Technology Bran
 WPMAE,"Heating, Operations & Transmis"
-WPMAEA,"Plant Maintenance Branch"
-WPMAEB,"Environmental & Water Chemistr"
-WPMAEC,"Production Branch"
-WPMAED,"Financial Management Branch"
-WPMAEF,"Steam Distribution Branch"
-WPMAEH,"Plant Engineering & Energy Bra"
-WPMB,"Facilities Modernization Divis"
-WPO,"Office of Mission Support and"
-WPO0A,"Business Performance Branch"
-WPO0B,"Workforce Development Branch"
-WPO0C,"Mission Support Branch"
-WPR,"Office of Real Estate Delivery"
-WPR1,"Office of the Deputy Director"
-WPR1A,"Customer Delivery Division 1"
-WPR1AA,"Branch A"
-WPR1AB,"Branch B"
-WPR1AC,"Branch C"
-WPR1B,"Customer Delivery Division 2"
-WPR1BA,"Branch A"
-WPR1BB,"Branch B"
-WPR1C,"Customer Delivery Division 3"
-WPR1CA,"Branch A"
-WPR1CB,"Branch B"
-WPRD,"Lease Development and Support"
-WPRDA,"Leasing Support Branch"
-WPRDB,"Leasing Tools Program Branch"
-WPRDC,"Lease Development Branch"
-WPRE,"Lease Execution Division"
-WPREA,"Branch A"
-WPREB,"Branch B"
-WPREC,"Branch C"
-WPRP,"Program Support Office"
-WPT,"Office of Port. Mgmt. Cust. En"
-WPT1,"Office of the Deputy Director"
-WPT1A,"Real Property Policy and Tools"
-WPT1AA,"Real Property Policy Branch"
-WPT1AB,"Program Resources Branch"
-WPT1AC,"Outlease Branch"
-WPTA,"Strategic Analysis Division"
-WPTAA,"Capital Investment Program Bra"
-WPTAB,"Real Property Asset Management"
-WPTC,"Real Prop. Utilization & Disp."
-WPTD,"Customer Engagement Division"
-WPTDA,"Branch A"
-WPTDB,"Branch B"
-WPTDC,"Branch C"
-Z,"Office of Strategic Communicat"
-ZC,"Office of Client Engagement"
-ZCR,"Client Relations Division"
-ZCRA,"Acquisition Client Branch"
-ZCRC,"CXO Client Branch"
-ZCRE,"Real Estate Client Branch"
-ZCRG,"Policy and Shared Services Cli"
-ZCRT,"Technology Client Branch"
-ZCZ,"Regional Client Relations Divi"
-ZCZ1,"Regional Communications Zone 1"
-ZCZ2,"Regional Communications Zone 2"
-ZCZ3,"Regional Communications Zone 3"
-ZM,"Public Affairs Division"
-ZMA,"Social Media Branch"
-ZMM,"Media Affairs Program Mgmt Off"
-ZMW,"Editorial Communications PMO"
-ZO,"Operations Division"
-ZOD,"Digital Comunication Prog Mgmt"
-ZOV,"Visual Communication Prog Mgmt"
+WPMAEA,Plant Maintenance Branch
+WPMAEB,Environmental & Water Chemistr
+WPMAEC,Production Branch
+WPMAED,Financial Management Branch
+WPMAEF,Steam Distribution Branch
+WPMAEH,Plant Engineering & Energy Bra
+WPMB,Facilities Modernization Divis
+WPO,Office of Mission Support and
+WPO0A,Business Performance Branch
+WPO0B,Workforce Development Branch
+WPO0C,Mission Support Branch
+WPR,Office of Real Estate Delivery
+WPR1,Office of the Deputy Director
+WPR1A,Customer Delivery Division 1
+WPR1AA,Branch A
+WPR1AB,Branch B
+WPR1AC,Branch C
+WPR1B,Customer Delivery Division 2
+WPR1BA,Branch A
+WPR1BB,Branch B
+WPR1C,Customer Delivery Division 3
+WPR1CA,Branch A
+WPR1CB,Branch B
+WPRD,Lease Development and Support
+WPRDA,Leasing Support Branch
+WPRDB,Leasing Tools Program Branch
+WPRDC,Lease Development Branch
+WPRE,Lease Execution Division
+WPREA,Branch A
+WPREB,Branch B
+WPREC,Branch C
+WPRP,Program Support Office
+WPT,Office of Port. Mgmt. Cust. En
+WPT1,Office of the Deputy Director
+WPT1A,Real Property Policy and Tools
+WPT1AA,Real Property Policy Branch
+WPT1AB,Program Resources Branch
+WPT1AC,Outlease Branch
+WPTA,Strategic Analysis Division
+WPTAA,Capital Investment Program Bra
+WPTAB,Real Property Asset Management
+WPTC,Real Prop. Utilization & Disp.
+WPTD,Customer Engagement Division
+WPTDA,Branch A
+WPTDB,Branch B
+WPTDC,Branch C
+WPX,Strategic Operations related t
