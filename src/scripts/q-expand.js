@@ -2,13 +2,7 @@
 // Ask for a Q* TTS initialism to be fully expanded to its full glory
 //
 // pulls information from config/q-expand.csv in this repo
-// that csv file got its information from two Google Doc org charts
-// FAS TTS High level:
-// https://docs.google.com/presentation/d/1otRbhoGRN4LfDnWpN6zZ0ymjPpTBW3t79pIiuBREkCY/edit?usp=sharing
-// TTS Solutions:
-// https://docs.google.com/presentation/d/10Qfq1AaQh74q76Pik99kQedvshLBo0qLWZGsH-nrV0w/edit?usp=sharing
-//
-// XXX somewhere there's another google doc about TTS Client Services (18f, etc.), but can't find the link now
+// @see q-expand-update.js
 //
 //  Dependencies:
 //    "csv-parse": "5.0.4"
