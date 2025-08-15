@@ -245,8 +245,8 @@ describe("q-expand csv data", () => {
     }
   });
 
-  it("is formatted correctly", async () =>
-    new Promise((resolve) => {
+  it("is formatted correctly", async () => {
+    const invalidCount = await new Promise((resolve) => {
       const rows = [];
 
       fs.createReadStream("config/q-expand.csv")
@@ -255,9 +255,15 @@ describe("q-expand csv data", () => {
           rows.push(row);
         })
         .on("end", () => {
-          const invalid = rows.filter((row) => row.length !== 2);
-          expect(invalid.length).toBe(0);
-          resolve();
+          const invalid = rows.filter(
+            (row) =>
+              row.length !== 2 ||
+              row.filter((column) => column.endsWith(",")).length > 0,
+          );
+          resolve(invalid.length);
         });
-    }));
+    });
+
+    expect(invalidCount).toBe(0);
+  });
 });
