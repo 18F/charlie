@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=charlie-bot
       - POSTGRES_USER=charlie-bot
     ports:
-    - 54329:5432
+      - 54329:5432
 
   charlie:
     build: .
@@ -20,15 +20,10 @@ services:
       - HOLIDAY_REMINDER_CHANNEL=${HOLIDAY_REMINDER_CHANNEL}
       - HOLIDAY_REMINDER_TIME=${HOLIDAY_REMINDER_TIME}
       - HOLIDAY_REMINDER_TIMEZONE=${HOLIDAY_REMINDER_TIMEZONE}
-      - ANGRY_TOCK_FIRST_TIME=${ANGRY_TOCK_FIRST_TIME}
-      - ANGRY_TOCK_SECOND_TIME=${ANGRY_TOCK_SECOND_TIME}
-      - ANGRY_TOCK_TIMEZONE=${ANGRY_TOCK_TIMEZONE}
       - DATABASE_URL=postgres://charlie-bot:charlie-bot@database/charlie
       - LOG_LEVEL=debug
       - SLACK_SIGNING_SECRET=${SLACK_SIGNING_SECRET}
       - SLACK_TOKEN=${SLACK_TOKEN}
-      - TOCK_API=${TOCK_API}
-      - TOCK_TOKEN=${TOCK_TOKEN}
     working_dir: /app
     volumes:
       - ./:/app

@@ -140,13 +140,6 @@ QUEAAD
 └──Q: FAS (TTS)
 ```
 
-##### Tock line
-
-What Tock line do I bill this project to? Ugh, who can remember? Charlie can!
-In a channel, you can say `@charlie set tock <number>` and Charlie will remember
-the Tock line for that room. In the future, if you need to know what to bill to,
-say `@charlie tock` and it will let you know. Handy!
-
 ##### US Code Bot
 
 The law sure is fun, and Charlie can help you look it up! If you drop a citation
@@ -184,15 +177,6 @@ words or phrases, it quietly lets the speaker know and offers some suggestions.
 What a great bot, helping nudge us all to thoughtful, inclusive language! We also
 maintain [a history](https://github.com/18F/charlie/blob/main/CHANGELOG.inclusion_bot.md)
 of the evolution of Inclusion Bot.
-
-##### Optimistic / Angry Tock
-
-At the end of the work week, Charlie will send a private message to any Tockable
-people who haven't submitted their Tock yet to remind them to do it. At the
-start of the next work week, Charlie will send a message to people who still
-haven't submitted their Tock. Finally, at the end of the first day of the work
-week, Charlie will send a message to 18F supervisors letting them know about
-anyone whose Tock report is late.
 
 ##### Travel team
 

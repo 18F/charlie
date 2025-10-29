@@ -11,7 +11,6 @@ describe("utils / index", () => {
       "optOut",
       "slack",
       "stats",
-      "tock",
     ]);
   });
 });
