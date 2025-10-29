@@ -7,7 +7,6 @@ const {
   optOut,
   slack,
   stats,
-  tock,
 } = require("./index");
 
 // Mock fetch and the utility functions, to make it easier for tests to use.
@@ -94,6 +93,5 @@ module.exports = {
     optOut,
     slack,
     stats,
-    tock,
   },
 };
