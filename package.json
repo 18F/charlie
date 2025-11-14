@@ -19,7 +19,7 @@
     "csv-parse": "^5.0.4",
     "dotenv": "^16.0.0",
     "he": "^1.2.0",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "moment": "^2.29.2",
     "moment-timezone": "^0.5.35",
     "node-schedule": "^2.0.0",
