@@ -189,7 +189,7 @@ when the Travel team will be back in the office!
 ## Development
 
 See [the wiki](https://github.com/18F/charlie/wiki) for developer documentation
-and our [contributing docs](CONTRIBUTING.md) for contribution guidelines
+and our [contributing docs](CONTRIBUTING.md) for contribution guidelines. For many of these bots, their responses can be edited in [charlie-slack-bot-facts](https://github.com/18F/charlie-slack-bot-facts)
 
 ## Public domain
 
