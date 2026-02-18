@@ -1180,131 +1180,55 @@ Q1BB,Division 2
 Q1BBA,Branch A
 Q1BBB,Branch B
 Q2,"Deputy Commissioner/Director"
-Q2A,Office of TTS Delivery
+Q2A,Office of Login
 Q2A0A,Technology Operations Division
-Q2AA,Office of Solutions
-Q2AAA,Cloud.gov Division
-Q2AAAA,Engineering Branch
-Q2AAB,Technology Transformation Serv
-Q2AABA,Operations Branch
-Q2AABAA,Acquisition Section
-Q2AABAB,Operations Section
-Q2AABB,Engineering Branch
-Q2AABC,User Experience Branch
-Q2AABD,Product Branch
-Q2AABF,Security Branch
-Q2AABFA,Security Operations Section
-Q2AABFB,Fraud Section
-Q2AABFC,Platform Engineering Section
-Q2AABG,Partnerships and Growth Branch
-Q2AABH,Engineering Partnerships Branc
-Q2AAC,Platforms and Services Divisio
-Q2AACA,Communities and Collaboration
-Q2AACB,Web Tools Branch
-Q2AACC,Open Data & Participatory Scie
-Q2AAD,Public Experience Division
-Q2AADA,Content and Outreach Branch
-Q2AADAA,Outreach and Partnerships Sect
-Q2AADAB,Content Section
-Q2AADB,Customer and Product Experienc
-Q2AADBA,User Experience Section
-Q2AADBB,Product Management Section
-Q2AADC,Contact Center Operations Bran
-Q2AADD,Infrastructure and Technology
-Q2AADDA,Engineering Operations Section
-Q2AADDB,Analytics Section
-Q2AAE,FedRAMP Division
-Q2AAEA,Branch A
-Q2AAEB,Branch B
-Q2AAF,Accelerators Division
-Q2AAFA,ARP Delivery Branch
-Q2AAFB,Internal Investments Branch
-Q2AAFC,10X Branch
-Q2AAFCA,Section 1
-Q2AAFCB,Section 2
-Q2AAFD,Benefits Studio Branch
-Q2AAFDA,Section 1
-Q2AAFDB,Section 2
-Q2AB,Office of Regulatory & Oversig
-Q2ABA,Modernized Rulemaking Division
-Q2ABB,Grants and Acquisition Divisio
-Q2ABC,Systems Design Division
-Q2ABD,Experience Design Division
-Q2AC,Office of the IAE
-Q2ACA,Management and Program Support
-Q2ACB,Product Business Services Divi
-Q2ACC,Outreach & Stakeholder Engagem
-Q2ACD,Product CX and Design Division
-Q2ACE,Product Architecture & Shared
-Q2AD,Office of TTS Consulting
-Q2ADA,18F Division
-Q2ADAA,Chapters and Practices Branch
-Q2ADAAA,Engineering Section
-Q2ADAAAA,Unit 1
-Q2ADAAAB,Unit 2
-Q2ADAAAC,Unit 3
-Q2ADAAAD,Unit 4
-Q2ADAAAE,Unit 5
-Q2ADAAAF,Unit 6
-Q2ADAAAG,Unit 7
-Q2ADAAAH,Unit 8
-Q2ADAAAI,Unit 9
-Q2ADAAB,Product Section
-Q2ADAABA,Unit 1
-Q2ADAABB,Unit 2
-Q2ADAABC,Unit 3
-Q2ADAABD,Unit 4
-Q2ADAAC,Design Section
-Q2ADAACA,Unit 1
-Q2ADAACB,Unit 2
-Q2ADAACC,Unit 3
-Q2ADAACD,Unit 4
-Q2ADAACE,Unit 5
-Q2ADAACF,Unit 6
-Q2ADAACG,Unit 7
-Q2ADAACH,Unit 8
-Q2ADAACI,Unit 9
-Q2ADAAD,Acquisition Section
-Q2ADAB,Projects Branch
-Q2ADABA,Account Management Section
-Q2ADB,Centers of Excellence Division
-Q2ADBA,Data and Analytics Branch
-Q2ADBB,CX and Contact Center Branch
-Q2ADBC,Cloud Adoption and Infrastruct
-Q2ADBD,Acquisition Branch
-Q2ADBE,Client Services Branch
-Q2ADBF,Artificial Intelligence Branch
-Q2ADBG,Innovation Adoption Branch
-Q2B,Office of TTS Operations
-Q2BA,Acquisition Division
-Q2BAA,Oversight Branch
-Q2BAB,Operations Branch
-Q2BB,Business Operations Division
-Q2BBA,Finance Branch
-Q2BBB,Agreements Branch
-Q2BC,Market Development & Partnersh
-Q2BD,Outreach and Marketing Divisio
-Q2BE,Talent Division
-Q2BEA,Talent Acquisition Branch A
-Q2BEB,Talent Acquisition Branch B
-Q2BEC,Talent Operations and Policy B
-Q2C,TTS Fellowship Office
-Q2CA,Presidential Innovation Fellow
-Q2CAA,Branch A
-Q2CAB,Branch B
-Q2CAC,Branch C
-Q2CAD,Branch D
-Q2CAE,Branch E
-Q2CAF,Branch F
-Q2CB,U.S. Digital Corps. Division
-Q2CBA,Branch A
-Q2CBB,Branch B
-Q2CBC,Branch C
-Q2CBD,Branch D
-Q2CBE,Branch E
-Q2CBF,Branch F
-Q2CBG,Branch G
-Q2CBH,Branch H
+Q2AA,Operations Division
+Q2AB,Engineering Division
+Q2AC,User Experience Division
+Q2AD,Product Division
+Q2AE,Security Division
+Q2AEA,Security Operations Branch
+Q2AEB,Platform Engineering Branch
+Q2AF,Partnerships & Growth Division
+Q2AG,Eng Integration Division
+Q2AH,Fraud Division
+Q2B,AROS
+Q2BA,Awards Division
+Q2BB,Regulatory Division
+Q2BC,Delivery Division
+Q2C,Office of Tech Talent
+Q2CA,Centers of Excellence Div
+Q2CAA,CoE 1 Branch
+Q2CAB,CoE 2 Branch
+Q2CB,Pres Innovation Fellow Div
+Q2CBA,PIF Branch A
+Q2CBB,PIF Branch B
+Q2CC,US Digial Corps
+Q2CCA,USDC Branch A
+Q2CCB,USDC Branch B
+Q2CCC,USDC Branch C
+Q2CCD,USDC Branch D
+Q2CCE,USDC Branch E
+Q2CCF,USDC Branch F
+Q2CCG,USDC Branch G
+Q2CCH,USDC Branch H
+Q20A,Cloud Division
+Q20AA,Operations Branch
+Q20AB,Pages & UX Branch
+Q20AC,Cloud Services Branch
+Q20B,FedRAMP Division
+Q20BA,Branch A
+Q20BB,Branch B
+Q20C,Digital Services Division
+Q20CA,Shared Services Branch
+Q20CB,Delivery Branch
+Q20D,TTS Engineering Division
+Q20E,Tech Business Ops Div
+Q20EA,Financial Mgmt Branch
+Q20EB,Enterprise Ops Branch
+Q20F,Tech Acquisition Div
+Q20FA,Acq Oversight Branch
+Q20FB,Acq Operations Branch
 QC,Office of Cust. & Stakeholder
 QC0A,Program Management Division
 QC1A,Content Management Office
