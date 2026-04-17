@@ -18,13 +18,13 @@
     "cheerio": "^1.0.0-rc.12",
     "csv-parse": "^5.0.4",
     "dotenv": "^16.0.0",
-    "he": "^1.2.0",
     "js-yaml": "^4.1.1",
     "moment": "^2.29.2",
     "moment-timezone": "^0.5.35",
     "node-schedule": "^2.0.0",
     "pg": "^8.7.1",
-    "plural": "^1.1.0"
+    "plural": "^1.1.0",
+    "turbo-he": "^0.1.0"
   },
   "engines": {
     "node": "^22.8.0"

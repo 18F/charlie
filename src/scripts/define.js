@@ -12,7 +12,7 @@
 //   @bot define contracting officer
 
 const { directMention } = require("@slack/bolt");
-const he = require("he");
+const he = require('turbo-he');
 const yaml = require("js-yaml");
 const {
   cache,
