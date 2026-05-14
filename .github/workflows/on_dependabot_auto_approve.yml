@@ -3,10 +3,6 @@ name: auto-approve dependabot PRs
 on:
   pull_request_target:
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   run:
     name: auto-approve dependabot PRs
