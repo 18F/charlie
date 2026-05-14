@@ -5,6 +5,10 @@ on:
     paths:
       - InclusionBot.md
 
+permissions:
+  contents: read
+  issues: write
+
 jobs:
   synchronize:
     name: Synchronize Inclusion Bot word lists
