@@ -31,7 +31,12 @@ const TIMEZONES = {
 };
 
 const matcher =
-  /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
+  /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(local(?:\s+time)?|((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i;
+
+// "local time" means whatever the reader's clock says, not the author's, so
+// there's nothing to convert. Mark those matches so we drop them up front.
+const isLocalTimeMatch = (timezone) =>
+  typeof timezone === "string" && /^local/i.test(timezone);
 
 module.exports = (app) => {
   helpMessage.registerNonInteractive(
@@ -56,7 +61,9 @@ module.exports = (app) => {
     let m = null;
     let ampm = null;
 
-    const matches = [...text.matchAll(RegExp(matcher, "gi"))];
+    const matches = [...text.matchAll(RegExp(matcher, "gi"))].filter(
+      ([, , , timezone]) => !isLocalTimeMatch(timezone),
+    );
 
     // If there aren't any matches, that can be because this was crossposted.
     // We don't want to have the bot respond to those because the authorship of

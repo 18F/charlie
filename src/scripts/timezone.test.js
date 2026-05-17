@@ -78,7 +78,7 @@ describe("Handy Tau-bot timezone conversions", () => {
     timezone(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i,
+      /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(local(?:\s+time)?|((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i,
       expect.any(Function),
     );
   });
@@ -240,6 +240,19 @@ describe("Handy Tau-bot timezone conversions", () => {
       await handler(message);
 
       expect(slack.postEphemeralMessage).not.toHaveBeenCalled();
+    });
+
+    it("does not respond when the author marks the time as local", async () => {
+      // "local time" / "local" mean "whatever the reader's clock says", so
+      // there's nothing to translate. Tracked at #533.
+      for (const text of [
+        "Is 10:51 local time too early for more pizza talk?",
+        "meeting at 9:00 local",
+      ]) {
+        message.event.text = text;
+        await handler(message);
+        expect(slack.postEphemeralMessage).not.toHaveBeenCalled();
+      }
     });
 
     it("correctly converts 24 hour time", async () => {
