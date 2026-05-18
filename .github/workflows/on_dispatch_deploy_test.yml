@@ -3,6 +3,9 @@ name: deploy to testing
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     uses: ./.github/workflows/reusable_build.yml
