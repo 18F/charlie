@@ -78,7 +78,7 @@ describe("Handy Tau-bot timezone conversions", () => {
     timezone(app);
 
     expect(app.message).toHaveBeenCalledWith(
-      /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i,
+      /(\d{1,2}:\d{2}\s?(am|pm)?)\s?(local(?:\s+time)?|((ak|a|c|e|m|p)(s|d)?t)|:(eastern|central|mountain|pacific)-time-zone:)?/i,
       expect.any(Function),
     );
   });
@@ -237,6 +237,20 @@ describe("Handy Tau-bot timezone conversions", () => {
 
     it("does not respond to an invalid time", async () => {
       message.event.text = "25:12";
+      await handler(message);
+
+      expect(slack.postEphemeralMessage).not.toHaveBeenCalled();
+    });
+
+    it('does not respond when the time is followed by "local time"', async () => {
+      message.event.text = "Is 10:51 local time too early for more pizza talk?";
+      await handler(message);
+
+      expect(slack.postEphemeralMessage).not.toHaveBeenCalled();
+    });
+
+    it('does not respond when the time is followed by "local"', async () => {
+      message.event.text = "meeting at 9:00 local";
       await handler(message);
 
       expect(slack.postEphemeralMessage).not.toHaveBeenCalled();
