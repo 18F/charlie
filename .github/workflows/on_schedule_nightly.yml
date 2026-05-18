@@ -5,6 +5,9 @@ on:
     # 3am UTC
     - cron: "0 3 * * *"
 
+permissions:
+  contents: read
+
 jobs:
   restage:
     runs-on: ubuntu-latest

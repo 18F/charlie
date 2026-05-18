@@ -6,6 +6,9 @@ on:
     # Scheduled to hopefully be during TTS business days most of the time
     - cron: "0 19 15 * *"
 
+permissions:
+  contents: read
+
 jobs:
   lts-check:
     name: current LTS check
