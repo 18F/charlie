@@ -10,10 +10,10 @@ const cron = require("node-cron");
 const SHARED_CHANNEL_ID = "C05A6Q2PK6G";
 
 const TRACK_CANVASES = {
-  Cyber:    "F091D6QD9RN",
-  Data:     "F091D7L8M5E",
-  Design:   "F090GG1L478",
-  Product:  "F090QH1MQMQ",
+  Cyber: "F091D6QD9RN",
+  Data: "F091D7L8M5E",
+  Design: "F090GG1L478",
+  Product: "F090QH1MQMQ",
   Software: "F0911VCAJTB",
 };
 
@@ -51,15 +51,27 @@ function getFridayBefore(wed) {
 }
 
 function formatDate(d) {
-  return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  return d.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 // ── CANVAS READING ────────────────────────────────────────────────────────────
 
 async function getFacilitatorForDate(client, canvasId, targetDate) {
   const targetStrs = [
-    targetDate.toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "2-digit" }),
-    targetDate.toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" }),
+    targetDate.toLocaleDateString("en-US", {
+      month: "numeric",
+      day: "numeric",
+      year: "2-digit",
+    }),
+    targetDate.toLocaleDateString("en-US", {
+      month: "numeric",
+      day: "numeric",
+      year: "numeric",
+    }),
     targetDate.toLocaleDateString("en-US", { month: "long", day: "numeric" }),
   ];
 
@@ -75,7 +87,10 @@ async function getFacilitatorForDate(client, canvasId, targetDate) {
         if (content.includes(fmt)) {
           for (const line of content.split("\n")) {
             if (line.includes(fmt)) {
-              const parts = line.split("|").map((p) => p.trim()).filter(Boolean);
+              const parts = line
+                .split("|")
+                .map((p) => p.trim())
+                .filter(Boolean);
               if (parts.length >= 2) return parts[1];
             }
           }
@@ -92,9 +107,9 @@ async function getFacilitatorForDate(client, canvasId, targetDate) {
 // ── MESSAGE BUILDER ───────────────────────────────────────────────────────────
 
 function buildMessage(facilitators, facilitationDate) {
-  const dateStr   = formatDate(facilitationDate);
+  const dateStr = formatDate(facilitationDate);
   const fridayStr = getFridayBefore(facilitationDate);
-  const bullets   = Object.entries(facilitators)
+  const bullets = Object.entries(facilitators)
     .map(([track, name]) => `• ${track}: ${name}`)
     .join("\n");
 
@@ -114,20 +129,29 @@ async function runBot(client) {
   console.log(`Track meet bot running. Next Wednesday: ${formatDate(nextWed)}`);
 
   if (!isTrackMeetWeek(nextWed)) {
-    console.log(`Skipping — ${getWednesdayNumber(nextWed)} Wednesday of the month (all-hands or wild card).`);
+    console.log(
+      `Skipping — ${getWednesdayNumber(nextWed)} Wednesday of the month (all-hands or wild card).`,
+    );
     return;
   }
 
   const facilitators = {};
   for (const [track, canvasId] of Object.entries(TRACK_CANVASES)) {
-    facilitators[track] = await getFacilitatorForDate(client, canvasId, nextWed);
+    facilitators[track] = await getFacilitatorForDate(
+      client,
+      canvasId,
+      nextWed,
+    );
     console.log(`  ${track}: ${facilitators[track]}`);
   }
 
   const message = buildMessage(facilitators, nextWed);
 
   try {
-    await client.chat.postMessage({ channel: SHARED_CHANNEL_ID, text: message });
+    await client.chat.postMessage({
+      channel: SHARED_CHANNEL_ID,
+      text: message,
+    });
     console.log("Track meet message posted successfully.");
   } catch (err) {
     console.error("Error posting message:", err.message);
@@ -138,9 +162,13 @@ async function runBot(client) {
 
 module.exports = (app) => {
   // Runs every Friday at 11:00 AM PT (19:00 UTC during daylight saving time)
-  cron.schedule("0 19 * * 5", () => {
-    runBot(app.client);
-  }, { timezone: "America/Los_Angeles" });
+  cron.schedule(
+    "0 19 * * 5",
+    () => {
+      runBot(app.client);
+    },
+    { timezone: "America/Los_Angeles" },
+  );
 
   console.log("Track meet bot loaded. Scheduled for Fridays at 11:00 AM PT.");
 };
