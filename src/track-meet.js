@@ -7,7 +7,14 @@
 
 const cron = require("node-cron");
 
+/**
+ * SHARED_CHANNEL_ID is the #usdc-all-fellows channel where the bot posts the message.
+ */
 const SHARED_CHANNEL_ID = "C05A6Q2PK6G";
+
+/**
+ * TRACK_CANVASES is an object mapping track names to their respective Slack Canvas IDs.
+ */
 
 const TRACK_CANVASES = {
   Cyber: "F091D6QD9RN",
