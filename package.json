@@ -22,6 +22,7 @@
     "js-yaml": "^4.2.0",
     "moment": "^2.29.2",
     "moment-timezone": "^0.5.35",
+    "node-cron": "^4.5.0",
     "node-schedule": "^2.0.0",
     "pg": "^8.7.1",
     "plural": "^1.1.0"

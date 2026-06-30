@@ -142,15 +142,16 @@ async function runBot(client) {
     return;
   }
 
+const trackEntries = Object.entries(TRACK_CANVASES);
+  const facilitatorList = await Promise.all(
+    trackEntries.map(([, canvasId]) =>
+      getFacilitatorForDate(client, canvasId, nextWed)),
+  );
   const facilitators = {};
-  for (const [track, canvasId] of Object.entries(TRACK_CANVASES)) {
-    facilitators[track] = await getFacilitatorForDate(
-      client,
-      canvasId,
-      nextWed,
-    );
+  trackEntries.forEach(([track], i) => {
+    facilitators[track] = facilitatorList[i];
     console.log(`  ${track}: ${facilitators[track]}`);
-  }
+  });
 
   const message = buildMessage(facilitators, nextWed);
 
