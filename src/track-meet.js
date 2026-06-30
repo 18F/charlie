@@ -15,12 +15,11 @@ const SHARED_CHANNEL_ID = "C05A6Q2PK6G";
 /**
  * TRACK_CANVASES is an object mapping track names to their respective Slack Canvas IDs.
  */
-
 const TRACK_CANVASES = {
-  Cyber: "F091D6QD9RN",
-  Data: "F091D7L8M5E",
-  Design: "F090GG1L478",
-  Product: "F090QH1MQMQ",
+  Cyber:    "F091D6QD9RN",
+  Data:     "F091D7L8M5E",
+  Design:   "F090GG1L478",
+  Product:  "F090QH1MQMQ",
   Software: "F0911VCAJTB",
 };
 
@@ -44,10 +43,12 @@ function isTrackMeetWeek(d) {
   return weeksDiff % 2 === 0;
 }
 
-function getNextWednesday() {
+function getNextNextWednesday() {
+  // From Friday, skip the immediate Wednesday (5 days away)
+  // and get the one after that (12 days away)
   const d = new Date();
-  const daysAhead = (3 - d.getDay() + 7) % 7 || 7;
-  d.setDate(d.getDate() + daysAhead);
+  const daysAhead = (3 - d.getDay() + 7) % 7 || 7; // days until next Wednesday
+  d.setDate(d.getDate() + daysAhead + 7);            // add another 7 to get the one after
   return d;
 }
 
@@ -69,16 +70,8 @@ function formatDate(d) {
 
 async function getFacilitatorForDate(client, canvasId, targetDate) {
   const targetStrs = [
-    targetDate.toLocaleDateString("en-US", {
-      month: "numeric",
-      day: "numeric",
-      year: "2-digit",
-    }),
-    targetDate.toLocaleDateString("en-US", {
-      month: "numeric",
-      day: "numeric",
-      year: "numeric",
-    }),
+    targetDate.toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "2-digit" }),
+    targetDate.toLocaleDateString("en-US", { month: "numeric", day: "numeric", year: "numeric" }),
     targetDate.toLocaleDateString("en-US", { month: "long", day: "numeric" }),
   ];
 
@@ -94,10 +87,7 @@ async function getFacilitatorForDate(client, canvasId, targetDate) {
         if (content.includes(fmt)) {
           for (const line of content.split("\n")) {
             if (line.includes(fmt)) {
-              const parts = line
-                .split("|")
-                .map((p) => p.trim())
-                .filter(Boolean);
+              const parts = line.split("|").map((p) => p.trim()).filter(Boolean);
               if (parts.length >= 2) return parts[1];
             }
           }
@@ -114,9 +104,9 @@ async function getFacilitatorForDate(client, canvasId, targetDate) {
 // ── MESSAGE BUILDER ───────────────────────────────────────────────────────────
 
 function buildMessage(facilitators, facilitationDate) {
-  const dateStr = formatDate(facilitationDate);
+  const dateStr   = formatDate(facilitationDate);
   const fridayStr = getFridayBefore(facilitationDate);
-  const bullets = Object.entries(facilitators)
+  const bullets   = Object.entries(facilitators)
     .map(([track, name]) => `• ${track}: ${name}`)
     .join("\n");
 
@@ -132,34 +122,38 @@ If you have a conflict (planned leave, agency conflict, etc) with your date to f
 // ── MAIN JOB ──────────────────────────────────────────────────────────────────
 
 async function runBot(client) {
-  const nextWed = getNextWednesday();
-  console.log(`Track meet bot running. Next Wednesday: ${formatDate(nextWed)}`);
+  const targetWed = getNextNextWednesday();
+  console.log(`Track meet bot running. Target Wednesday: ${formatDate(targetWed)}`);
 
-  if (!isTrackMeetWeek(nextWed)) {
+  if (!isTrackMeetWeek(targetWed)) {
     console.log(
-      `Skipping — ${getWednesdayNumber(nextWed)} Wednesday of the month (all-hands or wild card).`,
+      `Skipping — ${getWednesdayNumber(targetWed)} Wednesday of the month (all-hands or wild card).`
     );
     return;
   }
 
-const trackEntries = Object.entries(TRACK_CANVASES);
+  const trackEntries = Object.entries(TRACK_CANVASES);
   const facilitatorList = await Promise.all(
-    trackEntries.map(([, canvasId]) =>
-      getFacilitatorForDate(client, canvasId, nextWed)),
+    trackEntries.map(([, canvasId]) => getFacilitatorForDate(client, canvasId, targetWed))
   );
+
   const facilitators = {};
   trackEntries.forEach(([track], i) => {
     facilitators[track] = facilitatorList[i];
     console.log(`  ${track}: ${facilitators[track]}`);
   });
 
-  const message = buildMessage(facilitators, nextWed);
+  // Only skip if ALL tracks are TBD — a single missing facilitator still posts
+  const allTBD = Object.values(facilitators).every((name) => name === "TBD");
+  if (allTBD) {
+    console.log("No facilitators found in any canvas — skipping post.");
+    return;
+  }
+
+  const message = buildMessage(facilitators, targetWed);
 
   try {
-    await client.chat.postMessage({
-      channel: SHARED_CHANNEL_ID,
-      text: message,
-    });
+    await client.chat.postMessage({ channel: SHARED_CHANNEL_ID, text: message });
     console.log("Track meet message posted successfully.");
   } catch (err) {
     console.error("Error posting message:", err.message);
@@ -172,10 +166,8 @@ module.exports = (app) => {
   // Runs every Friday at 11:00 AM PT (19:00 UTC during daylight saving time)
   cron.schedule(
     "0 19 * * 5",
-    () => {
-      runBot(app.client);
-    },
-    { timezone: "America/Los_Angeles" },
+    () => { runBot(app.client); },
+    { timezone: "America/Los_Angeles" }
   );
 
   console.log("Track meet bot loaded. Scheduled for Fridays at 11:00 AM PT.");
