@@ -34,7 +34,6 @@ message: >
   are some alternatives that might work better:
 
 triggers:
-
   - matches:
       - blind to
       - blinded to
@@ -170,7 +169,7 @@ triggers:
   - matches:
       - fuck
     alternatives:
-      - ''
+      - ""
     why: >-
       ":TERM:" can trigger emotions related to abuse, trauma, and sexual assault
       that employees may not want to process at work.
@@ -416,7 +415,7 @@ triggers:
       - expert
       - whiz
     ignore:
-      - ':ninja:'
+      - ":ninja:"
       - ninja turtle
       - ninja turtles
       - ninja-turtle
@@ -557,7 +556,7 @@ triggers:
       - suicidal
       - kill yourself
     alternatives:
-      - ''
+      - ""
     why: >-
       ":TERM:" can trigger emotions related to death that employees may not want
       to process at work.
@@ -565,7 +564,7 @@ triggers:
   - matches:
       - shit
     alternatives:
-      - ''
+      - ""
     why: >-
       ":TERM:" can trigger emotions related to vulgarity that employees may not
       want to process at work.
