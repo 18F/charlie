@@ -29,7 +29,7 @@ function getWednesdayNumber(d) {
   return Math.floor((d.getDate() - 1) / 7) + 1;
 }
 
-const NEW_SCHEDULE_ANCHOR = new Date("2026-07-08"); // First track meet under new every-other-Wednesday rule
+const NEW_SCHEDULE_ANCHOR = new Date("2026-07-15"); // First track meet under new every-other-Wednesday rule
 
 function isTrackMeetWeek(d) {
   if (d < NEW_SCHEDULE_ANCHOR) {
@@ -37,7 +37,7 @@ function isTrackMeetWeek(d) {
     const n = getWednesdayNumber(d);
     return n === 2 || n === 4;
   }
-  // New rule: every other Wednesday anchored to 7/8/26
+  // New rule: every other Wednesday anchored to 7/15/26
   const msPerWeek = 7 * 24 * 60 * 60 * 1000;
   const weeksDiff = Math.round((d - NEW_SCHEDULE_ANCHOR) / msPerWeek);
   return weeksDiff % 2 === 0;
