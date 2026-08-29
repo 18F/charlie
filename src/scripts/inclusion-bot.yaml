@@ -212,17 +212,6 @@ triggers:
       stereotype that Romani people are dishonest or thieves.
 
   - matches:
-      - guru
-    alternatives:
-      - authority
-      - maestro
-      - virtuoso
-    why: >-
-      A guru is a sacred role in some Indian spiritual traditions and is not
-      merely an expert or guide. We want to show respect towards all religious
-      traditions.
-
-  - matches:
       - grandfathered
     alternatives:
       - legacy
@@ -264,6 +253,17 @@ triggers:
       ":TERM:" can be offensive or triggering to some religious traditions
       because it implies a deity cursing or reproaching people. We want to show
       respect towards all religious traditions.
+
+  - matches:
+      - guru
+    alternatives:
+      - authority
+      - maestro
+      - virtuoso
+    why: >-
+      A guru is a sacred role in some Indian spiritual traditions and is not
+      merely an expert or guide. We want to show respect towards all religious
+      traditions.
 
   - matches:
       - hysterical
@@ -477,19 +477,6 @@ triggers:
       performance seating, and has racist and classist origins.
 
   - matches:
-      - pow-wow
-      - powwow
-      - pow wow
-    alternatives:
-      - meeting
-      - working session
-      - huddle
-      - jam session
-    why: >-
-      Powwows are a sacred component of some Indigneous spiritual traditions. We
-      want to show respect towards all religious traditions.
-
-  - matches:
       - postmortem
       - post mortem
       - post-mortem
@@ -501,6 +488,19 @@ triggers:
     why: >-
       ":TERM:" can trigger emotions related to death that employees may not want
       to process at work.
+
+  - matches:
+      - pow-wow
+      - powwow
+      - pow wow
+    alternatives:
+      - meeting
+      - working session
+      - huddle
+      - jam session
+    why: >-
+      Powwows are a sacred component of some Indigneous spiritual traditions. We
+      want to show respect towards all religious traditions.
 
   - matches:
       - spaz
@@ -541,18 +541,6 @@ triggers:
       to mountain guides. Sherpa are a people, not a job.
 
   - matches:
-      - spirit animal
-    alternatives:
-      - role model
-      - kindred spirit
-      - inspiration
-      - secret twin
-      - when I grow up, I want to be...
-    why: >-
-      Spirit animals are a sacred component of some Indigneous spiritual
-      traditions. We want to show respect towards all religious traditions.
-
-  - matches:
       - suicide
       - suicidal
       - kill yourself
@@ -569,6 +557,18 @@ triggers:
     why: >-
       ":TERM:" can trigger emotions related to vulgarity that employees may not
       want to process at work.
+
+  - matches:
+      - spirit animal
+    alternatives:
+      - role model
+      - kindred spirit
+      - inspiration
+      - secret twin
+      - when I grow up, I want to be...
+    why: >-
+      Spirit animals are a sacred component of some Indigneous spiritual
+      traditions. We want to show respect towards all religious traditions.
 
   - matches:
       - totem pole
