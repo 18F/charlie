@@ -44,8 +44,8 @@ const markdownRowToTrigger = ([, matches, alternatives, why]) => ({
     .replace(/this term/i, '":TERM:"'),
 });
 
-const getTriggerIgnoreMap = (currentConfig) => {
-  const triggerWithIgnore = (newTrigger) => {
+const getTriggerExtraMetadataMap = (currentConfig) => {
+  const triggerWithExtraMetadata = (newTrigger) => {
     // Find a trigger in the existing config that has at least one of the same
     // matches as the new trigger. There may not be one, but if...
     const existing = currentConfig.triggers.find(
@@ -53,23 +53,32 @@ const getTriggerIgnoreMap = (currentConfig) => {
         currentMatches.some((v) => newTrigger.matches.includes(v)),
     );
 
+    // Create a new mapped trigger. We don't use an object spread notation here
+    // so we control the order the properties get rendered into YAML, to keep
+    // things consistent and nice.
+    const mapped = {
+      matches: newTrigger.matches,
+      alternatives: newTrigger.alternatives,
+      ignore: existing.ignore,
+    };
+
     // If there is an existing config that matches AND it has an ignore property
-    // return a new trigger that includes the ignore property. (We do it this
-    // way instead of using an object spread so we get the properties in the
-    // order we want for readability when it gets written to yaml.)
+    // add the existing ignore property on to the new trigger.
     if (existing?.ignore) {
-      return {
-        matches: newTrigger.matches,
-        alternatives: newTrigger.alternatives,
-        ignore: existing.ignore,
-        why: newTrigger.why,
-      };
+      mapped.ignore = existing.ignore;
+    }
+    // If there is an existing config that matches AND it has an ignore property
+    // add the existing ignore property on to the new trigger.
+    if (existing?.optional) {
+      mapped.optional = existing.optional;
     }
 
+    mapped.why = newTrigger.why;
+
     // Otherwise just return what we got.
-    return newTrigger;
+    return mapped;
   };
-  return triggerWithIgnore;
+  return triggerWithExtraMetadata;
 };
 
 const main = async () => {
@@ -82,7 +91,7 @@ const main = async () => {
   // Also find the frontmatter comments so we can preserve it.
   const frontmatter = getYamlFrontmatter(currentYamlStr);
 
-  const triggerWithIgnore = getTriggerIgnoreMap(currentConfig);
+  const triggerWithIgnore = getTriggerExtraMetadataMap(currentConfig);
 
   // Read and parse the markdown.
   const mdf = await fs.readFile("InclusionBot.md", { encoding: "utf-8" });
