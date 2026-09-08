@@ -16,7 +16,7 @@
     "@slack/bolt": "^4.1.0",
     "cfenv": "^1.2.6",
     "cheerio": "^1.0.0-rc.12",
-    "csv-parse": "^5.0.4",
+    "csv-parse": "^7.0.2",
     "dotenv": "^16.0.0",
     "he": "^1.2.0",
     "js-yaml": "^4.3.1",
