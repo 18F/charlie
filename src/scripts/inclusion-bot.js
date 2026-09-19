@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const yaml = require("js-yaml");
 const {
+  optOut,
   slack: { addEmojiReaction, postEphemeralResponse },
   stats: { incrementStats },
   helpMessage,
@@ -42,6 +43,12 @@ module.exports = async (app) => {
     "Charlie passively listens for language with racist, ableist, sexist, or other exclusionary histories. When it hears such words or phrases, it quietly lets the speaker know and offers some suggestions. What a great bot, helping nudge us all to thoughtful, inclusive language!",
   );
 
+  const optout = optOut(
+    "inclusion_bot_extended",
+    "Inclusion Bot | Extended mode",
+    "Opt out of extended inclusive language notifications. These notifications are meant to help educate and remind us to be mindful of our colleagues.",
+  );
+
   // Use the module exported version here, so that it can be stubbed for testing
   const { link, message, triggers } = module.exports.getTriggers();
 
@@ -55,10 +62,12 @@ module.exports = async (app) => {
   const combinedRegex = new RegExp(`\\b${combinedString}\\b`, "i");
 
   app.message(combinedRegex, (msg) => {
+    const extended = !optout.isOptedOut(msg.event.user);
+
     // Find the specific match that triggered this bot. At this point, go ahead
     // and remove things that should be ignored.
     const specificMatch = triggers
-      .map(({ alternatives, ignore, matches }) => {
+      .map(({ alternatives, ignore, optional, matches }) => {
         const { text } = msg.message;
 
         // Wrap the match in word boundaries, so we don't match something that's
@@ -72,10 +81,12 @@ module.exports = async (app) => {
         // makes the regexes a lot simpler.
         return {
           alternatives,
+          optional,
           text: text.replace(ignoreRegex, "").match(matchRegex),
         };
       })
       .filter(({ text }) => !!text)
+      .filter(({ optional }) => extended || !optional)
       .map(({ text: [match], ...rest }) => ({ text: match, ...rest }));
 
     // If there aren't any specific matches, it means the bot was triggered only
@@ -100,7 +111,11 @@ module.exports = async (app) => {
           color: "#2eb886",
           fallback: message,
           blocks: [
-            { type: "section", text: { type: "mrkdwn", text: message } },
+            {
+              type: "section",
+              text: { type: "mrkdwn", text: message },
+              ...(extended ? optout.button : {}),
+            },
             {
               type: "section",
               text: { type: "mrkdwn", text: pretexts.join("\n") },
