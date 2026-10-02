@@ -38,7 +38,8 @@
     "prettier": "^3.1.0"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "globalSetup": "<rootDir>/jest.globalSetup.js"
   },
   "prettier": {}
 }
