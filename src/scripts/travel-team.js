@@ -1,11 +1,18 @@
 const holidays = require("@18f/us-federal-holidays");
-const moment = require("moment");
+const moment = require("moment-timezone");
 const {
   stats: { incrementStats },
   helpMessage,
 } = require("../utils");
 
 const closedDays = ["Saturday", "Sunday"];
+
+// The travel team keeps eastern hours, so "what day is it" has to be answered
+// in eastern time, not in whatever zone the host happens to be set to. (In
+// production that's UTC, which is ahead of eastern after 7pm.)
+const TIMEZONE = "America/New_York";
+
+const now = () => moment.tz(TIMEZONE);
 
 const getChannelName = (() => {
   let allChannels = null;
@@ -21,11 +28,23 @@ const getChannelName = (() => {
   };
 })();
 
-const travelIsClosed = (day = moment()) =>
-  holidays.isAHoliday(day.toDate()) || closedDays.includes(day.format("dddd"));
+// Both halves of this check have to read the same calendar day. The weekday
+// name comes from the eastern-time object, so the holiday lookup has to use the
+// eastern-time date too: re-anchor it at UTC midnight and compare in UTC mode,
+// the same way utils/dates does it. Passing the raw Date instead would compare
+// against the host's calendar day, which disagrees with the eastern day every
+// evening and reports the wrong answer for a few hours each night.
+const isAHoliday = (day) =>
+  holidays.isAHoliday(
+    moment.utc(day.format("YYYY-MM-DD"), "YYYY-MM-DD").toDate(),
+    { utc: true },
+  );
+
+const travelIsClosed = (day = now()) =>
+  isAHoliday(day) || closedDays.includes(day.format("dddd"));
 
 const getNextWorkday = () => {
-  const m = moment().add(1, "day");
+  const m = now().add(1, "day");
   while (travelIsClosed(m)) {
     m.add(1, "day");
   }

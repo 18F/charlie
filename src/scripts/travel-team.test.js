@@ -142,11 +142,59 @@ describe("Travel team weekend/holiday notice", () => {
 
         message.say.mockClear();
 
-        // Now move forwar 3 hours and see that we get a new message for the user
+        // Now move forward 3 hours and see that we get a new message for the user
         jest.advanceTimersByTime(3 * 60 * 60 * 1000);
         await handler(message);
 
         expect(message.say).toHaveBeenCalled();
+      });
+    });
+
+    // Every timestamp in here is an evening in eastern time, which is already
+    // the next calendar day in UTC. Production runs in UTC, so this is the
+    // window where reading the day out of the host timezone gives the wrong
+    // answer. Keep these timestamps in ascending order and after the ones
+    // above: pastResponses lives at module scope and is only pruned by moving
+    // the clock forward, so an out-of-order timestamp will fail for reasons
+    // that have nothing to do with timezones.
+    describe("answers for eastern time, not the host timezone", () => {
+      it("sends a message in the evening of a holiday", async () => {
+        // Thursday, July 4, 2024, 8pm eastern. Already July 5 in UTC.
+        jest.setSystemTime(Date.parse("2024-07-05T00:00:00Z"));
+
+        await handler(message);
+
+        expect(message.say).toHaveBeenCalledWith({
+          icon_emoji: ":tts:",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Friday morning and someone will respond promptly.",
+          thread_ts: "thread id",
+          username: "TTS Travel Team",
+        });
+      });
+
+      it("does not offer a holiday as the next workday", async () => {
+        // Sunday, January 19, 2025, 8pm eastern. Monday is MLK Day, so the next
+        // workday is Tuesday.
+        jest.setSystemTime(Date.parse("2025-01-20T01:00:00Z"));
+
+        await handler(message);
+
+        expect(message.say).toHaveBeenCalledWith({
+          icon_emoji: ":tts:",
+          text: "Hi <@user id>. The TTS travel team is unavailable on weekends and holidays. If you need to change your flight for approved travel, contact AdTrav at (877) 472-6716. For after-hours emergency travel authorizations, see <https://handbook.tts.gsa.gov/travel-guide-b-after-hours-emergency-travel-authorizations/|the Handbook>. For other travel-related issues, such as an approval in Concur, please drop a new message in this channel Tuesday morning and someone will respond promptly.",
+          thread_ts: "thread id",
+          username: "TTS Travel Team",
+        });
+      });
+
+      it("stays quiet in the evening before a holiday", async () => {
+        // Wednesday, December 24, 2025, 8pm eastern. Christmas is tomorrow, but
+        // the travel team is still open today.
+        jest.setSystemTime(Date.parse("2025-12-25T01:00:00Z"));
+
+        await handler(message);
+
+        expect(message.say).not.toHaveBeenCalled();
       });
     });
   });
