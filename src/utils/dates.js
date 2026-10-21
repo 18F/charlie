@@ -61,8 +61,9 @@ const getNextElectionDay = () => {
   const election = getNextElectionDayFrom(date);
 
   // If the provided election day is in the past, jump forward a month and then
-  // get it again.
-  if (election.isBefore(moment.utc())) {
+  // get it again. Compare whole days, because election days come back at
+  // midnight, so any later hour on election day itself would read as past.
+  if (election.isBefore(moment.utc(), "day")) {
     date.add(1, "month");
     return getNextElectionDayFrom(date);
   }

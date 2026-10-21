@@ -79,6 +79,16 @@ describe("date utility library", () => {
       });
     });
 
+    it("returns today if today is election day", () => {
+      // 10am US eastern time on election day 2026, which is the default time
+      // the voting reminder goes out.
+      jest.setSystemTime(+moment.utc("2026-11-03T15:00:00Z").format("x"));
+
+      const electionDay = getNextElectionDay();
+
+      expect(electionDay.isSame(moment.utc("2026-11-03"))).toBe(true);
+    });
+
     it("skips odd-numbered years", () => {
       jest.setSystemTime(+moment.utc("2021-03-01", "YYYY-MM-DD").format("x"));
 
